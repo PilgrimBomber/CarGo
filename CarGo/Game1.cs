@@ -11,7 +11,7 @@ namespace CarGo
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-
+        Scene scene;
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
@@ -27,7 +27,8 @@ namespace CarGo
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-
+            scene = new Scene();
+            scene.addEntity(new Entities.Player());
             base.Initialize();
         }
 
@@ -63,7 +64,7 @@ namespace CarGo
                 Exit();
 
             // TODO: Add your update logic here
-
+            scene.Update();
             base.Update(gameTime);
         }
 
@@ -76,7 +77,7 @@ namespace CarGo
             GraphicsDevice.Clear(Color.CornflowerBlue);
 
             // TODO: Add your drawing code here
-
+            scene.Draw(gameTime);
             base.Draw(gameTime);
         }
     }
