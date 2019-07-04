@@ -20,17 +20,19 @@ namespace CarGo
         void Update();
     }
 
-    public abstract class Entity: ICollidable,IUpdateable, IDrawable
+    public abstract class Entity: ICollidable,IUpdateable//, IDrawable
     {
-        private Rectangle hitbox;
-        private int hitpoints;
-        public event EventHandler<EventArgs> DrawOrderChanged;
-        public event EventHandler<EventArgs> VisibleChanged;
-        int IDrawable.DrawOrder => throw new NotImplementedException();
-        bool IDrawable.Visible => throw new NotImplementedException();
+        protected Rectangle hitbox;
+        protected int hitpoints;
+        protected Texture2D texture;
+        protected int orientation;
+        //public event EventHandler<EventArgs> DrawOrderChanged;
+        //public event EventHandler<EventArgs> VisibleChanged;
+        //int IDrawable.DrawOrder => throw new NotImplementedException();
+        //bool IDrawable.Visible => throw new NotImplementedException();
 
         public abstract void Collide();
         public abstract void Update();
-        public abstract void Draw(GameTime gameTime);
+        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
     }
 }

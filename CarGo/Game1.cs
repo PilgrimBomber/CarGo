@@ -15,6 +15,8 @@ namespace CarGo
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
+            graphics.PreferredBackBufferWidth = 1200;
+            graphics.PreferredBackBufferHeight = 900;
             Content.RootDirectory = "Content";
         }
 
@@ -27,8 +29,10 @@ namespace CarGo
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            scene = new Scene();
-            scene.addEntity(new Entities.Player());
+            // Create a new SpriteBatch, which can be used to draw textures.
+            spriteBatch = new SpriteBatch(GraphicsDevice);
+            scene = new Scene(spriteBatch, Content);
+            scene.addEntity(new Entities.Player(Content));
             base.Initialize();
         }
 
@@ -38,9 +42,9 @@ namespace CarGo
         /// </summary>
         protected override void LoadContent()
         {
-            // Create a new SpriteBatch, which can be used to draw textures.
-            spriteBatch = new SpriteBatch(GraphicsDevice);
-
+            
+            
+            
             // TODO: use this.Content to load your game content here
         }
 
@@ -74,11 +78,11 @@ namespace CarGo
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.CornflowerBlue);
+            GraphicsDevice.Clear(Color.DimGray);
 
             // TODO: Add your drawing code here
             scene.Draw(gameTime);
-            base.Draw(gameTime);
+            //base.Draw(gameTime);
         }
     }
 }

@@ -20,7 +20,7 @@ namespace CarGo.Entities
         {
             throw new NotImplementedException();
         }
-        public override void Draw(GameTime gameTime)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
             throw new NotImplementedException();
         }

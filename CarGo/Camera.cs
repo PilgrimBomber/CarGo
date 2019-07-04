@@ -12,16 +12,20 @@ namespace CarGo
     class Camera
     {
         private Vector2 positon;
-        public Camera()
+        private SpriteBatch spriteBatch;
+        public Camera(SpriteBatch spriteBatchInit)
         {
             positon =new Vector2(0,0);
+            spriteBatch = spriteBatchInit;
         }
         public void Draw(List<Entity> entities,GameTime gameTime)
         {
+            spriteBatch.Begin();
             foreach (Entity entity in entities)
             {
-                entity.Draw(gameTime);
+                entity.Draw(gameTime, spriteBatch);
             }
+            spriteBatch.End();
         }
 
     }
