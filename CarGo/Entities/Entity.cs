@@ -22,7 +22,7 @@ namespace CarGo
 
     public abstract class Entity: ICollidable,IUpdateable//, IDrawable
     {
-        protected Rectangle hitbox;
+        protected RotRectangle hitbox;
         protected int hitpoints;
         protected Texture2D texture;
         protected int orientation;

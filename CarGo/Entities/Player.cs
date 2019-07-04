@@ -19,7 +19,7 @@ namespace CarGo.Entities
         public Player(ContentManager content)
         {
             inputHandler = new InputHandler();
-            hitbox = new Rectangle(0, 0, 200, 450);
+            hitbox = new RotRectangle(20,new Rectangle(400, 400, 200, 450));
             // load Texture
             texture = content.Load<Texture2D>("Car1");
         }
@@ -35,7 +35,7 @@ namespace CarGo.Entities
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture,hitbox,Color.White);
+            spriteBatch.Draw(texture, hitbox.middle, null, Color.White, hitbox.rotationRad, hitbox.offset,1, SpriteEffects.None,0f);
         }
     }
 }
