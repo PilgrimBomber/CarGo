@@ -11,9 +11,77 @@ namespace CarGo.Entities
 {
     class InputHandler
     {
-        public InputHandler()
+        private Player player;
+        private GamePadState previousState;
+        private KeyboardState previousKeyBoardState;
+        public InputHandler(Player player, PlayerIndex playerIndex)
         {
+            this.player = player;
+            previousState = GamePad.GetState(player.PlayerIndex);
+            previousKeyBoardState = Keyboard.GetState();
+        }
 
+        public void HandleInput()
+        {
+            KeyboardInput();
+            GamepadInput();           
+        }
+
+        private void GamepadInput()
+        {
+            //Controller Input
+            GamePadCapabilities capabilities = GamePad.GetCapabilities(player.PlayerIndex);
+
+            // Check if the controller is connected
+            if (capabilities.IsConnected)
+            {
+                GamePadState state = GamePad.GetState(player.PlayerIndex);
+
+                
+                if (state.ThumbSticks.Left.X < 0f)
+                    player.Turn(-1);
+                if (state.ThumbSticks.Left.X > 0f)
+                    player.Turn(1);
+                if (state.Triggers.Right > 0.1)
+                    player.Accelerate();
+                if (state.Triggers.Left > 0.1)
+                    player.Brake();
+                if(state.IsButtonDown(Buttons.LeftShoulder)&&previousState.IsButtonUp(Buttons.LeftShoulder))
+                {
+                    player.Boost();
+                }
+                
+                previousState = state;
+
+            }
+        }
+
+        private void KeyboardInput()
+        {
+            //KeyboardInput
+            KeyboardState keyboardstate = Keyboard.GetState();
+            if (keyboardstate.IsKeyDown(Keys.Right))
+            {
+                player.Turn(1);
+            }
+            if (keyboardstate.IsKeyDown(Keys.Left))
+            {
+                player.Turn(-1);
+            }
+            if (keyboardstate.IsKeyDown(Keys.Up))
+            {
+                player.Accelerate();
+            }
+            if (keyboardstate.IsKeyDown(Keys.Down))
+            {
+                player.Brake();
+            }
+            if (keyboardstate.IsKeyDown(Keys.LeftShift) && previousKeyBoardState.IsKeyUp(Keys.LeftShift))
+            {
+                player.Boost();
+            }
+
+            previousKeyBoardState = keyboardstate;
         }
     }
 }

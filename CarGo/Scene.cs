@@ -13,7 +13,8 @@ namespace CarGo
 {
     public class Scene: IUpdateable
     {
-          private Camera camera;
+        private Camera camera;
+        private CollisionCheck collisionCheck;
         private List<Entity> entities;
         private ContentManager content;
 
@@ -22,6 +23,7 @@ namespace CarGo
         {
             entities = new List<Entity>();
             camera = new Camera(spriteBatch);
+            collisionCheck = new CollisionCheck();
             this.content = content;
         }
 
@@ -31,16 +33,16 @@ namespace CarGo
         }
         public void Update()
         {
-            //foreach(Entity entity in entities)
-            //{
-            //    entity.Update();
-                
-            //}
+            collisionCheck.CheckCollisons(entities);
+            foreach (Entity entity in entities)
+            {
+                entity.Update();
+
+            }
         }
 
         public void Draw(GameTime gameTime)
         {
-
             camera.Draw(entities, gameTime);
         }
 

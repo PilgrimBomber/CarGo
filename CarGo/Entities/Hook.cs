@@ -16,11 +16,15 @@ namespace CarGo.Entities
             throw new NotImplementedException();
         }
 
-        public override void Collide()
+        public override void Collide(Entity entity)
         {
             throw new NotImplementedException();
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            throw new NotImplementedException();
+        }
+        public override void GetPushed(Vector2 direction)
         {
             throw new NotImplementedException();
         }

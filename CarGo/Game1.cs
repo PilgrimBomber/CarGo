@@ -7,17 +7,31 @@ namespace CarGo
     /// <summary>
     /// This is the main type for your game.
     /// </summary>
+    
+    public enum GameState {Playing,Menu,Pause,Lost,Won }
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Scene scene;
+        private GameState gameState;
+        public GameState GameState { get => gameState; set => gameState = value; }
+
         public Game1()
         {
             graphics = new GraphicsDeviceManager(this);
-            graphics.PreferredBackBufferWidth = 1200;
-            graphics.PreferredBackBufferHeight = 900;
+            graphics.PreferredBackBufferWidth = 1920;
+            graphics.PreferredBackBufferHeight = 1080;
+            #if DEBUG
+                        // Debug Code
+
+            #else
+                        // Release Code
+                        graphics.ToggleFullScreen();
+            #endif
+
             Content.RootDirectory = "Content";
+            GameState = GameState.Playing;
         }
 
         /// <summary>
@@ -29,11 +43,20 @@ namespace CarGo
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
-            // Create a new SpriteBatch, which can be used to draw textures.
             spriteBatch = new SpriteBatch(GraphicsDevice);
             scene = new Scene(spriteBatch, Content);
-            scene.addEntity(new Entities.Player(Content));
-            base.Initialize();
+            // Add a player for each connected Controller
+            int playercount = 0;
+            for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+            {
+                if (GamePad.GetCapabilities(index).IsConnected)
+                {
+                    scene.addEntity(new Entities.Player(Content, index, new Vector2(400 + (int)index * 100, 400)));
+                    playercount++;
+                }
+            }
+            //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
+            if(playercount==0)scene.addEntity(new Entities.Player(Content, PlayerIndex.One, new Vector2(400, 400)));
         }
 
         /// <summary>
@@ -68,8 +91,15 @@ namespace CarGo
                 Exit();
 
             // TODO: Add your update logic here
-            scene.Update();
-            base.Update(gameTime);
+            switch (this.GameState)
+            {
+                case GameState.Playing:
+                    scene.Update();
+                    break;
+                case GameState.Pause:
+                    break;
+                default:break; ;
+            }
         }
 
         /// <summary>
@@ -78,11 +108,10 @@ namespace CarGo
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Draw(GameTime gameTime)
         {
-            GraphicsDevice.Clear(Color.DimGray);
+            GraphicsDevice.Clear(Color.Cornsilk);
 
             // TODO: Add your drawing code here
             scene.Draw(gameTime);
-            //base.Draw(gameTime);
         }
     }
 }
