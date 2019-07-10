@@ -43,9 +43,9 @@ namespace CarGo.Entities
                 if (state.ThumbSticks.Left.X > 0f)
                     player.Turn(1);
                 if (state.Triggers.Right > 0.1)
-                    player.Accelerate();
+                    player.Accelerate(state.Triggers.Right);
                 if (state.Triggers.Left > 0.1)
-                    player.Brake();
+                    player.Accelerate(-state.Triggers.Left/3);
                 if(state.IsButtonDown(Buttons.LeftShoulder)&&previousState.IsButtonUp(Buttons.LeftShoulder))
                 {
                     player.Boost();
@@ -70,11 +70,11 @@ namespace CarGo.Entities
             }
             if (keyboardstate.IsKeyDown(Keys.Up))
             {
-                player.Accelerate();
+                player.Accelerate(1);
             }
             if (keyboardstate.IsKeyDown(Keys.Down))
             {
-                player.Brake();
+                player.Accelerate(-0.3f);
             }
             if (keyboardstate.IsKeyDown(Keys.LeftShift) && previousKeyBoardState.IsKeyUp(Keys.LeftShift))
             {

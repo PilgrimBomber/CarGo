@@ -43,6 +43,8 @@ namespace CarGo.Entities
             inputHandler.HandleInput();
             //Slow the car over time
             velocity *= 0.98f;
+            if (velocity.Length() < 0.05) velocity *= 0;
+
             //Move the car
             hitbox.Move(velocity);
 
@@ -53,9 +55,9 @@ namespace CarGo.Entities
             if (entity.GetType()==typeof(Player))
             {
                 entity.Hitbox.Move(velocity);
-                //entity.GetPushed(velocity);
                 velocity *= -0.1f;
                 Hitbox.Move(velocity);
+
             }
         }
 
@@ -65,7 +67,7 @@ namespace CarGo.Entities
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, hitbox.Center, null, Color.White, hitbox.RotationRad, hitbox.Offset,1, SpriteEffects.None,0f);
+            spriteBatch.Draw(texture, hitbox.Center, null, Color.White, hitbox.RotationRad, hitbox.Offset,1.05f, SpriteEffects.None,0f);
             
             //Debug: Draw the corner points of the hitbox
             Texture2D point = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
@@ -90,33 +92,24 @@ namespace CarGo.Entities
             }
             
         }
-        public void Accelerate()
+        public void Accelerate(float accelerationFactor)
         {
-            if(velocity.Length()==0)
+            if (velocity.Length() == 0)
             {
-                velocity.X = acceleration*(float)Math.Sin(hitbox.RotationRad);
-                velocity.Y = -acceleration*(float)Math.Cos(hitbox.RotationRad);
+                velocity.X = acceleration * (float)Math.Sin(hitbox.RotationRad);
+                velocity.Y = -acceleration * (float)Math.Cos(hitbox.RotationRad);
             }
             else
             {
+
                 if (velocity.Length() < maxSpeed)
                 {
-                    velocity.X += (maxSpeed - velocity.Length()) / 3 * acceleration * (float)Math.Sin(hitbox.RotationRad);
-                    velocity.Y -= (maxSpeed - velocity.Length()) / 3 * acceleration * (float)Math.Cos(hitbox.RotationRad);
-                }   
-            }
+                    velocity.X += (maxSpeed - velocity.Length()) / 3 * acceleration * accelerationFactor * (float)Math.Sin(hitbox.RotationRad);
+                    velocity.Y -= (maxSpeed - velocity.Length()) / 3 * acceleration * accelerationFactor * (float)Math.Cos(hitbox.RotationRad);
+                }
+            }           
         }
-        public void Brake()
-        {
-            velocity *= 0.98f;
-            if (velocity.Length()<0.2)
-            {
-                velocity.X = 0;
-                velocity.Y = 0;
-            }
-            
-        }
-
+        
         public void Boost()
         {
             if(velocity.Length()<maxSpeed) velocity *= 2f;
