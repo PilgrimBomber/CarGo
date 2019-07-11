@@ -57,6 +57,9 @@ namespace CarGo
             }
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
             if(playercount==0)scene.addEntity(new Entities.Player(Content, PlayerIndex.One, new Vector2(400, 400)));
+
+            //Add the Cargo
+            scene.addEntity(new Entities.Cargo(Content, new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2)));
         }
 
         /// <summary>

@@ -59,6 +59,14 @@ namespace CarGo.Entities
                 Hitbox.Move(velocity);
 
             }
+
+            // Collision with Cargo
+            if (entity.GetType() == typeof(Cargo))
+            {
+                velocity *= -1f;
+                Hitbox.Move(velocity);
+                
+            }
         }
 
         public override void GetPushed(Vector2 direction)
