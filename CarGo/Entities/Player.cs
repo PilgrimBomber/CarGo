@@ -57,7 +57,6 @@ namespace CarGo
             // Collision with Cargo
             if (entity.GetType() == typeof(Cargo))
             {
-                
                 Hitbox.Move(-velocity);
                 velocity *= -0.1f;
             }
@@ -114,7 +113,8 @@ namespace CarGo
 
         public void Boost()
         {
-            if (velocity.Length() < maxSpeed) velocity *= 2f;
+            if (velocity.Length() < maxSpeed) velocity += new Vector2(80*acceleration * (float)Math.Sin(hitbox.RotationRad), 80*-acceleration * (float)Math.Cos(hitbox.RotationRad));
+
         }
 
     }

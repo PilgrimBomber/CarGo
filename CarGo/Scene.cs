@@ -53,8 +53,11 @@ namespace CarGo
         }
         public void addCargo(Cargo cargo)
         {
-            if (this.cargo == null) this.cargo = cargo;
-            entities.Add(cargo);
+            if (this.cargo == null)
+            {
+                this.cargo = cargo;
+                entities.Add(cargo);
+            }
         }
 
         private void addEntity(Entity entity)
@@ -70,7 +73,6 @@ namespace CarGo
             foreach (Entity entity in entities)
             {
                 entity.Update();
-
             }
         }
 
