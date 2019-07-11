@@ -8,9 +8,9 @@ using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace CarGo.Entities
+namespace CarGo
 {
-    class Cargo:Entity
+    public class Cargo:Entity
     {
         public Cargo (ContentManager content, Vector2 center)
         {

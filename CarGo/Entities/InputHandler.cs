@@ -7,7 +7,7 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace CarGo.Entities
+namespace CarGo
 {
     class InputHandler
     {
@@ -24,7 +24,7 @@ namespace CarGo.Entities
         public void HandleInput()
         {
             KeyboardInput();
-            GamepadInput();           
+            GamepadInput();
         }
 
         private void GamepadInput()
@@ -37,7 +37,7 @@ namespace CarGo.Entities
             {
                 GamePadState state = GamePad.GetState(player.PlayerIndex);
 
-                
+
                 if (state.ThumbSticks.Left.X < 0f)
                     player.Turn(-1);
                 if (state.ThumbSticks.Left.X > 0f)
@@ -45,12 +45,12 @@ namespace CarGo.Entities
                 if (state.Triggers.Right > 0.1)
                     player.Accelerate(state.Triggers.Right);
                 if (state.Triggers.Left > 0.1)
-                    player.Accelerate(-state.Triggers.Left/3);
-                if(state.IsButtonDown(Buttons.LeftShoulder)&&previousState.IsButtonUp(Buttons.LeftShoulder))
+                    player.Accelerate(-state.Triggers.Left / 3);
+                if (state.IsButtonDown(Buttons.LeftShoulder) && previousState.IsButtonUp(Buttons.LeftShoulder))
                 {
                     player.Boost();
                 }
-                
+
                 previousState = state;
 
             }

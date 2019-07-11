@@ -1,16 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-using Microsoft.Xna.Framework;
+﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
-using Microsoft.Xna.Framework.Input;
+using System;
 
-namespace CarGo.Entities
+namespace CarGo
 {
-    class Player: Entity
+    public class Player : Entity
     {
         private InputHandler inputHandler;
         private Vector2 velocity;
@@ -19,7 +14,7 @@ namespace CarGo.Entities
         private float turnRate;
         private float drift;
         private PlayerIndex playerIndex;
-        
+
         public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }
         public float Acceleration { get => acceleration; set => acceleration = value; }
@@ -31,8 +26,8 @@ namespace CarGo.Entities
             inputHandler = new InputHandler(this, playerIndex);
             // load Texture
             texture = content.Load<Texture2D>("Auto-klein");
-            this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width/2,texture.Height/2));
-                        
+            hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
+
             acceleration = 0.15f;
             maxSpeed = 15.0f;
             turnRate = 1.5f;//1 is default
@@ -52,31 +47,30 @@ namespace CarGo.Entities
 
         public override void Collide(Entity entity)
         {
-            if (entity.GetType()==typeof(Player))
+            if (entity.GetType() == typeof(Player))
             {
                 entity.Hitbox.Move(velocity);
                 velocity *= -0.1f;
                 Hitbox.Move(velocity);
 
             }
-
             // Collision with Cargo
             if (entity.GetType() == typeof(Cargo))
             {
-                velocity *= -1f;
-                Hitbox.Move(velocity);
                 
+                Hitbox.Move(-velocity);
+                velocity *= -0.1f;
             }
         }
 
         public override void GetPushed(Vector2 direction)
         {
-            this.velocity += direction;
+            velocity += direction;
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(texture, hitbox.Center, null, Color.White, hitbox.RotationRad, hitbox.Offset,1.05f, SpriteEffects.None,0f);
-            
+            spriteBatch.Draw(texture, hitbox.Center, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.05f, SpriteEffects.None, 0f);
+
             //Debug: Draw the corner points of the hitbox
             Texture2D point = new Texture2D(spriteBatch.GraphicsDevice, 1, 1, false, SurfaceFormat.Color);
             point.SetData(new[] { Color.Red });
@@ -93,12 +87,12 @@ namespace CarGo.Entities
         }
         public void Turn(float rad)
         {
-            if(velocity.Length()>0.6f)
+            if (velocity.Length() > 0.6f)
             {
-                this.hitbox.Rotate(rad*turnRate);
-                velocity = Geometry.Rotate(velocity, rad*turnRate*(1-drift));
+                hitbox.Rotate(rad * turnRate);
+                velocity = Geometry.Rotate(velocity, rad * turnRate * (1 - drift));
             }
-            
+
         }
         public void Accelerate(float accelerationFactor)
         {
@@ -115,13 +109,13 @@ namespace CarGo.Entities
                     velocity.X += (maxSpeed - velocity.Length()) / 3 * acceleration * accelerationFactor * (float)Math.Sin(hitbox.RotationRad);
                     velocity.Y -= (maxSpeed - velocity.Length()) / 3 * acceleration * accelerationFactor * (float)Math.Cos(hitbox.RotationRad);
                 }
-            }           
+            }
         }
-        
+
         public void Boost()
         {
-            if(velocity.Length()<maxSpeed) velocity *= 2f;
+            if (velocity.Length() < maxSpeed) velocity *= 2f;
         }
-        
+
     }
 }

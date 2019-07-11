@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace CarGo.Entities
+namespace CarGo
 {
-    class Hook:Entity
+    public class Hook : Entity
     {
         override public void Update()
         {

@@ -51,15 +51,13 @@ namespace CarGo
             {
                 if (GamePad.GetCapabilities(index).IsConnected)
                 {
-                    scene.addEntity(new Entities.Player(Content, index, new Vector2(400 + (int)index * 100, 400)));
+                    scene.addPlayer(new Player(Content, index, new Vector2(400 + (int)index * 100, 400)));
                     playercount++;
                 }
             }
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
-            if(playercount==0)scene.addEntity(new Entities.Player(Content, PlayerIndex.One, new Vector2(400, 400)));
-
-            //Add the Cargo
-            scene.addEntity(new Entities.Cargo(Content, new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2)));
+            if(playercount==0)scene.addPlayer(new Player(Content, PlayerIndex.One, new Vector2(400, 400)));
+            scene.addCargo(new Cargo(Content, new Vector2(graphics.PreferredBackBufferWidth/2,graphics.PreferredBackBufferHeight/2)));
         }
 
         /// <summary>

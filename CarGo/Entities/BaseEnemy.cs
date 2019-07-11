@@ -4,9 +4,9 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace CarGo.Entities
+namespace CarGo
 {
-    abstract class BaseEnemy:Entity
+    public abstract class BaseEnemy:Entity
     {
 
     }

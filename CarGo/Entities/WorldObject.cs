@@ -7,9 +7,9 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 
-namespace CarGo.Entities
+namespace CarGo
 {
-    class WorldObject:Entity
+    public class WorldObject : Entity
     {
         override public void Update()
         {
