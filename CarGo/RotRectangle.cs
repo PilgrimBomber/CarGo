@@ -11,17 +11,15 @@ namespace CarGo
 {
     public class RotRectangle
     {
-        private int rotationDeg;
         private float rotationRad;
         private Vector2 offset;
         private Vector2 center;
         private Vector2[] corners;
         
         //Create a Rectangle with center mid and an offset. the offset equals half the width and length of the hitbox
-        public RotRectangle(int rot, Vector2 center, Vector2 offset)
+        public RotRectangle(float rotationRad, Vector2 center, Vector2 offset)
         {
-            rotationDeg = rot;
-            rotationRad = Geometry.DegToRad(rot);
+            this.rotationRad = rotationRad;
             this.offset = offset;
             this.center = center;
             corners = new Vector2[4];
@@ -35,16 +33,10 @@ namespace CarGo
             }
         }
 
-
-        public int RotationDeg
-        {
-            get { return rotationDeg; }
-            set { rotationDeg = value; rotationRad = Geometry.DegToRad(value); }
-        }
         public float RotationRad
         {
             get { return rotationRad; }
-            set { rotationRad = value; rotationDeg = Geometry.RadToDeg(value); }
+            set { rotationRad = value; }
         }
 
         public Vector2[] Corners { get => corners;}
@@ -64,7 +56,6 @@ namespace CarGo
         public void Rotate(float rad)
         {
             rotationRad += rad;
-            rotationDeg += Geometry.RadToDeg(rad);
             for (int i = 0; i < 4; i++)
             {
                 corners[i] = Geometry.Rotate(corners[i], rad, center);

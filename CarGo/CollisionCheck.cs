@@ -44,7 +44,9 @@ namespace CarGo
                 Vector2 r2Axis1 = r2.Corners[3] - r2.Corners[0];
                 Vector2 r2Axis2 = r2.Corners[1] - r2.Corners[0];
 
-                //
+                //for each axis
+                //project the Corners of both rectangles on the axis and check if there is a gap between them
+                //if there is a gap then there is no colission
                 List<float> valuesR1=new List<float>();
                 List<float> valuesR2 = new List<float>();
                 //r1Axis1
@@ -101,7 +103,7 @@ namespace CarGo
                     return false;
 
 
-
+                //if there is no gap on any axe the rectangles collide
                 return true;
             }
         }

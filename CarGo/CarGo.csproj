@@ -53,6 +53,7 @@
     <Compile Include="Entities\WorldObject.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Geometry.cs" />
+    <Compile Include="LevelControl.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="RotRectangle.cs" />

@@ -39,9 +39,9 @@ namespace CarGo
 
 
                 if (state.ThumbSticks.Left.X < 0f)
-                    player.Turn(-1);
+                    player.Turn(-1.0f/180.0f*(float)Math.PI);
                 if (state.ThumbSticks.Left.X > 0f)
-                    player.Turn(1);
+                    player.Turn(1.0f / 180.0f * (float)Math.PI);
                 if (state.Triggers.Right > 0.1)
                     player.Accelerate(state.Triggers.Right);
                 if (state.Triggers.Left > 0.1)
@@ -62,11 +62,11 @@ namespace CarGo
             KeyboardState keyboardstate = Keyboard.GetState();
             if (keyboardstate.IsKeyDown(Keys.Right))
             {
-                player.Turn(1);
+                player.Turn(1.0f / 180.0f * (float)Math.PI);
             }
             if (keyboardstate.IsKeyDown(Keys.Left))
             {
-                player.Turn(-1);
+                player.Turn(-1.0f / 180.0f * (float)Math.PI);
             }
             if (keyboardstate.IsKeyDown(Keys.Up))
             {

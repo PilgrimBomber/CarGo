@@ -79,11 +79,7 @@ namespace CarGo
             spriteBatch.Draw(point, new Rectangle((int)Hitbox.Corners[3].X, (int)Hitbox.Corners[3].Y, 1, 1), Color.White);
         }
 
-        //Turn the player by degress to the right
-        public void Turn(int degrees)
-        {
-            Turn(Geometry.DegToRad(degrees));
-        }
+        //Turn the player by rad to the right
         public void Turn(float rad)
         {
             if (velocity.Length() > 0.6f)
