@@ -95,7 +95,7 @@ namespace CarGo
             switch (this.GameState)
             {
                 case GameState.Playing:
-                    scene.Update();
+                    scene.Update(gameTime);
                     break;
                 case GameState.Pause:
                     break;

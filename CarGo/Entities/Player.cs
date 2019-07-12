@@ -14,6 +14,7 @@ namespace CarGo
         private float turnRate;
         private float drift;
         private PlayerIndex playerIndex;
+        private float lastTurn;
 
         public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }
@@ -35,13 +36,16 @@ namespace CarGo
         }
         override public void Update()
         {
+            lastTurn = 0;
             inputHandler.HandleInput();
+            //Move the car
+            hitbox.Move(velocity);
+
             //Slow the car over time
             velocity *= 0.98f;
             if (velocity.Length() < 0.05) velocity *= 0;
 
-            //Move the car
-            hitbox.Move(velocity);
+            
 
         }
 
@@ -57,8 +61,11 @@ namespace CarGo
             // Collision with Cargo
             if (entity.GetType() == typeof(Cargo))
             {
+                Turn(-lastTurn);
+                Hitbox.Move((hitbox.Center - entity.Hitbox.Center)*0.0005f);
                 Hitbox.Move(-velocity);
-                velocity *= -0.1f;
+                velocity *= -0.05f;
+                
             }
         }
 
@@ -86,6 +93,7 @@ namespace CarGo
             {
                 hitbox.Rotate(rad * turnRate);
                 velocity = Geometry.Rotate(velocity, rad * turnRate * (1 - drift));
+                lastTurn = rad;
             }
 
         }

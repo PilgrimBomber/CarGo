@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public class Scene: IUpdateable
+    public class Scene
     {
         private Camera camera;
         private CollisionCheck collisionCheck;
@@ -21,7 +21,7 @@ namespace CarGo
         private List<WorldObject> worldObjects;
         private Cargo cargo;
         private ContentManager content;
-
+        private LevelControl levelControl;
         //private SpriteBatch spriteBatch;
         public Scene(SpriteBatch spriteBatch, ContentManager content)
         {
@@ -31,13 +31,38 @@ namespace CarGo
             worldObjects = new List<WorldObject>();
             camera = new Camera(spriteBatch);
             collisionCheck = new CollisionCheck();
+            levelControl = new LevelControl(this);
             this.content = content;
         }
+
+        public void Update(GameTime gameTime)
+        {
+            collisionCheck.CheckCollisons(entities);
+            foreach (Entity entity in entities)
+            {
+                entity.Update();
+            }
+            levelControl.Update(gameTime);
+        }
+
+        public void Draw(GameTime gameTime)
+        {
+            camera.Draw(entities, gameTime);
+        }
+
+
+
 
         public void addWorldObject(WorldObject worldObject)
         {
             worldObjects.Add(worldObject);
             addEntity(worldObject);
+        }
+
+        public void removeWorldObject(WorldObject worldObject)
+        {
+            worldObjects.Remove(worldObject);
+            removeEntity(worldObject);
         }
 
         public void addEnemy(BaseEnemy enemy)
@@ -46,11 +71,23 @@ namespace CarGo
             addEntity(enemy);
         }
 
+        public void removeEnemy(BaseEnemy enemy)
+        {
+            enemies.Remove(enemy);
+            removeEntity(enemy);
+        }
+
         public void addPlayer(Player player)
         {
             players.Add(player);
             addEntity(player);
         }
+        public void removePlayer(Player player)
+        {
+            players.Remove(player);
+            removeEntity(player);
+        }
+
         public void addCargo(Cargo cargo)
         {
             if (this.cargo == null)
@@ -59,27 +96,19 @@ namespace CarGo
                 entities.Add(cargo);
             }
         }
-
+        
         private void addEntity(Entity entity)
         {
             entities.Add(entity);
         }
 
+        private void removeEntity(Entity entity)
+        {
+            entities.Remove(entity);
+        }
         
 
-        public void Update()
-        {
-            collisionCheck.CheckCollisons(entities);
-            foreach (Entity entity in entities)
-            {
-                entity.Update();
-            }
-        }
-
-        public void Draw(GameTime gameTime)
-        {
-            camera.Draw(entities, gameTime);
-        }
+        
 
         
     }
