@@ -14,7 +14,7 @@ namespace CarGo
     {
         public Cargo (ContentManager content, Vector2 center)
         {
-            texture = content.Load<Texture2D>("Cargo_test");
+            texture = content.Load<Texture2D>("Cargo");
             this.hitbox = new RotRectangle((float)Math.PI/2, center, new Vector2(texture.Width / 2, texture.Height / 2));
         }
         override public void Update()
