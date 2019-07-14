@@ -38,6 +38,7 @@ namespace CarGo
         {
             lastTurn = 0;
             inputHandler.HandleInput();
+
             //Move the car
             hitbox.Move(velocity);
 
@@ -66,6 +67,13 @@ namespace CarGo
                 Hitbox.Move(-velocity);
                 velocity *= -0.05f;
                 
+            }
+            //Collision with Dummy
+            if (entity.GetType() == typeof(EnemyDummy))
+            {
+                entity.Hitbox.Move(velocity);
+                entity.GetPushed(velocity);
+                velocity *= 0.5f;
             }
         }
 

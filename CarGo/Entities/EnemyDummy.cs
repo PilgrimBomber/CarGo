@@ -3,10 +3,51 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
+using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Input;
 
-namespace CarGo.Entities
+namespace CarGo
 {
-    class Class1
+    public class EnemyDummy : BaseEnemy
     {
+        private Vector2 velocity;
+
+        public EnemyDummy(ContentManager content, Vector2 center)
+        {
+            //Set dummy texture
+            texture = content.Load<Texture2D>("Dummy_test");
+            this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
+
+            velocity *= 0f;
+        }
+        override public void Update()
+        {
+            //Move the Dummy
+            hitbox.Move(velocity);
+
+            //Slows the dummy over time
+            velocity *= 0.94f;
+            if (velocity.Length() < 0.05) velocity *= 0;
+        }
+
+        public override void Collide(Entity entity)
+        {
+            if (entity.GetType() == typeof(EnemyDummy))
+            {
+                entity.Hitbox.Move(velocity);
+                velocity *= -0.1f;
+                Hitbox.Move(velocity);
+      
+        }
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        {
+            spriteBatch.Draw(texture, hitbox.Center, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.05f, SpriteEffects.None, 0f);
+        }
+        public override void GetPushed(Vector2 direction)
+        {
+            velocity += 3f * direction;
+        }
     }
 }
