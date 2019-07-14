@@ -39,7 +39,16 @@ namespace CarGo
                 entity.Hitbox.Move(velocity);
                 velocity *= -0.1f;
                 Hitbox.Move(velocity);
-      
+            }
+
+            //Collision with Cargo
+            if (entity.GetType() == typeof(Cargo))
+            {
+                Hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.0005f);
+                Hitbox.Move(-velocity);
+                velocity *= -0.05f;
+
+            }
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
         {
@@ -47,7 +56,7 @@ namespace CarGo
         }
         public override void GetPushed(Vector2 direction)
         {
-            velocity += 3f * direction;
+            velocity += 1.5f * direction;
         }
     }
 }
