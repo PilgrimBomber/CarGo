@@ -31,7 +31,7 @@ namespace CarGo
             worldObjects = new List<WorldObject>();
             camera = new Camera(spriteBatch);
             collisionCheck = new CollisionCheck();
-            levelControl = new LevelControl(this);
+            levelControl = new LevelControl(this,content);
             this.content = content;
         }
 

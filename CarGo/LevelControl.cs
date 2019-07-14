@@ -6,29 +6,29 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using Microsoft.Xna.Framework.Content;
 
 namespace CarGo
 {
     class LevelControl
     {
         private Scene scene;
-        private long timeCounter;
-        private double timer;
-        public LevelControl(Scene scene)
+        private TimeSpan timer;
+        private Level level;
+        public LevelControl(Scene scene, ContentManager content)
         {
             this.scene = scene;
-            timer = 0.0;
-            timeCounter = 0;
+            this.level = new Level1(scene, content);
+            timer = TimeSpan.Zero;
         }
 
         public void Update(GameTime gameTime)
         {
-            timer += gameTime.ElapsedGameTime.TotalSeconds;
-            if(timer >= 1.0)
-            {
-                timer -= 1.0;
-                timeCounter++;
-            }
+            timer += gameTime.ElapsedGameTime;
+            level.Update(timer);
+            
+            
         }
     }
+
 }

@@ -59,11 +59,9 @@ namespace CarGo
             if(playercount==0)scene.addPlayer(new Player(Content, PlayerIndex.One, new Vector2(400, 400)));
 
             //Add Cargo
-            scene.addCargo(new Cargo(Content, new Vector2(graphics.PreferredBackBufferWidth/2,graphics.PreferredBackBufferHeight/2)));
+            scene.addCargo(new Cargo(Content, new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2)));
 
-            //Add Dummy
-            scene.addEnemy(new EnemyDummy(Content, new Vector2(graphics.PreferredBackBufferWidth / 2 - 400, graphics.PreferredBackBufferHeight / 2 - 400)));
-            scene.addEnemy(new EnemyDummy(Content, new Vector2(graphics.PreferredBackBufferWidth / 2 - 300, graphics.PreferredBackBufferHeight / 2 - 400)));
+
         }
 
         /// <summary>
