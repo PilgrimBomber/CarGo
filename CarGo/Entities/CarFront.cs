@@ -22,10 +22,10 @@ namespace CarGo
             switch (frontType)
             {
                 case CarFrontType.Bumper:
-                    texture = content.Load<Texture2D>("Bumper");
+                    texture = content.Load<Texture2D>("textures/Mod_Front_Bumper");
                     break;
                 case CarFrontType.Spikes:
-                    texture = content.Load<Texture2D>("Spikes");
+                    texture = content.Load<Texture2D>("textures/Mod_Front_Spikes");
                     break;
             }
             Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));

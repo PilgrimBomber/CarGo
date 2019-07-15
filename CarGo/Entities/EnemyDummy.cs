@@ -17,7 +17,7 @@ namespace CarGo
         public EnemyDummy(ContentManager content, Vector2 center)
         {
             //Set dummy texture
-            texture = content.Load<Texture2D>("Dummy_test");
+            texture = content.Load<Texture2D>("textures/Enemy_Dummy");
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
 
             velocity *= 0f;
