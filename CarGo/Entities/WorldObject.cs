@@ -20,7 +20,7 @@ namespace CarGo
         {
             throw new NotImplementedException();
         }
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch)
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
         {
             throw new NotImplementedException();
         }

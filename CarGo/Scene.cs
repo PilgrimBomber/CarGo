@@ -43,6 +43,7 @@ namespace CarGo
                 entity.Update();
             }
             levelControl.Update(gameTime);
+            camera.Update(cargo, players);
         }
 
         public void Draw(GameTime gameTime)

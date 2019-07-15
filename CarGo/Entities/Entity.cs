@@ -34,7 +34,7 @@ namespace CarGo
 
         public abstract void Collide(Entity entity);
         public abstract void Update();
-        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch);
+        public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset);
 
 
         public abstract void GetPushed(Vector2 direction);
