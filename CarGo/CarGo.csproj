@@ -41,9 +41,11 @@
     <ApplicationManifest>app.manifest</ApplicationManifest>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="Entities\ActiveAbility.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CollisionCheck.cs" />
+    <Compile Include="Entities\CarFront.cs" />
     <Compile Include="Entities\EnemyAI.cs" />
     <Compile Include="Entities\BaseEnemy.cs" />
     <Compile Include="Entities\Cargo.cs" />

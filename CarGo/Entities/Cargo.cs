@@ -26,10 +26,15 @@ namespace CarGo
 
         public override void Collide(Entity entity)
         {
-            entity.Hitbox.Move(velocity);
+            
             if (entity.GetType() == typeof(Player))
             {
+                (entity as Player).Move(velocity);
                 (entity as Player).Velocity += velocity;//entity.Hitbox.Move(velocity);
+            }
+            else
+            {
+                entity.Hitbox.Move(velocity);
             }
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)

@@ -11,24 +11,11 @@ namespace CarGo
 {
     public static class Geometry
     {
-
-        public static Vector2 Rotate(Vector2 vector, int Degree)
-        {
-            //float rad = DegToRad(Degree);
-            //float s = (float)Math.Sin(rad);
-            //float c = (float)Math.Cos(rad);
-            //return new Vector2(vector.X * c + vector.Y * s, vector.Y * c - vector.X * s);
-            return Rotate(vector, DegToRad(Degree));
-        }
         public static Vector2 Rotate(Vector2 vector, float rad)
         {
             float s = (float)Math.Sin(rad);
             float c = (float)Math.Cos(rad);
             return new Vector2(vector.X * c - vector.Y * s, vector.Y * c + vector.X * s);
-        }
-        public static Vector2 Rotate(Vector2 point, int deg, Vector2 origin)
-        {
-            return Rotate(point, DegToRad(deg), origin);
         }
         public static Vector2 Rotate(Vector2 point, float rad,Vector2 origin)
         {
@@ -42,6 +29,7 @@ namespace CarGo
             vector.Y = oldY * c + oldX * s;
             return vector + origin;
         }
+
 
         public static int RadToDeg(float rad)
         {
