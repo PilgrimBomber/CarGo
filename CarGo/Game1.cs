@@ -55,7 +55,7 @@ namespace CarGo
                 }
             }
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
-            if(playercount==0)scene.addPlayer(new Player(Content, PlayerIndex.One, new Vector2(400, 400),CarType.Light, CarFrontType.Bumper, AbilityType.RocketLauncher));
+            if(playercount==0)scene.addPlayer(new Player(Content, PlayerIndex.One, new Vector2(400, 400),CarType.Light, CarFrontType.Spikes, AbilityType.RocketLauncher));
 
             //Add Cargo
             scene.addCargo(new Cargo(Content, new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2)));
