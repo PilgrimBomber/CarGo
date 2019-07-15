@@ -8,7 +8,6 @@ namespace CarGo
     public class Player : Entity
     {
         private InputHandler inputHandler;
-        private Vector2 velocity;
         private float maxSpeed;
         private float acceleration;
         private float turnRate;
@@ -44,7 +43,7 @@ namespace CarGo
 
             //Slow the car over time
             velocity *= 0.98f;
-            if (velocity.Length() < 0.05) velocity *= 0;
+            //if (velocity.Length() < 0.03) velocity *= 0;
 
             
 
@@ -52,6 +51,8 @@ namespace CarGo
 
         public override void Collide(Entity entity)
         {
+            Turn(-lastTurn);
+            //Collision with other Player
             if (entity.GetType() == typeof(Player))
             {
                 entity.Hitbox.Move(velocity);
@@ -62,7 +63,6 @@ namespace CarGo
             // Collision with Cargo
             if (entity.GetType() == typeof(Cargo))
             {
-                Turn(-lastTurn);
                 Hitbox.Move((hitbox.Center - entity.Hitbox.Center)*0.0005f);
                 Hitbox.Move(-velocity);
                 velocity *= -0.05f;

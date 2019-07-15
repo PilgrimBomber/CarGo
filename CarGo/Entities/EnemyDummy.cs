@@ -12,7 +12,7 @@ namespace CarGo
 {
     public class EnemyDummy : BaseEnemy
     {
-        private Vector2 velocity;
+        
 
         public EnemyDummy(ContentManager content, Vector2 center)
         {

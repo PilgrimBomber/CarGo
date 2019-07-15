@@ -35,6 +35,7 @@ namespace CarGo
             eventTriggered = new bool[10];
             eventTime = new int[10];
             eventTime[0] = 0;
+            eventTime[1] = 4;
         }
 
         public override void Update(TimeSpan timer)
@@ -50,6 +51,9 @@ namespace CarGo
                             scene.addEnemy(new EnemyDummy(content, new Vector2(300,200)));
                             scene.addEnemy(new EnemyDummy(content, new Vector2(1400,500)));
                             
+                            break;
+                        case 1:
+                            scene.addEnemy(new EnemyDummy(content, new Vector2(3000, 600)));
                             break;
                     }
                 }

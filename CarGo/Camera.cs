@@ -41,7 +41,7 @@ namespace CarGo
                 sumY += vector.Y;
             }
             float borderX = 300;
-            float borderY = 200;
+            float borderY = 300;
             offset.X = sumX / centers.Count -screenCenter.X;
             if (offset.X - cargo.Hitbox.Center.X + screenCenter.X > (screenSize.X-screenCenter.X)-borderX) offset.X = cargo.Hitbox.Center.X + (screenSize.X - screenCenter.X) - borderX - screenCenter.X;
             if (offset.X - cargo.Hitbox.Center.X + screenCenter.X < -((screenSize.X - screenCenter.X) - borderX)) offset.X = cargo.Hitbox.Center.X - ((screenSize.X - screenCenter.X) - borderX) - screenCenter.X;

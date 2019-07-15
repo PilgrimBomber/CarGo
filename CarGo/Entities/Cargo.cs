@@ -16,15 +16,21 @@ namespace CarGo
         {
             texture = content.Load<Texture2D>("Cargo");
             this.hitbox = new RotRectangle((float)Math.PI/2, center, new Vector2(texture.Width / 2, texture.Height / 2));
+            this.velocity = new Vector2(2f, 0);
         }
         override public void Update()
         {
+            hitbox.Move(velocity);
             //throw new NotImplementedException();
         }
 
         public override void Collide(Entity entity)
         {
-            //throw new NotImplementedException();
+            entity.Hitbox.Move(velocity);
+            if (entity.GetType() == typeof(Player))
+            {
+                (entity as Player).Velocity += velocity;//entity.Hitbox.Move(velocity);
+            }
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
         {

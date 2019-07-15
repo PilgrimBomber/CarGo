@@ -25,7 +25,7 @@ namespace CarGo
         protected RotRectangle hitbox;
         protected int hitpoints;
         protected Texture2D texture;
-
+        protected Vector2 velocity;
         public RotRectangle Hitbox { get => hitbox; set => hitbox = value; }
         //public event EventHandler<EventArgs> DrawOrderChanged;
         //public event EventHandler<EventArgs> VisibleChanged;
