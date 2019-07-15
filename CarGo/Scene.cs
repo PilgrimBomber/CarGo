@@ -23,13 +23,13 @@ namespace CarGo
         private ContentManager content;
         private LevelControl levelControl;
         //private SpriteBatch spriteBatch;
-        public Scene(SpriteBatch spriteBatch, ContentManager content)
+        public Scene(SpriteBatch spriteBatch, ContentManager content, Vector2 screenSize)
         {
             entities = new List<Entity>();
             players = new List<Player>();
             enemies = new List<BaseEnemy>();
             worldObjects = new List<WorldObject>();
-            camera = new Camera(spriteBatch);
+            camera = new Camera(spriteBatch,screenSize);
             collisionCheck = new CollisionCheck();
             levelControl = new LevelControl(this,content);
             this.content = content;

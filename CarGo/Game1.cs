@@ -23,13 +23,12 @@ namespace CarGo
             graphics.PreferredBackBufferWidth = 1920;
             graphics.PreferredBackBufferHeight = 1080;
             #if DEBUG
-                        // Debug Code
+            // Debug Code
 
             #else
-                        // Release Code
-                        graphics.ToggleFullScreen();
+            // Release Code
+            graphics.ToggleFullScreen();
             #endif
-
             Content.RootDirectory = "Content";
             GameState = GameState.Playing;
         }
@@ -44,7 +43,7 @@ namespace CarGo
         {
             // TODO: Add your initialization logic here
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            scene = new Scene(spriteBatch, Content);
+            scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight));
             // Add a player for each connected Controller
             int playercount = 0;
             for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)

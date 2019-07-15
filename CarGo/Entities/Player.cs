@@ -29,8 +29,8 @@ namespace CarGo
             texture = content.Load<Texture2D>("Auto-klein");
             hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
 
-            acceleration = 0.15f;
-            maxSpeed = 15.0f;
+            acceleration = 0.12f;
+            maxSpeed = 12.0f;
             turnRate = 1.5f;//1 is default
             drift = 0.15f;//number between 0 and 1
         }

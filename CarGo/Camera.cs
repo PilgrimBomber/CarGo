@@ -16,12 +16,12 @@ namespace CarGo
         private Vector2 screenCenter;
         private Vector2 screenSize;
         private Vector2 offset;
-        public Camera(SpriteBatch spriteBatchInit)
+        public Camera(SpriteBatch spriteBatchInit, Vector2 screenSize)
         {
             positon =new Vector2(0,0);
             spriteBatch = spriteBatchInit;
             offset = new Vector2(0, 0);
-            screenSize = new Vector2(1920, 1080);
+            this.screenSize = screenSize;
             screenCenter = new Vector2(screenSize.X / 2, screenSize.Y / 2);
         }
 
