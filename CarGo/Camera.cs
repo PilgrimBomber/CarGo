@@ -56,7 +56,9 @@ namespace CarGo
             tilemap.Draw(gameTime, spriteBatch, offset);
             foreach (Entity entity in entities)
             {
-                entity.Draw(gameTime, spriteBatch, offset);
+                if (entity.Hitbox.Center.X - offset.X > -200 && entity.Hitbox.Center.X - offset.X < screenSize.X + 200
+                    && entity.Hitbox.Center.Y - offset.Y > -200 && entity.Hitbox.Center.Y < screenSize.Y + offset.Y + 200)
+                    entity.Draw(gameTime, spriteBatch, offset);
             }
             spriteBatch.End();
         }
