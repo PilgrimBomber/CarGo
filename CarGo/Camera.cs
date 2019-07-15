@@ -41,7 +41,7 @@ namespace CarGo
                 sumY += vector.Y;
             }
             float borderX = 300;
-            float borderY = 300;
+            float borderY = 200;
             offset.X = sumX / centers.Count -screenCenter.X;
             if (offset.X - cargo.Hitbox.Center.X + screenCenter.X > (screenSize.X-screenCenter.X)-borderX) offset.X = cargo.Hitbox.Center.X + (screenSize.X - screenCenter.X) - borderX - screenCenter.X;
             if (offset.X - cargo.Hitbox.Center.X + screenCenter.X < -((screenSize.X - screenCenter.X) - borderX)) offset.X = cargo.Hitbox.Center.X - ((screenSize.X - screenCenter.X) - borderX) - screenCenter.X;
@@ -50,9 +50,10 @@ namespace CarGo
             if (offset.Y - cargo.Hitbox.Center.Y + screenCenter.Y < -((screenSize.Y - screenCenter.Y) - borderY)) offset.Y = cargo.Hitbox.Center.Y - ((screenSize.Y - screenCenter.Y) - borderY) - screenCenter.Y;
 
         }
-        public void Draw(List<Entity> entities,GameTime gameTime)
+        public void Draw(List<Entity> entities,GameTime gameTime, Tilemap tilemap)
         {
             spriteBatch.Begin();
+            tilemap.Draw(gameTime, spriteBatch, offset);
             foreach (Entity entity in entities)
             {
                 entity.Draw(gameTime, spriteBatch, offset);

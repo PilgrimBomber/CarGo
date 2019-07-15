@@ -22,6 +22,7 @@ namespace CarGo
         private Cargo cargo;
         private ContentManager content;
         private LevelControl levelControl;
+        private Tilemap tilemap;
         //private SpriteBatch spriteBatch;
         public Scene(SpriteBatch spriteBatch, ContentManager content, Vector2 screenSize)
         {
@@ -32,6 +33,7 @@ namespace CarGo
             camera = new Camera(spriteBatch,screenSize);
             collisionCheck = new CollisionCheck();
             levelControl = new LevelControl(this,content);
+            tilemap = new Tilemap(1, content);
             this.content = content;
         }
 
@@ -48,7 +50,7 @@ namespace CarGo
 
         public void Draw(GameTime gameTime)
         {
-            camera.Draw(entities, gameTime);
+            camera.Draw(entities, gameTime, tilemap);
         }
 
 
