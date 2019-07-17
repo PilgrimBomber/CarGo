@@ -26,9 +26,11 @@ namespace CarGo
         protected int hitpoints;
         protected Texture2D texture;
         protected Vector2 velocity;
+        protected Scene scene;
         public bool noCollision;
         public RotRectangle Hitbox { get => hitbox;}
         public Vector2 Velocity { get => velocity; set => velocity = value; }
+        
 
 
         //public event EventHandler<EventArgs> DrawOrderChanged;

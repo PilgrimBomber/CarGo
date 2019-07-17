@@ -45,6 +45,7 @@
     <Compile Include="Animation.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CollisionCheck.cs" />
+    <Compile Include="Entities\WorldObjects\Cactus.cs" />
     <Compile Include="Entities\CarFront.cs" />
     <Compile Include="Entities\EnemyAI.cs" />
     <Compile Include="Entities\BaseEnemy.cs" />
@@ -55,6 +56,7 @@
     <Compile Include="Entities\InputHandler.cs" />
     <Compile Include="Entities\Player.cs" />
     <Compile Include="Entities\WorldObject.cs" />
+    <Compile Include="Entities\WorldObjects\Rock.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Geometry.cs" />
     <Compile Include="Level.cs" />

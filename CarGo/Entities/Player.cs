@@ -95,15 +95,12 @@ namespace CarGo
                 (entity as Player).Move(velocity);
                 velocity *= -0.1f;
                 Move(velocity);
-
             }
             // Collision with Cargo
             if (entity.GetType() == typeof(Cargo))
             {
-                
                 Move(-velocity);
                 velocity *= -0.05f;
-                
             }
             //Collision with Dummy
             if (entity.GetType() == typeof(EnemyDummy))
@@ -114,8 +111,17 @@ namespace CarGo
                     entity.GetPushed(velocity);
                     velocity *= 0.5f;
                 }
-                
-                
+            }
+            //Collision with Rock
+            if (entity.GetType() == typeof(Rock))
+            {
+                Move(-velocity);
+                velocity *= -0.05f;
+            }
+            //Collision with Cactus
+            if (entity.GetType() == typeof(Cactus))
+            {
+                velocity *= 0.1f;
             }
         }
 

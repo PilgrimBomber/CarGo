@@ -16,6 +16,7 @@ namespace CarGo
         private Camera camera;
         private CollisionCheck collisionCheck;
         private List<Entity> entities;
+        private List<Entity> deadEntities;
         private List<Player> players;
         private List<BaseEnemy> enemies;
         private List<WorldObject> worldObjects;
@@ -27,6 +28,7 @@ namespace CarGo
         public Scene(SpriteBatch spriteBatch, ContentManager content, Vector2 screenSize)
         {
             entities = new List<Entity>();
+            deadEntities = new List<Entity>();
             players = new List<Player>();
             enemies = new List<BaseEnemy>();
             worldObjects = new List<WorldObject>();
@@ -37,6 +39,22 @@ namespace CarGo
             this.content = content;
         }
 
+        private void RemoveDeadEntities()
+        {
+            foreach (Entity entity in deadEntities)
+            {
+                if (players.Contains(entity)) removePlayer(entity as Player);
+                if (enemies.Contains(entity)) removeEnemy(entity as BaseEnemy);
+                if (worldObjects.Contains(entity)) removeWorldObject(entity as WorldObject);
+            }
+            deadEntities.Clear();
+        }
+
+        public void KillEntity(Entity entity)
+        {
+            deadEntities.Add(entity);
+        }
+
         public void Update(GameTime gameTime)
         {
             collisionCheck.CheckCollisons(entities);
@@ -44,6 +62,7 @@ namespace CarGo
             {
                 entity.Update();
             }
+            RemoveDeadEntities();
             levelControl.Update(gameTime);
             camera.Update(cargo, players);
         }
@@ -56,10 +75,18 @@ namespace CarGo
 
 
 
-        public void addWorldObject(WorldObject worldObject)
+        public void addCactus(Scene scene, Vector2 center)
         {
-            worldObjects.Add(worldObject);
-            addEntity(worldObject);
+            Cactus cactus = new Cactus(content, scene, center);
+            addEntity(cactus);
+            worldObjects.Add(cactus);
+        }
+
+        public void addRock(Scene scene, Vector2 center)
+        {
+            Rock rock = new Rock(content, scene, center);
+            addEntity(rock);
+            worldObjects.Add(rock);
         }
 
         public void removeWorldObject(WorldObject worldObject)
