@@ -87,6 +87,7 @@ namespace CarGo
         {
 
             Turn(-lastTurn);
+            Move((hitbox.Center - entity.Hitbox.Center) * 0.0005f);
             //Collision with other Player
 
             if (entity.GetType() == typeof(Player))
@@ -99,7 +100,7 @@ namespace CarGo
             // Collision with Cargo
             if (entity.GetType() == typeof(Cargo))
             {
-                Move((hitbox.Center - entity.Hitbox.Center)*0.0005f);
+                
                 Move(-velocity);
                 velocity *= -0.05f;
                 

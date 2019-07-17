@@ -12,29 +12,43 @@ namespace CarGo
 {
     public class Cargo:Entity
     {
+        private CarFront carFront;
         public Cargo (ContentManager content, Vector2 center)
         {
             texture = content.Load<Texture2D>("textures/Cargo");
-            this.hitbox = new RotRectangle((float)Math.PI/2, center, new Vector2(texture.Width / 2, texture.Height / 2));
+            this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
+            carFront = new CarFront(CarFrontType.No, content, hitbox);
+            hitbox.Rotate(Geometry.DegToRad(90));
+            carFront.Hitbox.RotatePoint(Geometry.DegToRad(90), hitbox.Center);
             this.velocity = new Vector2(2f, 0);
+            
+            
         }
         override public void Update()
         {
             hitbox.Move(velocity);
+            carFront.Move(velocity);
             //throw new NotImplementedException();
         }
 
         public override void Collide(Entity entity)
         {
-            
-            if (entity.GetType() == typeof(Player))
+            if (carFront.CheckCollision(entity))
             {
-                (entity as Player).Move(velocity);
-                (entity as Player).Velocity += velocity;//entity.Hitbox.Move(velocity);
-            }
-            else
-            {
-                entity.Hitbox.Move(velocity);
+                entity.Velocity += velocity;
+                //entity.Hitbox.Move(velocity);
+                entity.noCollision = true;
+
+
+                if (entity.GetType() == typeof(Player))
+                {
+                    (entity as Player).Move(velocity);
+                    //(entity as Player).Velocity += velocity;//entity.Hitbox.Move(velocity);
+                }
+                else
+                {
+                    entity.Hitbox.Move(velocity);
+                }
             }
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)

@@ -9,12 +9,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CarGo
 {
-    public enum CarFrontType { Spikes, Bumper }
+    public enum CarFrontType { Spikes, Bumper, No }
     class CarFront
     {
         private CarFrontType carFront;
         private Texture2D texture;
-        private RotRectangle Hitbox;
+        private RotRectangle hitbox;
+
+        public RotRectangle Hitbox { get => hitbox; set => hitbox = value; }
 
         public CarFront(CarFrontType frontType, ContentManager content, RotRectangle CarHitbox)
         {
@@ -23,12 +25,17 @@ namespace CarGo
             {
                 case CarFrontType.Bumper:
                     texture = content.Load<Texture2D>("textures/Mod_Front_Bumper");
+                    Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                     break;
                 case CarFrontType.Spikes:
                     texture = content.Load<Texture2D>("textures/Mod_Front_Spikes");
+                    Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
+                    break;
+                case CarFrontType.No:
+                    Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2((CarHitbox.Corners[1].X-CarHitbox.Corners[2].X)/2,30));
                     break;
             }
-            Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
+            
         }
 
         public void Turn(float rad, Vector2 RotationOrigin)

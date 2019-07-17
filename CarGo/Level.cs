@@ -54,7 +54,8 @@ namespace CarGo
                             break;
                         case 1:
                             eventTriggered[1] = true;
-                            scene.addEnemy(new EnemyDummy(content, new Vector2(3000, 600)));
+                            scene.addEnemy(new EnemyDummy(content, new Vector2(3000, 540)));
+                            scene.addEnemy(new EnemyDummy(content, new Vector2(3300, 540)));
                             break;
                     }
                 }

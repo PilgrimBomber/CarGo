@@ -24,27 +24,40 @@ namespace CarGo
         }
         override public void Update()
         {
+            
             //Move the Dummy
             hitbox.Move(velocity);
 
             //Slows the dummy over time
-            velocity *= 0.94f;
+            velocity *= 0.97f;
             if (velocity.Length() < 0.05) velocity *= 0;
         }
 
         public override void Collide(Entity entity)
         {
-            if (entity.GetType() == typeof(EnemyDummy))
+            hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.005f);
+            if (noCollision)
             {
-                entity.Hitbox.Move(velocity);
+                noCollision = false;
+                return;
+            }
+            if (entity.GetType() == typeof(EnemyDummy) && !noCollision)
+            {
+                Vector2 otherVelocity = (entity as EnemyDummy).Velocity;
+                (entity as EnemyDummy).Velocity *= -0.1f;
+                (entity as EnemyDummy).Velocity += velocity*0.4f;
+                (entity as EnemyDummy).noCollision = true;
                 velocity *= -0.1f;
+                velocity += otherVelocity * 0.4f;
+                entity.Hitbox.Move(velocity);
+                entity.Hitbox.Move((entity.Hitbox.Center- hitbox.Center) * 0.05f);
                 Hitbox.Move(velocity);
             }
-
+            
             //Collision with Cargo
             if (entity.GetType() == typeof(Cargo))
             {
-                Hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.0005f);
+                //Hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.0005f);
                 Hitbox.Move(-velocity);
                 velocity *= -0.05f;
 
