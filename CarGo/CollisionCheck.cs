@@ -30,7 +30,7 @@ namespace CarGo
             }
         }
 
-        private bool CheckCollision(RotRectangle r1,RotRectangle r2)
+        public static bool CheckCollision(RotRectangle r1,RotRectangle r2)
         {
             //Check if they are not in range of each other
             if(r1.Offset.Length()+r2.Offset.Length()<(r1.Center-r2.Center).Length())

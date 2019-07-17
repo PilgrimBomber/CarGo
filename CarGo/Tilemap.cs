@@ -24,8 +24,8 @@ namespace CarGo
             tilemap = new int[500, 25];
             collisionMap = new int[500, 25];
             textures = new List<Texture2D>();
-            textures.Add(content.Load<Texture2D>("texture_0"));
-            textures.Add(content.Load<Texture2D>("Dummy_test"));
+            textures.Add(content.Load<Texture2D>("textures/Tile_0"));
+            textures.Add(content.Load<Texture2D>("textures/Enemy_Dummy"));
             generateMap();
 
         }
@@ -37,7 +37,7 @@ namespace CarGo
             {
                 for (int y = 0; y < tilemap.GetLength(0); y++)
                 {
-                    tilemap[y, x]=0;//aus datei oder random
+                    tilemap[y, x] = 0;//aus datei oder random
                     collisionMap[y, x] = 0;
                 }
             }
