@@ -77,14 +77,24 @@ namespace CarGo
 
         public void addCactus(Scene scene, Vector2 center)
         {
-            Cactus cactus = new Cactus(content, scene, center);
+            int indexX = (int)(center.X / 64);
+            int indexY = (int)(center.Y / 64);
+            tilemap.SetCollisionMap(indexX, indexY, CollisionType.Slow);
+            Cactus cactus = new Cactus(content, scene, new Vector2(indexX * 64 + 32, indexY * 64 + 32));
+            cactus.indexX = indexX;
+            cactus.indexY = indexY;
             addEntity(cactus);
             worldObjects.Add(cactus);
         }
 
         public void addRock(Scene scene, Vector2 center)
         {
-            Rock rock = new Rock(content, scene, center);
+            int indexX = (int)(center.X / 64);
+            int indexY = (int)(center.Y / 64);
+            tilemap.SetCollisionMap(indexX, indexY, CollisionType.staticCollision);
+            Rock rock = new Rock(content, scene, new Vector2(indexX * 64 + 32, indexY * 64 + 32));
+            rock.indexX = indexX;
+            rock.indexY = indexY;
             addEntity(rock);
             worldObjects.Add(rock);
         }
@@ -93,6 +103,7 @@ namespace CarGo
         {
             worldObjects.Remove(worldObject);
             removeEntity(worldObject);
+            tilemap.SetCollisionMap(worldObject.indexX, worldObject.indexY, CollisionType.noCollision);
         }
 
         public void addEnemy(BaseEnemy enemy)

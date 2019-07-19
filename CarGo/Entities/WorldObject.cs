@@ -11,6 +11,8 @@ namespace CarGo
 {
     public abstract class WorldObject : Entity
     {
+        public int indexX;
+        public int indexY;
         override public void Update()
         {
             throw new NotImplementedException();

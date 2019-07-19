@@ -50,7 +50,7 @@ namespace CarGo
                             eventTriggered[0] = true;
                             scene.addEnemy(new EnemyDummy(content, new Vector2(0,0)));
                             scene.addEnemy(new EnemyDummy(content, new Vector2(1400,500)));
-                            scene.addCactus(scene, new Vector2 (1200,500));
+                            scene.addCactus(scene, new Vector2 (1200,700));
                             scene.addRock(scene, new Vector2(1200, 0));
                             break;
                         case 1:

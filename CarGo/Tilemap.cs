@@ -10,19 +10,21 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CarGo
 {
+    public enum CollisionType {noCollision, staticCollision, Slow }
+
     public class Tilemap
     {
 
         private const int constWidth = 64;
         private const int constHeight = 64;
         private int[,] tilemap;
-        private int[,] collisionMap;
+        private CollisionType[,] collisionMap;
         private List<Texture2D> textures;
 
         public Tilemap(int levelNumber, ContentManager content)
         {
             tilemap = new int[500, 25];
-            collisionMap = new int[500, 25];
+            collisionMap = new CollisionType[500, 25];
             textures = new List<Texture2D>();
             textures.Add(content.Load<Texture2D>("textures/Tile_0"));
             textures.Add(content.Load<Texture2D>("textures/Enemy_Dummy"));
@@ -37,8 +39,8 @@ namespace CarGo
             {
                 for (int y = 0; y < tilemap.GetLength(0); y++)
                 {
-                    tilemap[y, x] = 0;//aus datei oder random
-                    collisionMap[y, x] = 0;
+                    tilemap[y, x] = 0 ;//aus datei oder random
+                    collisionMap[y, x] = CollisionType.noCollision;
                 }
             }
             
@@ -48,6 +50,11 @@ namespace CarGo
             //    tilemap[i, 12] = random.Next() % 3 + 15;
             //    tilemap[i, 13] = random.Next() % 3 + 18;
             //}
+        }
+
+        public void SetCollisionMap(int indexX, int indexY, CollisionType collisionType)
+        {
+            collisionMap[indexX, indexY] = collisionType;
         }
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
