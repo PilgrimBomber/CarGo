@@ -64,10 +64,6 @@ namespace CarGo
 
             }
 
-            if (entity.GetType() == typeof(Player))
-            {
-                effect.Play(0.1f, 0.0f, 0.0f);
-            }
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
         {
@@ -76,6 +72,7 @@ namespace CarGo
         public override void GetPushed(Vector2 direction)
         {
             velocity += 1.5f * direction;
+            effect.Play(0.1f, 0.0f, 0.0f);
         }
     }
 }
