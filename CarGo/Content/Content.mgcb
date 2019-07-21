@@ -13,6 +13,12 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin sounds/Enemy_Monster_Hit.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Enemy_Monster_Hit.wav
+
 #begin textures/Cactus.png
 /importer:TextureImporter
 /processor:TextureProcessor

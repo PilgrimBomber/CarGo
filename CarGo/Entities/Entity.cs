@@ -5,6 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
@@ -25,6 +26,7 @@ namespace CarGo
         protected RotRectangle hitbox;
         protected int hitpoints;
         protected Texture2D texture;
+        protected SoundEffect effect;
         protected Vector2 velocity;
         protected Scene scene;
         public bool noCollision;

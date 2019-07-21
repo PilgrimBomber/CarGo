@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
@@ -18,8 +19,8 @@ namespace CarGo
         {
             //Set dummy texture
             texture = content.Load<Texture2D>("textures/Enemy_Dummy");
+            effect = content.Load<SoundEffect>("sounds/Enemy_Monster_Hit");
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
-
             velocity *= 0f;
         }
         override public void Update()
@@ -61,6 +62,11 @@ namespace CarGo
                 Hitbox.Move(-velocity);
                 velocity *= -0.05f;
 
+            }
+
+            if (entity.GetType() == typeof(Player))
+            {
+                effect.Play(0.1f, 0.0f, 0.0f);
             }
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
