@@ -13,13 +13,14 @@ namespace CarGo
 {
     public class EnemyDummy : BaseEnemy
     {
-        
+        SoundEffectInstance crashSound;
 
         public EnemyDummy(ContentManager content, Vector2 center)
         {
             //Set dummy texture
             texture = content.Load<Texture2D>("textures/Enemy_Dummy");
             effect = content.Load<SoundEffect>("sounds/Enemy_Monster_Hit");
+            crashSound = effect.CreateInstance();
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             velocity *= 0f;
         }
@@ -72,7 +73,9 @@ namespace CarGo
         public override void GetPushed(Vector2 direction)
         {
             velocity += 1.5f * direction;
-            effect.Play(0.1f, 0.0f, 0.0f);
+            //effect.Play(0.1f, 0.0f, 0.0f);
+            crashSound.Volume = 0.1f;
+            crashSound.Play();
         }
     }
 }

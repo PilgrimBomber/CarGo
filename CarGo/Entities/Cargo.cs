@@ -47,7 +47,7 @@ namespace CarGo
                 }
                 else
                 {
-                    entity.Hitbox.Move(velocity);
+                    entity.GetPushed(velocity);
                 }
             }
         }
