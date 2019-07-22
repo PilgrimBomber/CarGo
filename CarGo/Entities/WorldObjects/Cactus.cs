@@ -12,22 +12,30 @@ namespace CarGo
 {
     public class Cactus : WorldObject
     {
-        private bool isActivated;
+        public bool isActivated;
+        Texture2D ripTexture;
         public Cactus(ContentManager content,Scene scene, Vector2 center)
         {
             texture = content.Load<Texture2D>("textures/Cactus");
+            ripTexture = content.Load<Texture2D>("textures/CactusRip");
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             isActivated = false;
             this.scene = scene;
         }
         override public void Update()
         {
-            if (isActivated == true) scene.KillEntity(this);
+            //if (isActivated == true) scene.KillEntity(this);
         }
 
         public override void Collide(Entity entity)
         {
-            isActivated = true;
+            if(!isActivated)
+            {
+                isActivated = true;
+                texture = ripTexture;
+            }
+            
+            
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
         {
