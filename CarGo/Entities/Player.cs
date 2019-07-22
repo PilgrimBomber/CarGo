@@ -20,7 +20,7 @@ namespace CarGo
         private CarFront carFront;
         private ActiveAbility active;
 
-        public Vector2 Velocity { get => velocity; set => velocity = value; }
+        //public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }
         public float Acceleration { get => acceleration; set => acceleration = value; }
         public PlayerIndex PlayerIndex { get => playerIndex; set => playerIndex = value; }

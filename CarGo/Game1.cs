@@ -50,15 +50,15 @@ namespace CarGo
             {
                 if (GamePad.GetCapabilities(index).IsConnected)
                 {
-                    scene.addPlayer(new Player(Content, index, new Vector2(400 + (int)index * 100, 400),CarType.Light,CarFrontType.Bumper, AbilityType.RocketLauncher));
+                    scene.addPlayer(index, new Vector2(400 + (int)index * 100, 400),CarType.Light,CarFrontType.Bumper, AbilityType.RocketLauncher);
                     playercount++;
                 }
             }
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
-            if(playercount==0)scene.addPlayer(new Player(Content, PlayerIndex.One, new Vector2(400, 400),CarType.Light, CarFrontType.Spikes, AbilityType.RocketLauncher));
+            if(playercount==0)scene.addPlayer(PlayerIndex.One, new Vector2(400, 400),CarType.Light, CarFrontType.Spikes, AbilityType.RocketLauncher);
 
             //Add Cargo
-            scene.addCargo(new Cargo(Content, new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2)));
+            scene.addCargo(new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2));
 
 
         }

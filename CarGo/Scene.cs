@@ -75,24 +75,24 @@ namespace CarGo
 
 
 
-        public void addCactus(Scene scene, Vector2 center)
+        public void addCactus(Vector2 center)
         {
             int indexX = (int)(center.X / 64);
             int indexY = (int)(center.Y / 64);
             tilemap.SetCollisionMap(indexX, indexY, CollisionType.Slow);
-            Cactus cactus = new Cactus(content, scene, new Vector2(indexX * 64 + 32, indexY * 64 + 32));
+            Cactus cactus = new Cactus(content, this, new Vector2(indexX * 64 + 32, indexY * 64 + 32));
             cactus.indexX = indexX;
             cactus.indexY = indexY;
             addEntity(cactus);
             worldObjects.Add(cactus);
         }
 
-        public void addRock(Scene scene, Vector2 center)
+        public void addRock(Vector2 center)
         {
             int indexX = (int)(center.X / 64);
             int indexY = (int)(center.Y / 64);
             tilemap.SetCollisionMap(indexX, indexY, CollisionType.staticCollision);
-            Rock rock = new Rock(content, scene, new Vector2(indexX * 64 + 32, indexY * 64 + 32));
+            Rock rock = new Rock(content, this, new Vector2(indexX * 64 + 32, indexY * 64 + 32));
             rock.indexX = indexX;
             rock.indexY = indexY;
             addEntity(rock);
@@ -106,8 +106,16 @@ namespace CarGo
             tilemap.SetCollisionMap(worldObject.indexX, worldObject.indexY, CollisionType.noCollision);
         }
 
-        public void addEnemy(BaseEnemy enemy)
+        public void addEnemy(EnemyType enemyType, Vector2 center)
         {
+            BaseEnemy enemy;
+            switch (enemyType)
+            {
+                case EnemyType.EnemyDummy: enemy = new EnemyDummy(content,center);
+                    break;
+                default: enemy = new EnemyDummy(content, center);
+                    break;
+            }
             enemies.Add(enemy);
             addEntity(enemy);
         }
@@ -118,8 +126,9 @@ namespace CarGo
             removeEntity(enemy);
         }
 
-        public void addPlayer(Player player)
+        public void addPlayer(PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType)
         {
+            Player player = new Player(content, playerIndex, center, carType, carFrontType, abilityType);
             players.Add(player);
             addEntity(player);
         }
@@ -129,11 +138,11 @@ namespace CarGo
             removeEntity(player);
         }
 
-        public void addCargo(Cargo cargo)
+        public void addCargo(Vector2 center)
         {
             if (this.cargo == null)
             {
-                this.cargo = cargo;
+                this.cargo = new Cargo(content,center);
                 entities.Add(cargo);
             }
         }
