@@ -26,7 +26,6 @@ namespace CarGo
         protected RotRectangle hitbox;
         protected int hitpoints;
         protected Texture2D texture;
-        protected SoundEffect effect;
         protected Vector2 velocity;
         protected Scene scene;
         public bool noCollision;

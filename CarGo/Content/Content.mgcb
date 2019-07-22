@@ -31,6 +31,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/Cactus.png
 
+#begin textures/Car_BigSize.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Car_BigSize.png
+
 #begin textures/Car_MediumSize.png
 /importer:TextureImporter
 /processor:TextureProcessor

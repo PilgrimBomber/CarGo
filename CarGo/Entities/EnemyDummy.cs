@@ -15,12 +15,11 @@ namespace CarGo
     {
         SoundEffectInstance crashSound;
 
-        public EnemyDummy(ContentManager content, Vector2 center)
+        public EnemyDummy(ContentManager content, SoundCollection soundCollection, Vector2 center)
         {
             //Set dummy texture
             texture = content.Load<Texture2D>("textures/Enemy_Dummy");
-            effect = content.Load<SoundEffect>("sounds/Enemy_Monster_Hit");
-            crashSound = effect.CreateInstance();
+            crashSound = soundCollection.getInstance(SoundType.Crash_Dummy);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             velocity *= 0f;
         }
@@ -73,7 +72,6 @@ namespace CarGo
         public override void GetPushed(Vector2 direction)
         {
             velocity += 1.5f * direction;
-            //effect.Play(0.1f, 0.0f, 0.0f);
             crashSound.Volume = 0.1f;
             crashSound.Play();
         }

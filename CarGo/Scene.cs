@@ -24,6 +24,7 @@ namespace CarGo
         private ContentManager content;
         private LevelControl levelControl;
         private Tilemap tilemap;
+        private SoundCollection soundCollection;
         //private SpriteBatch spriteBatch;
         public Scene(SpriteBatch spriteBatch, ContentManager content, Vector2 screenSize)
         {
@@ -36,6 +37,7 @@ namespace CarGo
             collisionCheck = new CollisionCheck();
             levelControl = new LevelControl(this,content);
             tilemap = new Tilemap(1, content);
+            soundCollection = new SoundCollection(content);
             this.content = content;
         }
 
@@ -111,9 +113,9 @@ namespace CarGo
             BaseEnemy enemy;
             switch (enemyType)
             {
-                case EnemyType.EnemyDummy: enemy = new EnemyDummy(content,center);
+                case EnemyType.EnemyDummy: enemy = new EnemyDummy(content,soundCollection ,center);
                     break;
-                default: enemy = new EnemyDummy(content, center);
+                default: enemy = new EnemyDummy(content, soundCollection, center);
                     break;
             }
             enemies.Add(enemy);
