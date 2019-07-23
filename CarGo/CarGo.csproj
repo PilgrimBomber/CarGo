@@ -61,6 +61,7 @@
     <Compile Include="Geometry.cs" />
     <Compile Include="Level.cs" />
     <Compile Include="LevelControl.cs" />
+    <Compile Include="TextureCollection.cs" />
     <Compile Include="SoundCollection.cs" />
     <Compile Include="Tilemap.cs" />
     <Compile Include="Program.cs" />
