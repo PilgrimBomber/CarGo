@@ -12,23 +12,25 @@ namespace CarGo
     public enum CarFrontType { Spikes, Bumper, No }
     class CarFront
     {
+        
         private CarFrontType carFront;
         private Texture2D texture;
         private RotRectangle hitbox;
 
         public RotRectangle Hitbox { get => hitbox; set => hitbox = value; }
 
-        public CarFront(CarFrontType frontType, ContentManager content, RotRectangle CarHitbox)
+        public CarFront(SoundCollection soundCollection, TextureCollection textureCollection, CarFrontType frontType, RotRectangle CarHitbox)
         {
+            
             carFront = frontType;
             switch (frontType)
             {
                 case CarFrontType.Bumper:
-                    texture = content.Load<Texture2D>("textures/Mod_Front_Bumper");
+                    texture = textureCollection.GetTexture(TextureType.Front_Bumper);
                     Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                     break;
                 case CarFrontType.Spikes:
-                    texture = content.Load<Texture2D>("textures/Mod_Front_Spikes");
+                    texture = textureCollection.GetTexture(TextureType.Front_Spikes);
                     Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                     break;
                 case CarFrontType.No:

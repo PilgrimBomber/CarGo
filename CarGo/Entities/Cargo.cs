@@ -13,11 +13,12 @@ namespace CarGo
     public class Cargo:Entity
     {
         private CarFront carFront;
-        public Cargo (ContentManager content, Vector2 center)
+        public Cargo (SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Vector2 center)
         {
-            texture = content.Load<Texture2D>("textures/Cargo");
+            this.scene = scene;
+            texture = textureCollection.GetTexture(TextureType.Cargo);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
-            carFront = new CarFront(CarFrontType.No, content, hitbox);
+            carFront = new CarFront(soundCollection, textureCollection, CarFrontType.No, hitbox);
             hitbox.Rotate(Geometry.DegToRad(90));
             carFront.Hitbox.RotatePoint(Geometry.DegToRad(90), hitbox.Center);
             this.velocity = new Vector2(2f, 0);

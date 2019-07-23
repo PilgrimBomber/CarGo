@@ -5,7 +5,7 @@ using System;
 
 namespace CarGo
 {
-    public enum CarType { Light, Medium, Heavy}
+    public enum CarType { Small, Medium, Big}
     
 
     public class Player : Entity
@@ -25,29 +25,30 @@ namespace CarGo
         public float Acceleration { get => acceleration; set => acceleration = value; }
         public PlayerIndex PlayerIndex { get => playerIndex; set => playerIndex = value; }
 
-        public Player(ContentManager content, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType frontType, AbilityType ability)
+        public Player(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType frontType, AbilityType ability)
         {
             this.playerIndex = playerIndex;
+            this.scene = scene;
             inputHandler = new InputHandler(this, playerIndex);
             
             switch(carType)
             {
-                case CarType.Light:
-                    texture = content.Load<Texture2D>("textures/Car_MediumSize");// load Texture
+                case CarType.Small:
+                    texture = textureCollection.GetTexture(TextureType.Car_Small);
                     acceleration = 0.12f;
                     maxSpeed = 12.0f;
                     turnRate = 1.5f;//1 is default
                     drift = 0.15f;//number between 0 and 1
                     break;
                 case CarType.Medium:
-                    texture = content.Load<Texture2D>("textures/Car_MediumSize");// load Texture
+                    texture = textureCollection.GetTexture(TextureType.Car_Medium);
                     acceleration = 0.12f;
                     maxSpeed = 12.0f;
                     turnRate = 1.5f;//1 is default
                     drift = 0.15f;//number between 0 and 1
                     break;
-                case CarType.Heavy:
-                    texture = content.Load<Texture2D>("textures/Car_MediumSize");// load Texture
+                case CarType.Big:
+                    texture = textureCollection.GetTexture(TextureType.Car_Big);
                     acceleration = 0.12f;
                     maxSpeed = 12.0f;
                     turnRate = 1.5f;//1 is default
@@ -63,7 +64,7 @@ namespace CarGo
             }
 
             hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
-            carFront = new CarFront(frontType, content, hitbox);
+            carFront = new CarFront(soundCollection, textureCollection, frontType, hitbox);
 
         }
         override public void Update()

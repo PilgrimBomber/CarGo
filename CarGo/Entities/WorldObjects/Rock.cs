@@ -12,9 +12,10 @@ namespace CarGo
 {
     public class Rock : WorldObject
     {
-        public Rock(ContentManager content ,Scene scene ,Vector2 center)
+        public Rock(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Vector2 center)
         {
-            texture = content.Load<Texture2D>("textures/Rock");
+            this.scene = scene;
+            texture = textureCollection.GetTexture(TextureType.WorldObject_Rock);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
         }
         override public void Update()

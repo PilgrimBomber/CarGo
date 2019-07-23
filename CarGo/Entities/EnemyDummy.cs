@@ -15,10 +15,11 @@ namespace CarGo
     {
         SoundEffectInstance crashSound;
 
-        public EnemyDummy(ContentManager content, SoundCollection soundCollection, Vector2 center)
+        public EnemyDummy(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Vector2 center)
         {
+            this.scene = scene;
             //Set dummy texture
-            texture = content.Load<Texture2D>("textures/Enemy_Dummy");
+            texture = textureCollection.GetTexture(TextureType.Dummy);
             crashSound = soundCollection.getInstance(SoundType.Crash_Dummy);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             velocity *= 0f;
