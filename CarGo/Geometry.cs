@@ -41,4 +41,6 @@ namespace CarGo
             return (float)((float)deg / 180 * Math.PI);
         }
     }
+
+    
 }

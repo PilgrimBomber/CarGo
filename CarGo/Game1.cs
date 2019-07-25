@@ -58,7 +58,7 @@ namespace CarGo
             if(playercount==0)scene.addPlayer(PlayerIndex.One, new Vector2(400, 400),CarType.Medium, CarFrontType.Spikes, AbilityType.RocketLauncher);
 
             //Add Cargo
-            scene.addCargo(new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2));
+            //scene.addCargo(new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2));
 
 
         }

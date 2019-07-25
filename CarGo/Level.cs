@@ -55,8 +55,8 @@ namespace CarGo
                             break;
                         case 1:
                             eventTriggered[1] = true;
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3000, 540));
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3300, 540));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3000, 800));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3300, 200));
                             break;
                     }
                 }

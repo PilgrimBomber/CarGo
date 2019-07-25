@@ -15,6 +15,7 @@ namespace CarGo
     {
         private Camera camera;
         private CollisionCheck collisionCheck;
+        private EnemyAI enemyAI;
         private List<Entity> entities;
         private List<Entity> deadEntities;
         private List<Player> players;
@@ -34,13 +35,17 @@ namespace CarGo
             players = new List<Player>();
             enemies = new List<BaseEnemy>();
             worldObjects = new List<WorldObject>();
+            
             camera = new Camera(spriteBatch,screenSize);
             collisionCheck = new CollisionCheck();
             levelControl = new LevelControl(this,content);
             tilemap = new Tilemap(1, content);
             soundCollection = new SoundCollection(content);
             textureCollection = new TextureCollection(content);
+            this.addCargo(screenSize / 2);
+            enemyAI = new EnemyAI(tilemap, enemies, cargo);
             this.content = content;
+
         }
 
         private void RemoveDeadEntities()
@@ -68,7 +73,9 @@ namespace CarGo
             }
             RemoveDeadEntities();
             levelControl.Update(gameTime);
+            enemyAI.Update();
             camera.Update(cargo, players);
+
         }
 
         public void Draw(GameTime gameTime)

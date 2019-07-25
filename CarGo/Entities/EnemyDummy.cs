@@ -14,6 +14,9 @@ namespace CarGo
     public class EnemyDummy : BaseEnemy
     {
         SoundEffectInstance crashSound;
+        
+        private List<Location> path;
+        public List<Location> Path { get => path; set => path = value; }
 
         public EnemyDummy(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Vector2 center)
         {
@@ -26,7 +29,7 @@ namespace CarGo
         }
         override public void Update()
         {
-            
+            FollowPath();
             //Move the Dummy
             hitbox.Move(velocity);
 
@@ -34,6 +37,8 @@ namespace CarGo
             velocity *= 0.97f;
             if (velocity.Length() < 0.05) velocity *= 0;
         }
+
+
 
         public override void Collide(Entity entity)
         {
@@ -75,6 +80,17 @@ namespace CarGo
             velocity += 1.5f * direction;
             crashSound.Volume = 0.1f;
             crashSound.Play();
+        }
+
+        private void FollowPath()
+        {
+            if(path!=null)if (Tilemap.CoordinatesWorldToGrid(this).Equals(path.First()))
+            {
+                path.RemoveAt(0);
+                velocity = (Tilemap.CoordinatesGridToWorld(path.First())-this.hitbox.Center);
+                velocity.Normalize();
+                velocity *= 2.5f;
+            }
         }
     }
 }

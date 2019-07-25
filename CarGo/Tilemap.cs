@@ -17,14 +17,29 @@ namespace CarGo
 
         private const int constWidth = 64;
         private const int constHeight = 64;
+        private const int mapWidth = 500;
+        private const int mapHeight = 25;
         private int[,] tilemap;
         private CollisionType[,] collisionMap;
         private List<Texture2D> textures;
+        public static readonly Location[] DIRS = new[]
+        {
+            new Location(1, 0), // to right of tile
+            new Location(0, -1), // below tile
+            new Location(-1, 0), // to left of tile
+            new Location(0, 1), // above tile
+            new Location(1, 1), // diagonal top right
+            new Location(-1, 1), // diagonal top left
+            new Location(1, -1), // diagonal bottom right
+            new Location(-1, -1) // diagonal bottom left
+        };
+
+        public CollisionType[,] CollisionMap { get => collisionMap;}
 
         public Tilemap(int levelNumber, ContentManager content)
         {
-            tilemap = new int[500, 25];
-            collisionMap = new CollisionType[500, 25];
+            tilemap = new int[mapWidth,mapHeight];
+            collisionMap = new CollisionType[mapWidth, mapHeight];
             textures = new List<Texture2D>();
             textures.Add(content.Load<Texture2D>("textures/Tile_0"));
             textures.Add(content.Load<Texture2D>("textures/Enemy_Dummy"));
@@ -57,6 +72,26 @@ namespace CarGo
             collisionMap[indexX, indexY] = collisionType;
         }
 
+        //returns the grid coordinates for input world coordinates
+        public static Location CoordinatesWorldToGrid(float X, float Y)
+        {
+            return new Location((int)(X / constWidth), (int)(Y / constHeight));
+        }
+        public static Location CoordinatesWorldToGrid(Entity entity)
+        {
+            return new Location((int)(entity.Hitbox.Center.X / constWidth),(int)(entity.Hitbox.Center.Y/ constHeight));
+        }
+
+        //returns the world coordinates for input grid coordinates
+        public static Vector2 CoordinatesGridToWorld(int X, int Y)
+        {
+            return new Vector2(X*constWidth +constWidth/2, Y* constHeight + constHeight/2);
+        }
+        public static Vector2 CoordinatesGridToWorld(Location location)
+        {
+            return new Vector2(location.x * constWidth + constWidth / 2, location.y * constHeight + constHeight / 2);
+        }
+
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
         {
             int minY = (int)(offset.Y +240)/constHeight;
@@ -70,6 +105,44 @@ namespace CarGo
                     spriteBatch.Draw(textures[tilemap[j, i]], new Vector2(constWidth * (j-11)- offset.X, constHeight * (i-4) - offset.Y), Color.White);
                 }
 
+            }
+        }
+
+        public bool InBounds(Location id)
+        {
+            return (0 <= id.x) && (id.x < mapWidth) && (0 <= id.y) && (id.y < mapHeight);
+        }
+
+        // Everything that isn't a Wall is Passable
+        public bool Passable(Location id)
+        {
+            if (collisionMap[id.x, id.y] == CollisionType.staticCollision) return false;
+            else return true;
+        }
+
+        // If the heuristic = 2f, the movement is diagonal
+        public float Cost(Location a, Location b)
+        {
+            float cost = 1000;
+            if (collisionMap[b.x, b.y] == CollisionType.noCollision) cost= 1;
+            if (collisionMap[b.x, b.y] == CollisionType.Slow) cost = 5;
+            if (AStar.Heuristic(a, b) == 2f) cost*= (float)Math.Sqrt(2f);
+
+            return cost;
+
+        }
+
+        // Check the tiles that are next to, above, below, or diagonal to
+        // this tile, and return them if they're within the game bounds and passable
+        public IEnumerable<Location> Neighbors(Location id)
+        {
+            foreach (var dir in DIRS)
+            {
+                Location next = new Location(id.x + dir.x, id.y + dir.y);
+                if (InBounds(next) && Passable(next))
+                {
+                    yield return next;
+                }
             }
         }
     }
