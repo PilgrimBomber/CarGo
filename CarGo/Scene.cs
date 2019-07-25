@@ -43,7 +43,8 @@ namespace CarGo
             soundCollection = new SoundCollection(content);
             textureCollection = new TextureCollection(content);
             this.addCargo(screenSize / 2);
-            enemyAI = new EnemyAI(tilemap, enemies, cargo);
+            //enemyAI = new EnemyAI(tilemap, enemies, cargo);
+            enemyAI = new EnemyAI(worldObjects, enemies, cargo);
             this.content = content;
 
         }

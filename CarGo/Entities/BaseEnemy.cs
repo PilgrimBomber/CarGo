@@ -13,6 +13,7 @@ namespace CarGo
 
     public abstract class BaseEnemy:Entity
     {
+        public bool wasPushed;
 
         
     }

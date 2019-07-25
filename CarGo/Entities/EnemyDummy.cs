@@ -26,6 +26,7 @@ namespace CarGo
             crashSound = soundCollection.getInstance(SoundType.Crash_Dummy);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             velocity *= 0f;
+            wasPushed = false;
         }
         override public void Update()
         {
@@ -34,8 +35,16 @@ namespace CarGo
             hitbox.Move(velocity);
 
             //Slows the dummy over time
-            velocity *= 0.97f;
-            if (velocity.Length() < 0.05) velocity *= 0;
+            if(wasPushed)
+            {
+                velocity *= 0.96f;
+                if (velocity.Length() < 0.05)
+                {
+                    velocity *= 0;
+                    wasPushed = false;
+                }
+            }
+            
         }
 
 
@@ -80,6 +89,7 @@ namespace CarGo
             velocity += 1.5f * direction;
             crashSound.Volume = 0.1f;
             crashSound.Play();
+            wasPushed = true;
         }
 
         private void FollowPath()

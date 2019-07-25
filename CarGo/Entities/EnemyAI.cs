@@ -16,35 +16,87 @@ namespace CarGo
         //private BaseEnemy baseEnemy;
         //private Cargo cargo;
         private AStar aStar;
+        private bool usingAStar;
         List<BaseEnemy> enemies;
         Cargo cargo;
+
+        List<WorldObject> worldObjects;
+
         private int updateCounter=0;
         public EnemyAI(Tilemap tilemap, List<BaseEnemy> enemies,Cargo cargo)
         {
             aStar = new AStar(tilemap);
             this.enemies = enemies;
             this.cargo = cargo;
-            
+            usingAStar = true;
+        }
+
+        public EnemyAI(List<WorldObject> worldObjects, List<BaseEnemy> enemies, Cargo cargo)
+        {
+            this.worldObjects = worldObjects;
+            this.enemies = enemies;
+            this.cargo = cargo;
+            usingAStar = false;
         }
 
         public void Update()
         {
-            if(updateCounter==0)
+            //Grid-Based Version
+            if(usingAStar)
             {
-                foreach (BaseEnemy enemy in enemies)
+                if (updateCounter == 0)
                 {
-                    if (enemy.GetType() == typeof(EnemyDummy))
+                    foreach (BaseEnemy enemy in enemies)
                     {
-                        (enemy as EnemyDummy).Path = aStar.FindPath(Tilemap.CoordinatesWorldToGrid(enemy), Tilemap.CoordinatesWorldToGrid(cargo));
+                        if (enemy.GetType() == typeof(EnemyDummy))
+                        {
+                            (enemy as EnemyDummy).Path = aStar.FindPath(Tilemap.CoordinatesWorldToGrid(enemy), Tilemap.CoordinatesWorldToGrid(cargo));
+                        }
                     }
                 }
-            }
-            updateCounter++;
-            if (updateCounter>10)
-            {
-                updateCounter = 0;
+                updateCounter++;
+                if (updateCounter > 10)
+                {
+                    updateCounter = 0;
+                }
             }
             
+        else
+            {
+                //Direct Move
+                if (updateCounter == 0)
+                {
+                    foreach (BaseEnemy baseEnemy in enemies)
+                    {
+                        if (baseEnemy.wasPushed) continue;
+                        int collisionCount = 0;
+
+                        foreach (WorldObject worldObject in worldObjects)
+                        {
+                            if (CollisionCheck.CheckCollision(baseEnemy.Hitbox.Center, cargo.Hitbox.Center - baseEnemy.Hitbox.Center, worldObject.Hitbox))
+                            {
+                                collisionCount++;
+                            }
+                        }
+                        if (collisionCount > 0)
+                        {
+                            baseEnemy.Velocity *= 0;
+                        }
+                        else
+                        {
+                            baseEnemy.Velocity = (cargo.Hitbox.Center - baseEnemy.Hitbox.Center);
+                            baseEnemy.Velocity /= baseEnemy.Velocity.Length();
+                            baseEnemy.Velocity *= 1.5f;
+
+                        }
+                    }
+                }
+                updateCounter++;
+                if (updateCounter > 10)
+                {
+                    updateCounter = 0;
+                }
+            }
         }
 
 

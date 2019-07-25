@@ -48,10 +48,12 @@ namespace CarGo
                     {
                         case 0://Add Dummy
                             eventTriggered[0] = true;
-                            scene.addEnemy(EnemyType.EnemyDummy,new Vector2(0,0));
-                            scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1400,500));
-                            scene.addCactus(new Vector2 (1200,700));
-                            scene.addRock(new Vector2(1200, 0));
+                            scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1200,800));
+                            scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1250,750));
+                            scene.addCactus(new Vector2 (1200,50));
+                            scene.addRock(new Vector2(1200, 700));
+                            scene.addRock(new Vector2(1250, 700));
+                            scene.addRock(new Vector2(1150, 700));
                             break;
                         case 1:
                             eventTriggered[1] = true;
