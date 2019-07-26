@@ -45,5 +45,9 @@ namespace CarGo
         {
             throw new NotImplementedException();
         }
+        public override void GetDamage(Entity entity)
+        {
+            throw new NotImplementedException();
+        }
     }
 }

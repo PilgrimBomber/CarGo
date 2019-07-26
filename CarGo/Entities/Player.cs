@@ -189,6 +189,10 @@ namespace CarGo
         {
             active.Use();
         }
+        public override void GetDamage(Entity entity)
+        {
+            throw new NotImplementedException();
+        }
 
     }
 }
