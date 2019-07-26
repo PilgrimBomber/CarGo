@@ -14,7 +14,8 @@ namespace CarGo
     public abstract class BaseEnemy:Entity
     {
         public bool wasPushed;
+        protected List<Vector2> path;
 
-        
+        public List<Vector2> Path { get => path; set => path = value; }
     }
 }

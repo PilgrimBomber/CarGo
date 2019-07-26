@@ -50,12 +50,12 @@ namespace CarGo
                     {
                         if (enemy.GetType() == typeof(EnemyDummy))
                         {
-                            (enemy as EnemyDummy).Path = aStar.FindPath(Tilemap.CoordinatesWorldToGrid(enemy), Tilemap.CoordinatesWorldToGrid(cargo));
+                            (enemy as EnemyDummy).Path2 = aStar.FindPath(Tilemap.CoordinatesWorldToGrid(enemy), Tilemap.CoordinatesWorldToGrid(cargo));
                         }
                     }
                 }
                 updateCounter++;
-                if (updateCounter > 10)
+                if (updateCounter > 100)
                 {
                     updateCounter = 0;
                 }
@@ -66,31 +66,55 @@ namespace CarGo
                 //Direct Move
                 if (updateCounter == 0)
                 {
-                    foreach (BaseEnemy baseEnemy in enemies)
+                    //    foreach (BaseEnemy baseEnemy in enemies)
+                    //    {
+                    //        if (baseEnemy.wasPushed) continue;
+                    //        int collisionCount = 0;
+                    //        Vector2 direction = cargo.Hitbox.Center - baseEnemy.Hitbox.Center;
+                    //        foreach (WorldObject worldObject in worldObjects)
+                    //        {
+                    //            if (CollisionCheck.CheckCollision(baseEnemy.Hitbox.Center, cargo.Hitbox.Center - baseEnemy.Hitbox.Center, worldObject.Hitbox))
+                    //            {
+                    //                collisionCount++;
+                    //            }
+                    //        }
+                    //        if (collisionCount > 0)
+                    //        {
+
+
+                    //            baseEnemy.Velocity *= 0;
+                    //        }
+                    //        else
+                    //        {
+                    //            baseEnemy.Velocity = (cargo.Hitbox.Center - baseEnemy.Hitbox.Center);
+                    //            baseEnemy.Velocity /= baseEnemy.Velocity.Length();
+
+                    //            //baseEnemy.Hitbox.Rotate((float)Math.Atan((cargo.Hitbox.Center - baseEnemy.Hitbox.Center).Y / (cargo.Hitbox.Center - baseEnemy.Hitbox.Center).X));
+                    //            if(baseEnemy.Hitbox.Center.X < cargo.Hitbox.Center.X)
+                    //            {
+                    //                baseEnemy.Hitbox.RotationRad = (float)Math.Atan((cargo.Hitbox.Center - baseEnemy.Hitbox.Center).Y / (cargo.Hitbox.Center - baseEnemy.Hitbox.Center).X) + Geometry.DegToRad(90);
+                    //                baseEnemy.Velocity *= 2.2f;
+                    //            }
+                    //            else
+                    //            {
+                    //                baseEnemy.Hitbox.RotationRad = (float)Math.Atan((cargo.Hitbox.Center - baseEnemy.Hitbox.Center).Y / (cargo.Hitbox.Center - baseEnemy.Hitbox.Center).X) - Geometry.DegToRad(90);
+                    //                baseEnemy.Velocity *= 1.8f;
+                    //            }
+                    //        }
+                    //    }
+                    
+                    foreach(BaseEnemy baseEnemy in enemies)
                     {
-                        if (baseEnemy.wasPushed) continue;
-                        int collisionCount = 0;
-
-                        foreach (WorldObject worldObject in worldObjects)
-                        {
-                            if (CollisionCheck.CheckCollision(baseEnemy.Hitbox.Center, cargo.Hitbox.Center - baseEnemy.Hitbox.Center, worldObject.Hitbox))
-                            {
-                                collisionCount++;
-                            }
-                        }
-                        if (collisionCount > 0)
-                        {
-                            baseEnemy.Velocity *= 0;
-                        }
-                        else
-                        {
-                            baseEnemy.Velocity = (cargo.Hitbox.Center - baseEnemy.Hitbox.Center);
-                            baseEnemy.Velocity /= baseEnemy.Velocity.Length();
-                            baseEnemy.Velocity *= 1.5f;
-
-                        }
+                        List<Vector2> path = new List<Vector2>();
+                        path.Clear();
+                        path.Add(baseEnemy.Hitbox.Center);
+                        Search(baseEnemy.Hitbox.Center, cargo.Hitbox.Center, path);
+                        baseEnemy.Path = path;
                     }
+
+
                 }
+
                 updateCounter++;
                 if (updateCounter > 10)
                 {
@@ -98,6 +122,58 @@ namespace CarGo
                 }
             }
         }
+
+
+        private void Search(Vector2 position, Vector2 target, List<Vector2> path)
+        {
+            if (path.Count > 5) return;
+            
+            Vector2 direction = target - position;
+            float angle = Geometry.DegToRad(1);
+            while (true)
+            {
+                float distance = 0;
+                int collisionCount = 0;
+                float shortestDistance = 0;// int.MaxValue;
+                WorldObject closestWorldObject;
+                foreach (WorldObject worldObject in worldObjects)
+                {
+                    
+                    if (CollisionCheck.CheckCollision(position, direction, worldObject.Hitbox))
+                    {
+                        
+                        distance = Vector2.Distance(position, worldObject.Hitbox.Center);
+                        if (collisionCount == 0)
+                        {
+                            shortestDistance = distance;
+                        }
+                        
+                        if (distance < shortestDistance)
+                        {
+                            shortestDistance = distance;
+                        }
+                        collisionCount++;
+                    }
+                }
+                if (collisionCount > 0)
+                {
+                    direction.Normalize();
+                    direction*= shortestDistance;
+                    direction = Geometry.Rotate(direction, angle);
+                    angle *= -1.2f;
+                }
+                else
+                {
+                    position += direction;
+                    path.Add(position);
+                    if (Vector2.Distance(position, target) < 10) return;
+                    Search(position, target, path);
+                    return;
+                }
+            }
+        }
+
+        
 
 
     }

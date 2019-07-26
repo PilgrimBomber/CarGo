@@ -14,9 +14,9 @@ namespace CarGo
     public class EnemyDummy : BaseEnemy
     {
         SoundEffectInstance crashSound;
-        
-        private List<Location> path;
-        public List<Location> Path { get => path; set => path = value; }
+
+        private List<Location> path2;
+        public List<Location> Path2 { get => path2; set => path2 = value; }
 
         public EnemyDummy(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Vector2 center)
         {
@@ -94,12 +94,28 @@ namespace CarGo
 
         private void FollowPath()
         {
-            if(path!=null)if (Tilemap.CoordinatesWorldToGrid(this).Equals(path.First()))
+            if(path2!=null)if (Tilemap.CoordinatesWorldToGrid(this).Equals(path2.First()))
             {
-                path.RemoveAt(0);
-                velocity = (Tilemap.CoordinatesGridToWorld(path.First())-this.hitbox.Center);
+                path2.RemoveAt(0);
+                velocity = (Tilemap.CoordinatesGridToWorld(path2.First())-this.hitbox.Center);
                 velocity.Normalize();
                 velocity *= 2.5f;
+            }
+
+            if(path!=null)
+            {
+                if (Vector2.Distance(path.First(), hitbox.Center)<10)
+                {
+                    if (wasPushed) return;
+                    path.RemoveAt(0);
+                    velocity = path.First() - this.hitbox.Center;
+                    velocity.Normalize();
+                    velocity *= 2.1f;
+                }
+                //velocity = path.First() - this.hitbox.Center;
+                //velocity.Normalize();
+                //velocity *= 2.1f;
+                
             }
         }
     }

@@ -117,5 +117,15 @@ namespace CarGo
             line.Rotate(angle);
             return CheckCollision(rotRectangle, line);
         }
+        //public static bool CheckCollision(Vector2 position, Vector2 direction, ref float distance, RotRectangle obstacle)
+        //{
+
+        //    //Vector2 direction = target - position;
+        //    float angle = (float)Math.Atan(direction.Y / direction.X);
+        //    RotRectangle line = new RotRectangle(0, position + direction / 2, new Vector2(direction.Length() / 2, 10));
+        //    line.Rotate(angle);
+
+        //    return CheckCollision(obstacle, line);
+        //}
     }
 }
