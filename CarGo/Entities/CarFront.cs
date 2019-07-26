@@ -52,7 +52,10 @@ namespace CarGo
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
         {
-            spriteBatch.Draw(texture, Hitbox.Center - offset, null, Color.White, Hitbox.RotationRad, Hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
+            if (carFront != CarFrontType.No)
+            {
+                spriteBatch.Draw(texture, Hitbox.Center - offset, null, Color.White, Hitbox.RotationRad, Hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
+            }
         }
 
         public bool CheckCollision(Entity entity)

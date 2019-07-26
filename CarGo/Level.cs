@@ -50,6 +50,7 @@ namespace CarGo
                             eventTriggered[0] = true;
                             scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1200,800));
                             scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1250,750));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(200, 600));
                             scene.addCactus(new Vector2 (1200,50));
                             scene.addRock(new Vector2(1200, 700));
                             scene.addRock(new Vector2(1250, 700));
@@ -59,6 +60,14 @@ namespace CarGo
                             eventTriggered[1] = true;
                             scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3000, 800));
                             scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3300, 200));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3600, 800));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3800, 200));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2200, 800));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2300, 200));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2400, 800));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2500, 200));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2600, 800));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2700, 200));
                             break;
                     }
                 }

@@ -18,6 +18,7 @@ namespace CarGo
         private PlayerIndex playerIndex;
         private float lastTurn;
         private CarFront carFront;
+        private CarFrontType carFrontType;
         private ActiveAbility active;
 
         //public Vector2 Velocity { get => velocity; set => velocity = value; }
@@ -30,7 +31,7 @@ namespace CarGo
             this.playerIndex = playerIndex;
             this.scene = scene;
             inputHandler = new InputHandler(this, playerIndex);
-            
+           
             switch(carType)
             {
                 case CarType.Small:
@@ -39,6 +40,7 @@ namespace CarGo
                     maxSpeed = 12.0f;
                     turnRate = 1.5f;//1 is default
                     drift = 0.15f;//number between 0 and 1
+                    hitpoints = 500;
                     break;
                 case CarType.Medium:
                     texture = textureCollection.GetTexture(TextureType.Car_Medium);
@@ -46,6 +48,7 @@ namespace CarGo
                     maxSpeed = 12.0f;
                     turnRate = 1.5f;//1 is default
                     drift = 0.15f;//number between 0 and 1
+                    hitpoints = 1000;
                     break;
                 case CarType.Big:
                     texture = textureCollection.GetTexture(TextureType.Car_Big);
@@ -53,6 +56,7 @@ namespace CarGo
                     maxSpeed = 12.0f;
                     turnRate = 1.5f;//1 is default
                     drift = 0.15f;//number between 0 and 1
+                    hitpoints = 1500;
                     break;
             }
 
@@ -65,10 +69,12 @@ namespace CarGo
 
             hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             carFront = new CarFront(soundCollection, textureCollection, frontType, hitbox);
+            carFrontType = frontType;
 
         }
         override public void Update()
         {
+            if (hitpoints <= 0) scene.KillEntity(this);
             lastTurn = 0;
             inputHandler.HandleInput();
 
@@ -109,8 +115,13 @@ namespace CarGo
                 entity.Hitbox.Move(velocity);
                 if(carFront.CheckCollision(entity))
                 {
+                    entity.TakeDamage(CalculateDamage());
                     entity.GetPushed(velocity);
                     velocity *= 0.5f;
+                }
+                else
+                {
+                    this.TakeDamage(100);
                 }
             }
             //Collision with Rock
@@ -189,10 +200,35 @@ namespace CarGo
         {
             active.Use();
         }
-        public override void GetDamage(Entity entity)
+        public override void TakeDamage(int damage)
         {
-            throw new NotImplementedException();
+            hitpoints -= damage;
         }
-
+        private int CalculateDamage()
+        {
+            int damage;
+            switch (carFrontType)
+            {
+                case CarFrontType.No:
+                    {
+                        damage = (int)velocity.Length() * 4;
+                        return damage;
+                    }
+                case CarFrontType.Bumper:
+                    {
+                        damage = (int)velocity.Length() * 4;
+                        return damage;
+                    }
+                case CarFrontType.Spikes:
+                    {
+                        damage = (int)velocity.Length() * 8;
+                        return damage;
+                    }
+                default:
+                    {
+                        return 0;
+                    }
+            }
+        }
     }
 }

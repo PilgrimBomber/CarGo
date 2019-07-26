@@ -113,7 +113,7 @@ namespace CarGo
             
             //Vector2 direction = target - position;
             float angle = (float)Math.Atan(direction.Y / direction.X);
-            RotRectangle line = new RotRectangle(0, position + direction / 2, new Vector2(direction.Length() / 2,10));
+            RotRectangle line = new RotRectangle(0, position + direction / 2, new Vector2(direction.Length() / 2,25));
             line.Rotate(angle);
             return CheckCollision(rotRectangle, line);
         }

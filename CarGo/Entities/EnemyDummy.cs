@@ -27,9 +27,11 @@ namespace CarGo
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             velocity *= 0f;
             wasPushed = false;
+            hitpoints = 100;
         }
         override public void Update()
         {
+            if (hitpoints <= 0) scene.KillEntity(this);
             FollowPath();
             //Move the Dummy
             hitbox.Move(velocity);
@@ -73,6 +75,22 @@ namespace CarGo
             {
                 //Hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.0005f);
                 Hitbox.Move(-velocity);
+                entity.TakeDamage(100);
+                hitpoints = 0;
+                velocity *= -0.05f;
+
+            }
+            if (entity.GetType() == typeof(Rock) && wasPushed == true)
+            {
+                Hitbox.Move(-velocity);
+                this.TakeDamage((int)velocity.LengthSquared());
+                velocity *= -0.05f;
+
+            }
+            if (entity.GetType() == typeof(Cactus) && wasPushed == true)
+            {
+                Hitbox.Move(-velocity);
+                this.TakeDamage(20);
                 velocity *= -0.05f;
 
             }
@@ -116,9 +134,9 @@ namespace CarGo
                 
             }
         }
-        public override void GetDamage(Entity entity)
+        public override void TakeDamage(int damage)
         {
-            throw new NotImplementedException();
+            hitpoints -= damage;
         }
     }
 }

@@ -22,11 +22,12 @@ namespace CarGo
             hitbox.Rotate(Geometry.DegToRad(90));
             carFront.Hitbox.RotatePoint(Geometry.DegToRad(90), hitbox.Center);
             this.velocity = new Vector2(2f, 0);
-            
+            hitpoints = 1000;
             
         }
         override public void Update()
         {
+            if (hitpoints <= 0) velocity *= 0;
             hitbox.Move(velocity);
             carFront.Move(velocity);
             //throw new NotImplementedException();
@@ -48,7 +49,7 @@ namespace CarGo
                 }
                 else
                 {
-                    entity.GetPushed(velocity);
+                    entity.TakeDamage(10000);
                 }
             }
         }
@@ -61,9 +62,9 @@ namespace CarGo
         {
             throw new NotImplementedException();
         }
-        public override void GetDamage(Entity entity)
+        public override void TakeDamage(int damage)
         {
-            throw new NotImplementedException();
+            hitpoints -= damage;
         }
     }
 }
