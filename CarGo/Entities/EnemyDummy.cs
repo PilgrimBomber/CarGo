@@ -23,7 +23,7 @@ namespace CarGo
             this.scene = scene;
             //Set dummy texture
             texture = textureCollection.GetTexture(TextureType.Dummy);
-            crashSound = soundCollection.getInstance(SoundType.Crash_Dummy);
+            crashSound = soundCollection.GetInstance(SoundType.Crash_Dummy);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             velocity *= 0f;
             wasPushed = false;
@@ -46,8 +46,6 @@ namespace CarGo
             }
             
         }
-
-
 
         public override void Collide(Entity entity)
         {
@@ -117,6 +115,10 @@ namespace CarGo
                 //velocity *= 2.1f;
                 
             }
+        }
+        public override void GetDamage(Entity entity)
+        {
+            throw new NotImplementedException();
         }
     }
 }

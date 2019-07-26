@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CarGo
 {
-    public enum TextureType { Cargo, Car_Big, Car_Medium, Car_Small, Dummy,Front_Spikes, Front_Bumper,WorldObject_Rock, WorldObject_Cactus, WorldObject_CactusRip}
+    public enum TextureType { Cargo, Car_Big, Car_Medium, Car_Small, Dummy, Enemy_Zombie ,Front_Spikes, Front_Bumper,WorldObject_Rock, WorldObject_Cactus, WorldObject_CactusRip}
     public class TextureCollection
     {
         private List<Texture2D> textures;
@@ -26,6 +26,7 @@ namespace CarGo
                     case TextureType.Car_Medium: textures.Add(content.Load<Texture2D>("textures/Car_MediumSize")); break;
                     case TextureType.Car_Small: //textures.Add(content.Load<Texture2D>("Cargo")); break;
                     case TextureType.Dummy: textures.Add(content.Load<Texture2D>("textures/Enemy_Dummy")); break;
+                    case TextureType.Enemy_Zombie: //textures.Add(content.Load<Texture2D>("textures/Enemy_Zombie")); break;
                     case TextureType.Front_Bumper: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Bumper")); break;
                     case TextureType.Front_Spikes: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Spikes")); break;
                     case TextureType.WorldObject_Cactus: textures.Add(content.Load<Texture2D>("textures/Cactus")); break;
