@@ -32,7 +32,7 @@ namespace CarGo
             }
         }
 
-        public SoundEffectInstance getInstance(SoundType soundType)
+        public SoundEffectInstance GetInstance(SoundType soundType)
         {
             return effects[(int)soundType].CreateInstance();
         }

@@ -23,7 +23,7 @@ namespace CarGo
             this.scene = scene;
             //Set dummy texture
             texture = textureCollection.GetTexture(TextureType.Enemy_Zombie);
-            crashSound = soundCollection.getInstance(SoundType.Crash_Dummy);
+            crashSound = soundCollection.GetInstance(SoundType.Crash_Dummy);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             velocity *= 0f;
             wasPushed = false;
