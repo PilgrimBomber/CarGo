@@ -11,7 +11,7 @@ namespace CarGo
 {
     public class Hook : Entity
     {
-        override public void Update()
+        override public void Update(GameTime gameTime)
         {
             throw new NotImplementedException();
         }

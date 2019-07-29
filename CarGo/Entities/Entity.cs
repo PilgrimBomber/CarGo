@@ -18,7 +18,7 @@ namespace CarGo
 
     interface IUpdateable
     {
-        void Update();
+        void Update(GameTime gameTime);
     }
 
     public enum EntityCategory { Player, Cargo, Enemy, WorldObject}
@@ -43,7 +43,7 @@ namespace CarGo
         //bool IDrawable.Visible => throw new NotImplementedException();
 
         public abstract void Collide(Entity entity, EntityCategory entityCategory);
-        public abstract void Update();
+        public abstract void Update(GameTime gameTime);
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset);
         public abstract void GetPushed(Vector2 direction);
         public abstract void TakeDamage(int damage);

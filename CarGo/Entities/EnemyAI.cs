@@ -36,7 +36,7 @@ namespace CarGo
             usingAStar = false;
         }
 
-        public void Update()
+        public void Update(GameTime gameTime)
         {
             if(cargo==null)cargo = cargos.First();
             

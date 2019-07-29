@@ -25,7 +25,7 @@ namespace CarGo
             hitpoints = 1000;
             
         }
-        override public void Update()
+        override public void Update(GameTime gameTime)
         {
             if (hitpoints <= 0) velocity *= 0;
             hitbox.Move(velocity);

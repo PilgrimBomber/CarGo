@@ -29,7 +29,7 @@ namespace CarGo
             wasPushed = false;
             hitpoints = 100;
         }
-        override public void Update()
+        override public void Update(GameTime gameTime)
         {
             if (hitpoints <= 0) scene.KillEntity(this);
             FollowPath();

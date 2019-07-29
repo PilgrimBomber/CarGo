@@ -71,11 +71,11 @@ namespace CarGo
             collisionCheck.CheckCollisions();
             foreach (Entity entity in entities)
             {
-                entity.Update();
+                entity.Update(gameTime);
             }
             RemoveDeadEntities();
             levelControl.Update(gameTime);
-            enemyAI.Update();
+            enemyAI.Update(gameTime);
             camera.Update();
 
         }

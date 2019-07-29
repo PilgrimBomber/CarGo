@@ -22,7 +22,7 @@ namespace CarGo
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             isActivated = false;
         }
-        override public void Update()
+        override public void Update(GameTime gameTime)
         {
             //if (isActivated == true) scene.KillEntity(this);
         }

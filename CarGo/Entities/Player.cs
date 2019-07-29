@@ -21,6 +21,7 @@ namespace CarGo
         private CarFrontType carFrontType;
         private ActiveAbility active;
         private bool noDamage;
+        private float cooldownBoost = 0;
 
         //public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }
@@ -74,19 +75,19 @@ namespace CarGo
             noDamage = false;
 
         }
-        override public void Update()
+
+        override public void Update(GameTime gameTime)
         {
             if (hitpoints <= 0) scene.KillEntity(this);
             lastTurn = 0;
             inputHandler.HandleInput();
 
+            CalculateCooldowns(gameTime);
             Move(velocity);
 
             //Slow the car over time
             velocity *= 0.98f;
             //if (velocity.Length() < 0.03) velocity *= 0;
-
-
 
         }
 
@@ -226,7 +227,11 @@ namespace CarGo
 
         public void Boost()
         {
-            if (velocity.Length() < maxSpeed) velocity += new Vector2(80*acceleration * (float)Math.Sin(hitbox.RotationRad), 80*-acceleration * (float)Math.Cos(hitbox.RotationRad));
+            if (velocity.Length() < maxSpeed && cooldownBoost<=0)
+            {
+                velocity += new Vector2(80 * acceleration * (float)Math.Sin(hitbox.RotationRad), 80 * -acceleration * (float)Math.Cos(hitbox.RotationRad));
+                cooldownBoost = 3000f;
+            }
 
         }
 
@@ -262,6 +267,14 @@ namespace CarGo
                     {
                         return 0;
                     }
+            }
+        }
+
+        private void CalculateCooldowns(GameTime gameTime)
+        {
+            if (cooldownBoost > 0)
+            {
+                cooldownBoost -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
         }
     }

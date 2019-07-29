@@ -18,7 +18,7 @@ namespace CarGo
             texture = textureCollection.GetTexture(TextureType.WorldObject_Rock);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
         }
-        override public void Update()
+        override public void Update(GameTime gameTime)
         {
             //throw new NotImplementedException();
         }
