@@ -20,6 +20,7 @@ namespace CarGo
         private CarFront carFront;
         private CarFrontType carFrontType;
         private ActiveAbility active;
+        private bool noDamage;
 
         //public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }
@@ -70,6 +71,7 @@ namespace CarGo
             hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             carFront = new CarFront(soundCollection, textureCollection, frontType, hitbox);
             carFrontType = frontType;
+            noDamage = false;
 
         }
         override public void Update()
@@ -88,61 +90,87 @@ namespace CarGo
 
         }
 
-        
 
         public override void Collide(Entity entity, EntityType entityType)
         {
 
             Turn(-lastTurn);
             Move((hitbox.Center - entity.Hitbox.Center) * 0.0005f);
-            //Collision with other Player
 
-            if (entity.GetType() == typeof(Player))
+            switch (entityType)
             {
-                (entity as Player).Move(velocity);
-                velocity *= -0.1f;
-                Move(velocity);
-            }
-            // Collision with Cargo
-            if (entity.GetType() == typeof(Cargo))
-            {
-                Move(-velocity);
-                velocity *= -0.05f;
-            }
-            //Collision with Dummy
-            if (entity.GetType() == typeof(EnemyDummy))
-            {
-                entity.Hitbox.Move(velocity);
-                if(carFront.CheckCollision(entity))
-                {
-                    entity.TakeDamage(CalculateDamage());
-                    entity.GetPushed(velocity);
-                    velocity *= 0.5f;
-                }
-                else
-                {
-                    this.TakeDamage(100);
-                }
-            }
-            //Collision with Rock
-            if (entity.GetType() == typeof(Rock))
-            {
-                Move(-velocity);
-                velocity *= -0.05f;
-            }
-            //Collision with Cactus
-            if (entity.GetType() == typeof(Cactus))
-            {
-                if(!(entity as Cactus).isActivated)
-                {
-                    velocity *= 0.1f;
-                }
-                else
-                {
-                    Turn(-lastTurn);
-                }
+
+                //Collision with Other Players
+                case EntityType.Player:                            
+                    {
+                        (entity as Player).Move(velocity);
+                        velocity *= -0.1f;
+                        Move(velocity);
+                        break;
+                    }
+
+                //Collision with Cargo
+                case EntityType.Cargo:
+                    {
+                        Move(-velocity);
+                        velocity *= -0.05f;
+                        break;
+                    }
+
+                //Collision with Enemies
+                case EntityType.Enemy:
+                    {
+                        //Collision with Dummy
+                        if (entity.GetType() == typeof(EnemyDummy))
+                        {
+                            if (carFront.CheckCollision(entity))
+                            {
+                                entity.Hitbox.Move(velocity);
+                                entity.TakeDamage(CalculateDamage());
+                                entity.GetPushed(velocity);
+                                velocity *= 0.5f;
+                                noDamage = true;
+                            }
+                            else
+                            {
+                                noDamage = false;
+                                entity.Hitbox.Move(velocity);
+                            }
+                        }
+                        break;
+                    }
+
+                //Collision with Worldobjects
+                case EntityType.WorldObject:
+                    {
+                        //Collision with Rock
+                        if (entity.GetType() == typeof(Rock))
+                        {
+                            Move(-velocity);
+                            velocity *= -0.05f;
+                        }
+
+                        //Collision with Cactus
+                        if (entity.GetType() == typeof(Cactus))
+                        {
+                            if (!(entity as Cactus).isActivated)
+                            {
+                                velocity *= 0.1f;
+                            }
+                            else
+                            {
+                                Turn(-lastTurn);
+                            }
+                        }
+
+                        break;
+                    }
+
+                default: break;
             }
         }
+
+
 
         public override void GetPushed(Vector2 direction)
         {
@@ -208,7 +236,7 @@ namespace CarGo
         }
         public override void TakeDamage(int damage)
         {
-            hitpoints -= damage;
+            if (!noDamage) hitpoints -= damage;
         }
         private int CalculateDamage()
         {
