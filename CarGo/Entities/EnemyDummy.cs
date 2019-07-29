@@ -58,17 +58,17 @@ namespace CarGo
                 return;
             }
 
-            switch (entityType)
+            switch (entityCategory)
             {
                 //Collision with Player
-                case EntityType.Player:
+                case EntityCategory.Player:
                     {
                         //entity.TakeDamage(100);
                         break;
                     }
 
                 //Collision with Cargo
-                case EntityType.Cargo:
+                case EntityCategory.Cargo:
                     {
                         if (entity.GetType() == typeof(Cargo))
                         {
@@ -81,7 +81,7 @@ namespace CarGo
                     }
 
                 //Collision with Enemies
-                case EntityType.Enemy:
+                case EntityCategory.Enemy:
                     {
 
                         //Collision with Dummy
@@ -121,7 +121,7 @@ namespace CarGo
                     }
 
                 //Collision with WorldObjects
-                case EntityType.WorldObject:
+                case EntityCategory.WorldObject:
                     {
 
                         //Collision with Rock
