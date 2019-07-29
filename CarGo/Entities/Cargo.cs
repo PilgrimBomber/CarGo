@@ -33,7 +33,7 @@ namespace CarGo
             //throw new NotImplementedException();
         }
 
-        public override void Collide(Entity entity)
+        public override void Collide(Entity entity, EntityType entityType)
         {
             if (carFront.CheckCollision(entity))
             {

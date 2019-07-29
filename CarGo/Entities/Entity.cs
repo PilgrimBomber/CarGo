@@ -13,13 +13,15 @@ namespace CarGo
 
     interface ICollidable
     {
-        void Collide(Entity entity);
+        void Collide(Entity entity, EntityType entityType);
     }
 
     interface IUpdateable
     {
         void Update();
     }
+
+    public enum EntityType { Player, Cargo, Enemy, WorldObject}
 
     public abstract class Entity: ICollidable,IUpdateable//, IDrawable
     {
@@ -39,7 +41,7 @@ namespace CarGo
         //int IDrawable.DrawOrder => throw new NotImplementedException();
         //bool IDrawable.Visible => throw new NotImplementedException();
 
-        public abstract void Collide(Entity entity);
+        public abstract void Collide(Entity entity, EntityType entityType);
         public abstract void Update();
         public abstract void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset);
         public abstract void GetPushed(Vector2 direction);

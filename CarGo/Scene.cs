@@ -21,7 +21,7 @@ namespace CarGo
         private List<Player> players;
         private List<BaseEnemy> enemies;
         private List<WorldObject> worldObjects;
-        private Cargo cargo;
+        private List<Cargo> cargos;
         private ContentManager content;
         private LevelControl levelControl;
         private Tilemap tilemap;
@@ -35,16 +35,16 @@ namespace CarGo
             players = new List<Player>();
             enemies = new List<BaseEnemy>();
             worldObjects = new List<WorldObject>();
-            
+            cargos = new List<Cargo>();
+
             camera = new Camera(spriteBatch,screenSize);
-            collisionCheck = new CollisionCheck();
+            collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects);
             levelControl = new LevelControl(this,content);
             tilemap = new Tilemap(1, content);
             soundCollection = new SoundCollection(content);
             textureCollection = new TextureCollection(content);
-            this.addCargo(screenSize / 2);
             //enemyAI = new EnemyAI(tilemap, enemies, cargo);
-            enemyAI = new EnemyAI(worldObjects, enemies, cargo);
+            enemyAI = new EnemyAI(worldObjects, enemies, cargos);
             this.content = content;
 
         }
@@ -67,7 +67,8 @@ namespace CarGo
 
         public void Update(GameTime gameTime)
         {
-            collisionCheck.CheckCollisons(entities);
+            //collisionCheck.CheckCollisons(entities);
+            collisionCheck.CheckCollisions();
             foreach (Entity entity in entities)
             {
                 entity.Update();
@@ -75,7 +76,7 @@ namespace CarGo
             RemoveDeadEntities();
             levelControl.Update(gameTime);
             enemyAI.Update();
-            camera.Update(cargo, players);
+            camera.Update(cargos.First(), players);
 
         }
 
@@ -152,11 +153,9 @@ namespace CarGo
 
         public void addCargo(Vector2 center)
         {
-            if (this.cargo == null)
-            {
-                this.cargo = new Cargo(soundCollection, textureCollection, this, center);
-                entities.Add(cargo);
-            }
+            Cargo cargo = new Cargo(soundCollection, textureCollection, this, center);
+            cargos.Add(cargo);
+            entities.Add(cargo);
         }
         
         private void addEntity(Entity entity)

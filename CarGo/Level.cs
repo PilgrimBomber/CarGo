@@ -46,8 +46,9 @@ namespace CarGo
                 {
                     switch(i)
                     {
-                        case 0://Add Dummy
+                        case 0:
                             eventTriggered[0] = true;
+                            scene.addCargo(new Vector2(1920 / 2, 1080 / 2));
                             scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1200,800));
                             scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1250,750));
                             scene.addEnemy(EnemyType.EnemyDummy, new Vector2(200, 600));

@@ -13,26 +13,6 @@ namespace CarGo
     {
         public int indexX;
         public int indexY;
-        override public void Update()
-        {
-            throw new NotImplementedException();
-        }
-
-        public override void Collide(Entity entity)
-        {
-            throw new NotImplementedException();
-        }
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
-        {
-            throw new NotImplementedException();
-        }
-        public override void GetPushed(Vector2 direction)
-        {
-            throw new NotImplementedException();
-        }
-        public override void TakeDamage(int damage)
-        {
-            throw new NotImplementedException();
-        }
+        
     }
 }

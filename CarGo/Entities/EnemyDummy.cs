@@ -49,7 +49,7 @@ namespace CarGo
             
         }
 
-        public override void Collide(Entity entity)
+        public override void Collide(Entity entity, EntityType entityType)
         {
             hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.005f);
             if (noCollision)

@@ -11,9 +11,16 @@ namespace CarGo
 {
     public class CollisionCheck
     {
-        public CollisionCheck()
+        List<Cargo> cargos;
+        List<Player> players;
+        List<BaseEnemy> enemies;
+        List<WorldObject> worldObjects;
+        public CollisionCheck(List<Cargo> cargos, List<Player> players, List<BaseEnemy> enemies, List<WorldObject> worldObjects)
         {
-
+            this.cargos = cargos;
+            this.players = players;
+            this.enemies = enemies;
+            this.worldObjects = worldObjects;
         }
         public void CheckCollisons(List<Entity> entities)
         {
@@ -23,13 +30,121 @@ namespace CarGo
                 {
                     if(CheckCollision(entities[i].Hitbox,entities[j].Hitbox))
                     {
-                        entities[i].Collide(entities[j]);
-                        entities[j].Collide(entities[i]);
+                        entities[i].Collide(entities[j], EntityType.Player);
+                        entities[j].Collide(entities[i], EntityType.Player);
                     }
                 }
             }
         }
 
+        public void CheckCollisions()
+        {
+            //Player
+            for (int i=0; i<players.Count;i++)
+            {
+                //Player - Player
+                for (int j = i+1; j < players.Count; j++)
+                {
+                    if(CheckCollision(players[i],players[j]))
+                    {
+                        players[i].Collide(players[j], EntityType.Player);
+                        players[j].Collide(players[i], EntityType.Player);
+                    }  
+                }
+
+                //Player - Cargos
+                for (int j = 0; j < cargos.Count; j++)
+                {
+                    if (CheckCollision(players[i], cargos[j]))
+                    {
+                        players[i].Collide(cargos[j], EntityType.Cargo);
+                        cargos[j].Collide(players[i], EntityType.Player);
+                    }
+                }
+                //Player - Enemies
+                for (int j = 0; j < enemies.Count; j++)
+                {
+                    if (CheckCollision(players[i], enemies[j]))
+                    {
+                        players[i].Collide(enemies[j], EntityType.Enemy);
+                        enemies[j].Collide(players[i], EntityType.Player);
+                    }
+                }
+                //Player - WorldObject
+                for (int j = 0; j < worldObjects.Count; j++)
+                {
+                    if (CheckCollision(players[i], worldObjects[j]))
+                    {
+                        players[i].Collide(worldObjects[j], EntityType.WorldObject);
+                        worldObjects[j].Collide(players[i], EntityType.Player);
+                    }
+                }
+            }
+
+            //Cargo
+            for (int i = 0; i < cargos.Count; i++)
+            {
+                //Cargo - Cargo
+                for (int j = i+1;j<cargos.Count ; j++)
+                {
+                    if (CheckCollision(cargos[i], cargos[j]))
+                    {
+                        cargos[i].Collide(cargos[j], EntityType.Cargo);
+                        cargos[j].Collide(cargos[i], EntityType.Cargo);
+                    }
+                }
+
+                //Cargo - Enemy
+                for (int j = 0; j < enemies.Count; j++)
+                {
+                    if (CheckCollision(cargos[i], enemies[j]))
+                    {
+                        cargos[i].Collide(enemies[j], EntityType.Enemy);
+                        enemies[j].Collide(cargos[i], EntityType.Cargo);
+                    }
+                }
+
+                ////Cargo - WorldObject
+                //for (int j = 0; j < worldObjects.Count; j++)
+                //{
+                //    if (CheckCollision(cargos[i], worldObjects[j]))
+                //    {
+                //        cargos[i].Collide(worldObjects[j], EntityType.WorldObject);
+                //        worldObjects[j].Collide(cargos[i], EntityType.Cargo);
+                //    }
+                //}
+            }
+
+            //Enemy
+            for (int i =0; i<enemies.Count; i++)
+            {
+                //Enemy - Enemy
+                for (int j = 0; j < enemies.Count; j++)
+                {
+                    if (CheckCollision(enemies[i], enemies[j]))
+                    {
+                        enemies[i].Collide(enemies[j], EntityType.Enemy);
+                        enemies[j].Collide(enemies[i], EntityType.Enemy);
+                    }
+                }
+                //Enemy - WorldObject
+                for (int j = 0; j < worldObjects.Count; j++)
+                {
+                    if (CheckCollision(enemies[i], worldObjects[j]))
+                    {
+                        enemies[i].Collide(worldObjects[j], EntityType.WorldObject);
+                        worldObjects[j].Collide(enemies[i], EntityType.Enemy);
+                    }
+                }
+            }
+        }
+
+        
+
+        public static bool CheckCollision(Entity e1, Entity e2)
+        {
+            return CheckCollision(e1.Hitbox, e2.Hitbox);
+        }
         public static bool CheckCollision(RotRectangle r1,RotRectangle r2)
         {
             //Check if they are not in range of each other

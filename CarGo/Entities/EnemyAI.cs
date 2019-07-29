@@ -19,28 +19,31 @@ namespace CarGo
         private bool usingAStar;
         List<BaseEnemy> enemies;
         Cargo cargo;
-
+        List<Cargo> cargos;
         List<WorldObject> worldObjects;
 
         private int updateCounter=0;
-        public EnemyAI(Tilemap tilemap, List<BaseEnemy> enemies,Cargo cargo)
+        public EnemyAI(Tilemap tilemap, List<BaseEnemy> enemies,List<Cargo> cargos)
         {
             aStar = new AStar(tilemap);
             this.enemies = enemies;
-            this.cargo = cargo;
+            this.cargos = cargos;
             usingAStar = true;
         }
 
-        public EnemyAI(List<WorldObject> worldObjects, List<BaseEnemy> enemies, Cargo cargo)
+        public EnemyAI(List<WorldObject> worldObjects, List<BaseEnemy> enemies, List<Cargo> cargos)
         {
             this.worldObjects = worldObjects;
             this.enemies = enemies;
-            this.cargo = cargo;
+            this.cargos = cargos;
             usingAStar = false;
         }
 
         public void Update()
         {
+            if(cargo==null)cargo = cargos.First();
+            
+            
             //Grid-Based Version
             if(usingAStar)
             {
@@ -61,7 +64,7 @@ namespace CarGo
                 }
             }
             
-        else
+            else
             {
                 //Direct Move
                 if (updateCounter == 0)

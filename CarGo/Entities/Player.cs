@@ -90,7 +90,7 @@ namespace CarGo
 
         
 
-        public override void Collide(Entity entity)
+        public override void Collide(Entity entity, EntityType entityType)
         {
 
             Turn(-lastTurn);
