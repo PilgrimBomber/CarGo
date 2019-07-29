@@ -57,66 +57,91 @@ namespace CarGo
                 noCollision = false;
                 return;
             }
-            if (entity.GetType() == typeof(EnemyDummy) && !noCollision)
+
+            switch (entityType)
             {
-                if(wasPushed)
-                {
-                    TakeDamage((int)(velocity - entity.Velocity).Length());
-                    entity.Velocity = velocity;
-                    //velocity *= 0.9f;
-                    
-                }
-                else
-                {
-                    if ((entity as EnemyDummy).wasPushed)
+                //Collision with Player
+                case EntityType.Player:
                     {
-                        TakeDamage((int)(velocity - entity.Velocity).Length());
-                        velocity = entity.Velocity;
-                        
-                        //entity.Velocity *= 0.9f;
+                        //entity.TakeDamage(100);
+                        break;
                     }
-                    else
+
+                //Collision with Cargo
+                case EntityType.Cargo:
                     {
-                        Vector2 otherVelocity = (entity as EnemyDummy).Velocity;
-                        (entity as EnemyDummy).Velocity *= -0.4f;
-                        (entity as EnemyDummy).Velocity += velocity * 0.4f;
-                        (entity as EnemyDummy).noCollision = true;
-                        velocity *= -0.4f;
-                        velocity += otherVelocity * 0.4f;
-                        entity.Hitbox.Move(velocity);
-                        entity.Hitbox.Move((entity.Hitbox.Center - hitbox.Center) * 0.05f);
-                        Hitbox.Move(velocity);
+                        if (entity.GetType() == typeof(Cargo))
+                        {
+                            Hitbox.Move(-velocity);
+                            entity.TakeDamage(10);
+                            //hitpoints = 0;
+                            velocity *= -0.05f;
+                        }
+                        break;
                     }
-                        
-                }
-                
-            }
-            
-            //Collision with Cargo
-            if (entity.GetType() == typeof(Cargo))
-            {
-                //Hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.0005f);
-                Hitbox.Move(-velocity);
-                entity.TakeDamage(10);
-                //hitpoints = 0;
-                velocity *= -0.05f;
 
-            }
-            if (entity.GetType() == typeof(Rock) && wasPushed == true)
-            {
-                Hitbox.Move(-velocity);
-                this.TakeDamage((int)velocity.LengthSquared());
-                velocity *= -0.05f;
+                //Collision with Enemies
+                case EntityType.Enemy:
+                    {
 
-            }
-            if (entity.GetType() == typeof(Cactus) && wasPushed == true)
-            {
-                Hitbox.Move(-velocity);
-                this.TakeDamage(20);
-                velocity *= -0.05f;
+                        //Collision with Dummy
+                        if (entity.GetType() == typeof(EnemyDummy) && !noCollision)
+                        {
+                            if (wasPushed)
+                            {
+                                TakeDamage((int)(velocity - entity.Velocity).Length());
+                                entity.Velocity = velocity;
+                                //velocity *= 0.9f;
 
-            }
+                            }
+                            else
+                            {
+                                if ((entity as EnemyDummy).wasPushed)
+                                {
+                                    TakeDamage((int)(velocity - entity.Velocity).Length());
+                                    velocity = entity.Velocity;
 
+                                    //entity.Velocity *= 0.9f;
+                                }
+                                else
+                                {
+                                    Vector2 otherVelocity = (entity as EnemyDummy).Velocity;
+                                    (entity as EnemyDummy).Velocity *= -0.4f;
+                                    (entity as EnemyDummy).Velocity += velocity * 0.4f;
+                                    (entity as EnemyDummy).noCollision = true;
+                                    velocity *= -0.4f;
+                                    velocity += otherVelocity * 0.4f;
+                                    entity.Hitbox.Move(velocity);
+                                    entity.Hitbox.Move((entity.Hitbox.Center - hitbox.Center) * 0.05f);
+                                    Hitbox.Move(velocity);
+                                }
+                            }
+                        }
+                        break;
+                    }
+
+                //Collision with WorldObjects
+                case EntityType.WorldObject:
+                    {
+
+                        //Collision with Rock
+                        if (entity.GetType() == typeof(Rock) && wasPushed == true)
+                        {
+                            Hitbox.Move(-velocity);
+                            this.TakeDamage((int)velocity.LengthSquared());
+                            velocity *= -0.05f;
+                        }
+
+                        //Collision with Cactus
+                        if (entity.GetType() == typeof(Cactus) && wasPushed == true)
+                        {
+                            Hitbox.Move(-velocity);
+                            this.TakeDamage(20);
+                            velocity *= -0.05f;
+                        }
+                        break;
+                    }
+            }
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
         {
