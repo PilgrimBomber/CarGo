@@ -110,6 +110,17 @@ namespace CarGo
                         path.Add(baseEnemy.Hitbox.Center);
                         Search(baseEnemy.Hitbox.Center, cargo.Hitbox.Center, path);
                         baseEnemy.Path = path;
+                        //baseEnemy.Velocity /= baseEnemy.Velocity.Length();
+                        if (baseEnemy.Hitbox.Center.X < cargo.Hitbox.Center.X)
+                        {
+                            baseEnemy.Hitbox.RotationRad = (float)Math.Atan((cargo.Hitbox.Center - baseEnemy.Hitbox.Center).Y / (cargo.Hitbox.Center - baseEnemy.Hitbox.Center).X) + Geometry.DegToRad(90);
+                            //baseEnemy.Velocity *= 2.2f;
+                        }
+                        else
+                        {
+                            baseEnemy.Hitbox.RotationRad = (float)Math.Atan((cargo.Hitbox.Center - baseEnemy.Hitbox.Center).Y / (cargo.Hitbox.Center - baseEnemy.Hitbox.Center).X) - Geometry.DegToRad(90);
+                            //baseEnemy.Velocity *= 1.8f;
+                        }
                     }
 
 
@@ -135,7 +146,6 @@ namespace CarGo
                 float distance = 0;
                 int collisionCount = 0;
                 float shortestDistance = 0;// int.MaxValue;
-                WorldObject closestWorldObject;
                 foreach (WorldObject worldObject in worldObjects)
                 {
                     
