@@ -22,20 +22,20 @@ namespace CarGo
             this.enemies = enemies;
             this.worldObjects = worldObjects;
         }
-        public void CheckCollisons(List<Entity> entities)
-        {
-            for (int i = 0; i <entities.Count-1; i++)
-            {
-                for (int j = i+1; j < entities.Count; j++)
-                {
-                    if(CheckCollision(entities[i].Hitbox,entities[j].Hitbox))
-                    {
-                        entities[i].Collide(entities[j], EntityType.Player);
-                        entities[j].Collide(entities[i], EntityType.Player);
-                    }
-                }
-            }
-        }
+        //public void CheckCollisons(List<Entity> entities)
+        //{
+        //    for (int i = 0; i <entities.Count-1; i++)
+        //    {
+        //        for (int j = i+1; j < entities.Count; j++)
+        //        {
+        //            if(CheckCollision(entities[i].Hitbox,entities[j].Hitbox))
+        //            {
+        //                entities[i].Collide(entities[j], EntityType.Player);
+        //                entities[j].Collide(entities[i], EntityType.Player);
+        //            }
+        //        }
+        //    }
+        //}
 
         public void CheckCollisions()
         {
@@ -228,19 +228,9 @@ namespace CarGo
             
             //Vector2 direction = target - position;
             float angle = (float)Math.Atan(direction.Y / direction.X);
-            RotRectangle line = new RotRectangle(0, position + direction / 2, new Vector2(direction.Length() / 2,25));
+            RotRectangle line = new RotRectangle(0, position + direction / 2, new Vector2(direction.Length() / 2, 25));
             line.Rotate(angle);
             return CheckCollision(rotRectangle, line);
         }
-        //public static bool CheckCollision(Vector2 position, Vector2 direction, ref float distance, RotRectangle obstacle)
-        //{
-
-        //    //Vector2 direction = target - position;
-        //    float angle = (float)Math.Atan(direction.Y / direction.X);
-        //    RotRectangle line = new RotRectangle(0, position + direction / 2, new Vector2(direction.Length() / 2, 10));
-        //    line.Rotate(angle);
-
-        //    return CheckCollision(obstacle, line);
-        //}
     }
 }

@@ -134,7 +134,13 @@ namespace CarGo
             if (entity.GetType() == typeof(Cactus))
             {
                 if(!(entity as Cactus).isActivated)
-                velocity *= 0.1f;
+                {
+                    velocity *= 0.1f;
+                }
+                else
+                {
+                    Turn(-lastTurn);
+                }
             }
         }
 
