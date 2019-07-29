@@ -119,7 +119,7 @@ namespace CarGo
             for (int i =0; i<enemies.Count; i++)
             {
                 //Enemy - Enemy
-                for (int j = 0; j < enemies.Count; j++)
+                for (int j = i+1; j < enemies.Count; j++)
                 {
                     if (CheckCollision(enemies[i], enemies[j]))
                     {

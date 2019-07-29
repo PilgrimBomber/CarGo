@@ -37,7 +37,7 @@ namespace CarGo
             worldObjects = new List<WorldObject>();
             cargos = new List<Cargo>();
 
-            camera = new Camera(spriteBatch,screenSize);
+            camera = new Camera(spriteBatch,screenSize, cargos,players,enemies,worldObjects);
             collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects);
             levelControl = new LevelControl(this,content);
             tilemap = new Tilemap(1, content);
@@ -76,13 +76,13 @@ namespace CarGo
             RemoveDeadEntities();
             levelControl.Update(gameTime);
             enemyAI.Update();
-            camera.Update(cargos.First(), players);
+            camera.Update();
 
         }
 
         public void Draw(GameTime gameTime)
         {
-            camera.Draw(entities, gameTime, tilemap);
+            camera.Draw(gameTime, tilemap);
         }
 
 
