@@ -38,19 +38,15 @@ namespace CarGo
             if (carFront.CheckCollision(entity))
             {
                 entity.Velocity += velocity;
-                //entity.Hitbox.Move(velocity);
                 entity.noCollision = true;
 
-
-                if (entity.GetType() == typeof(Player))
+                switch(entityType)
                 {
-                    (entity as Player).Move(velocity);
-                    //(entity as Player).Velocity += velocity;//entity.Hitbox.Move(velocity);
+                    case EntityType.Player: (entity as Player).Move(velocity); break;
+                    case EntityType.Enemy: entity.Velocity += velocity; (entity as BaseEnemy).wasPushed = true; break;
+                    default: entity.TakeDamage(10000); break;
                 }
-                else
-                {
-                    entity.TakeDamage(10000);
-                }
+                
             }
         }
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)

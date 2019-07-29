@@ -75,8 +75,8 @@ namespace CarGo
             {
                 //Hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.0005f);
                 Hitbox.Move(-velocity);
-                entity.TakeDamage(100);
-                hitpoints = 0;
+                entity.TakeDamage(10);
+                //hitpoints = 0;
                 velocity *= -0.05f;
 
             }
