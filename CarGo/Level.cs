@@ -44,7 +44,7 @@ namespace CarGo
             eventTime[0] = 0;
             eventTime[1] = 4;
             triggerdistance[0] = 0;
-            triggerdistance[1] = 200;
+            triggerdistance[1] = 400;
         }
 
         public override void Update(TimeSpan timer)

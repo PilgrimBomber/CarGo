@@ -27,7 +27,7 @@ namespace CarGo
             //if (isActivated == true) scene.KillEntity(this);
         }
 
-        public override void Collide(Entity entity, EntityType entityType)
+        public override void Collide(Entity entity, EntityCategory entityCategory)
         {
             if(!isActivated)
             {

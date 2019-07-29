@@ -30,8 +30,8 @@ namespace CarGo
         //        {
         //            if(CheckCollision(entities[i].Hitbox,entities[j].Hitbox))
         //            {
-        //                entities[i].Collide(entities[j], EntityType.Player);
-        //                entities[j].Collide(entities[i], EntityType.Player);
+        //                entities[i].Collide(entities[j], entityCategory.Player);
+        //                entities[j].Collide(entities[i], entityCategory.Player);
         //            }
         //        }
         //    }
@@ -47,8 +47,8 @@ namespace CarGo
                 {
                     if(CheckCollision(players[i],players[j]))
                     {
-                        players[i].Collide(players[j], EntityType.Player);
-                        players[j].Collide(players[i], EntityType.Player);
+                        players[i].Collide(players[j], EntityCategory.Player);
+                        players[j].Collide(players[i], EntityCategory.Player);
                     }  
                 }
 
@@ -57,8 +57,8 @@ namespace CarGo
                 {
                     if (CheckCollision(players[i], cargos[j]))
                     {
-                        players[i].Collide(cargos[j], EntityType.Cargo);
-                        cargos[j].Collide(players[i], EntityType.Player);
+                        players[i].Collide(cargos[j], EntityCategory.Cargo);
+                        cargos[j].Collide(players[i], EntityCategory.Player);
                     }
                 }
                 //Player - Enemies
@@ -66,8 +66,8 @@ namespace CarGo
                 {
                     if (CheckCollision(players[i], enemies[j]))
                     {
-                        players[i].Collide(enemies[j], EntityType.Enemy);
-                        enemies[j].Collide(players[i], EntityType.Player);
+                        players[i].Collide(enemies[j], EntityCategory.Enemy);
+                        enemies[j].Collide(players[i], EntityCategory.Player);
                     }
                 }
                 //Player - WorldObject
@@ -75,8 +75,8 @@ namespace CarGo
                 {
                     if (CheckCollision(players[i], worldObjects[j]))
                     {
-                        players[i].Collide(worldObjects[j], EntityType.WorldObject);
-                        worldObjects[j].Collide(players[i], EntityType.Player);
+                        players[i].Collide(worldObjects[j], EntityCategory.WorldObject);
+                        worldObjects[j].Collide(players[i], EntityCategory.Player);
                     }
                 }
             }
@@ -89,8 +89,8 @@ namespace CarGo
                 {
                     if (CheckCollision(cargos[i], cargos[j]))
                     {
-                        cargos[i].Collide(cargos[j], EntityType.Cargo);
-                        cargos[j].Collide(cargos[i], EntityType.Cargo);
+                        cargos[i].Collide(cargos[j], EntityCategory.Cargo);
+                        cargos[j].Collide(cargos[i], EntityCategory.Cargo);
                     }
                 }
 
@@ -99,8 +99,8 @@ namespace CarGo
                 {
                     if (CheckCollision(cargos[i], enemies[j]))
                     {
-                        cargos[i].Collide(enemies[j], EntityType.Enemy);
-                        enemies[j].Collide(cargos[i], EntityType.Cargo);
+                        cargos[i].Collide(enemies[j], EntityCategory.Enemy);
+                        enemies[j].Collide(cargos[i], EntityCategory.Cargo);
                     }
                 }
 
@@ -109,8 +109,8 @@ namespace CarGo
                 //{
                 //    if (CheckCollision(cargos[i], worldObjects[j]))
                 //    {
-                //        cargos[i].Collide(worldObjects[j], EntityType.WorldObject);
-                //        worldObjects[j].Collide(cargos[i], EntityType.Cargo);
+                //        cargos[i].Collide(worldObjects[j], entityCategory.WorldObject);
+                //        worldObjects[j].Collide(cargos[i], entityCategory.Cargo);
                 //    }
                 //}
             }
@@ -123,8 +123,8 @@ namespace CarGo
                 {
                     if (CheckCollision(enemies[i], enemies[j]))
                     {
-                        enemies[i].Collide(enemies[j], EntityType.Enemy);
-                        enemies[j].Collide(enemies[i], EntityType.Enemy);
+                        enemies[i].Collide(enemies[j], EntityCategory.Enemy);
+                        enemies[j].Collide(enemies[i], EntityCategory.Enemy);
                     }
                 }
                 //Enemy - WorldObject
@@ -132,8 +132,8 @@ namespace CarGo
                 {
                     if (CheckCollision(enemies[i], worldObjects[j]))
                     {
-                        enemies[i].Collide(worldObjects[j], EntityType.WorldObject);
-                        worldObjects[j].Collide(enemies[i], EntityType.Enemy);
+                        enemies[i].Collide(worldObjects[j], EntityCategory.WorldObject);
+                        worldObjects[j].Collide(enemies[i], EntityCategory.Enemy);
                     }
                 }
             }

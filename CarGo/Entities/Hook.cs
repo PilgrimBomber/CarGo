@@ -16,7 +16,7 @@ namespace CarGo
             throw new NotImplementedException();
         }
 
-        public override void Collide(Entity entity, EntityType entityType)
+        public override void Collide(Entity entity, EntityCategory entityCategory)
         {
             throw new NotImplementedException();
         }

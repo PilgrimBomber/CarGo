@@ -33,17 +33,17 @@ namespace CarGo
             //throw new NotImplementedException();
         }
 
-        public override void Collide(Entity entity, EntityType entityType)
+        public override void Collide(Entity entity, EntityCategory entityCategory)
         {
             if (carFront.CheckCollision(entity))
             {
                 entity.Velocity += velocity;
                 entity.noCollision = true;
 
-                switch(entityType)
+                switch(entityCategory)
                 {
-                    case EntityType.Player: (entity as Player).Move(velocity); break;
-                    case EntityType.Enemy: entity.Velocity += velocity; (entity as BaseEnemy).wasPushed = true; break;
+                    case EntityCategory.Player: (entity as Player).Move(velocity); break;
+                    case EntityCategory.Enemy: entity.Velocity += velocity; (entity as BaseEnemy).wasPushed = true; break;
                     default: entity.TakeDamage(10000); break;
                 }
                 

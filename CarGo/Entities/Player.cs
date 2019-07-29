@@ -91,17 +91,17 @@ namespace CarGo
         }
 
 
-        public override void Collide(Entity entity, EntityType entityType)
+        public override void Collide(Entity entity, EntityCategory entityCategory)
         {
 
             Turn(-lastTurn);
             Move((hitbox.Center - entity.Hitbox.Center) * 0.0005f);
 
-            switch (entityType)
+            switch (entityCategory)
             {
 
                 //Collision with Other Players
-                case EntityType.Player:                            
+                case EntityCategory.Player:                            
                     {
                         (entity as Player).Move(velocity);
                         velocity *= -0.1f;
@@ -110,7 +110,7 @@ namespace CarGo
                     }
 
                 //Collision with Cargo
-                case EntityType.Cargo:
+                case EntityCategory.Cargo:
                     {
                         Move(-velocity);
                         velocity *= -0.05f;
@@ -118,7 +118,7 @@ namespace CarGo
                     }
 
                 //Collision with Enemies
-                case EntityType.Enemy:
+                case EntityCategory.Enemy:
                     {
                         //Collision with Dummy
                         if (entity.GetType() == typeof(EnemyDummy))
@@ -141,7 +141,7 @@ namespace CarGo
                     }
 
                 //Collision with Worldobjects
-                case EntityType.WorldObject:
+                case EntityCategory.WorldObject:
                     {
                         //Collision with Rock
                         if (entity.GetType() == typeof(Rock))
