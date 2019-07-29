@@ -17,6 +17,9 @@ namespace CarGo
         protected int levelNumber;
         protected Scene scene;
         protected ContentManager content;
+        protected bool[] eventTriggered;
+        protected int[] eventTime;
+        protected int[] triggerdistance;
 
         public virtual void Update(TimeSpan timer)
         {
@@ -25,33 +28,52 @@ namespace CarGo
     }
     class Level1:Level
     {
-        private bool[] eventTriggered;
-        private int[] eventTime;
-        public Level1(Scene scene, ContentManager content)
+        
+        private Vector2 startPosition;
+        private static int numEvents=10;
+        private List<Cargo> cargos;
+        public Level1(Scene scene, ContentManager content, List<Cargo> cargos)
         {
             this.scene = scene;
             this.content = content;
+            this.cargos = cargos;
             levelNumber = 1;
-            eventTriggered = new bool[10];
-            eventTime = new int[10];
+            eventTriggered = new bool[numEvents];
+            eventTime = new int[numEvents];
+            triggerdistance = new int[numEvents];
             eventTime[0] = 0;
             eventTime[1] = 4;
+            triggerdistance[0] = 0;
+            triggerdistance[1] = 200;
         }
 
         public override void Update(TimeSpan timer)
         {
-            for (int i = 0; i < 10; i++)
+            int distanceTravelled=0;
+            if (cargos.Count>0)
             {
-                if (timer.TotalSeconds >= eventTime[i] && !eventTriggered[i])
+                distanceTravelled = (int)(cargos.First().Hitbox.Center - startPosition).Length();
+            }
+            else
+            {
+                scene.addCargo(new Vector2(1920 / 2, 1080 / 2));
+                startPosition = cargos.First().Hitbox.Center;
+            }
+            
+
+            for (int i = 0; i < numEvents; i++)
+            {
+                //if (timer.TotalSeconds >= eventTime[i] && !eventTriggered[i])
+                if(distanceTravelled >= triggerdistance[i] && !eventTriggered[i])
                 {
                     switch(i)
                     {
                         case 0:
                             eventTriggered[0] = true;
-                            scene.addCargo(new Vector2(1920 / 2, 1080 / 2));
-                            //scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1200,800));
-                            //scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1250,750));
-                            //scene.addEnemy(EnemyType.EnemyDummy, new Vector2(200, 600));
+                            
+                            scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1200,800));
+                            scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1250,750));
+                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(200, 600));
                             scene.addCactus(new Vector2 (1200,50));
                             scene.addRock(new Vector2(1200, 700));
                             scene.addRock(new Vector2(1250, 700));

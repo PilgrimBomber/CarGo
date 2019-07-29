@@ -59,15 +59,37 @@ namespace CarGo
             }
             if (entity.GetType() == typeof(EnemyDummy) && !noCollision)
             {
-                Vector2 otherVelocity = (entity as EnemyDummy).Velocity;
-                (entity as EnemyDummy).Velocity *= -0.1f;
-                (entity as EnemyDummy).Velocity += velocity*0.4f;
-                (entity as EnemyDummy).noCollision = true;
-                velocity *= -0.1f;
-                velocity += otherVelocity * 0.4f;
-                entity.Hitbox.Move(velocity);
-                entity.Hitbox.Move((entity.Hitbox.Center- hitbox.Center) * 0.05f);
-                Hitbox.Move(velocity);
+                if(wasPushed)
+                {
+                    TakeDamage((int)(velocity - entity.Velocity).Length());
+                    entity.Velocity = velocity;
+                    //velocity *= 0.9f;
+                    
+                }
+                else
+                {
+                    if ((entity as EnemyDummy).wasPushed)
+                    {
+                        TakeDamage((int)(velocity - entity.Velocity).Length());
+                        velocity = entity.Velocity;
+                        
+                        //entity.Velocity *= 0.9f;
+                    }
+                    else
+                    {
+                        Vector2 otherVelocity = (entity as EnemyDummy).Velocity;
+                        (entity as EnemyDummy).Velocity *= -0.4f;
+                        (entity as EnemyDummy).Velocity += velocity * 0.4f;
+                        (entity as EnemyDummy).noCollision = true;
+                        velocity *= -0.4f;
+                        velocity += otherVelocity * 0.4f;
+                        entity.Hitbox.Move(velocity);
+                        entity.Hitbox.Move((entity.Hitbox.Center - hitbox.Center) * 0.05f);
+                        Hitbox.Move(velocity);
+                    }
+                        
+                }
+                
             }
             
             //Collision with Cargo
@@ -110,13 +132,13 @@ namespace CarGo
 
         private void FollowPath()
         {
-            if(path2!=null)if (Tilemap.CoordinatesWorldToGrid(this).Equals(path2.First()))
-            {
-                path2.RemoveAt(0);
-                velocity = (Tilemap.CoordinatesGridToWorld(path2.First())-this.hitbox.Center);
-                velocity.Normalize();
-                velocity *= 2.5f;
-            }
+            //if(path2!=null)if (Tilemap.CoordinatesWorldToGrid(this).Equals(path2.First()))
+            //{
+            //    path2.RemoveAt(0);
+            //    velocity = (Tilemap.CoordinatesGridToWorld(path2.First())-this.hitbox.Center);
+            //    velocity.Normalize();
+            //    velocity *= 2.5f;
+            //}
 
             if(path!=null)
             {

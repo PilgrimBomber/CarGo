@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
+using System;
 
 namespace CarGo
 {
@@ -22,13 +23,15 @@ namespace CarGo
             graphics = new GraphicsDeviceManager(this);
             graphics.PreferredBackBufferWidth = 1920;
             graphics.PreferredBackBufferHeight = 1080;
-            #if DEBUG
+            this.IsFixedTimeStep = true;//false;
+            this.TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d); //60);
+#if DEBUG
             // Debug Code
 
-            #else
+#else
             // Release Code
             graphics.ToggleFullScreen();
-            #endif
+#endif
             Content.RootDirectory = "Content";
             GameState = GameState.Playing;
         }
@@ -56,11 +59,6 @@ namespace CarGo
             }
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
             if(playercount==0)scene.addPlayer(PlayerIndex.One, new Vector2(400, 400),CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
-
-            //Add Cargo
-            //scene.addCargo(new Vector2(graphics.PreferredBackBufferWidth / 2, graphics.PreferredBackBufferHeight / 2));
-
-
         }
 
         /// <summary>

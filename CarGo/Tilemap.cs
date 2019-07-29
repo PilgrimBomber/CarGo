@@ -10,7 +10,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CarGo
 {
-    public enum CollisionType {noCollision, staticCollision, Slow }
+    
 
     public class Tilemap
     {
@@ -20,7 +20,6 @@ namespace CarGo
         private const int mapWidth = 500;
         private const int mapHeight = 25;
         private int[,] tilemap;
-        private CollisionType[,] collisionMap;
         private List<Texture2D> textures;
         public static readonly Location[] DIRS = new[]
         {
@@ -34,12 +33,10 @@ namespace CarGo
             new Location(-1, -1) // diagonal bottom left
         };
 
-        public CollisionType[,] CollisionMap { get => collisionMap;}
-
+        
         public Tilemap(int levelNumber, ContentManager content)
         {
             tilemap = new int[mapWidth,mapHeight];
-            collisionMap = new CollisionType[mapWidth, mapHeight];
             textures = new List<Texture2D>();
             textures.Add(content.Load<Texture2D>("textures/Tile_0"));
             textures.Add(content.Load<Texture2D>("textures/Enemy_Dummy"));
@@ -55,7 +52,7 @@ namespace CarGo
                 for (int y = 0; y < tilemap.GetLength(0); y++)
                 {
                     tilemap[y, x] = 0 ;//aus datei oder random
-                    collisionMap[y, x] = CollisionType.noCollision;
+                    
                 }
             }
             
@@ -65,11 +62,6 @@ namespace CarGo
             //    tilemap[i, 12] = random.Next() % 3 + 15;
             //    tilemap[i, 13] = random.Next() % 3 + 18;
             //}
-        }
-
-        public void SetCollisionMap(int indexX, int indexY, CollisionType collisionType)
-        {
-            collisionMap[indexX, indexY] = collisionType;
         }
 
         //returns the grid coordinates for input world coordinates
@@ -105,44 +97,6 @@ namespace CarGo
                     spriteBatch.Draw(textures[tilemap[j, i]], new Vector2(constWidth * (j-11)- offset.X, constHeight * (i-4) - offset.Y), Color.White);
                 }
 
-            }
-        }
-
-        public bool InBounds(Location id)
-        {
-            return (0 <= id.x) && (id.x < mapWidth) && (0 <= id.y) && (id.y < mapHeight);
-        }
-
-        // Everything that isn't a Wall is Passable
-        public bool Passable(Location id)
-        {
-            if (collisionMap[id.x, id.y] == CollisionType.staticCollision) return false;
-            else return true;
-        }
-
-        // If the heuristic = 2f, the movement is diagonal
-        public float Cost(Location a, Location b)
-        {
-            float cost = 1000;
-            if (collisionMap[b.x, b.y] == CollisionType.noCollision) cost= 1;
-            if (collisionMap[b.x, b.y] == CollisionType.Slow) cost = 5;
-            if (AStar.Heuristic(a, b) == 2f) cost*= (float)Math.Sqrt(2f);
-
-            return cost;
-
-        }
-
-        // Check the tiles that are next to, above, below, or diagonal to
-        // this tile, and return them if they're within the game bounds and passable
-        public IEnumerable<Location> Neighbors(Location id)
-        {
-            foreach (var dir in DIRS)
-            {
-                Location next = new Location(id.x + dir.x, id.y + dir.y);
-                if (InBounds(next) && Passable(next))
-                {
-                    yield return next;
-                }
             }
         }
     }

@@ -12,10 +12,7 @@ namespace CarGo
 
     public class EnemyAI
     {
-        //private Tilemap tilemap;
-        //private BaseEnemy baseEnemy;
-        //private Cargo cargo;
-        private AStar aStar;
+        //private AStar aStar;
         private bool usingAStar;
         List<BaseEnemy> enemies;
         Cargo cargo;
@@ -25,7 +22,7 @@ namespace CarGo
         private int updateCounter=0;
         public EnemyAI(Tilemap tilemap, List<BaseEnemy> enemies,List<Cargo> cargos)
         {
-            aStar = new AStar(tilemap);
+            //aStar = new AStar(tilemap);
             this.enemies = enemies;
             this.cargos = cargos;
             usingAStar = true;
@@ -47,13 +44,14 @@ namespace CarGo
             //Grid-Based Version
             if(usingAStar)
             {
+                throw new NotImplementedException();
                 if (updateCounter == 0)
                 {
                     foreach (BaseEnemy enemy in enemies)
                     {
                         if (enemy.GetType() == typeof(EnemyDummy))
                         {
-                            (enemy as EnemyDummy).Path2 = aStar.FindPath(Tilemap.CoordinatesWorldToGrid(enemy), Tilemap.CoordinatesWorldToGrid(cargo));
+                            //(enemy as EnemyDummy).Path2 = aStar.FindPath(Tilemap.CoordinatesWorldToGrid(enemy), Tilemap.CoordinatesWorldToGrid(cargo));
                         }
                     }
                 }
@@ -190,107 +188,107 @@ namespace CarGo
 
 
     }
-    public class AStar
-    {
-        private Tilemap tilemap;
-        Location start;
-        Location target;
-        //searchable range of the grid
+    //public class AStar
+    //{
+    //    private Tilemap tilemap;
+    //    Location start;
+    //    Location target;
+    //    //searchable range of the grid
         
-        public Dictionary<Location, Location> cameFrom = new Dictionary<Location, Location>();
-        public Dictionary<Location, float> costSoFar = new Dictionary<Location, float>();
-        public AStar(Tilemap tilemap)
-        {
-            this.tilemap = tilemap;
+    //    public Dictionary<Location, Location> cameFrom = new Dictionary<Location, Location>();
+    //    public Dictionary<Location, float> costSoFar = new Dictionary<Location, float>();
+    //    public AStar(Tilemap tilemap)
+    //    {
+    //        this.tilemap = tilemap;
             
 
             
-        }
+    //    }
 
-        static public float Heuristic(Location a, Location b)
-        {
-            return Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y);
-        }
+    //    static public float Heuristic(Location a, Location b)
+    //    {
+    //        return Math.Abs(a.x - b.x) + Math.Abs(a.y - b.y);
+    //    }
 
-        private void Search(Location start, Location target)
-        {
-            this.start = start;
-            this.target = target;
-            cameFrom.Clear();
-            costSoFar.Clear();
-            var frontier = new PriorityQueue<Location>();
-            // Add the starting location to the frontier with a priority of 0
-            frontier.Enqueue(start, 0f);
+    //    private void Search(Location start, Location target)
+    //    {
+    //        this.start = start;
+    //        this.target = target;
+    //        cameFrom.Clear();
+    //        costSoFar.Clear();
+    //        var frontier = new PriorityQueue<Location>();
+    //        // Add the starting location to the frontier with a priority of 0
+    //        frontier.Enqueue(start, 0f);
 
-            cameFrom.Add(start, start); // is set to start, None in example
-            costSoFar.Add(start, 0f);
+    //        cameFrom.Add(start, start); // is set to start, None in example
+    //        costSoFar.Add(start, 0f);
 
-            while (frontier.Count > 0f)
-            {
-                // Get the Location from the frontier that has the lowest
-                // priority, then remove that Location from the frontier
-                Location current = frontier.Dequeue();
+    //        while (frontier.Count > 0f)
+    //        {
+    //            // Get the Location from the frontier that has the lowest
+    //            // priority, then remove that Location from the frontier
+    //            Location current = frontier.Dequeue();
 
-                // If we're at the goal Location, stop looking.
-                if (current.Equals(target)) break;
+    //            // If we're at the goal Location, stop looking.
+    //            if (current.Equals(target)) break;
 
-                // Neighbors will return a List of valid tile Locations
-                // that are next to, diagonal to, above or below current
-                foreach (var neighbor in tilemap.Neighbors(current))
-                {
+    //            // Neighbors will return a List of valid tile Locations
+    //            // that are next to, diagonal to, above or below current
+    //            foreach (var neighbor in tilemap.Neighbors(current))
+    //            {
 
-                    // If neighbor is diagonal to current, graph.Cost(current,neighbor)
-                    // will return Sqrt(2). Otherwise it will return only the cost of
-                    // the neighbor, which depends on its type, as set in the TileType enum.
-                    // So if this is a normal floor tile (1) and it's neighbor is an
-                    // adjacent (not diagonal) floor tile (1), newCost will be 2,
-                    // or if the neighbor is diagonal, 1+Sqrt(2). And that will be the
-                    // value assigned to costSoFar[neighbor] below.
-                    float newCost = costSoFar[current] + tilemap.Cost(current, neighbor);
+    //                // If neighbor is diagonal to current, graph.Cost(current,neighbor)
+    //                // will return Sqrt(2). Otherwise it will return only the cost of
+    //                // the neighbor, which depends on its type, as set in the TileType enum.
+    //                // So if this is a normal floor tile (1) and it's neighbor is an
+    //                // adjacent (not diagonal) floor tile (1), newCost will be 2,
+    //                // or if the neighbor is diagonal, 1+Sqrt(2). And that will be the
+    //                // value assigned to costSoFar[neighbor] below.
+    //                float newCost = costSoFar[current] + tilemap.Cost(current, neighbor);
 
-                    // If there's no cost assigned to the neighbor yet, or if the new
-                    // cost is lower than the assigned one, add newCost for this neighbor
-                    if (!costSoFar.ContainsKey(neighbor) || newCost < costSoFar[neighbor])
-                    {
+    //                // If there's no cost assigned to the neighbor yet, or if the new
+    //                // cost is lower than the assigned one, add newCost for this neighbor
+    //                if (!costSoFar.ContainsKey(neighbor) || newCost < costSoFar[neighbor])
+    //                {
 
-                        // If we're replacing the previous cost, remove it
-                        if (costSoFar.ContainsKey(neighbor))
-                        {
-                            costSoFar.Remove(neighbor);
-                            cameFrom.Remove(neighbor);
-                        }
+    //                    // If we're replacing the previous cost, remove it
+    //                    if (costSoFar.ContainsKey(neighbor))
+    //                    {
+    //                        costSoFar.Remove(neighbor);
+    //                        cameFrom.Remove(neighbor);
+    //                    }
 
-                        costSoFar.Add(neighbor, newCost);
-                        cameFrom.Add(neighbor, current);
-                        float priority = newCost + Heuristic(neighbor, target);
-                        frontier.Enqueue(neighbor, priority);
-                    }
-                }
-            }
-        }
-        public List<Location> FindPath(Location start, Location target)
-        {
-            Search(start, target);
-            List<Location> path = new List<Location>();
-            Location current = target;
-            // path.Add(current);
+    //                    costSoFar.Add(neighbor, newCost);
+    //                    cameFrom.Add(neighbor, current);
+    //                    float priority = newCost + Heuristic(neighbor, target);
+    //                    frontier.Enqueue(neighbor, priority);
+    //                }
+    //            }
+    //        }
+    //    }
+    //    public List<Location> FindPath(Location start, Location target)
+    //    {
+    //        Search(start, target);
+    //        List<Location> path = new List<Location>();
+    //        Location current = target;
+    //        // path.Add(current);
 
-            while (!current.Equals(start))
-            {
-                //if (!cameFrom.ContainsKey(current))
-                //{
-                //    //MonoBehaviour.print("cameFrom does not contain current.");
-                //    return new List<Location>();
-                //}
-                path.Add(current);
-                current = cameFrom[current];
-            }
-            path.Add(start);
-            // path.Add(start);
-            path.Reverse();
-            return path;
-        }
-    }
+    //        while (!current.Equals(start))
+    //        {
+    //            //if (!cameFrom.ContainsKey(current))
+    //            //{
+    //            //    //MonoBehaviour.print("cameFrom does not contain current.");
+    //            //    return new List<Location>();
+    //            //}
+    //            path.Add(current);
+    //            current = cameFrom[current];
+    //        }
+    //        path.Add(start);
+    //        // path.Add(start);
+    //        path.Reverse();
+    //        return path;
+    //    }
+    //}
 
 
     public class Location

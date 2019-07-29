@@ -39,7 +39,7 @@ namespace CarGo
 
             camera = new Camera(spriteBatch,screenSize, cargos,players,enemies,worldObjects);
             collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects);
-            levelControl = new LevelControl(this,content);
+            levelControl = new LevelControl(this,content, cargos);
             tilemap = new Tilemap(1, content);
             soundCollection = new SoundCollection(content);
             textureCollection = new TextureCollection(content);
@@ -90,24 +90,14 @@ namespace CarGo
 
         public void addCactus(Vector2 center)
         {
-            int indexX = (int)(center.X / 64);
-            int indexY = (int)(center.Y / 64);
-            tilemap.SetCollisionMap(indexX, indexY, CollisionType.Slow);
-            Cactus cactus = new Cactus(soundCollection, textureCollection, this, new Vector2(indexX * 64 + 32, indexY * 64 + 32));
-            cactus.indexX = indexX;
-            cactus.indexY = indexY;
+            Cactus cactus = new Cactus(soundCollection, textureCollection, this, center);
             addEntity(cactus);
             worldObjects.Add(cactus);
         }
 
         public void addRock(Vector2 center)
         {
-            int indexX = (int)(center.X / 64);
-            int indexY = (int)(center.Y / 64);
-            tilemap.SetCollisionMap(indexX, indexY, CollisionType.staticCollision);
-            Rock rock = new Rock(soundCollection, textureCollection, this, new Vector2(indexX * 64 + 32, indexY * 64 + 32));
-            rock.indexX = indexX;
-            rock.indexY = indexY;
+            Rock rock = new Rock(soundCollection, textureCollection, this, center);
             addEntity(rock);
             worldObjects.Add(rock);
         }
@@ -116,7 +106,6 @@ namespace CarGo
         {
             worldObjects.Remove(worldObject);
             removeEntity(worldObject);
-            tilemap.SetCollisionMap(worldObject.indexX, worldObject.indexY, CollisionType.noCollision);
         }
 
         public void addEnemy(EnemyType enemyType, Vector2 center)
