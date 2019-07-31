@@ -12,45 +12,48 @@ using Microsoft.Xna.Framework.Input;
 namespace CarGo
 {
 
-    abstract class Level
+    public abstract class Level
     {
-        protected int levelNumber;
+        public int levelNumber;
         protected Scene scene;
-        protected ContentManager content;
-        protected bool[] eventTriggered;
-        protected int[] eventTime;
-        protected int[] triggerdistance;
+        //protected ContentManager content;
+        protected Vector2 startPosition;
+        protected List<Cargo> cargos;
+        protected List<SpawnEvent> spawnEvents;
 
-        public virtual void Update(TimeSpan timer)
+        public Level()
         {
-            throw new NotImplementedException();
-        }
-    }
-    class Level1:Level
-    {
-        
-        private Vector2 startPosition;
-        private static int numEvents=10;
-        private List<Cargo> cargos;
-        public Level1(Scene scene, ContentManager content, List<Cargo> cargos)
-        {
-            this.scene = scene;
-            this.content = content;
-            this.cargos = cargos;
-            levelNumber = 1;
-            eventTriggered = new bool[numEvents];
-            eventTime = new int[numEvents];
-            triggerdistance = new int[numEvents];
-            eventTime[0] = 0;
-            eventTime[1] = 4;
-            triggerdistance[0] = 0;
-            triggerdistance[1] = 400;
+
         }
 
-        public override void Update(TimeSpan timer)
+        protected void HandleStartSpawn()
         {
-            int distanceTravelled=0;
-            if (cargos.Count>0)
+            List<SpawnEvent> EventsHappened = new List<SpawnEvent>();
+            foreach (SpawnEvent spawn in spawnEvents)
+            {
+                if (spawn.GetType() == typeof(StartSpawnEvent))
+                {
+                    spawn.SpawnAll(0);
+                    EventsHappened.Add(spawn);
+
+                }
+            }
+            if (EventsHappened.Count > 0)
+            {
+                foreach (SpawnEvent eventsHappened in EventsHappened)
+                {
+                    spawnEvents.Remove(eventsHappened);
+                }
+            }
+        }
+
+        public void Update()
+        {
+            int distanceTravelled = 0;
+            List<SpawnEvent> EventsHappened = new List<SpawnEvent>();
+
+
+            if (cargos.Count > 0)
             {
                 distanceTravelled = (int)(cargos.First().Hitbox.Center - startPosition).Length();
             }
@@ -60,42 +63,150 @@ namespace CarGo
                 startPosition = cargos.First().Hitbox.Center;
             }
             
-
-            for (int i = 0; i < numEvents; i++)
+            foreach (SpawnEvent spawnEvent in spawnEvents)
             {
-                //if (timer.TotalSeconds >= eventTime[i] && !eventTriggered[i])
-                if(distanceTravelled >= triggerdistance[i] && !eventTriggered[i])
+                if (spawnEvent.CheckDistance(distanceTravelled))
                 {
-                    switch(i)
-                    {
-                        case 0:
-                            eventTriggered[0] = true;
-                            
-                            scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1200,800));
-                            scene.addEnemy(EnemyType.EnemyDummy,new Vector2(1250,750));
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(200, 600));
-                            scene.addCactus(new Vector2 (1200,50));
-                            scene.addRock(new Vector2(1200, 700));
-                            scene.addRock(new Vector2(1250, 700));
-                            scene.addRock(new Vector2(1150, 700));
-                            break;
-                        case 1:
-                            eventTriggered[1] = true;
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3000, 540));
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3300, 540));
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3600, 520));
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(3800, 200));
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2200, 800));
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2300, 200));
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2400, 800));
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2500, 200));
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2600, 800));
-                            scene.addEnemy(EnemyType.EnemyDummy, new Vector2(2700, 200));
-                            break;
-                    }
+                    spawnEvent.SpawnAll(distanceTravelled);
+                    EventsHappened.Add(spawnEvent);
+
                 }
             }
-            
+            //remove Events
+            if (EventsHappened.Count > 0)
+            {
+                foreach (SpawnEvent eventsHappened in EventsHappened)
+                {
+                    spawnEvents.Remove(eventsHappened);
+                }
+            }
+
         }
     }
+
+
+
+    public class SpawnEvent
+    {
+
+        protected List<EntityType> types;
+        protected List<Vector2> offsets;
+        protected int triggerDistance;
+        protected Scene scene;
+        public SpawnEvent(int triggerDistance, Scene scene)
+        {
+            types = new List<EntityType>();
+            offsets = new List<Vector2>();
+            this.triggerDistance = triggerDistance;
+            this.scene = scene;
+        }
+
+        /// <summary>
+        /// Adds an entity to an SpawnEvent
+        /// Relative Position must be outside [-1620,3540] [-780,1860]
+        /// </summary>
+        /// <param name="entityType"></param>
+        /// <param name="relativePositionX"></param>
+        /// <param name="relativePositionY"></param>
+        public virtual void AddSpawn(EntityType entityType, int relativePositionX, int relativePositionY)
+        {
+            //Values must be outside [-300,2220] [-300,1380]
+            if (entityType == EntityType.Cargo || entityType == EntityType.Player) throw new ArgumentOutOfRangeException();
+            types.Add(entityType);
+            if (relativePositionX > -1620 && relativePositionX < 3540 && relativePositionY > -780 && relativePositionY < 1860) throw new ArgumentOutOfRangeException();
+
+            offsets.Add(new Vector2(relativePositionX, relativePositionY));
+        }
+
+        public virtual void SpawnAll(int distanceTravelled)
+        {
+            for (int i = 0; i < types.Count; i++)
+            {
+
+                Vector2 Position = new Vector2(offsets[i].X + distanceTravelled, offsets[i].Y);
+                switch (types[i])
+                {
+                    case EntityType.Cactus: scene.addCactus(Position); break;
+                    case EntityType.EnemyDummy: scene.addEnemy(EnemyType.EnemyDummy, Position); break;
+                    case EntityType.Rock: scene.addRock(Position); break;
+                }
+
+            }
+        }
+
+        public bool CheckDistance(int distanceTravelled)
+        {
+            return distanceTravelled > triggerDistance;
+        }
+    }
+
+    public class StartSpawnEvent:SpawnEvent
+    {
+        private int numPlayers;
+        public StartSpawnEvent(Scene scene, int numPlayers):base(0,scene)
+        {
+            this.numPlayers = numPlayers;
+        }
+
+        public override void AddSpawn(EntityType entityType, int relativePositionX, int relativePositionY)
+        {
+            types.Add(entityType);
+            offsets.Add(new Vector2(relativePositionX, relativePositionY));
+        }
+
+        //public void AddPlayer(int relativePositionX, int relativePositionY)
+        //{
+
+        //}
+
+        public override void SpawnAll(int distanceTravelled)
+        {
+            for (int i = 0; i < types.Count; i++)
+            {
+
+                Vector2 Position = new Vector2(offsets[i].X + distanceTravelled, offsets[i].Y);
+                switch (types[i])
+                {
+                    case EntityType.Cactus: scene.addCactus(Position); break;
+                    case EntityType.EnemyDummy: scene.addEnemy(EnemyType.EnemyDummy, Position); break;
+                    case EntityType.Rock: scene.addRock(Position); break;
+                    case EntityType.Player: scene.addPlayer(PlayerIndex.One, Position,CarType.Medium,CarFrontType.Bumper,AbilityType.RocketLauncher); break;
+                }
+
+            }
+        }
+    }
+
+
+    public class Level1:Level
+    {
+        
+        public Level1(Scene scene, ContentManager content, List<Cargo> cargos)
+        {
+            this.scene = scene;
+            //this.content = content;
+            this.cargos = cargos;
+            levelNumber = 1;
+            spawnEvents = new List<SpawnEvent>();
+
+            spawnEvents.Add(new StartSpawnEvent(scene, 1));
+            spawnEvents[0].AddSpawn(EntityType.Cargo, 960, 540);
+            spawnEvents[0].AddSpawn(EntityType.Player, 400, 800);
+            spawnEvents[0].AddSpawn(EntityType.Rock, 1300, 200);
+
+            spawnEvents.Add(new SpawnEvent(0, scene));
+            spawnEvents[1].AddSpawn(EntityType.EnemyDummy, 3600,540);
+            spawnEvents[1].AddSpawn(EntityType.Rock, 3600, 300);
+
+
+            spawnEvents.Add(new SpawnEvent(500, scene));
+            spawnEvents[2].AddSpawn(EntityType.EnemyDummy, 2221, 1900);
+
+            HandleStartSpawn();
+        }
+
+        
+    }
+
+    
 }

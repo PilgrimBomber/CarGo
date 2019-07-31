@@ -22,10 +22,10 @@ namespace CarGo
             timer = TimeSpan.Zero;
         }
 
-        public void Update(GameTime gameTime)
+        public void Update()
         {
-            timer += gameTime.ElapsedGameTime;
-            level.Update(timer);
+            //timer += gameTime.ElapsedGameTime;
+            level.Update();
             
             
         }

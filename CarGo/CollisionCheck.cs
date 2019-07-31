@@ -114,7 +114,7 @@ namespace CarGo
                 //    }
                 //}
             }
-
+            
             //Enemy
             for (int i =0; i<enemies.Count; i++)
             {
@@ -139,12 +139,25 @@ namespace CarGo
             }
         }
 
-        
 
+        /// <summary>
+        /// Checks Collision of two Entities hitboxes
+        /// </summary>
+        /// <param name="e1">first Enitity</param>
+        /// <param name="e2">second Entity</param>
+        /// <returns>True, if there is a collision</returns>
         public static bool CheckCollision(Entity e1, Entity e2)
         {
             return CheckCollision(e1.Hitbox, e2.Hitbox);
         }
+
+
+        /// <summary>
+        /// Checks Collision of two rotated Rectangles
+        /// </summary>
+        /// <param name="r1"></param>
+        /// <param name="r2"></param>
+        /// <returns>True, if there is a collision</returns>
         public static bool CheckCollision(RotRectangle r1,RotRectangle r2)
         {
             //Check if they are not in range of each other
@@ -223,6 +236,13 @@ namespace CarGo
             }
         }
 
+        /// <summary>
+        /// Checks if rotRectangle blocks the Path from position in direction
+        /// </summary>
+        /// <param name="position"></param>
+        /// <param name="direction"></param>
+        /// <param name="rotRectangle"></param>
+        /// <returns></returns>
         public static bool CheckCollision(Vector2 position, Vector2 direction, RotRectangle rotRectangle)
         {
             

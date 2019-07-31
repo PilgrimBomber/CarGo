@@ -230,7 +230,7 @@ namespace CarGo
             if (velocity.Length() < maxSpeed && cooldownBoost<=0)
             {
                 velocity += new Vector2(80 * acceleration * (float)Math.Sin(hitbox.RotationRad), 80 * -acceleration * (float)Math.Cos(hitbox.RotationRad));
-                cooldownBoost = 3000f;
+                cooldownBoost = 1000f;
             }
 
         }

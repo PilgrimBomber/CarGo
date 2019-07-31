@@ -37,12 +37,13 @@ namespace CarGo
             worldObjects = new List<WorldObject>();
             cargos = new List<Cargo>();
 
+            soundCollection = new SoundCollection(content);
+            textureCollection = new TextureCollection(content);
             camera = new Camera(spriteBatch,screenSize, cargos,players,enemies,worldObjects);
             collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects);
             levelControl = new LevelControl(this,content, cargos);
             tilemap = new Tilemap(1, content);
-            soundCollection = new SoundCollection(content);
-            textureCollection = new TextureCollection(content);
+            
             //enemyAI = new EnemyAI(tilemap, enemies, cargo);
             enemyAI = new EnemyAI(worldObjects, enemies, cargos);
             this.content = content;
@@ -74,7 +75,7 @@ namespace CarGo
                 entity.Update(gameTime);
             }
             RemoveDeadEntities();
-            levelControl.Update(gameTime);
+            levelControl.Update();
             enemyAI.Update(gameTime);
             camera.Update();
 
