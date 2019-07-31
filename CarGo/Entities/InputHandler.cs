@@ -23,7 +23,7 @@ namespace CarGo
 
         public void HandleInput()
         {
-            if(player.PlayerIndex==PlayerIndex.Two)KeyboardInput();
+            if(player.PlayerIndex==PlayerIndex.Four)KeyboardInput();
 
             GamepadInput();
         }
@@ -50,6 +50,10 @@ namespace CarGo
                 if (state.IsButtonDown(Buttons.LeftShoulder) && previousState.IsButtonUp(Buttons.LeftShoulder))
                 {
                     player.Boost();
+                }
+                if (state.IsButtonDown(Buttons.Y) && previousState.IsButtonUp(Buttons.Y))
+                {
+                    player.Horn();
                 }
 
                 previousState = state;
@@ -80,6 +84,10 @@ namespace CarGo
             if (keyboardstate.IsKeyDown(Keys.LeftShift) && previousKeyBoardState.IsKeyUp(Keys.LeftShift))
             {
                 player.Boost();
+            }
+            if (keyboardstate.IsKeyDown(Keys.Space) && previousKeyBoardState.IsKeyUp(Keys.Space))
+            {
+                player.Horn();
             }
 
             previousKeyBoardState = keyboardstate;

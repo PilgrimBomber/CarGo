@@ -13,7 +13,7 @@ namespace CarGo
 {
     public class EnemyDummy : BaseEnemy
     {
-        SoundEffectInstance crashSound;
+        SoundEffectInstance soundCrash;
 
         private List<Location> path2;
         public List<Location> Path2 { get => path2; set => path2 = value; }
@@ -23,7 +23,7 @@ namespace CarGo
             this.scene = scene;
             //Set dummy texture
             texture = textureCollection.GetTexture(TextureType.Enemy_Zombie);
-            crashSound = soundCollection.GetInstance(SoundType.Crash_Dummy);
+            soundCrash = soundCollection.GetInstance(SoundType.Crash_Dummy);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             velocity *= 0f;
             wasPushed = false;
@@ -150,8 +150,8 @@ namespace CarGo
         public override void GetPushed(Vector2 direction)
         {
             velocity += 1.5f * direction;
-            crashSound.Volume = 0.1f;
-            crashSound.Play();
+            soundCrash.Volume = 0.1f;
+            soundCrash.Play();
             wasPushed = true;
         }
 

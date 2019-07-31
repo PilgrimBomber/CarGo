@@ -16,7 +16,9 @@ namespace CarGo
         Crash_Dummy,
         Car_Accelerate,
         Car_Background,
-        Car_Boost
+        Car_Boost,
+        Car_Horn
+            
     }
     public class SoundCollection
     {
@@ -39,6 +41,9 @@ namespace CarGo
                         break;
                     case SoundType.Car_Boost:
                         effects.Add(content.Load<SoundEffect>("sounds/Car_Boost"));
+                        break;
+                    case SoundType.Car_Horn:
+                        effects.Add(content.Load<SoundEffect>("sounds/Car_Horn"));
                         break;
                 }
             }

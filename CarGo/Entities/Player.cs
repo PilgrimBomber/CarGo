@@ -26,6 +26,7 @@ namespace CarGo
         private SoundEffectInstance soundAcceleration;
         private SoundEffectInstance soudBackground;
         private SoundEffectInstance soundBoost;
+        private SoundEffectInstance soundHorn;
 
         //public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }
@@ -42,6 +43,8 @@ namespace CarGo
             soudBackground.Volume = 0.2f;
             soundBoost = soundCollection.GetInstance(SoundType.Car_Boost);
             soundBoost.Volume = 0.7f;
+            soundHorn = soundCollection.GetInstance(SoundType.Car_Horn);
+            soundHorn.Volume = 0.3f;
             switch(carType)
             {
                 case CarType.Small:
@@ -261,6 +264,11 @@ namespace CarGo
                 cooldownBoost = 1000f;
             }
 
+        }
+
+        public void Horn()
+        {
+            soundHorn.Play();
         }
 
         public void Active()

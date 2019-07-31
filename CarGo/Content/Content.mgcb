@@ -31,6 +31,12 @@
 /processorParam:Quality=Best
 /build:sounds/Car_Boost.wav
 
+#begin sounds/Car_Horn.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Car_Horn.wav
+
 #begin sounds/Enemy_Monster_Hit.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
