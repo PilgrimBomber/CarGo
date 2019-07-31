@@ -23,7 +23,8 @@ namespace CarGo
 
         public void HandleInput()
         {
-            KeyboardInput();
+            if(player.PlayerIndex==PlayerIndex.Two)KeyboardInput();
+
             GamepadInput();
         }
 

@@ -13,7 +13,10 @@ namespace CarGo
 
     public enum SoundType
     {
-        Crash_Dummy
+        Crash_Dummy,
+        Car_Accelerate,
+        Car_Background,
+        Car_Boost
     }
     public class SoundCollection
     {
@@ -27,6 +30,15 @@ namespace CarGo
                 {
                     case SoundType.Crash_Dummy:
                         effects.Add(content.Load<SoundEffect>("sounds/Enemy_Monster_Hit"));
+                        break;
+                    case SoundType.Car_Accelerate:
+                        effects.Add(content.Load<SoundEffect>("sounds/Car_Accelerate"));
+                        break;
+                    case SoundType.Car_Background:
+                        effects.Add(content.Load<SoundEffect>("sounds/Car_Background"));
+                        break;
+                    case SoundType.Car_Boost:
+                        effects.Add(content.Load<SoundEffect>("sounds/Car_Boost"));
                         break;
                 }
             }

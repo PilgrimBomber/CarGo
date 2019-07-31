@@ -154,10 +154,10 @@ namespace CarGo
             offsets.Add(new Vector2(relativePositionX, relativePositionY));
         }
 
-        //public void AddPlayer(int relativePositionX, int relativePositionY)
-        //{
+        public void AddPlayer(int relativePositionX, int relativePositionY)
+        {
 
-        //}
+        }
 
         public override void SpawnAll(int distanceTravelled)
         {
@@ -191,7 +191,7 @@ namespace CarGo
 
             spawnEvents.Add(new StartSpawnEvent(scene, 1));
             spawnEvents[0].AddSpawn(EntityType.Cargo, 960, 540);
-            spawnEvents[0].AddSpawn(EntityType.Player, 400, 800);
+            //spawnEvents[0].AddSpawn(EntityType.Player, 400, 800);
             spawnEvents[0].AddSpawn(EntityType.Rock, 1300, 200);
 
             spawnEvents.Add(new SpawnEvent(0, scene));

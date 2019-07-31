@@ -13,6 +13,24 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin sounds/Car_Accelerate.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Car_Accelerate.wav
+
+#begin sounds/Car_Background.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Car_Background.wav
+
+#begin sounds/Car_Boost.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Car_Boost.wav
+
 #begin sounds/Enemy_Monster_Hit.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

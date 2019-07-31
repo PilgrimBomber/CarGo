@@ -59,6 +59,8 @@ namespace CarGo
             }
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
             //if(playercount==0)scene.addPlayer(PlayerIndex.One, new Vector2(400, 400),CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
+            //scene.addPlayer(PlayerIndex.One, new Vector2(400, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
+            scene.addPlayer(PlayerIndex.Two, new Vector2(800, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
         }
 
         /// <summary>
@@ -111,8 +113,16 @@ namespace CarGo
         {
             GraphicsDevice.Clear(Color.Cornsilk);
 
-            // TODO: Add your drawing code here
-            scene.Draw(gameTime);
+            switch (this.GameState)
+            {
+                case GameState.Playing:
+                    scene.Draw(gameTime);
+                    break;
+                case GameState.Pause:
+                    break;
+                default: break; ;
+            }
+            
         }
     }
 }

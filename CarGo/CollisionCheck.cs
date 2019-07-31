@@ -48,7 +48,7 @@ namespace CarGo
                     if(CheckCollision(players[i],players[j]))
                     {
                         players[i].Collide(players[j], EntityCategory.Player);
-                        players[j].Collide(players[i], EntityCategory.Player);
+                        //players[j].Collide(players[i], EntityCategory.Player);
                     }  
                 }
 

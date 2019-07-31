@@ -1,6 +1,7 @@
 ﻿using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using System;
 
 namespace CarGo
@@ -22,6 +23,9 @@ namespace CarGo
         private ActiveAbility active;
         private bool noDamage;
         private float cooldownBoost = 0;
+        private SoundEffectInstance soundAcceleration;
+        private SoundEffectInstance soudBackground;
+        private SoundEffectInstance soundBoost;
 
         //public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }
@@ -33,7 +37,11 @@ namespace CarGo
             this.playerIndex = playerIndex;
             this.scene = scene;
             inputHandler = new InputHandler(this, playerIndex);
-           
+            soundAcceleration = soundCollection.GetInstance(SoundType.Car_Accelerate);
+            soudBackground = soundCollection.GetInstance(SoundType.Car_Background);
+            soudBackground.Volume = 0.2f;
+            soundBoost = soundCollection.GetInstance(SoundType.Car_Boost);
+            soundBoost.Volume = 0.7f;
             switch(carType)
             {
                 case CarType.Small:
@@ -85,6 +93,15 @@ namespace CarGo
             CalculateCooldowns(gameTime);
             Move(velocity);
 
+            if(velocity.Length()>0.2)
+            {
+                soudBackground.Play();
+            }
+            else
+            {
+                soudBackground.Pause();
+            }
+
             //Slow the car over time
             velocity *= 0.98f;
             //if (velocity.Length() < 0.03) velocity *= 0;
@@ -104,9 +121,14 @@ namespace CarGo
                 //Collision with Other Players
                 case EntityCategory.Player:                            
                     {
-                        (entity as Player).Move(velocity);
-                        velocity *= -0.1f;
-                        Move(velocity);
+                        Vector2 velocity2 = entity.Velocity;
+                        (entity as Player).Move(-velocity2);
+                        Move(-velocity);
+                        entity.Velocity = velocity;
+                        this.velocity = velocity2;
+                        //(entity as Player).Move(velocity);
+                        //velocity *= -0.6f;
+                        //Move(velocity);
                         break;
                     }
 
@@ -209,6 +231,11 @@ namespace CarGo
         }
         public void Accelerate(float accelerationFactor)
         {
+            if(accelerationFactor>0&& velocity.Length()<0.8)
+            {
+                soundAcceleration.Volume = accelerationFactor/2;
+                soundAcceleration.Play();
+            }
             if (velocity.Length() == 0)
             {
                 velocity.X = acceleration * (float)Math.Sin(hitbox.RotationRad);
@@ -227,6 +254,7 @@ namespace CarGo
 
         public void Boost()
         {
+            soundBoost.Play();
             if (velocity.Length() < maxSpeed && cooldownBoost<=0)
             {
                 velocity += new Vector2(80 * acceleration * (float)Math.Sin(hitbox.RotationRad), 80 * -acceleration * (float)Math.Cos(hitbox.RotationRad));
