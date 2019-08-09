@@ -59,8 +59,8 @@ namespace CarGo
             }
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
             if(playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
-            //scene.addPlayer(PlayerIndex.One, new Vector2(400, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
-            scene.addPlayer(PlayerIndex.Four, new Vector2(800, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
+            
+           // scene.addPlayer(PlayerIndex.Four, new Vector2(800, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
         }
 
         /// <summary>

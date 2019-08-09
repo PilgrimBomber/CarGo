@@ -21,7 +21,7 @@ namespace CarGo
         void Update(GameTime gameTime);
     }
 
-    public enum EntityCategory { Player, Cargo, Enemy, WorldObject}
+    public enum EntityCategory { Player, Cargo, Enemy, WorldObject, ActiveAbility}
     public enum EntityType { Player,Cargo, EnemyDummy, Cactus, Rock}
 
     public abstract class Entity: ICollidable,IUpdateable//, IDrawable

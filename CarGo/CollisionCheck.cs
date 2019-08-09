@@ -15,41 +15,29 @@ namespace CarGo
         List<Player> players;
         List<BaseEnemy> enemies;
         List<WorldObject> worldObjects;
-        public CollisionCheck(List<Cargo> cargos, List<Player> players, List<BaseEnemy> enemies, List<WorldObject> worldObjects)
+        List<ActiveAbility> activeAbilities;
+        public CollisionCheck(List<Cargo> cargos, List<Player> players, List<BaseEnemy> enemies, List<WorldObject> worldObjects, List<ActiveAbility> activeAbilities)
         {
             this.cargos = cargos;
             this.players = players;
             this.enemies = enemies;
             this.worldObjects = worldObjects;
+            this.activeAbilities = activeAbilities;
         }
-        //public void CheckCollisons(List<Entity> entities)
-        //{
-        //    for (int i = 0; i <entities.Count-1; i++)
-        //    {
-        //        for (int j = i+1; j < entities.Count; j++)
-        //        {
-        //            if(CheckCollision(entities[i].Hitbox,entities[j].Hitbox))
-        //            {
-        //                entities[i].Collide(entities[j], entityCategory.Player);
-        //                entities[j].Collide(entities[i], entityCategory.Player);
-        //            }
-        //        }
-        //    }
-        //}
 
         public void CheckCollisions()
         {
             //Player
-            for (int i=0; i<players.Count;i++)
+            for (int i = 0; i < players.Count; i++)
             {
                 //Player - Player
-                for (int j = i+1; j < players.Count; j++)
+                for (int j = i + 1; j < players.Count; j++)
                 {
-                    if(CheckCollision(players[i],players[j]))
+                    if (CheckCollision(players[i], players[j]))
                     {
                         players[i].Collide(players[j], EntityCategory.Player);
                         //players[j].Collide(players[i], EntityCategory.Player);
-                    }  
+                    }
                 }
 
                 //Player - Cargos
@@ -85,7 +73,7 @@ namespace CarGo
             for (int i = 0; i < cargos.Count; i++)
             {
                 //Cargo - Cargo
-                for (int j = i+1;j<cargos.Count ; j++)
+                for (int j = i + 1; j < cargos.Count; j++)
                 {
                     if (CheckCollision(cargos[i], cargos[j]))
                     {
@@ -113,13 +101,23 @@ namespace CarGo
                 //        worldObjects[j].Collide(cargos[i], entityCategory.Cargo);
                 //    }
                 //}
+
+                //Cargo - ActiveAbility
+                for (int j = 0; j < activeAbilities.Count; j++)
+                {
+                    if (CheckCollision(cargos[i], activeAbilities[j]))
+                    {
+                        //cargos[i].Collide(activeAbilities[j], EntityCategory.ActiveAbility);
+                        if(activeAbilities[j].isActive) activeAbilities[j].Collide(cargos[i], EntityCategory.Cargo);
+                    }
+                }
             }
-            
+
             //Enemy
-            for (int i =0; i<enemies.Count; i++)
+            for (int i = 0; i < enemies.Count; i++)
             {
                 //Enemy - Enemy
-                for (int j = i+1; j < enemies.Count; j++)
+                for (int j = i + 1; j < enemies.Count; j++)
                 {
                     if (CheckCollision(enemies[i], enemies[j]))
                     {
@@ -136,7 +134,33 @@ namespace CarGo
                         worldObjects[j].Collide(enemies[i], EntityCategory.Enemy);
                     }
                 }
+
+                // Enemy - ActiveAbility
+                for (int j = 0; j < activeAbilities.Count; j++)
+                {
+                    if (CheckCollision(enemies[i], activeAbilities[j]))
+                    {
+                        if (activeAbilities[j].isActive) activeAbilities[j].Collide(enemies[i], EntityCategory.Enemy);
+                    }
+                }
             }
+
+
+            // WorldObjects
+            for (int i = 0; i < worldObjects.Count; i++)
+            {
+
+                // WorldObject - ActiveAbility
+                for (int j = 0; j < activeAbilities.Count; j++)
+                {
+                    if (CheckCollision(worldObjects[i], activeAbilities[j]))
+                    {
+                        if (activeAbilities[j].isActive) activeAbilities[j].Collide(worldObjects[i], EntityCategory.WorldObject);
+                    }
+                }
+
+            }
+
         }
 
 

@@ -61,10 +61,11 @@
     <Prefer32Bit>true</Prefer32Bit>
   </PropertyGroup>
   <ItemGroup>
-    <Compile Include="Entities\ActiveAbility.cs" />
+    <Compile Include="Entities\ActiveAbilities\ActiveAbility.cs" />
     <Compile Include="Animation.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CollisionCheck.cs" />
+    <Compile Include="Entities\ActiveAbilities\RocketLauncher.cs" />
     <Compile Include="Entities\WorldObjects\Cactus.cs" />
     <Compile Include="Entities\CarFront.cs" />
     <Compile Include="Entities\EnemyAI.cs" />
@@ -75,7 +76,7 @@
     <Compile Include="Entities\Hook.cs" />
     <Compile Include="Entities\InputHandler.cs" />
     <Compile Include="Entities\Player.cs" />
-    <Compile Include="Entities\WorldObject.cs" />
+    <Compile Include="Entities\WorldObjects\WorldObject.cs" />
     <Compile Include="Entities\WorldObjects\Rock.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Geometry.cs" />

@@ -55,6 +55,10 @@ namespace CarGo
                 {
                     player.Horn();
                 }
+                if (state.IsButtonDown(Buttons.A) || state.IsButtonDown(Buttons.RightShoulder))
+                {
+                    player.Active();
+                }
 
                 previousState = state;
 
@@ -65,19 +69,19 @@ namespace CarGo
         {
             //KeyboardInput
             KeyboardState keyboardstate = Keyboard.GetState();
-            if (keyboardstate.IsKeyDown(Keys.Right))
+            if (keyboardstate.IsKeyDown(Keys.Right) || keyboardstate.IsKeyDown(Keys.D))
             {
                 player.Turn(1.0f / 180.0f * (float)Math.PI);
             }
-            if (keyboardstate.IsKeyDown(Keys.Left))
+            if (keyboardstate.IsKeyDown(Keys.Left) || keyboardstate.IsKeyDown(Keys.A))
             {
                 player.Turn(-1.0f / 180.0f * (float)Math.PI);
             }
-            if (keyboardstate.IsKeyDown(Keys.Up))
+            if (keyboardstate.IsKeyDown(Keys.Up) || keyboardstate.IsKeyDown(Keys.W))
             {
                 player.Accelerate(1);
             }
-            if (keyboardstate.IsKeyDown(Keys.Down))
+            if (keyboardstate.IsKeyDown(Keys.Down) || keyboardstate.IsKeyDown(Keys.S))
             {
                 player.Accelerate(-0.3f);
             }
@@ -85,9 +89,13 @@ namespace CarGo
             {
                 player.Boost();
             }
-            if (keyboardstate.IsKeyDown(Keys.Space) && previousKeyBoardState.IsKeyUp(Keys.Space))
+            if (keyboardstate.IsKeyDown(Keys.H) && previousKeyBoardState.IsKeyUp(Keys.H))
             {
                 player.Horn();
+            }
+            if (keyboardstate.IsKeyDown(Keys.Space) && previousKeyBoardState.IsKeyUp(Keys.Space))
+            {
+                player.Active();
             }
 
             previousKeyBoardState = keyboardstate;

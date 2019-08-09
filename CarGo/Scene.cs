@@ -16,12 +16,13 @@ namespace CarGo
         private Camera camera;
         private CollisionCheck collisionCheck;
         private EnemyAI enemyAI;
-        private List<Entity> entities;
+        public List<Entity> entities;
         private List<Entity> deadEntities;
         private List<Player> players;
         private List<BaseEnemy> enemies;
         private List<WorldObject> worldObjects;
         private List<Cargo> cargos;
+        private List<ActiveAbility> activeAbilities;
         private ContentManager content;
         private LevelControl levelControl;
         private Tilemap tilemap;
@@ -36,11 +37,12 @@ namespace CarGo
             enemies = new List<BaseEnemy>();
             worldObjects = new List<WorldObject>();
             cargos = new List<Cargo>();
+            activeAbilities = new List<ActiveAbility>();
 
             soundCollection = new SoundCollection(content);
             textureCollection = new TextureCollection(content);
-            camera = new Camera(spriteBatch,screenSize, cargos,players,enemies,worldObjects);
-            collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects);
+            camera = new Camera(spriteBatch,screenSize, cargos,players,enemies,worldObjects, activeAbilities);
+            collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects, activeAbilities);
             levelControl = new LevelControl(this,content, cargos);
             tilemap = new Tilemap(1, content);
             
@@ -158,9 +160,16 @@ namespace CarGo
             entities.Remove(entity);
         }
         
-
+        public void addActiveAbility(ActiveAbility activeAbility)
+        {
+            activeAbilities.Add(activeAbility);
+            addEntity(activeAbility);
+        }
         
-
-        
+        public void removeActiveAbility(ActiveAbility activeAbility)
+        {
+            activeAbilities.Remove(activeAbility);
+            removeEntity(activeAbility);
+        }
     }
 }

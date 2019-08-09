@@ -13,16 +13,20 @@ namespace CarGo
 
     public enum SoundType
     {
-        Crash_Dummy,
+  
         Car_Accelerate,
         Car_Background,
         Car_Boost,
-        Car_Horn
+        Car_Horn,
+        Enemy_Hit,
+        Enemy_Growl,
+        RocketLauncher_Explosion,
+        RocketLauncher_Launch,
             
     }
     public class SoundCollection
     {
-        private List<SoundEffect> effects = new List<SoundEffect>();
+        private List<SoundEffect> soundEffect = new List<SoundEffect>();
 
         public SoundCollection(ContentManager content)
         {
@@ -30,20 +34,30 @@ namespace CarGo
             {
                 switch (soundType)
                 {
-                    case SoundType.Crash_Dummy:
-                        effects.Add(content.Load<SoundEffect>("sounds/Enemy_Monster_Hit"));
-                        break;
+                
                     case SoundType.Car_Accelerate:
-                        effects.Add(content.Load<SoundEffect>("sounds/Car_Accelerate"));
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/Car_Accelerate"));
                         break;
                     case SoundType.Car_Background:
-                        effects.Add(content.Load<SoundEffect>("sounds/Car_Background"));
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/Car_Background"));
                         break;
                     case SoundType.Car_Boost:
-                        effects.Add(content.Load<SoundEffect>("sounds/Car_Boost"));
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/Car_Boost"));
                         break;
                     case SoundType.Car_Horn:
-                        effects.Add(content.Load<SoundEffect>("sounds/Car_Horn"));
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/Car_Horn"));
+                        break;
+                    case SoundType.Enemy_Hit:
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/Enemy_Monster_Hit"));
+                        break;
+                    case SoundType.Enemy_Growl:
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/Enemy_Growl"));
+                        break;
+                    case SoundType.RocketLauncher_Launch:
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/RocketLauncher_Launch"));
+                        break;
+                    case SoundType.RocketLauncher_Explosion:
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/RocketLauncher_EXPLOSION!!!"));
                         break;
                 }
             }
@@ -51,7 +65,7 @@ namespace CarGo
 
         public SoundEffectInstance GetInstance(SoundType soundType)
         {
-            return effects[(int)soundType].CreateInstance();
+            return soundEffect[(int)soundType].CreateInstance();
         }
 
 

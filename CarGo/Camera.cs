@@ -20,8 +20,9 @@ namespace CarGo
         private List<Player> players;
         private List<BaseEnemy> enemies;
         private List<WorldObject> worldObjects;
+        private List<ActiveAbility> activeAbilities;
 
-        public Camera(SpriteBatch spriteBatchInit, Vector2 screenSize, List<Cargo> cargos, List<Player> players, List<BaseEnemy> enemies, List<WorldObject> worldObjects)
+        public Camera(SpriteBatch spriteBatchInit, Vector2 screenSize, List<Cargo> cargos, List<Player> players, List<BaseEnemy> enemies, List<WorldObject> worldObjects, List<ActiveAbility> activeAbilities)
         {
             positon =new Vector2(0,0);
             spriteBatch = spriteBatchInit;
@@ -32,6 +33,7 @@ namespace CarGo
             this.players = players;
             this.enemies = enemies;
             this.worldObjects = worldObjects;
+            this.activeAbilities = activeAbilities;
         }
 
         public void Update()
@@ -83,6 +85,12 @@ namespace CarGo
                 if (enemy.Hitbox.Center.X - offset.X > -200 && enemy.Hitbox.Center.X - offset.X < screenSize.X + 200
                     && enemy.Hitbox.Center.Y - offset.Y > -200 && enemy.Hitbox.Center.Y < screenSize.Y + offset.Y + 200)
                     enemy.Draw(gameTime, spriteBatch, offset);
+            }
+            foreach (ActiveAbility activeAbility in activeAbilities)
+            {
+                if (activeAbility.Hitbox.Center.X - offset.X > -200 && activeAbility.Hitbox.Center.X - offset.X < screenSize.X + 200
+                    && activeAbility.Hitbox.Center.Y - offset.Y > -200 && activeAbility.Hitbox.Center.Y < screenSize.Y + offset.Y + 200)
+                    activeAbility.Draw(gameTime, spriteBatch, offset);
             }
             foreach (Player player in players)
             {

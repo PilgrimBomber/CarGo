@@ -72,15 +72,16 @@ namespace CarGo
                     hitpoints = 1500;
                     break;
             }
-
+            hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             switch (ability)
             {
                 case AbilityType.RocketLauncher:
-                    this.active = new RocketLauncher(this);
+                    this.active = new RocketLauncher(soundCollection, textureCollection, scene, this);
                     break;
             }
+            scene.addActiveAbility(active);
 
-            hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
+            
             carFront = new CarFront(soundCollection, textureCollection, frontType, hitbox);
             carFrontType = frontType;
             noDamage = false;
