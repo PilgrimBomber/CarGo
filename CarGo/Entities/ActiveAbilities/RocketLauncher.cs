@@ -30,15 +30,15 @@ namespace CarGo
             texture = textureCollection.GetTexture(TextureType.Active_RocketLauncher);
             textureExplosion = textureCollection.GetTexture(TextureType.Explosion);
             soundLaunch = soundCollection.GetInstance(SoundType.RocketLauncher_Launch);
+            soundLaunch.Volume = 0.225f;
             soundExplosion = soundCollection.GetInstance(SoundType.RocketLauncher_Explosion);
-
+            soundExplosion.Volume = 1f;
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
         }
 
 
         public void Explosion()
         {
-            soundExplosion.Volume = 1;
             soundExplosion.Play();
             isExploded = true;
             livingTimer = 1;
@@ -101,7 +101,9 @@ namespace CarGo
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
             isExploded = false;
 
+            soundLaunch.Stop();
             soundLaunch.Play();
+            soundExplosion.Stop();
             isActive = true;
             activationCooldownTimer = 2f;
             livingTimer = 10f;
