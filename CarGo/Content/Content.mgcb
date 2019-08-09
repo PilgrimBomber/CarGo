@@ -13,11 +13,6 @@
 
 #---------------------------------- Content ---------------------------------#
 
-#begin Level1.xml
-/importer:XmlImporter
-/processor:PassThroughProcessor
-/build:Level1.xml
-
 #begin sounds/Car_Accelerate.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
