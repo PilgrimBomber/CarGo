@@ -27,6 +27,7 @@ namespace CarGo
         private SoundEffectInstance soudBackground;
         private SoundEffectInstance soundBoost;
         private SoundEffectInstance soundHorn;
+        private SoundEffectInstance soundHorn2;
 
         //public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }
@@ -45,7 +46,9 @@ namespace CarGo
             soundBoost.Volume = 0.3f;
             soundHorn = soundCollection.GetInstance(SoundType.Car_Horn);
             soundHorn.Volume = 0.3f;
-            switch(carType)
+            soundHorn2 = soundCollection.GetInstance(SoundType.Car_Horn2);
+            soundHorn2.Volume = 0.2f;
+            switch (carType)
             {
                 case CarType.Small:
                     texture = textureCollection.GetTexture(TextureType.Car_Small);
@@ -267,9 +270,14 @@ namespace CarGo
 
         }
 
-        public void Horn()
+        public void Horn(int horn_Number)
         {
-            soundHorn.Play();
+            switch(horn_Number)
+            {
+                case 1: soundHorn.Play(); break;
+                case 2: soundHorn2.Play(); break;
+            }
+            
         }
 
         public void Active()

@@ -18,6 +18,7 @@ namespace CarGo
         Car_Background,
         Car_Boost,
         Car_Horn,
+        Car_Horn2,
         Enemy_Hit,
         Enemy_Growl,
         RocketLauncher_Explosion,
@@ -46,6 +47,9 @@ namespace CarGo
                         break;
                     case SoundType.Car_Horn:
                         soundEffect.Add(content.Load<SoundEffect>("sounds/Car_Horn"));
+                        break;
+                    case SoundType.Car_Horn2:
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/Car_Horn2"));
                         break;
                     case SoundType.Enemy_Hit:
                         soundEffect.Add(content.Load<SoundEffect>("sounds/Enemy_Monster_Hit"));

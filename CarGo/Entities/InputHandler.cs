@@ -53,7 +53,15 @@ namespace CarGo
                 }
                 if (state.IsButtonDown(Buttons.Y) && previousState.IsButtonUp(Buttons.Y))
                 {
-                    player.Horn();
+                    player.Horn(1);
+                }
+                if (state.IsButtonDown(Buttons.X) && previousState.IsButtonUp(Buttons.X))
+                {
+                    player.Horn(2);
+                }
+                if (state.IsButtonDown(Buttons.B) && previousState.IsButtonUp(Buttons.B))
+                {
+                    player.Horn(3);
                 }
                 if (state.IsButtonDown(Buttons.A) || state.IsButtonDown(Buttons.RightShoulder))
                 {
@@ -91,7 +99,11 @@ namespace CarGo
             }
             if (keyboardstate.IsKeyDown(Keys.H) && previousKeyBoardState.IsKeyUp(Keys.H))
             {
-                player.Horn();
+                player.Horn(1);
+            }
+            if (keyboardstate.IsKeyDown(Keys.J) && previousKeyBoardState.IsKeyUp(Keys.J))
+            {
+                player.Horn(2);
             }
             if (keyboardstate.IsKeyDown(Keys.Space) && previousKeyBoardState.IsKeyUp(Keys.Space))
             {
