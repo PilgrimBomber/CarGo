@@ -37,11 +37,29 @@
 /processorParam:Quality=Best
 /build:sounds/Car_Horn.wav
 
+#begin sounds/Enemy_Growl.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Enemy_Growl.wav
+
 #begin sounds/Enemy_Monster_Hit.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/Enemy_Monster_Hit.wav
+
+#begin sounds/RocketLauncher_EXPLOSION!!!.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/RocketLauncher_EXPLOSION!!!.wav
+
+#begin sounds/RocketLauncher_Launch.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/RocketLauncher_Launch.wav
 
 #begin textures/Cactus.png
 /importer:TextureImporter
