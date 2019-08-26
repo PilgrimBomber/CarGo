@@ -41,9 +41,9 @@ namespace CarGo
             inputHandler = new InputHandler(this, playerIndex);
             soundAcceleration = soundCollection.GetInstance(SoundType.Car_Accelerate);
             soudBackground = soundCollection.GetInstance(SoundType.Car_Background);
-            soudBackground.Volume = 0.1f;
+            soudBackground.Volume = 0.07f;
             soundBoost = soundCollection.GetInstance(SoundType.Car_Boost);
-            soundBoost.Volume = 0.3f;
+            soundBoost.Volume = 0.1f;
             soundHorn = soundCollection.GetInstance(SoundType.Car_Horn);
             soundHorn.Volume = 0.3f;
             soundHorn2 = soundCollection.GetInstance(SoundType.Car_Horn2);
@@ -240,7 +240,7 @@ namespace CarGo
         {
             if(accelerationFactor>0&& velocity.Length()<0.8)
             {
-                soundAcceleration.Volume = accelerationFactor/5;
+                soundAcceleration.Volume = accelerationFactor/8;
                 soundAcceleration.Play();
             }
             if (velocity.Length() == 0)

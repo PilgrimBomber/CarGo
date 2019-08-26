@@ -32,7 +32,7 @@ namespace CarGo
                     case TextureType.WorldObject_Cactus: textures.Add(content.Load<Texture2D>("textures/Cactus")); break;
                     case TextureType.WorldObject_CactusRip: textures.Add(content.Load<Texture2D>("textures/CactusRip")); break;
                     case TextureType.WorldObject_Rock: textures.Add(content.Load<Texture2D>("textures/Rock")); break;
-                    case TextureType.Active_RocketLauncher: textures.Add(content.Load<Texture2D>("textures/Cargo")); break;
+                    case TextureType.Active_RocketLauncher: textures.Add(content.Load<Texture2D>("textures/Rock")); break;
                     case TextureType.Explosion: textures.Add(content.Load<Texture2D>("textures/Explosion")); break;
                 }
             }
