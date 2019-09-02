@@ -63,10 +63,23 @@ namespace CarGo
                 {
                     player.Horn(3);
                 }
-                if (state.IsButtonDown(Buttons.A) || state.IsButtonDown(Buttons.RightShoulder))
+                if (state.IsButtonDown(Buttons.A))
                 {
                     player.Active();
                 }
+                if (state.IsButtonDown(Buttons.RightShoulder) && previousState.IsButtonUp(Buttons.RightShoulder))
+                {
+                    player.TurnRate = 3.5f;
+                    player.Drift = 0.4f;
+                    player.MaxSpeed = 5f;
+                }
+                if (state.IsButtonUp(Buttons.RightShoulder) && previousState.IsButtonDown(Buttons.RightShoulder))
+                {
+                    player.TurnRate = 1.5f;
+                    player.Drift = 0.15f;
+                    player.MaxSpeed = 12f;
+                }
+
 
                 previousState = state;
 
@@ -109,7 +122,23 @@ namespace CarGo
             {
                 player.Active();
             }
+            if (keyboardstate.IsKeyDown(Keys.Space) && previousKeyBoardState.IsKeyUp(Keys.Space))
+            {
+                player.Active();
+            }
+            if (keyboardstate.IsKeyDown(Keys.LeftControl) && previousKeyBoardState.IsKeyUp(Keys.LeftControl))
+            {
+                player.TurnRate = 3.5f;
+                player.Drift = 0.4f;
+                player.MaxSpeed = 5f;
 
+            }
+            if (keyboardstate.IsKeyUp(Keys.LeftControl) && previousKeyBoardState.IsKeyDown(Keys.LeftControl))
+            {
+                player.TurnRate = 1.5f;
+                player.Drift = 0.15f;
+                player.MaxSpeed = 12f;
+            }
             previousKeyBoardState = keyboardstate;
         }
     }

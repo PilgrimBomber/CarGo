@@ -30,6 +30,8 @@ namespace CarGo
         private SoundEffectInstance soundHorn2;
 
         //public Vector2 Velocity { get => velocity; set => velocity = value; }
+        public float TurnRate { get => turnRate; set => turnRate = value; }
+        public float Drift { get => drift; set => drift = value; }
         public float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }
         public float Acceleration { get => acceleration; set => acceleration = value; }
         public PlayerIndex PlayerIndex { get => playerIndex; set => playerIndex = value; }
