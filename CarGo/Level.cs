@@ -192,15 +192,43 @@ namespace CarGo
             spawnEvents.Add(new StartSpawnEvent(scene, 1));
             spawnEvents[0].AddSpawn(EntityType.Cargo, 960, 540);
             //spawnEvents[0].AddSpawn(EntityType.Player, 400, 800);
-            spawnEvents[0].AddSpawn(EntityType.Rock, 1300, 200);
+            //spawnEvents[0].AddSpawn(EntityType.Rock, 1300, 200);
+            //spawnEvents[0].AddSpawn(EntityType.Rock, 1364, 264);
 
             spawnEvents.Add(new SpawnEvent(0, scene));
             spawnEvents[1].AddSpawn(EntityType.EnemyDummy, 3600,540);
-            spawnEvents[1].AddSpawn(EntityType.Rock, 3600, 300);
-
+            //spawnEvents[1].AddSpawn(EntityType.Rock, 3600, 300);
 
             spawnEvents.Add(new SpawnEvent(500, scene));
-            spawnEvents[2].AddSpawn(EntityType.EnemyDummy, 2221, 1900);
+            spawnEvents[2].AddSpawn(EntityType.EnemyDummy, 3600, 740);
+            spawnEvents[2].AddSpawn(EntityType.EnemyDummy, 3600, 340);
+
+            spawnEvents.Add(new SpawnEvent(1000, scene));
+            spawnEvents[3].AddSpawn(EntityType.EnemyDummy, 4200, -800);
+            spawnEvents[3].AddSpawn(EntityType.EnemyDummy, 4200, 1900);
+
+            spawnEvents.Add(new SpawnEvent(1500, scene));
+            spawnEvents[4].AddSpawn(EntityType.EnemyDummy, 5000, 640);
+            spawnEvents[4].AddSpawn(EntityType.EnemyDummy, 5000, 440);
+
+            spawnEvents.Add(new SpawnEvent(3000, scene));
+            spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 2500, -800);
+            spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 2500, 1900);
+            spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 3600, 840);
+            spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 3600, 240);
+            spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 4000, 540);
+
+            spawnEvents.Add(new SpawnEvent(5000, scene));
+            spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1000, -800);
+            spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1000, 1900);
+            spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1500, -800);
+            spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1500, 1900);
+
+            spawnEvents.Add(new SpawnEvent(8000, scene));
+            spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1000, -800);
+            spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1000, 1900);
+            spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1500, -800);
+            spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1500, 1900);
 
             HandleStartSpawn();
         }
