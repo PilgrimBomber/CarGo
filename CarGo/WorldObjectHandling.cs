@@ -56,7 +56,7 @@ namespace CarGo
                 {
                     if (worldObject.Hitbox.Center.X < cargos[0].Hitbox.Center.X - 2000)
                     {
-                        Vector2 Center = new Vector2(cargos[0].Hitbox.Center.X + 1500 + random.Next(0, 200), random.Next(-200, 1300));
+                        Vector2 Center = new Vector2(cargos[0].Hitbox.Center.X + 1800 + random.Next(-200, 200), random.Next(-200, 1300));
                         if (Center.Y > 480 && Center.Y < 620)
                         {
                             Center.Y += 140;

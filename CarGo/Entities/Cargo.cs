@@ -38,13 +38,12 @@ namespace CarGo
             if (carFront.CheckCollision(entity))
             {
                 entity.Velocity += velocity;
-                entity.noCollision = true;
+                //entity.noCollision = true;
 
                 switch(entityCategory)
                 {
                     case EntityCategory.Player: (entity as Player).Move(velocity); break;
                     case EntityCategory.Enemy: entity.Velocity += velocity; (entity as BaseEnemy).wasPushed = true; break;
-                    default: entity.TakeDamage(10000); break;
                 }
                 
             }

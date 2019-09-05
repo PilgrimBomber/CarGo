@@ -55,7 +55,7 @@ namespace CarGo
         }
         public override void TakeDamage(int damage)
         {
-            throw new NotImplementedException();
+            
         }
     }
 }

@@ -25,6 +25,7 @@ namespace CarGo
             texture = textureCollection.GetTexture(TextureType.Enemy_Zombie);
             soundCrash = soundCollection.GetInstance(SoundType.Enemy_Hit);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
+            hitpoints = 100;
         }
         
 
@@ -49,13 +50,11 @@ namespace CarGo
                 //Collision with Cargo
                 case EntityCategory.Cargo:
                     {
-                        if (entity.GetType() == typeof(Cargo))
-                        {
-                            Hitbox.Move(-velocity);
-                            entity.TakeDamage(10);
-                            //hitpoints = 0;
-                            velocity *= -0.05f;
-                        }
+                        
+                        //Hitbox.Move(-velocity);
+                        entity.TakeDamage(10);
+                        hitpoints = 0;
+                        //velocity *= -0.05f;
                         break;
                     }
 
@@ -102,7 +101,9 @@ namespace CarGo
                 //Collision with WorldObjects
                 case EntityCategory.WorldObject:
                     {
+                        Vector2 direction = Hitbox.Center - entity.Hitbox.Center;
 
+                        Hitbox.Move(direction / 15);
                         //Collision with Rock
                         if (entity.GetType() == typeof(Rock) && wasPushed == true)
                         {

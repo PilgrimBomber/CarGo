@@ -24,7 +24,7 @@ namespace CarGo
             cargos = scene.GetCargos();
             velocity *= 0f;
             wasPushed = false;
-            hitpoints = 100;
+            
         }
 
         public override void Update(GameTime gameTime)
