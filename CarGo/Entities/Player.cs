@@ -18,13 +18,15 @@ namespace CarGo
         private float drift;
         private PlayerIndex playerIndex;
         private float lastTurn;
+        private CarType carType;
         private CarFront carFront;
         private CarFrontType carFrontType;
         private ActiveAbility active;
         private bool noDamage;
         private float cooldownBoost = 0;
+        private int idleCounter;
         private SoundEffectInstance soundAcceleration;
-        private SoundEffectInstance soudBackground;
+        private SoundEffectInstance soundBackground;
         private SoundEffectInstance soundBoost;
         private SoundEffectInstance soundHorn;
         private SoundEffectInstance soundHorn2;
@@ -42,38 +44,39 @@ namespace CarGo
             this.scene = scene;
             inputHandler = new InputHandler(this, playerIndex);
             soundAcceleration = soundCollection.GetInstance(SoundType.Car_Accelerate);
-            soudBackground = soundCollection.GetInstance(SoundType.Car_Background);
-            soudBackground.Volume = 0.07f;
+            soundBackground = soundCollection.GetInstance(SoundType.Car_Background);
+            soundBackground.Volume = 0.07f;
             soundBoost = soundCollection.GetInstance(SoundType.Car_Boost);
             soundBoost.Volume = 0.1f;
             soundHorn = soundCollection.GetInstance(SoundType.Car_Horn);
             soundHorn.Volume = 0.3f;
             soundHorn2 = soundCollection.GetInstance(SoundType.Car_Horn2);
             soundHorn2.Volume = 0.2f;
+            this.carType = carType;
             switch (carType)
             {
                 case CarType.Small:
                     texture = textureCollection.GetTexture(TextureType.Car_Small);
-                    acceleration = 0.12f;
-                    maxSpeed = 12.0f;
-                    turnRate = 1.5f;//1 is default
-                    drift = 0.15f;//number between 0 and 1
+                    acceleration = 0.1f;
+                    maxSpeed = 16.0f;
+                    turnRate = 2.5f;//1 is default
+                    drift = 0.05f;//number between 0 and 1
                     hitpoints = 500;
                     break;
                 case CarType.Medium:
                     texture = textureCollection.GetTexture(TextureType.Car_Medium);
-                    acceleration = 0.12f;
-                    maxSpeed = 12.0f;
-                    turnRate = 1.5f;//1 is default
+                    acceleration = 0.08f;
+                    maxSpeed = 14.0f;
+                    turnRate = 1.8f;//1 is default
                     drift = 0.15f;//number between 0 and 1
                     hitpoints = 1000;
                     break;
                 case CarType.Big:
                     texture = textureCollection.GetTexture(TextureType.Car_Big);
-                    acceleration = 0.12f;
-                    maxSpeed = 12.0f;
-                    turnRate = 1.5f;//1 is default
-                    drift = 0.15f;//number between 0 and 1
+                    acceleration = 0.05f;
+                    maxSpeed = 16.0f;
+                    turnRate = 1.3f;//1 is default
+                    drift = 0.05f;//number between 0 and 1
                     hitpoints = 1500;
                     break;
             }
@@ -90,7 +93,7 @@ namespace CarGo
             carFront = new CarFront(soundCollection, textureCollection, frontType, hitbox);
             carFrontType = frontType;
             noDamage = false;
-
+            idleCounter = 0;
         }
 
         override public void Update(GameTime gameTime)
@@ -104,15 +107,18 @@ namespace CarGo
 
             if(velocity.Length()>0.2)
             {
-                soudBackground.Play();
+                soundBackground.Play();
+
             }
             else
             {
-                soudBackground.Pause();
+                soundBackground.Pause();
+                
             }
 
             //Slow the car over time
-            velocity *= 0.98f;
+            if (idleCounter > 20) velocity *= 0.98f;
+            else velocity *= 0.99f;
             //if (velocity.Length() < 0.03) velocity *= 0;
 
         }
@@ -158,9 +164,24 @@ namespace CarGo
                             if (carFront.CheckCollision(entity))
                             {
                                 entity.Hitbox.Move(velocity);
-                                entity.TakeDamage(CalculateDamage());
-                                entity.GetPushed(velocity);
-                                velocity *= 0.5f;
+                                entity.TakeDamage((int)CalculateDamage());
+                                //entity.GetPushed(velocity);
+                                switch(carType)
+                                {
+                                    case CarType.Big:
+                                        entity.GetPushed(velocity*1.3f);
+                                        velocity *= 0.8f;
+                                        break;
+                                    case CarType.Medium:
+                                        entity.GetPushed(velocity);
+                                        velocity *= 0.5f;
+                                        break;
+                                    case CarType.Small:
+                                        entity.GetPushed(velocity*0.8f);
+                                        velocity *= 0.3f;
+                                        break;
+                                }
+                                
                                 noDamage = true;
                             }
                             else
@@ -229,18 +250,20 @@ namespace CarGo
         //Turn the player by rad to the right
         public void Turn(float rad)
         {
-            if (velocity.Length() > 0.6f)
+            if (velocity.Length() > 1.5f)
             {
-                hitbox.Rotate(rad * turnRate);
-                carFront.Turn(rad * turnRate, hitbox.Center);
-                velocity = Geometry.Rotate(velocity, rad * turnRate * (1 - drift));
+                
+                hitbox.Rotate(rad * turnRate * (30 - velocity.Length()) / 20);
+                carFront.Turn(rad * turnRate * (30 - velocity.Length()) / 20, hitbox.Center);
+                velocity = Geometry.Rotate(velocity, rad * turnRate * (30 - velocity.Length()) / 20 * (1 - drift));
                 lastTurn = rad;
             }
 
         }
         public void Accelerate(float accelerationFactor)
         {
-            if(accelerationFactor>0&& velocity.Length()<0.8)
+            Console.WriteLine("Geschwindigkeit " + velocity.Length().ToString());
+            if (accelerationFactor>0&& velocity.Length()<0.8)
             {
                 soundAcceleration.Volume = accelerationFactor/8;
                 soundAcceleration.Play();
@@ -255,8 +278,8 @@ namespace CarGo
 
                 if (velocity.Length() < maxSpeed)
                 {
-                    velocity.X += (maxSpeed - velocity.Length()) / 3 * acceleration * accelerationFactor * (float)Math.Sin(hitbox.RotationRad);
-                    velocity.Y -= (maxSpeed - velocity.Length()) / 3 * acceleration * accelerationFactor * (float)Math.Cos(hitbox.RotationRad);
+                    velocity.X += (float)Math.Sqrt(maxSpeed - velocity.Length()) * acceleration * accelerationFactor * (float)Math.Sin(hitbox.RotationRad);
+                    velocity.Y -= (float)Math.Sqrt(maxSpeed - velocity.Length()) * acceleration * accelerationFactor * (float)Math.Cos(hitbox.RotationRad);
                 }
             }
         }
@@ -282,6 +305,12 @@ namespace CarGo
             
         }
 
+        public void Idle(bool performedAction)
+        {
+            if (performedAction) idleCounter = 0;
+            else idleCounter++;
+        }
+
         public void Active()
         {
             active.Use();
@@ -290,31 +319,51 @@ namespace CarGo
         {
             if (!noDamage) hitpoints -= damage;
         }
-        private int CalculateDamage()
+        private float CalculateDamage()
         {
-            int damage;
+            float damage;
+            
             switch (carFrontType)
             {
                 case CarFrontType.No:
                     {
                         damage = (int)velocity.Length() * 4;
-                        return damage;
+                        break;
+                        //return damage;
                     }
                 case CarFrontType.Bumper:
                     {
                         damage = (int)velocity.Length() * 4;
-                        return damage;
+                        break;
+                        //return damage;
                     }
                 case CarFrontType.Spikes:
                     {
                         damage = (int)velocity.Length() * 8;
-                        return damage;
+                        break;
+                        //return damage;
                     }
                 default:
                     {
-                        return 0;
+                        damage = 0;break;
+                        //return 0;
                     }
             }
+
+            switch (carType)
+            {
+                case CarType.Big:
+                    damage *= 2f;
+                    break;
+                case CarType.Medium:
+                    damage *= 1f;
+                    break;
+                case CarType.Small:
+                    damage *= 0.75f;
+                    break;
+            }
+
+            return damage;
         }
 
         private void CalculateCooldowns(GameTime gameTime)

@@ -150,6 +150,11 @@ namespace CarGo
             entities.Add(cargo);
         }
         
+        public List<Cargo> GetCargos()
+        {
+            return cargos;
+        }
+
         private void addEntity(Entity entity)
         {
             entities.Add(entity);

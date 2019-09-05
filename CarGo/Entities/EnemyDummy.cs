@@ -15,39 +15,18 @@ namespace CarGo
     {
         SoundEffectInstance soundCrash;
 
-        private List<Location> path2;
-        public List<Location> Path2 { get => path2; set => path2 = value; }
+        //private List<Location> path2;
+        //public List<Location> Path2 { get => path2; set => path2 = value; }
 
-        public EnemyDummy(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Vector2 center)
+        public EnemyDummy(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Vector2 center):base(scene)
         {
-            this.scene = scene;
+            
             //Set dummy texture
             texture = textureCollection.GetTexture(TextureType.Enemy_Zombie);
             soundCrash = soundCollection.GetInstance(SoundType.Enemy_Hit);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
-            velocity *= 0f;
-            wasPushed = false;
-            hitpoints = 100;
         }
-        override public void Update(GameTime gameTime)
-        {
-            if (hitpoints <= 0) scene.KillEntity(this);
-            FollowPath();
-            //Move the Dummy
-            hitbox.Move(velocity);
-
-            //Slows the dummy over time
-            if(wasPushed)
-            {
-                velocity *= 0.96f;
-                if (velocity.Length() < 0.05)
-                {
-                    velocity *= 0;
-                    wasPushed = false;
-                }
-            }
-            
-        }
+        
 
         public override void Collide(Entity entity, EntityCategory entityCategory)
         {
@@ -143,10 +122,7 @@ namespace CarGo
                     }
             }
         }
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
-        {
-            spriteBatch.Draw(texture, hitbox.Center-offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.05f, SpriteEffects.None, 0f);
-        }
+        
         public override void GetPushed(Vector2 direction)
         {
             velocity += 1.5f * direction;
@@ -155,32 +131,7 @@ namespace CarGo
             wasPushed = true;
         }
 
-        private void FollowPath()
-        {
-            //if(path2!=null)if (Tilemap.CoordinatesWorldToGrid(this).Equals(path2.First()))
-            //{
-            //    path2.RemoveAt(0);
-            //    velocity = (Tilemap.CoordinatesGridToWorld(path2.First())-this.hitbox.Center);
-            //    velocity.Normalize();
-            //    velocity *= 2.5f;
-            //}
-
-            if(path!=null)
-            {
-                if (Vector2.Distance(path.First(), hitbox.Center)<10)
-                {
-                    if (wasPushed) return;
-                    path.RemoveAt(0);
-                    velocity = path.First() - this.hitbox.Center;
-                    velocity.Normalize();
-                    velocity *= 2.1f;
-                }
-                //velocity = path.First() - this.hitbox.Center;
-                //velocity.Normalize();
-                //velocity *= 2.1f;
-                
-            }
-        }
+        
         public override void TakeDamage(int damage)
         {
             hitpoints -= damage;

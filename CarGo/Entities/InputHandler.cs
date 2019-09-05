@@ -32,7 +32,7 @@ namespace CarGo
         {
             //Controller Input
             GamePadCapabilities capabilities = GamePad.GetCapabilities(player.PlayerIndex);
-
+            bool playerAction = false;
             // Check if the controller is connected
             if (capabilities.IsConnected)
             {
@@ -40,16 +40,32 @@ namespace CarGo
 
 
                 if (state.ThumbSticks.Left.X < 0f)
-                    player.Turn(-1.0f/180.0f*(float)Math.PI);
+                {
+                    player.Turn(-1.0f / 180.0f * (float)Math.PI);
+                    playerAction = true;
+                }
                 if (state.ThumbSticks.Left.X > 0f)
+                {
                     player.Turn(1.0f / 180.0f * (float)Math.PI);
+                    playerAction = true;
+                }
+                    
                 if (state.Triggers.Right > 0.1)
+                {
                     player.Accelerate(state.Triggers.Right);
+                    playerAction = true;
+                }
+                   
                 if (state.Triggers.Left > 0.1)
+                {
                     player.Accelerate(-state.Triggers.Left / 3);
+                    playerAction = true;
+                }
+                    
                 if (state.IsButtonDown(Buttons.LeftShoulder) && previousState.IsButtonUp(Buttons.LeftShoulder))
                 {
                     player.Boost();
+                    playerAction = true;
                 }
                 if (state.IsButtonDown(Buttons.Y) && previousState.IsButtonUp(Buttons.Y))
                 {
@@ -63,23 +79,13 @@ namespace CarGo
                 {
                     player.Horn(3);
                 }
-                if (state.IsButtonDown(Buttons.A))
+                if (state.IsButtonDown(Buttons.A)|| state.IsButtonDown(Buttons.RightShoulder))
                 {
                     player.Active();
                 }
-                if (state.IsButtonDown(Buttons.RightShoulder) && previousState.IsButtonUp(Buttons.RightShoulder))
-                {
-                    player.TurnRate = 3.5f;
-                    player.Drift = 0.4f;
-                    player.MaxSpeed = 5f;
-                }
-                if (state.IsButtonUp(Buttons.RightShoulder) && previousState.IsButtonDown(Buttons.RightShoulder))
-                {
-                    player.TurnRate = 1.5f;
-                    player.Drift = 0.15f;
-                    player.MaxSpeed = 12f;
-                }
 
+                if (playerAction) player.Idle(false);
+                else player.Idle(true);
 
                 previousState = state;
 
@@ -126,19 +132,11 @@ namespace CarGo
             {
                 player.Active();
             }
-            if (keyboardstate.IsKeyDown(Keys.LeftControl) && previousKeyBoardState.IsKeyUp(Keys.LeftControl))
-            {
-                player.TurnRate = 3.5f;
-                player.Drift = 0.4f;
-                player.MaxSpeed = 5f;
+            
 
-            }
-            if (keyboardstate.IsKeyUp(Keys.LeftControl) && previousKeyBoardState.IsKeyDown(Keys.LeftControl))
-            {
-                player.TurnRate = 1.5f;
-                player.Drift = 0.15f;
-                player.MaxSpeed = 12f;
-            }
+            if (keyboardstate.GetPressedKeys().Length == 0) player.Idle(false);
+            else player.Idle(true);
+
             previousKeyBoardState = keyboardstate;
         }
     }

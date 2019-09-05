@@ -47,22 +47,25 @@ namespace CarGo
             {
                 centers.Add(player.Hitbox.Center);
             }
-            float sumX = 0;
-            float sumY = 0;
+            float sumX = 0f;
+            float sumY = 0f;
             foreach (Vector2 vector in centers)
             {
                 sumX += vector.X;
                 sumY += vector.Y;
             }
-            float borderX = 300;
-            float borderY = 300;
+            float borderX = 300f;
+            float borderY = 300f;
             offset.X = sumX / centers.Count -screenCenter.X;
             if (offset.X - cargos[0].Hitbox.Center.X + screenCenter.X > (screenSize.X-screenCenter.X)-borderX) offset.X = cargos[0].Hitbox.Center.X + (screenSize.X - screenCenter.X) - borderX - screenCenter.X;
             if (offset.X - cargos[0].Hitbox.Center.X + screenCenter.X < -((screenSize.X - screenCenter.X) - borderX)) offset.X = cargos[0].Hitbox.Center.X - ((screenSize.X - screenCenter.X) - borderX) - screenCenter.X;
             offset.Y = sumY / centers.Count - screenCenter.Y;
             if (offset.Y - cargos[0].Hitbox.Center.Y + screenCenter.Y > ((screenSize.Y-screenCenter.Y)-borderY)) offset.Y = cargos[0].Hitbox.Center.Y + ((screenSize.Y - screenCenter.Y) - borderY) - screenCenter.Y;
             if (offset.Y - cargos[0].Hitbox.Center.Y + screenCenter.Y < -((screenSize.Y - screenCenter.Y) - borderY)) offset.Y = cargos[0].Hitbox.Center.Y - ((screenSize.Y - screenCenter.Y) - borderY) - screenCenter.Y;
-
+            if(offset.Y>2000||offset.Y<-2000)
+            {
+                Console.WriteLine("error");
+            }
         }
         public void Draw(GameTime gameTime, Tilemap tilemap)
         {

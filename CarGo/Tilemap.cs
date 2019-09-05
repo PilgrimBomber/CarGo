@@ -21,17 +21,17 @@ namespace CarGo
         private const int mapHeight = 25;
         private int[,] tilemap;
         private List<Texture2D> textures;
-        public static readonly Location[] DIRS = new[]
-        {
-            new Location(1, 0), // to right of tile
-            new Location(0, -1), // below tile
-            new Location(-1, 0), // to left of tile
-            new Location(0, 1), // above tile
-            new Location(1, 1), // diagonal top right
-            new Location(-1, 1), // diagonal top left
-            new Location(1, -1), // diagonal bottom right
-            new Location(-1, -1) // diagonal bottom left
-        };
+        //public static readonly Location[] DIRS = new[]
+        //{
+        //    new Location(1, 0), // to right of tile
+        //    new Location(0, -1), // below tile
+        //    new Location(-1, 0), // to left of tile
+        //    new Location(0, 1), // above tile
+        //    new Location(1, 1), // diagonal top right
+        //    new Location(-1, 1), // diagonal top left
+        //    new Location(1, -1), // diagonal bottom right
+        //    new Location(-1, -1) // diagonal bottom left
+        //};
 
         
         public Tilemap(int levelNumber, ContentManager content)
@@ -65,24 +65,24 @@ namespace CarGo
         }
 
         //returns the grid coordinates for input world coordinates
-        public static Location CoordinatesWorldToGrid(float X, float Y)
-        {
-            return new Location((int)(X / constWidth), (int)(Y / constHeight));
-        }
-        public static Location CoordinatesWorldToGrid(Entity entity)
-        {
-            return new Location((int)(entity.Hitbox.Center.X / constWidth),(int)(entity.Hitbox.Center.Y/ constHeight));
-        }
+        //public static Location CoordinatesWorldToGrid(float X, float Y)
+        //{
+        //    return new Location((int)(X / constWidth), (int)(Y / constHeight));
+        //}
+        //public static Location CoordinatesWorldToGrid(Entity entity)
+        //{
+        //    return new Location((int)(entity.Hitbox.Center.X / constWidth),(int)(entity.Hitbox.Center.Y/ constHeight));
+        //}
 
-        //returns the world coordinates for input grid coordinates
-        public static Vector2 CoordinatesGridToWorld(int X, int Y)
-        {
-            return new Vector2(X*constWidth +constWidth/2, Y* constHeight + constHeight/2);
-        }
-        public static Vector2 CoordinatesGridToWorld(Location location)
-        {
-            return new Vector2(location.x * constWidth + constWidth / 2, location.y * constHeight + constHeight / 2);
-        }
+        ////returns the world coordinates for input grid coordinates
+        //public static Vector2 CoordinatesGridToWorld(int X, int Y)
+        //{
+        //    return new Vector2(X*constWidth +constWidth/2, Y* constHeight + constHeight/2);
+        //}
+        //public static Vector2 CoordinatesGridToWorld(Location location)
+        //{
+        //    return new Vector2(location.x * constWidth + constWidth / 2, location.y * constHeight + constHeight / 2);
+        //}
 
         public void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
         {

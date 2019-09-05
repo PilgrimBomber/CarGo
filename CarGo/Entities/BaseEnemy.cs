@@ -15,7 +15,72 @@ namespace CarGo
     {
         public bool wasPushed;
         protected List<Vector2> path;
-
+        protected List<Cargo> cargos;
         public List<Vector2> Path { get => path; set => path = value; }
+
+        public BaseEnemy(Scene scene)
+        {
+            this.scene = scene;
+            cargos = scene.GetCargos();
+            velocity *= 0f;
+            wasPushed = false;
+            hitpoints = 100;
+        }
+
+        public override void Update(GameTime gameTime)
+        {
+            if (hitpoints <= 0) scene.KillEntity(this);
+            FollowPath();
+            //Move the Dummy
+            hitbox.Move(velocity);
+
+            //Slows the dummy over time
+            if (wasPushed)
+            {
+                velocity *= 0.96f;
+                if (velocity.Length() < 0.05)
+                {
+                    velocity *= 0;
+                    wasPushed = false;
+                }
+            }
+
+        }
+
+
+        protected void FollowPath()
+        {
+            //if(path2!=null)if (Tilemap.CoordinatesWorldToGrid(this).Equals(path2.First()))
+            //{
+            //    path2.RemoveAt(0);
+            //    velocity = (Tilemap.CoordinatesGridToWorld(path2.First())-this.hitbox.Center);
+            //    velocity.Normalize();
+            //    velocity *= 2.5f;
+            //}
+
+            if (path != null)
+            {
+                if (Vector2.Distance(path.First(), hitbox.Center) < 10)
+                {
+                    if (wasPushed) return;
+                    path.RemoveAt(0);
+                    velocity = path.First() - this.hitbox.Center;
+                    velocity.Normalize();
+                    if(hitbox.Center.X<cargos[0].Hitbox.Center.X)
+                    {
+                        velocity *= 2.5f;
+                    }
+                    else
+                    {
+                        velocity *= 1.7f;
+                    }
+
+                }
+                //velocity = path.First() - this.hitbox.Center;
+                //velocity.Normalize();
+                //velocity *= 2.1f;
+
+            }
+        }
     }
 }
