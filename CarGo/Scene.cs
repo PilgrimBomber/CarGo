@@ -25,6 +25,7 @@ namespace CarGo
         private List<ActiveAbility> activeAbilities;
         private ContentManager content;
         private LevelControl levelControl;
+        private WorldObjectHandling worldObjectHandling;
         private Tilemap tilemap;
         private SoundCollection soundCollection;
         private TextureCollection textureCollection;
@@ -44,6 +45,7 @@ namespace CarGo
             camera = new Camera(spriteBatch,screenSize, cargos,players,enemies,worldObjects, activeAbilities);
             collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects, activeAbilities);
             levelControl = new LevelControl(this,content, cargos);
+            worldObjectHandling = new WorldObjectHandling(this, worldObjects);
             tilemap = new Tilemap(1, content);
             
             //enemyAI = new EnemyAI(tilemap, enemies, cargo);
@@ -78,6 +80,7 @@ namespace CarGo
             }
             RemoveDeadEntities();
             levelControl.Update();
+            worldObjectHandling.Update(gameTime);
             enemyAI.Update(gameTime);
             camera.Update();
 

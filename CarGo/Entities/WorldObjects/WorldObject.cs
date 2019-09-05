@@ -11,8 +11,9 @@ namespace CarGo
 {
     public abstract class WorldObject : Entity
     {
-        public int indexX;
-        public int indexY;
-        
+        public void SetPosition(Vector2 position)
+        {
+            hitbox.Move(position-hitbox.Center);
+        }
     }
 }
