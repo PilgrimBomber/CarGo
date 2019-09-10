@@ -17,9 +17,18 @@ namespace CarGo
         private List<Cargo> cargos;
         private Random random;
         private TimeSpan Timer;
-        private GameTime Timer2;
+
+        public List<RotRectangle> playerSpawnPositons;
         public WorldObjectHandling(Scene scene, List<WorldObject> worldObjects)
         {
+            playerSpawnPositons = new List<RotRectangle>();
+            for (int i = 0; i<4; i++)
+            {
+                playerSpawnPositons.Add(new RotRectangle(0, new Vector2(400 + (int)i * 100, 400),new Vector2(100,100)));
+                  
+            }
+            playerSpawnPositons.Add(new RotRectangle(90, new Vector2(960, 540), new Vector2(100, 100)));
+
             this.worldObjects = worldObjects;
             this.scene = scene;
             cargos = scene.GetCargos();
@@ -27,11 +36,18 @@ namespace CarGo
 
             for (int i = 0; i < 15; i++)
             {
+                //Vector2 Center = new Vector2(random.Next(-200, 4000), random.Next(-200, 1200));
+                //if(Center.Y>480 && Center.Y < 620)
+                //{
+                //    Center.Y += 140;
+                //}
+                
                 Vector2 Center = new Vector2(random.Next(-200, 4000), random.Next(-200, 1200));
-                if(Center.Y>480 && Center.Y < 620)
+                if (Center.Y > 480 && Center.Y < 620)
                 {
                     Center.Y += 140;
                 }
+
                 if (random.Next(0, 2) == 0)
                 {
                     scene.addCactus(Center);
@@ -41,9 +57,17 @@ namespace CarGo
                     scene.addRock(Center);
                 }
 
+                while (CheckCollisions(worldObjects.Last(), worldObjects)&& CheckCollisions(worldObjects.Last().Hitbox))
+                {
+                    Center = new Vector2(random.Next(-200, 4000), random.Next(-200, 1200));
+                    if (Center.Y > 480 && Center.Y < 620)
+                    {
+                        Center.Y += 140;
+                    }
+                    worldObjects.Last().SetPosition(Center);
+                }
             }
             Timer = new TimeSpan(0,0,0,0,1);
-            Timer2 = new GameTime();
         }
 
         //Values must be outside [-300,2220] [-300,1380]
@@ -56,12 +80,18 @@ namespace CarGo
                 {
                     if (worldObject.Hitbox.Center.X < cargos[0].Hitbox.Center.X - 2000)
                     {
-                        Vector2 Center = new Vector2(cargos[0].Hitbox.Center.X + 1800 + random.Next(-200, 200), random.Next(-200, 1300));
-                        if (Center.Y > 480 && Center.Y < 620)
+                        do
                         {
-                            Center.Y += 140;
-                        }
-                        worldObject.SetPosition(Center);
+                            Vector2 Center = new Vector2(cargos[0].Hitbox.Center.X + 1800 + random.Next(-200, 200), random.Next(-200, 1300));
+                            if (Center.Y > 480 && Center.Y < 620)
+                            {
+                                Center.Y += 140;
+                            }
+                            worldObject.SetPosition(Center);
+                        } while (CheckCollisions(worldObject, worldObjects));
+                        
+                        
+                        
                         if(worldObject.GetType()== typeof(Cactus))
                         {
                             (worldObject as Cactus).isActivated = false;
@@ -70,8 +100,34 @@ namespace CarGo
                 }
             }
             
-            //Timer.Add(gameTime.ElapsedGameTime);
             Timer += gameTime.ElapsedGameTime;
+        }
+
+        private bool CheckCollisions(WorldObject worldObject1, List<WorldObject> worldObjects)
+        {
+            if (worldObjects.Count == 0) return false;
+            foreach (WorldObject worldObject in worldObjects)
+            {
+                if (worldObject.Equals(worldObject1)) continue;
+                if (CollisionCheck.CheckCollision(worldObject1.Hitbox, worldObject.Hitbox))
+                {
+                    return true;
+                }
+            }
+            return false;
+        }
+
+        private bool CheckCollisions(RotRectangle hitbox)
+        {
+            if (worldObjects.Count == 0) return false;
+            foreach (RotRectangle playerSpawnPosition in playerSpawnPositons)
+            {
+                if (CollisionCheck.CheckCollision(hitbox, playerSpawnPosition))
+                {
+                    return true;
+                }
+            }
+            return false;
         }
     }
 }
