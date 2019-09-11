@@ -150,7 +150,7 @@ namespace CarGo
                 foreach (WorldObject worldObject in worldObjects)
                 {
                     
-                    if (CollisionCheck.CheckCollision(position, direction, worldObject.Hitbox))
+                    if (CollisionCheck.CheckCollision(position, direction, 75, worldObject.Hitbox))
                     {
                         
                         distance = Vector2.Distance(position, worldObject.Hitbox.Center);

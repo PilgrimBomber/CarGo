@@ -9,7 +9,7 @@ namespace CarGo
     /// This is the main type for your game.
     /// </summary>
     
-    public enum GameState {Playing,Menu,Pause,Lost,Won, LevelEditor }
+    public enum GameState {Playing,MenuMain, MenuModificationSelection,MenuPause,MenuLost,MenuWon, LevelEditor }
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -58,7 +58,7 @@ namespace CarGo
                 }
             }
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
-            if(playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Big, CarFrontType.Bumper, AbilityType.RocketLauncher);
+            if(playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Small, CarFrontType.Spikes, AbilityType.RocketLauncher);
            
           // scene.addPlayer(PlayerIndex.Four, new Vector2(800, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
         }
@@ -99,9 +99,9 @@ namespace CarGo
                 case GameState.Playing:
                     scene.Update(gameTime);
                     break;
-                case GameState.Pause:
+                case GameState.MenuPause:
                     break;
-                default:break; ;
+                default:break;
             }
         }
 
@@ -118,7 +118,7 @@ namespace CarGo
                 case GameState.Playing:
                     scene.Draw(gameTime);
                     break;
-                case GameState.Pause:
+                case GameState.MenuPause:
                     break;
                 default: break; ;
             }

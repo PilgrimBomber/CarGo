@@ -38,25 +38,25 @@ namespace CarGo
         public float Acceleration { get => acceleration; set => acceleration = value; }
         public PlayerIndex PlayerIndex { get => playerIndex; set => playerIndex = value; }
 
-        public Player(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType frontType, AbilityType ability)
+        public Player(Scene scene, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType frontType, AbilityType ability)
         {
             this.playerIndex = playerIndex;
             this.scene = scene;
             inputHandler = new InputHandler(this, playerIndex);
-            soundAcceleration = soundCollection.GetInstance(SoundType.Car_Accelerate);
-            soundBackground = soundCollection.GetInstance(SoundType.Car_Background);
+            soundAcceleration = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Accelerate);
+            soundBackground = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Background);
             soundBackground.Volume = 0.07f;
-            soundBoost = soundCollection.GetInstance(SoundType.Car_Boost);
+            soundBoost = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Boost);
             soundBoost.Volume = 0.1f;
-            soundHorn = soundCollection.GetInstance(SoundType.Car_Horn);
+            soundHorn = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Horn);
             soundHorn.Volume = 0.3f;
-            soundHorn2 = soundCollection.GetInstance(SoundType.Car_Horn2);
+            soundHorn2 = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Horn2);
             soundHorn2.Volume = 0.2f;
             this.carType = carType;
             switch (carType)
             {
                 case CarType.Small:
-                    texture = textureCollection.GetTexture(TextureType.Car_Small);
+                    texture = TextureCollection.getInstance().GetTexture(TextureType.Car_Small);
                     acceleration = 0.1f;
                     maxSpeed = 16.0f;
                     turnRate = 2.5f;//1 is default
@@ -64,7 +64,7 @@ namespace CarGo
                     hitpoints = 500;
                     break;
                 case CarType.Medium:
-                    texture = textureCollection.GetTexture(TextureType.Car_Medium);
+                    texture = TextureCollection.getInstance().GetTexture(TextureType.Car_Medium);
                     acceleration = 0.08f;
                     maxSpeed = 14.0f;
                     turnRate = 1.8f;//1 is default
@@ -72,7 +72,7 @@ namespace CarGo
                     hitpoints = 1000;
                     break;
                 case CarType.Big:
-                    texture = textureCollection.GetTexture(TextureType.Car_Big);
+                    texture = TextureCollection.getInstance().GetTexture(TextureType.Car_Big);
                     acceleration = 0.05f;
                     maxSpeed = 16.0f;
                     turnRate = 1.3f;//1 is default
@@ -84,13 +84,13 @@ namespace CarGo
             switch (ability)
             {
                 case AbilityType.RocketLauncher:
-                    this.active = new RocketLauncher(soundCollection, textureCollection, scene, this);
+                    this.active = new RocketLauncher(scene, this);
                     break;
             }
             scene.addActiveAbility(active);
 
             
-            carFront = new CarFront(soundCollection, textureCollection, frontType, hitbox);
+            carFront = new CarFront(frontType, hitbox);
             carFrontType = frontType;
             noDamage = false;
             idleCounter = 0;

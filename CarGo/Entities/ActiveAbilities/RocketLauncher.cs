@@ -18,7 +18,7 @@ namespace CarGo
         private Player player;
         private bool isExploded;
 
-        public RocketLauncher(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Player player)
+        public RocketLauncher(Scene scene, Player player)
         {
             isActive = false;
             activationCooldownTimer = 0;
@@ -27,11 +27,11 @@ namespace CarGo
             this.player = player;
             this.scene = scene;
             
-            texture = textureCollection.GetTexture(TextureType.Active_RocketLauncher);
-            textureExplosion = textureCollection.GetTexture(TextureType.Explosion);
-            soundLaunch = soundCollection.GetInstance(SoundType.RocketLauncher_Launch);
+            texture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher);
+            textureExplosion = TextureCollection.getInstance().GetTexture(TextureType.Explosion);
+            soundLaunch = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Launch);
             soundLaunch.Volume = 0.225f;
-            soundExplosion = soundCollection.GetInstance(SoundType.RocketLauncher_Explosion);
+            soundExplosion = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Explosion);
             soundExplosion.Volume = 1f;
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
         }

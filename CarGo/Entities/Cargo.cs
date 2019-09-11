@@ -13,12 +13,12 @@ namespace CarGo
     public class Cargo:Entity
     {
         private CarFront carFront;
-        public Cargo (SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Vector2 center)
+        public Cargo (Scene scene, Vector2 center)
         {
             this.scene = scene;
-            texture = textureCollection.GetTexture(TextureType.Cargo);
+            texture = TextureCollection.getInstance().GetTexture(TextureType.Cargo);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
-            carFront = new CarFront(soundCollection, textureCollection, CarFrontType.No, hitbox);
+            carFront = new CarFront(CarFrontType.No, hitbox);
             hitbox.Rotate(Geometry.DegToRad(90));
             carFront.Hitbox.RotatePoint(Geometry.DegToRad(90), hitbox.Center);
             this.velocity = new Vector2(2f, 0);
@@ -42,7 +42,7 @@ namespace CarGo
 
                 switch(entityCategory)
                 {
-                    case EntityCategory.Player: (entity as Player).Move(velocity); break;
+                    case EntityCategory.Player: (entity as Player).Move(velocity*1.05f); break;
                     case EntityCategory.Enemy: entity.Velocity += velocity; (entity as BaseEnemy).wasPushed = true; break;
                 }
                 

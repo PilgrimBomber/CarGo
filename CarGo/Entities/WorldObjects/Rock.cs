@@ -12,10 +12,10 @@ namespace CarGo
 {
     public class Rock : WorldObject
     {
-        public Rock(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Vector2 center)
+        public Rock(Scene scene, Vector2 center)
         {
             this.scene = scene;
-            texture = textureCollection.GetTexture(TextureType.WorldObject_Rock);
+            texture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_Rock);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
         }
         override public void Update(GameTime gameTime)

@@ -19,18 +19,18 @@ namespace CarGo
 
         public RotRectangle Hitbox { get => hitbox; set => hitbox = value; }
 
-        public CarFront(SoundCollection soundCollection, TextureCollection textureCollection, CarFrontType frontType, RotRectangle CarHitbox)
+        public CarFront(CarFrontType frontType, RotRectangle CarHitbox)
         {
             
             carFront = frontType;
             switch (frontType)
             {
                 case CarFrontType.Bumper:
-                    texture = textureCollection.GetTexture(TextureType.Front_Bumper);
+                    texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Bumper);
                     Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                     break;
                 case CarFrontType.Spikes:
-                    texture = textureCollection.GetTexture(TextureType.Front_Spikes);
+                    texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Spikes);
                     Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                     break;
                 case CarFrontType.No:

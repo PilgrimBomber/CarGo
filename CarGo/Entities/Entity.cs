@@ -46,7 +46,7 @@ namespace CarGo
         public abstract void Update(GameTime gameTime);
         public virtual void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
         {
-            spriteBatch.Draw(texture, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.05f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(texture, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
         }
         public abstract void GetPushed(Vector2 direction);
         public abstract void TakeDamage(int damage);

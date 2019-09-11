@@ -14,11 +14,13 @@ namespace CarGo
     {
         public bool isActivated;
         Texture2D ripTexture;
-        public Cactus(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Vector2 center)
+        public Cactus(Scene scene, Vector2 center)
         {
             this.scene = scene;
-            texture = textureCollection.GetTexture(TextureType.WorldObject_Cactus);
-            ripTexture = textureCollection.GetTexture(TextureType.WorldObject_CactusRip);
+            //texture = textureCollection.GetTexture(TextureType.WorldObject_Cactus);
+            texture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_Cactus);
+            //ripTexture = textureCollection.GetTexture(TextureType.WorldObject_CactusRip);
+            ripTexture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_CactusRip);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             isActivated = false;
         }

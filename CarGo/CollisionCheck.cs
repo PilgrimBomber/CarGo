@@ -267,12 +267,12 @@ namespace CarGo
         /// <param name="direction"></param>
         /// <param name="rotRectangle"></param>
         /// <returns></returns>
-        public static bool CheckCollision(Vector2 position, Vector2 direction, RotRectangle rotRectangle)
+        public static bool CheckCollision(Vector2 position, Vector2 direction, int width, RotRectangle rotRectangle)
         {
             
             //Vector2 direction = target - position;
             float angle = (float)Math.Atan(direction.Y / direction.X);
-            RotRectangle line = new RotRectangle(0, position + direction / 2, new Vector2(direction.Length() / 2, 25));
+            RotRectangle line = new RotRectangle(0, position + direction / 2, new Vector2(direction.Length() / 2, width/2));
             line.Rotate(angle);
             return CheckCollision(rotRectangle, line);
         }

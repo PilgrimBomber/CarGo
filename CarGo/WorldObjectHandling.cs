@@ -18,16 +18,16 @@ namespace CarGo
         private Random random;
         private TimeSpan Timer;
 
-        public List<RotRectangle> playerSpawnPositons;
+        public List<RotRectangle> spawnPositons;
         public WorldObjectHandling(Scene scene, List<WorldObject> worldObjects)
         {
-            playerSpawnPositons = new List<RotRectangle>();
+            spawnPositons = new List<RotRectangle>();
             for (int i = 0; i<4; i++)
             {
-                playerSpawnPositons.Add(new RotRectangle(0, new Vector2(400 + (int)i * 100, 400),new Vector2(100,100)));
+                spawnPositons.Add(new RotRectangle(0, new Vector2(400 + (int)i * 100, 400),new Vector2(100,100)));
                   
             }
-            playerSpawnPositons.Add(new RotRectangle(90, new Vector2(960, 540), new Vector2(100, 100)));
+            spawnPositons.Add(new RotRectangle(90, new Vector2(960, 540), new Vector2(100, 100)));
 
             this.worldObjects = worldObjects;
             this.scene = scene;
@@ -120,7 +120,7 @@ namespace CarGo
         private bool CheckCollisions(RotRectangle hitbox)
         {
             if (worldObjects.Count == 0) return false;
-            foreach (RotRectangle playerSpawnPosition in playerSpawnPositons)
+            foreach (RotRectangle playerSpawnPosition in spawnPositons)
             {
                 if (CollisionCheck.CheckCollision(hitbox, playerSpawnPosition))
                 {

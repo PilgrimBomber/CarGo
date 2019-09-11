@@ -18,12 +18,13 @@ namespace CarGo
         //private List<Location> path2;
         //public List<Location> Path2 { get => path2; set => path2 = value; }
 
-        public EnemyDummy(SoundCollection soundCollection, TextureCollection textureCollection, Scene scene, Vector2 center):base(scene)
+        public EnemyDummy(Scene scene, Vector2 center):base(scene)
         {
-            
+
             //Set dummy texture
-            texture = textureCollection.GetTexture(TextureType.Enemy_Zombie);
-            soundCrash = soundCollection.GetInstance(SoundType.Enemy_Hit);
+            texture = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie); 
+            //textureCollection.GetTexture(TextureType.Enemy_Zombie);
+            soundCrash = SoundCollection.getInstance().GetSoundInstance(SoundType.Enemy_Hit);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             hitpoints = 100;
         }

@@ -27,8 +27,7 @@ namespace CarGo
         private LevelControl levelControl;
         private WorldObjectHandling worldObjectHandling;
         private Tilemap tilemap;
-        private SoundCollection soundCollection;
-        private TextureCollection textureCollection;
+       
         //private SpriteBatch spriteBatch;
         public Scene(SpriteBatch spriteBatch, ContentManager content, Vector2 screenSize)
         {
@@ -40,8 +39,9 @@ namespace CarGo
             cargos = new List<Cargo>();
             activeAbilities = new List<ActiveAbility>();
 
-            soundCollection = new SoundCollection(content);
-            textureCollection = new TextureCollection(content);
+            SoundCollection.getInstance().LoadSounds(content);
+            //textureCollection = new TextureCollection(content);
+            TextureCollection.getInstance().loadTextures(content);
             camera = new Camera(spriteBatch,screenSize, cargos,players,enemies,worldObjects, activeAbilities);
             collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects, activeAbilities);
             levelControl = new LevelControl(this,content, cargos);
@@ -96,14 +96,14 @@ namespace CarGo
 
         public void addCactus(Vector2 center)
         {
-            Cactus cactus = new Cactus(soundCollection, textureCollection, this, center);
+            Cactus cactus = new Cactus(this, center);
             addEntity(cactus);
             worldObjects.Add(cactus);
         }
 
         public void addRock(Vector2 center)
         {
-            Rock rock = new Rock(soundCollection, textureCollection, this, center);
+            Rock rock = new Rock(this, center);
             addEntity(rock);
             worldObjects.Add(rock);
         }
@@ -119,9 +119,9 @@ namespace CarGo
             BaseEnemy enemy;
             switch (enemyType)
             {
-                case EnemyType.EnemyDummy: enemy = new EnemyDummy(soundCollection, textureCollection, this, center);
+                case EnemyType.EnemyDummy: enemy = new EnemyDummy(this, center);
                     break;
-                default: enemy = new EnemyDummy(soundCollection, textureCollection, this, center);
+                default: enemy = new EnemyDummy(this, center);
                     break;
             }
             enemies.Add(enemy);
@@ -136,7 +136,7 @@ namespace CarGo
 
         public void addPlayer(PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType)
         {
-            Player player = new Player(soundCollection, textureCollection, this, playerIndex, center, carType, carFrontType, abilityType);
+            Player player = new Player(this, playerIndex, center, carType, carFrontType, abilityType);
             players.Add(player);
             addEntity(player);
         }
@@ -148,7 +148,7 @@ namespace CarGo
 
         public void addCargo(Vector2 center)
         {
-            Cargo cargo = new Cargo(soundCollection, textureCollection, this, center);
+            Cargo cargo = new Cargo(this, center);
             cargos.Add(cargo);
             entities.Add(cargo);
         }

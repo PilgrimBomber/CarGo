@@ -28,8 +28,14 @@ namespace CarGo
     public class SoundCollection
     {
         private List<SoundEffect> soundEffect = new List<SoundEffect>();
+        private static SoundCollection instance;
 
-        public SoundCollection(ContentManager content)
+        private SoundCollection()
+        {
+
+        }
+
+        public void LoadSounds(ContentManager content)
         {
             foreach (SoundType soundType in Enum.GetValues(typeof (SoundType)).Cast<SoundType>().ToList<SoundType>())
             {
@@ -67,8 +73,15 @@ namespace CarGo
             }
         }
 
-        public SoundEffectInstance GetInstance(SoundType soundType)
+        public static SoundCollection getInstance()
         {
+            if (instance == null) instance = new SoundCollection();
+            return instance;
+        }
+
+        public SoundEffectInstance GetSoundInstance(SoundType soundType)
+        {
+            if(soundEffect==null) throw new ContentLoadException();
             return soundEffect[(int)soundType].CreateInstance();
         }
 
