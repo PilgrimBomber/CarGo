@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CarGo
 {
-    public enum EnemyType{EnemyDummy}
+    public enum EnemyType{EnemyDummy, EnemyFast}
 
     public abstract class BaseEnemy:Entity
     {

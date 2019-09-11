@@ -190,6 +190,38 @@ namespace CarGo
                                 entity.Hitbox.Move(velocity);
                             }
                         }
+                        //Collision with 
+                        if (entity.GetType() == typeof(EnemyFast))
+                        {
+                            if (carFront.CheckCollision(entity))
+                            {
+                                entity.Hitbox.Move(velocity);
+                                entity.TakeDamage((int)CalculateDamage());
+                                //entity.GetPushed(velocity);
+                                switch (carType)
+                                {
+                                    case CarType.Big:
+                                        entity.GetPushed(velocity * 1.3f);
+                                        velocity *= 0.8f;
+                                        break;
+                                    case CarType.Medium:
+                                        entity.GetPushed(velocity);
+                                        velocity *= 0.5f;
+                                        break;
+                                    case CarType.Small:
+                                        entity.GetPushed(velocity * 0.8f);
+                                        velocity *= 0.3f;
+                                        break;
+                                }
+
+                                noDamage = true;
+                            }
+                            else
+                            {
+                                noDamage = false;
+                                entity.Hitbox.Move(velocity);
+                            }
+                        }
                         break;
                     }
 

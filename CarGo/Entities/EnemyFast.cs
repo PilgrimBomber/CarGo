@@ -11,24 +11,24 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public class EnemyDummy : BaseEnemy
+    public class EnemyFast : BaseEnemy
     {
         SoundEffectInstance soundCrash;
 
         //private List<Location> path2;
         //public List<Location> Path2 { get => path2; set => path2 = value; }
 
-        public EnemyDummy(Scene scene, Vector2 center):base(scene)
+        public EnemyFast(Scene scene, Vector2 center) : base(scene)
         {
 
-            //Set dummy texture
-            texture = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie); 
+            //Set EnemyFast texture
+            texture = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Fast);
             //textureCollection.GetTexture(TextureType.Enemy_Zombie);
             soundCrash = SoundCollection.getInstance().GetSoundInstance(SoundType.Enemy_Hit);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
-            hitpoints = 100;
+            hitpoints = 50;
         }
-        
+
 
         public override void Collide(Entity entity, EntityCategory entityCategory)
         {
@@ -51,7 +51,7 @@ namespace CarGo
                 //Collision with Cargo
                 case EntityCategory.Cargo:
                     {
-                        
+
                         //Hitbox.Move(-velocity);
                         entity.TakeDamage(10);
                         hitpoints = 0;
@@ -158,7 +158,7 @@ namespace CarGo
                     }
             }
         }
-        
+
         public override void GetPushed(Vector2 direction)
         {
             velocity += 1.5f * direction;
@@ -167,7 +167,7 @@ namespace CarGo
             wasPushed = true;
         }
 
-        
+
         public override void TakeDamage(int damage)
         {
             hitpoints -= damage;
