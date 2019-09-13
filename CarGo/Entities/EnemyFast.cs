@@ -27,6 +27,7 @@ namespace CarGo
             soundCrash = SoundCollection.getInstance().GetSoundInstance(SoundType.Enemy_Hit);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             hitpoints = 50;
+            baseSpeed = 4;
         }
 
 
