@@ -79,6 +79,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/Cactus.png
 
+#begin textures/CactusRip.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/CactusRip.png
+
 #begin textures/Car_BigSize.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -187,18 +199,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/Mod_Front_Spikes.png
 
-#begin textures/RipCactus.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/RipCactus.png;textures/CactusRip.png
-
 #begin textures/Rock.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -210,6 +210,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/Rock.png
+
+#begin textures/Rocket.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Rocket.png
+
+#begin textures/Tile_0.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Tile_0.png;textures/Tile_0_original.png
 
 #begin textures/Tile_0.png
 /importer:TextureImporter
