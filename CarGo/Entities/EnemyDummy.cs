@@ -14,7 +14,7 @@ namespace CarGo
     public class EnemyDummy : BaseEnemy
     {
         SoundEffectInstance soundCrash;
-
+        Animation animation;
         //private List<Location> path2;
         //public List<Location> Path2 { get => path2; set => path2 = value; }
 
@@ -22,10 +22,13 @@ namespace CarGo
         {
 
             //Set dummy texture
-            texture = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie); 
+            texture = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie);
+            
             //textureCollection.GetTexture(TextureType.Enemy_Zombie);
             soundCrash = SoundCollection.getInstance().GetSoundInstance(SoundType.Enemy_Hit);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
+
+            animation = new Animation(AnimationType.Zombie_Slow, hitbox);
             hitpoints = 100;
             baseSpeed = 2;
         }
@@ -159,7 +162,11 @@ namespace CarGo
                     }
             }
         }
-        
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
+        {
+            animation.Draw(gameTime, spriteBatch, offset);
+        }
         public override void GetPushed(Vector2 direction)
         {
             velocity += 1.5f * direction;

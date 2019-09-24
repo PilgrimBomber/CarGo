@@ -163,6 +163,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/Enemy_Zombie.png
 
+#begin textures/Enemy_Zombie_Slow_Animation.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Enemy_Zombie_Slow_Animation.png
+
 #begin textures/EnemyFast.png
 /importer:TextureImporter
 /processor:TextureProcessor

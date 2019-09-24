@@ -103,6 +103,7 @@ namespace CarGo
             inputHandler.HandleInput();
 
             CalculateCooldowns(gameTime);
+            Console.WriteLine("Geschwindigkeit:" + velocity.Length().ToString() + "Position: " + hitbox.Center.ToString());
             Move(velocity);
 
             if(velocity.Length()>0.2)
@@ -219,7 +220,9 @@ namespace CarGo
                             else
                             {
                                 noDamage = false;
+                                
                                 entity.Hitbox.Move(velocity);
+                                
                             }
                         }
                         break;
@@ -294,7 +297,7 @@ namespace CarGo
         }
         public void Accelerate(float accelerationFactor)
         {
-            Console.WriteLine("Geschwindigkeit " + velocity.Length().ToString());
+            //Console.WriteLine("Geschwindigkeit " + velocity.Length().ToString());
             if (accelerationFactor>0&& velocity.Length()<0.8)
             {
                 soundAcceleration.Volume = accelerationFactor/8;
