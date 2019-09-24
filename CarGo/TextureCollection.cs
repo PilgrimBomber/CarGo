@@ -33,7 +33,7 @@ namespace CarGo
                         case TextureType.Cargo: textures.Add(content.Load<Texture2D>("textures/Cargo")); break;
                         case TextureType.Car_Big: textures.Add(content.Load<Texture2D>("textures/Car_BigSize")); break;
                         case TextureType.Car_Medium: textures.Add(content.Load<Texture2D>("textures/Car_MediumSize")); break;
-                        case TextureType.Car_Small: textures.Add(content.Load<Texture2D>("textures/Rock")); break;
+                        case TextureType.Car_Small: textures.Add(content.Load<Texture2D>("textures/Car_SmallSize")); break;
                         case TextureType.Dummy: textures.Add(content.Load<Texture2D>("textures/Enemy_Dummy")); break;
                         case TextureType.Enemy_Zombie: textures.Add(content.Load<Texture2D>("textures/Enemy_Zombie")); break;
                         case TextureType.Enemy_Fast: textures.Add(content.Load<Texture2D>("textures/EnemyFast")); break;

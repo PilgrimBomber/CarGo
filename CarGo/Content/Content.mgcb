@@ -115,6 +115,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/Car_MediumSize.png
 
+#begin textures/Car_SmallSize.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Car_SmallSize.png
+
 #begin textures/Cargo.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -222,18 +234,6 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/Rocket.png
-
-#begin textures/Tile_0.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/Tile_0.png;textures/Tile_0_original.png
 
 #begin textures/Tile_0.png
 /importer:TextureImporter
