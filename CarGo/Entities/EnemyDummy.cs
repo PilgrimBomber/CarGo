@@ -13,8 +13,8 @@ namespace CarGo
 {
     public class EnemyDummy : BaseEnemy
     {
-        SoundEffectInstance soundCrash;
-        Animation animation;
+        private SoundEffectInstance soundCrash;
+        private Animation animation;
         //private List<Location> path2;
         //public List<Location> Path2 { get => path2; set => path2 = value; }
 
@@ -22,7 +22,7 @@ namespace CarGo
         {
 
             //Set dummy texture
-            texture = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie);
+            texture = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie_Slow);
             
             //textureCollection.GetTexture(TextureType.Enemy_Zombie);
             soundCrash = SoundCollection.getInstance().GetSoundInstance(SoundType.Enemy_Hit);

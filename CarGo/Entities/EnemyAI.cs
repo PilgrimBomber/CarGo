@@ -45,21 +45,21 @@ namespace CarGo
             if(usingAStar)
             {
                 throw new NotImplementedException();
-                if (updateCounter == 0)
-                {
-                    foreach (BaseEnemy enemy in enemies)
-                    {
-                        if (enemy.GetType() == typeof(EnemyDummy))
-                        {
-                            //(enemy as EnemyDummy).Path2 = aStar.FindPath(Tilemap.CoordinatesWorldToGrid(enemy), Tilemap.CoordinatesWorldToGrid(cargo));
-                        }
-                    }
-                }
-                updateCounter++;
-                if (updateCounter > 100)
-                {
-                    updateCounter = 0;
-                }
+                //if (updateCounter == 0)
+                //{
+                //    foreach (BaseEnemy enemy in enemies)
+                //    {
+                //        if (enemy.GetType() == typeof(EnemyDummy))
+                //        {
+                //            //(enemy as EnemyDummy).Path2 = aStar.FindPath(Tilemap.CoordinatesWorldToGrid(enemy), Tilemap.CoordinatesWorldToGrid(cargo));
+                //        }
+                //    }
+                //}
+                //updateCounter++;
+                //if (updateCounter > 100)
+                //{
+                //    updateCounter = 0;
+                //}
             }
             
             else

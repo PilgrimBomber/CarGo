@@ -17,6 +17,7 @@ namespace CarGo
         private Texture2D textureExplosion;
         private Player player;
         private bool isExploded;
+        //private Animation animation;
 
         public RocketLauncher(Scene scene, Player player)
         {
@@ -26,7 +27,8 @@ namespace CarGo
 
             this.player = player;
             this.scene = scene;
-            
+           
+
             texture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher);
             textureExplosion = TextureCollection.getInstance().GetTexture(TextureType.Explosion);
             soundLaunch = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Launch);
@@ -34,6 +36,7 @@ namespace CarGo
             soundExplosion = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Explosion);
             soundExplosion.Volume = 1f;
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
+           // animation = new Animation(AnimationType.Explosion, new RotRectangle(hitbox.RotationRad, hitbox.Center /* -offset */, new Vector2(textureExplosion.Width / 2, textureExplosion.Height / 2)));
         }
 
 
@@ -72,6 +75,7 @@ namespace CarGo
                 if (isExploded)
                 {
                     spriteBatch.Draw(textureExplosion, hitbox.Center - offset, null, Color.White, 0, new Vector2(textureExplosion.Width / 2, textureExplosion.Height / 2), 1.0f, SpriteEffects.None, 0f);
+                    //animation.Draw(gameTime, spriteBatch, new Vector2(textureExplosion.Width / 2, textureExplosion.Height / 2));
                 }
                 else
                 {

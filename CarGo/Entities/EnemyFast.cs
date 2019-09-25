@@ -13,8 +13,8 @@ namespace CarGo
 {
     public class EnemyFast : BaseEnemy
     {
-        SoundEffectInstance soundCrash;
-
+        private SoundEffectInstance soundCrash;
+        private Animation animation;
         //private List<Location> path2;
         //public List<Location> Path2 { get => path2; set => path2 = value; }
 
@@ -22,10 +22,11 @@ namespace CarGo
         {
 
             //Set EnemyFast texture
-            texture = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Fast);
+            texture = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie_Fast);
             //textureCollection.GetTexture(TextureType.Enemy_Zombie);
             soundCrash = SoundCollection.getInstance().GetSoundInstance(SoundType.Enemy_Hit);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
+            animation = new Animation(AnimationType.Zombie_Fast, hitbox);
             hitpoints = 50;
             baseSpeed = 4;
         }
@@ -168,6 +169,10 @@ namespace CarGo
             wasPushed = true;
         }
 
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
+        {
+            animation.Draw(gameTime, spriteBatch, offset);
+        }
 
         public override void TakeDamage(int damage)
         {

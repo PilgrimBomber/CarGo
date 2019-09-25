@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CarGo
 {
-    public enum TextureType { Explosion, Cargo, Car_Big, Car_Medium, Car_Small, Dummy, Enemy_Zombie, Enemy_Zombie_Animation, Enemy_Fast ,Front_Spikes, Front_Bumper,WorldObject_Rock, WorldObject_Cactus, WorldObject_CactusRip, Active_RocketLauncher}
+    public enum TextureType { Explosion, Explosion_Animation, Cargo, Car_Big, Car_Medium, Car_Small, Dummy, Enemy_Zombie_Slow, Enemy_Zombie_Slow_Animation, Enemy_Zombie_Fast, Enemy_Zombie_Fast_Animation ,Front_Spikes, Front_Bumper,WorldObject_Rock, WorldObject_Cactus, WorldObject_CactusRip, Active_RocketLauncher}
     public class TextureCollection
     {
         private List<Texture2D> textures;
@@ -30,21 +30,25 @@ namespace CarGo
                 {
                     switch (textureType)
                     {
+                        case TextureType.Active_RocketLauncher: textures.Add(content.Load<Texture2D>("textures/Rocket")); break;
                         case TextureType.Cargo: textures.Add(content.Load<Texture2D>("textures/Cargo")); break;
                         case TextureType.Car_Big: textures.Add(content.Load<Texture2D>("textures/Car_BigSize")); break;
                         case TextureType.Car_Medium: textures.Add(content.Load<Texture2D>("textures/Car_MediumSize")); break;
                         case TextureType.Car_Small: textures.Add(content.Load<Texture2D>("textures/Car_SmallSize")); break;
                         case TextureType.Dummy: textures.Add(content.Load<Texture2D>("textures/Enemy_Dummy")); break;
-                        case TextureType.Enemy_Zombie: textures.Add(content.Load<Texture2D>("textures/Enemy_Zombie")); break;
-                        case TextureType.Enemy_Zombie_Animation: textures.Add(content.Load<Texture2D>("textures/Enemy_Zombie_Slow_Animation")); break;
-                        case TextureType.Enemy_Fast: textures.Add(content.Load<Texture2D>("textures/EnemyFast")); break;
+                        case TextureType.Enemy_Zombie_Slow: textures.Add(content.Load<Texture2D>("textures/Enemy_Zombie_Slow")); break;
+                        case TextureType.Enemy_Zombie_Slow_Animation: textures.Add(content.Load<Texture2D>("textures/Enemy_Zombie_Slow_Animation")); break;
+                        case TextureType.Enemy_Zombie_Fast: textures.Add(content.Load<Texture2D>("textures/Enemy_Zombie_Fast")); break;
+                        case TextureType.Enemy_Zombie_Fast_Animation: textures.Add(content.Load<Texture2D>("textures/Enemy_Zombie_Fast_Animation")); break;
+                        case TextureType.Explosion: textures.Add(content.Load<Texture2D>("textures/Explosion")); break;
+                        case TextureType.Explosion_Animation: textures.Add(content.Load<Texture2D>("textures/Explosion_Animation")); break;
                         case TextureType.Front_Bumper: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Bumper")); break;
                         case TextureType.Front_Spikes: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Spikes")); break;
                         case TextureType.WorldObject_Cactus: textures.Add(content.Load<Texture2D>("textures/Cactus")); break;
                         case TextureType.WorldObject_CactusRip: textures.Add(content.Load<Texture2D>("textures/CactusRip")); break;
                         case TextureType.WorldObject_Rock: textures.Add(content.Load<Texture2D>("textures/Rock")); break;
-                        case TextureType.Active_RocketLauncher: textures.Add(content.Load<Texture2D>("textures/Rocket")); break;
-                        case TextureType.Explosion: textures.Add(content.Load<Texture2D>("textures/Explosion")); break;
+                        
+                       
                     }
                 }
             }

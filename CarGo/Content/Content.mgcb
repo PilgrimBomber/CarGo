@@ -13,6 +13,18 @@
 
 #---------------------------------- Content ---------------------------------#
 
+#begin ../../../../../Desktop/ex/Explosion_Animation.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:../../../../../Desktop/ex/Explosion_Animation.png;textures/Explosion_Animation.png
+
 #begin sounds/Car_Accelerate.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -161,7 +173,19 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/Enemy_Zombie.png
+/build:textures/Enemy_Zombie.png;textures/Enemy_Zombie_Slow.png
+
+#begin textures/Enemy_Zombie_Fast_Animation.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Enemy_Zombie_Fast_Animation.png
 
 #begin textures/Enemy_Zombie_Slow_Animation.png
 /importer:TextureImporter
@@ -185,7 +209,7 @@
 /processorParam:ResizeToPowerOfTwo=False
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
-/build:textures/EnemyFast.png
+/build:textures/EnemyFast.png;textures/Enemy_Zombie_Fast.png
 
 #begin textures/Explosion.png
 /importer:TextureImporter

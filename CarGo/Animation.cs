@@ -35,20 +35,20 @@ namespace CarGo
                 case AnimationType.Explosion:
                     reapeating = false;
                     frameTime = new TimeSpan(0, 0, 0, 0, 100);
-                    frameCount = 13;
-                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Explosion);
+                    frameCount = 11;
+                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Explosion_Animation);
                     break;
                 case AnimationType.Zombie_Slow:
                     reapeating = true;
-                    frameTime = new TimeSpan(0, 0, 0, 0, 100);
-                    frameCount = 2;
-                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie_Animation);
+                    frameTime = new TimeSpan(0, 0, 0, 0, 150);
+                    frameCount = 8;
+                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie_Slow_Animation);
                     break;
                 case AnimationType.Zombie_Fast:
                     reapeating = true;
-                    frameTime = new TimeSpan(0, 0, 0, 0, 100);
+                    frameTime = new TimeSpan(0, 0, 0, 0, 150);
                     frameCount = 8;
-                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Fast);
+                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie_Fast_Animation);
                     break;
             }
 
