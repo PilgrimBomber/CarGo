@@ -58,7 +58,7 @@ namespace CarGo
                 case CarType.Small:
                     texture = TextureCollection.getInstance().GetTexture(TextureType.Car_Small);
                     acceleration = 0.1f;
-                    maxSpeed = 16.0f;
+                    maxSpeed = 12.0f;
                     turnRate = 2.5f;//1 is default
                     drift = 0.05f;//number between 0 and 1
                     hitpoints = 500;
@@ -189,6 +189,7 @@ namespace CarGo
                             {
                                 noDamage = false;
                                 entity.Hitbox.Move(velocity);
+                                entity.GetPushed(velocity * 0.1f);
                             }
                         }
                         //Collision with 
@@ -399,6 +400,11 @@ namespace CarGo
             }
 
             return damage;
+        }
+
+        public void SetPosition(Vector2 position)
+        {
+            Move(position - hitbox.Center);
         }
 
         private void CalculateCooldowns(GameTime gameTime)
