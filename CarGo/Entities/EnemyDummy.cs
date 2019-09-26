@@ -44,6 +44,7 @@ namespace CarGo
                 //Collision with Player
                 case EntityCategory.Player:
                     {
+                        wasPushed = true;
                         //entity.TakeDamage(100);
                         break;
                     }
