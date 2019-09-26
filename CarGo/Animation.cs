@@ -11,7 +11,7 @@ namespace CarGo
 {
     public enum AnimationType { Explosion, Zombie_Slow, Zombie_Fast }
 
-    class Animation
+    public class Animation
     {
         private TimeSpan timeExisting;
         private RotRectangle hitbox;

@@ -13,11 +13,14 @@ namespace CarGo
 
     public abstract class BaseEnemy:Entity
     {
+        
         public bool wasPushed;
         protected List<Vector2> path;
         protected List<Cargo> cargos;
         protected float baseSpeed;
+        protected Animation animation;
         public List<Vector2> Path { get => path; set => path = value; }
+        
 
         public BaseEnemy(Scene scene)
         {
@@ -48,6 +51,11 @@ namespace CarGo
 
         }
 
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
+        {
+            if (wasPushed) spriteBatch.Draw(texture, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
+            else animation.Draw(gameTime, spriteBatch, offset);
+        }
 
         protected void FollowPath()
         {

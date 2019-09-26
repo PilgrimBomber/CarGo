@@ -14,7 +14,7 @@ namespace CarGo
     public class EnemyDummy : BaseEnemy
     {
         private SoundEffectInstance soundCrash;
-        private Animation animation;
+        //private Animation animation;
         //private List<Location> path2;
         //public List<Location> Path2 { get => path2; set => path2 = value; }
 
@@ -164,10 +164,7 @@ namespace CarGo
             }
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
-        {
-            animation.Draw(gameTime, spriteBatch, offset);
-        }
+        
         public override void GetPushed(Vector2 direction)
         {
             velocity += 1.5f * direction;

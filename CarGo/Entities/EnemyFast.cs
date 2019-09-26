@@ -14,7 +14,7 @@ namespace CarGo
     public class EnemyFast : BaseEnemy
     {
         private SoundEffectInstance soundCrash;
-        private Animation animation;
+        
         //private List<Location> path2;
         //public List<Location> Path2 { get => path2; set => path2 = value; }
 
@@ -167,11 +167,6 @@ namespace CarGo
             soundCrash.Volume = 0.1f;
             soundCrash.Play();
             wasPushed = true;
-        }
-
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
-        {
-            animation.Draw(gameTime, spriteBatch, offset);
         }
 
         public override void TakeDamage(int damage)

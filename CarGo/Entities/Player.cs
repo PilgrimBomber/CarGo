@@ -103,7 +103,7 @@ namespace CarGo
             inputHandler.HandleInput();
 
             CalculateCooldowns(gameTime);
-            Console.WriteLine("Geschwindigkeit:" + velocity.Length().ToString() + "Position: " + hitbox.Center.ToString());
+            //Console.WriteLine("Geschwindigkeit:" + velocity.Length().ToString() + "Position: " + hitbox.Center.ToString());
             Move(velocity);
 
             if(velocity.Length()>0.2)
@@ -123,6 +123,7 @@ namespace CarGo
             //if (velocity.Length() < 0.03) velocity *= 0;
 
         }
+
 
 
         public override void Collide(Entity entity, EntityCategory entityCategory)
@@ -291,7 +292,9 @@ namespace CarGo
                 
                 hitbox.Rotate(rad * turnRate * (30 - velocity.Length()) / 20);
                 carFront.Turn(rad * turnRate * (30 - velocity.Length()) / 20, hitbox.Center);
+                Console.Write("Fehlerquelle drehen: " + velocity.Length().ToString());
                 velocity = Geometry.Rotate(velocity, rad * turnRate * (30 - velocity.Length()) / 20 * (1 - drift));
+                Console.WriteLine(" Nach dem drehen:" + velocity.Length().ToString());
                 lastTurn = rad;
             }
 
@@ -299,6 +302,7 @@ namespace CarGo
         public void Accelerate(float accelerationFactor)
         {
             //Console.WriteLine("Geschwindigkeit " + velocity.Length().ToString());
+            Console.Write("Fehlerquelle beschleunigen: " + velocity.Length().ToString());
             if (accelerationFactor>0&& velocity.Length()<0.8)
             {
                 soundAcceleration.Volume = accelerationFactor/8;
@@ -318,6 +322,8 @@ namespace CarGo
                     velocity.Y -= (float)Math.Sqrt(maxSpeed - velocity.Length()) * acceleration * accelerationFactor * (float)Math.Cos(hitbox.RotationRad);
                 }
             }
+
+            Console.WriteLine("nach dem Beschleunigen: " + velocity.Length().ToString());
         }
 
         public void Boost()
