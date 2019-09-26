@@ -89,7 +89,9 @@ namespace CarGo
             int minY = (int)(offset.Y +240)/constHeight;
             int minX = (int)(offset.X + 660)/constWidth;
             if (minX >= 500 - 32) minX = 500 - 32;
-            
+            if (minY > mapHeight - 18) minY = mapHeight - 18;
+            if (minY < 0) minY = 0;
+
             for (int i = minY; i < minY+18; i++) 
             {
                 for (int j = minX; j < minX+32; j++) 

@@ -103,6 +103,7 @@ namespace CarGo
             inputHandler.HandleInput();
 
             CalculateCooldowns(gameTime);
+            Console.WriteLine("Geschwindigkeit:" + velocity.Length().ToString() + "Position: " + hitbox.Center.ToString());
             Move(velocity);
 
             if(velocity.Length()>0.2)
@@ -191,6 +192,40 @@ namespace CarGo
                                 entity.GetPushed(velocity * 0.1f);
                             }
                         }
+                        //Collision with 
+                        if (entity.GetType() == typeof(EnemyFast))
+                        {
+                            if (carFront.CheckCollision(entity))
+                            {
+                                entity.Hitbox.Move(velocity);
+                                entity.TakeDamage((int)CalculateDamage());
+                                //entity.GetPushed(velocity);
+                                switch (carType)
+                                {
+                                    case CarType.Big:
+                                        entity.GetPushed(velocity * 1.3f);
+                                        velocity *= 0.8f;
+                                        break;
+                                    case CarType.Medium:
+                                        entity.GetPushed(velocity);
+                                        velocity *= 0.5f;
+                                        break;
+                                    case CarType.Small:
+                                        entity.GetPushed(velocity * 0.8f);
+                                        velocity *= 0.3f;
+                                        break;
+                                }
+
+                                noDamage = true;
+                            }
+                            else
+                            {
+                                noDamage = false;
+                                
+                                entity.Hitbox.Move(velocity);
+                                
+                            }
+                        }
                         break;
                     }
 
@@ -263,7 +298,7 @@ namespace CarGo
         }
         public void Accelerate(float accelerationFactor)
         {
-            Console.WriteLine("Geschwindigkeit " + velocity.Length().ToString());
+            //Console.WriteLine("Geschwindigkeit " + velocity.Length().ToString());
             if (accelerationFactor>0&& velocity.Length()<0.8)
             {
                 soundAcceleration.Volume = accelerationFactor/8;

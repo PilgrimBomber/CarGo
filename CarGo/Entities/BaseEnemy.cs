@@ -9,13 +9,14 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CarGo
 {
-    public enum EnemyType{EnemyDummy}
+    public enum EnemyType{EnemyDummy, EnemyFast}
 
     public abstract class BaseEnemy:Entity
     {
         public bool wasPushed;
         protected List<Vector2> path;
         protected List<Cargo> cargos;
+        protected float baseSpeed;
         public List<Vector2> Path { get => path; set => path = value; }
 
         public BaseEnemy(Scene scene)
@@ -68,11 +69,11 @@ namespace CarGo
                     velocity.Normalize();
                     if(hitbox.Center.X<cargos[0].Hitbox.Center.X)
                     {
-                        velocity *= 2.5f;
+                        velocity *= baseSpeed * 1.3f;
                     }
                     else
                     {
-                        velocity *= 1.7f;
+                        velocity *= baseSpeed* 0.8f;
                     }
 
                 }

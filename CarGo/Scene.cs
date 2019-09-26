@@ -121,6 +121,8 @@ namespace CarGo
             {
                 case EnemyType.EnemyDummy: enemy = new EnemyDummy(this, center);
                     break;
+                case EnemyType.EnemyFast: enemy = new EnemyFast(this, center);
+                    break;
                 default: enemy = new EnemyDummy(this, center);
                     break;
             }

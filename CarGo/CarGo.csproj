@@ -66,6 +66,7 @@
     <Compile Include="Camera.cs" />
     <Compile Include="CollisionCheck.cs" />
     <Compile Include="Entities\ActiveAbilities\RocketLauncher.cs" />
+    <Compile Include="Entities\EnemyFast.cs" />
     <Compile Include="Entities\WorldObjects\Cactus.cs" />
     <Compile Include="Entities\CarFront.cs" />
     <Compile Include="Entities\EnemyAI.cs" />

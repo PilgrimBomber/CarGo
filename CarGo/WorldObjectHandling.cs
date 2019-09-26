@@ -119,7 +119,7 @@ namespace CarGo
 
         private bool CheckCollisions(RotRectangle hitbox)
         {
-            if (worldObjects.Count == 0) return false;
+            //if (worldObjects.Count == 0) return false;
             foreach (RotRectangle playerSpawnPosition in spawnPositons)
             {
                 if (CollisionCheck.CheckCollision(hitbox, playerSpawnPosition))

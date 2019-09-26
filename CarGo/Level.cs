@@ -128,6 +128,7 @@ namespace CarGo
                 {
                     case EntityType.Cactus: scene.addCactus(Position); break;
                     case EntityType.EnemyDummy: scene.addEnemy(EnemyType.EnemyDummy, Position); break;
+                    case EntityType.EnemyFast: scene.addEnemy(EnemyType.EnemyFast, Position); break;
                     case EntityType.Rock: scene.addRock(Position); break;
                 }
 
@@ -169,6 +170,7 @@ namespace CarGo
                 {
                     case EntityType.Cactus: scene.addCactus(Position); break;
                     case EntityType.EnemyDummy: scene.addEnemy(EnemyType.EnemyDummy, Position); break;
+                    case EntityType.EnemyFast: scene.addEnemy(EnemyType.EnemyFast, Position); break;
                     case EntityType.Rock: scene.addRock(Position); break;
                     case EntityType.Player: scene.addPlayer(PlayerIndex.One, Position,CarType.Medium,CarFrontType.Bumper,AbilityType.RocketLauncher); break;
                 }
@@ -196,7 +198,7 @@ namespace CarGo
             //spawnEvents[0].AddSpawn(EntityType.Rock, 1364, 264);
 
             spawnEvents.Add(new SpawnEvent(0, scene));
-            spawnEvents[1].AddSpawn(EntityType.EnemyDummy, 3600,540);
+            spawnEvents[1].AddSpawn(EntityType.EnemyFast, 3600,540);
             //spawnEvents[1].AddSpawn(EntityType.Rock, 3600, 300);
 
             spawnEvents.Add(new SpawnEvent(500, scene));
