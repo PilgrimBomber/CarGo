@@ -36,6 +36,11 @@ namespace CarGo
                 if (activationCooldownTimer < 0) activationCooldownTimer = 0;
             }
         }
+
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
+        {
+            if(isActive)base.Draw(gameTime, spriteBatch, offset);
+        }
     }
 
 }

@@ -43,6 +43,12 @@ namespace CarGo
         public Vector2 Center { get => center;}
         public Vector2 Offset { get => offset;}
 
+        public void SetPosition(Vector2 position)
+        {
+            Move(position - center);
+            
+        }
+
         public void Move(Vector2 direction)
         {
             center.X += direction.X;

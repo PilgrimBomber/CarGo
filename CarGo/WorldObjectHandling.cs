@@ -64,7 +64,7 @@ namespace CarGo
                     {
                         Center.Y += 140;
                     }
-                    worldObjects.Last().SetPosition(Center);
+                    worldObjects.Last().Hitbox.SetPosition(Center);
                 }
             }
             Timer = new TimeSpan(0,0,0,0,1);
@@ -87,7 +87,7 @@ namespace CarGo
                             {
                                 Center.Y += 140;
                             }
-                            worldObject.SetPosition(Center);
+                            worldObject.Hitbox.SetPosition(Center);
                         } while (CheckCollisions(worldObject, worldObjects));
                         
                         

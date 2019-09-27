@@ -23,7 +23,7 @@ namespace CarGo
         Enemy_Growl,
         RocketLauncher_Explosion,
         RocketLauncher_Launch,
-            
+        Shockwave    
     }
     public class SoundCollection
     {
@@ -69,6 +69,9 @@ namespace CarGo
                     case SoundType.RocketLauncher_Explosion:
                         soundEffect.Add(content.Load<SoundEffect>("sounds/RocketLauncher_EXPLOSION!!!"));
                         break;
+                    case SoundType.Shockwave:
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/Car_Boost"));// noch benötigt
+                            break;
                 }
             }
         }

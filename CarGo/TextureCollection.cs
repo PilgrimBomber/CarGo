@@ -9,7 +9,27 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CarGo
 {
-    public enum TextureType { Explosion, Explosion_Animation, Cargo, Car_Big, Car_Medium, Car_Small, Dummy, Enemy_Zombie_Slow, Enemy_Zombie_Slow_Animation, Enemy_Zombie_Fast, Enemy_Zombie_Fast_Animation ,Front_Spikes, Front_Bumper,WorldObject_Rock, WorldObject_Cactus, WorldObject_CactusRip, Active_RocketLauncher}
+    public enum TextureType {
+        Explosion,
+        Explosion_Animation,
+        Cargo,
+        Car_Big,
+        Car_Medium,
+        Car_Small,
+        Dummy,
+        Enemy_Zombie_Slow,
+        Enemy_Zombie_Slow_Animation,
+        Enemy_Zombie_Fast,
+        Enemy_Zombie_Fast_Animation,
+        Front_Spikes,
+        Front_Bumper,
+        WorldObject_Rock,
+        WorldObject_Cactus,
+        WorldObject_CactusRip,
+        Active_RocketLauncher,
+        Active_Shockwave
+    }
+
     public class TextureCollection
     {
         private List<Texture2D> textures;
@@ -31,6 +51,7 @@ namespace CarGo
                     switch (textureType)
                     {
                         case TextureType.Active_RocketLauncher: textures.Add(content.Load<Texture2D>("textures/Rocket")); break;
+                        case TextureType.Active_Shockwave: textures.Add(content.Load<Texture2D>("textures/Shockwave")); break; //noch benötigt
                         case TextureType.Cargo: textures.Add(content.Load<Texture2D>("textures/Cargo")); break;
                         case TextureType.Car_Big: textures.Add(content.Load<Texture2D>("textures/Car_BigSize")); break;
                         case TextureType.Car_Medium: textures.Add(content.Load<Texture2D>("textures/Car_MediumSize")); break;
