@@ -110,12 +110,86 @@ namespace CarGo
         /// <param name="relativePositionY"></param>
         public virtual void AddSpawn(EntityType entityType, int relativePositionX, int relativePositionY)
         {
-            //Values must be outside [-300,2220] [-300,1380]
             if (entityType == EntityType.Cargo || entityType == EntityType.Player) throw new ArgumentOutOfRangeException();
             types.Add(entityType);
             if (relativePositionX > -1620 && relativePositionX < 3540 && relativePositionY > -780 && relativePositionY < 1860) throw new ArgumentOutOfRangeException();
 
             offsets.Add(new Vector2(relativePositionX, relativePositionY));
+        }
+
+        public virtual void AddSpawn(EntityType entityType, int entityAmount)
+        {
+            Random random = new Random();
+            Vector2 position;
+            //Values must be outside [-300,2220] [-300,1380]
+            if (entityType == EntityType.Cargo || entityType == EntityType.Player) throw new ArgumentOutOfRangeException();
+            types.Add(entityType);
+
+            for (int i = 0; i < entityAmount; i++)
+            {
+                switch (random.Next(1, 11))
+                {
+                    default:
+                        position = new Vector2();
+                        break;
+                    case 1:
+                        position = new Vector2(
+                            random.Next(-2470, 80),
+                            random.Next(-1380,-780));
+                        break;
+                    case 2:
+                        position = new Vector2(
+                            random.Next(80, 1840),
+                            random.Next(-1380, -780));
+                        break;
+                    case 3:
+                        position = new Vector2(
+                            random.Next(1840, 3540),
+                            random.Next(-1380, -780));
+                        break;
+                    case 4:
+                        position = new Vector2(
+                            random.Next(3540, 5240),
+                            random.Next(-1380, -780));
+                        break;
+                    case 5:
+                        position = new Vector2(
+                            random.Next(3540,5240),
+                            random.Next(-780,540));
+                        break;
+                    case 6:
+                        position = new Vector2(
+                            random.Next(3540,5240),
+                            random.Next(540,1860));
+                        break;
+                    case 7:
+                        position = new Vector2(
+                            random.Next(3540,5240),
+                            random.Next(1860,2460));
+                        break;
+                    case 8:
+                        position = new Vector2(
+                            random.Next(1840,3540),
+                            random.Next(1860, 2460));
+                        break;
+                    case 9:
+                        position = new Vector2(
+                            random.Next(80,1840),
+                            random.Next(1860, 2460));
+                        break;
+                    case 10:
+                        position = new Vector2(
+                            random.Next(-2470,80),
+                            random.Next(1860, 2460));
+                        break;
+                    case 11:
+                        position = new Vector2(
+                            random.Next(-2470,-1620),
+                            random.Next(-780,1860));
+                        break;
+                }
+                offsets.Add(position);
+            }           
         }
 
         public virtual void SpawnAll(int distanceTravelled)
@@ -198,39 +272,40 @@ namespace CarGo
             //spawnEvents[0].AddSpawn(EntityType.Rock, 1364, 264);
 
             spawnEvents.Add(new SpawnEvent(0, scene));
-            spawnEvents[1].AddSpawn(EntityType.EnemyFast, 3600,540);
+            spawnEvents[1].AddSpawn(EntityType.EnemyFast,5);
+            spawnEvents[1].AddSpawn(EntityType.EnemyDummy, 2);
             //spawnEvents[1].AddSpawn(EntityType.Rock, 3600, 300);
 
-            spawnEvents.Add(new SpawnEvent(500, scene));
-            spawnEvents[2].AddSpawn(EntityType.EnemyDummy, 3600, 740);
-            spawnEvents[2].AddSpawn(EntityType.EnemyDummy, 3600, 340);
+            //spawnEvents.Add(new SpawnEvent(500, scene));
+            //spawnEvents[2].AddSpawn(EntityType.EnemyDummy, 3600, 740);
+            //spawnEvents[2].AddSpawn(EntityType.EnemyDummy, 3600, 340);
 
-            spawnEvents.Add(new SpawnEvent(1000, scene));
-            spawnEvents[3].AddSpawn(EntityType.EnemyDummy, 4200, -800);
-            spawnEvents[3].AddSpawn(EntityType.EnemyDummy, 4200, 1900);
+            //spawnEvents.Add(new SpawnEvent(1000, scene));
+            //spawnEvents[3].AddSpawn(EntityType.EnemyDummy, 4200, -800);
+            //spawnEvents[3].AddSpawn(EntityType.EnemyDummy, 4200, 1900);
 
-            spawnEvents.Add(new SpawnEvent(1500, scene));
-            spawnEvents[4].AddSpawn(EntityType.EnemyDummy, 5000, 640);
-            spawnEvents[4].AddSpawn(EntityType.EnemyDummy, 5000, 440);
+            //spawnEvents.Add(new SpawnEvent(1500, scene));
+            //spawnEvents[4].AddSpawn(EntityType.EnemyDummy, 5000, 640);
+            //spawnEvents[4].AddSpawn(EntityType.EnemyDummy, 5000, 440);
 
-            spawnEvents.Add(new SpawnEvent(3000, scene));
-            spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 2500, -800);
-            spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 2500, 1900);
-            spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 3600, 840);
-            spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 3600, 240);
-            spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 4000, 540);
+            //spawnEvents.Add(new SpawnEvent(3000, scene));
+            //spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 2500, -800);
+            //spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 2500, 1900);
+            //spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 3600, 840);
+            //spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 3600, 240);
+            //spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 4000, 540);
 
-            spawnEvents.Add(new SpawnEvent(5000, scene));
-            spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1000, -800);
-            spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1000, 1900);
-            spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1500, -800);
-            spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1500, 1900);
+            //spawnEvents.Add(new SpawnEvent(5000, scene));
+            //spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1000, -800);
+            //spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1000, 1900);
+            //spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1500, -800);
+            //spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 1500, 1900);
 
-            spawnEvents.Add(new SpawnEvent(8000, scene));
-            spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1000, -800);
-            spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1000, 1900);
-            spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1500, -800);
-            spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1500, 1900);
+            //spawnEvents.Add(new SpawnEvent(8000, scene));
+            //spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1000, -800);
+            //spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1000, 1900);
+            //spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1500, -800);
+            //spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 1500, 1900);
 
             HandleStartSpawn();
         }
