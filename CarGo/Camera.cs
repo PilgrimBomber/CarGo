@@ -21,9 +21,11 @@ namespace CarGo
         private List<BaseEnemy> enemies;
         private List<WorldObject> worldObjects;
         private List<ActiveAbility> activeAbilities;
+        private HUD hud;
 
         public Camera(SpriteBatch spriteBatchInit, Vector2 screenSize, List<Cargo> cargos, List<Player> players, List<BaseEnemy> enemies, List<WorldObject> worldObjects, List<ActiveAbility> activeAbilities)
         {
+            hud = new HUD(spriteBatchInit, players, cargos, activeAbilities, screenSize);
             positon =new Vector2(0,0);
             spriteBatch = spriteBatchInit;
             offset = new Vector2(0, 0);
@@ -97,7 +99,7 @@ namespace CarGo
                     && player.Hitbox.Center.Y - offset.Y > -200 && player.Hitbox.Center.Y < screenSize.Y + offset.Y + 200)
                     player.Draw(gameTime, spriteBatch, offset);
             }
-
+            hud.Draw(spriteBatch);
             spriteBatch.End();
         }
 

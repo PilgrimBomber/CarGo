@@ -28,13 +28,14 @@ namespace CarGo
     {
         protected RotRectangle hitbox;
         protected int hitpoints;
+        protected int maxLife;
         protected Texture2D texture;
         protected Vector2 velocity;
         protected Scene scene;
         public bool noCollision;
         public RotRectangle Hitbox { get => hitbox;}
         public Vector2 Velocity { get => velocity; set => velocity = value; }
-        
+
 
 
         //public event EventHandler<EventArgs> DrawOrderChanged;
@@ -50,5 +51,10 @@ namespace CarGo
         }
         public abstract void GetPushed(Vector2 direction);
         public abstract void TakeDamage(int damage);
+        public float getPercentLife()
+        {
+            Console.WriteLine(((float)hitpoints / maxLife) * 100f+ "hitpoints "+ hitpoints );
+            return ((float)hitpoints / maxLife) * 100f;
+        }
     }
 }

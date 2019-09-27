@@ -13,6 +13,7 @@ namespace CarGo
     public class Cargo:Entity
     {
         private CarFront carFront;
+
         public Cargo (Scene scene, Vector2 center)
         {
             this.scene = scene;
@@ -22,8 +23,9 @@ namespace CarGo
             hitbox.Rotate(Geometry.DegToRad(90));
             carFront.Hitbox.RotatePoint(Geometry.DegToRad(90), hitbox.Center);
             this.velocity = new Vector2(2f, 0);
+            maxLife = 1000;
             hitpoints = 1000;
-            
+
         }
         override public void Update(GameTime gameTime)
         {
