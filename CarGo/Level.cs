@@ -123,10 +123,11 @@ namespace CarGo
             Vector2 position;
             //Values must be outside [-300,2220] [-300,1380]
             if (entityType == EntityType.Cargo || entityType == EntityType.Player) throw new ArgumentOutOfRangeException();
-            types.Add(entityType);
+            
 
             for (int i = 0; i < entityAmount; i++)
             {
+                types.Add(entityType);
                 switch (random.Next(1, 11))
                 {
                     default:
@@ -200,10 +201,10 @@ namespace CarGo
                 Vector2 Position = new Vector2(offsets[i].X + distanceTravelled, offsets[i].Y);
                 switch (types[i])
                 {
-                    case EntityType.Cactus: scene.addCactus(Position); break;
+                    //case EntityType.Cactus: scene.addCactus(Position); break;
                     case EntityType.EnemyDummy: scene.addEnemy(EnemyType.EnemyDummy, Position); break;
                     case EntityType.EnemyFast: scene.addEnemy(EnemyType.EnemyFast, Position); break;
-                    case EntityType.Rock: scene.addRock(Position); break;
+                    //case EntityType.Rock: scene.addRock(Position); break;
                 }
 
             }
