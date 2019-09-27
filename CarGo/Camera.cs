@@ -62,10 +62,6 @@ namespace CarGo
             offset.Y = sumY / centers.Count - screenCenter.Y;
             if (offset.Y - cargos[0].Hitbox.Center.Y + screenCenter.Y > ((screenSize.Y-screenCenter.Y)-borderY)) offset.Y = cargos[0].Hitbox.Center.Y + ((screenSize.Y - screenCenter.Y) - borderY) - screenCenter.Y;
             if (offset.Y - cargos[0].Hitbox.Center.Y + screenCenter.Y < -((screenSize.Y - screenCenter.Y) - borderY)) offset.Y = cargos[0].Hitbox.Center.Y - ((screenSize.Y - screenCenter.Y) - borderY) - screenCenter.Y;
-            if(offset.Y>2000||offset.Y<-2000)
-            {
-                Console.WriteLine("error");
-            }
         }
         public void Draw(GameTime gameTime, Tilemap tilemap)
         {

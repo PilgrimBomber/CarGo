@@ -292,9 +292,7 @@ namespace CarGo
                 
                 hitbox.Rotate(rad * turnRate * (30 - velocity.Length()) / 20);
                 carFront.Turn(rad * turnRate * (30 - velocity.Length()) / 20, hitbox.Center);
-                Console.Write("Fehlerquelle drehen: " + velocity.Length().ToString());
                 velocity = Geometry.Rotate(velocity, rad * turnRate * (30 - velocity.Length()) / 20 * (1 - drift));
-                Console.WriteLine(" Nach dem drehen:" + velocity.Length().ToString());
                 lastTurn = rad;
             }
 
@@ -303,7 +301,7 @@ namespace CarGo
         {
             //Console.WriteLine("Geschwindigkeit " + velocity.Length().ToString());
             Console.Write("Fehlerquelle beschleunigen: " + velocity.Length().ToString());
-            if (accelerationFactor>0&& velocity.Length()<0.8)
+            if (accelerationFactor>0 && velocity.Length()<0.8)
             {
                 soundAcceleration.Volume = accelerationFactor/8;
                 soundAcceleration.Play();
@@ -318,8 +316,8 @@ namespace CarGo
 
                 if (velocity.Length() < maxSpeed)
                 {
-                    velocity.X += (float)Math.Sqrt(maxSpeed - velocity.Length()) * acceleration * accelerationFactor * (float)Math.Sin(hitbox.RotationRad);
-                    velocity.Y -= (float)Math.Sqrt(maxSpeed - velocity.Length()) * acceleration * accelerationFactor * (float)Math.Cos(hitbox.RotationRad);
+                    velocity.X += (float)Math.Sqrt(Math.Abs(maxSpeed - velocity.Length())) * acceleration * accelerationFactor * (float)Math.Sin(hitbox.RotationRad);
+                    velocity.Y -= (float)Math.Sqrt(Math.Abs(maxSpeed - velocity.Length())) * acceleration * accelerationFactor * (float)Math.Cos(hitbox.RotationRad);
                 }
             }
 
