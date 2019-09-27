@@ -22,12 +22,15 @@ namespace CarGo
         private int currentFrame;
 
         private Texture2D spritesheet;
+        private Vector2 animationOffset;
 
         public Animation(AnimationType animationType, RotRectangle hitbox)
         {
             this.animationType = animationType;
             timeExisting = new TimeSpan(0, 0, 0, 0, 0);
             this.hitbox = hitbox;
+           
+
             currentFrame = 0;
 
             switch (animationType)
@@ -51,6 +54,8 @@ namespace CarGo
                     spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie_Fast_Animation);
                     break;
             }
+
+            animationOffset =new Vector2((spritesheet.Width / frameCount) / 2, spritesheet.Height / 2);
 
 
         }
@@ -79,7 +84,7 @@ namespace CarGo
                 }
             }
 
-            spriteBatch.Draw(spritesheet, new Rectangle((int)(hitbox.Center.X - (spritesheet.Width / frameCount)/2 - offset.X), (int)(hitbox.Center.Y - spritesheet.Height/2 - offset.Y), spritesheet.Width / frameCount, spritesheet.Height), new Rectangle(spritesheet.Width / frameCount * currentFrame, 0, spritesheet.Width / frameCount, spritesheet.Height), Color.White, hitbox.RotationRad, hitbox.Offset, SpriteEffects.None, 0f);
+            spriteBatch.Draw(spritesheet, new Rectangle((int)(hitbox.Center.X  - offset.X), (int)(hitbox.Center.Y  - offset.Y), spritesheet.Width / frameCount, spritesheet.Height), new Rectangle(spritesheet.Width / frameCount * currentFrame, 0, spritesheet.Width / frameCount, spritesheet.Height), Color.White, hitbox.RotationRad, animationOffset, SpriteEffects.None, 0f);
 
             return true;
      
