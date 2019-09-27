@@ -21,9 +21,10 @@ namespace CarGo
             damage = 70;
             collidedEntities = new List<Entity>();
 
-            texture = TextureCollection.getInstance().GetTexture(TextureType.Active_Shockwave);
+            textureShockwave = TextureCollection.getInstance().GetTexture(TextureType.Active_Shockwave);
             soundShockWave = SoundCollection.getInstance().GetSoundInstance(SoundType.Shockwave);
-            hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
+            soundShockWave.Volume = 0.5f;
+            hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(textureShockwave.Width / 2, textureShockwave.Height / 2));
             // animation = new Animation(AnimationType.Explosion, new RotRectangle(hitbox.RotationRad, hitbox.Center /* -offset */, new Vector2(textureExplosion.Width / 2, textureExplosion.Height / 2)));
         }
 
@@ -37,6 +38,7 @@ namespace CarGo
         {
             if (activationCooldownTimer > 0) return;
             isActive =true;
+            soundShockWave.Play();
             activationCooldownTimer = 3;
             livingTimer = 0.5f;
         }

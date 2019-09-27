@@ -67,6 +67,12 @@
 /processorParam:Quality=Best
 /build:sounds/RocketLauncher_Launch.wav
 
+#begin sounds/Shockwave.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Shockwave.wav
+
 #begin textures/Cactus.png
 /importer:TextureImporter
 /processor:TextureProcessor
