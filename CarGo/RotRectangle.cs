@@ -49,6 +49,8 @@ namespace CarGo
             
         }
 
+        
+
         public void Move(Vector2 direction)
         {
             center.X += direction.X;
@@ -67,6 +69,19 @@ namespace CarGo
                 corners[i] = Geometry.Rotate(corners[i], rad, center);
             }
 
+        }
+
+        public void Scale(float scalingFactor)
+        {
+            offset *= scalingFactor;
+            corners[0] = this.center + offset;
+            corners[1] = this.center + new Vector2(offset.X, -offset.Y);
+            corners[2] = this.center - offset;
+            corners[3] = this.center + new Vector2(-offset.X, offset.Y);
+            for (int i = 0; i < 4; i++)
+            {
+                corners[i] = Geometry.Rotate(corners[i], rotationRad, this.center);
+            }
         }
 
         public void RotatePoint(float rad, Vector2 origin)

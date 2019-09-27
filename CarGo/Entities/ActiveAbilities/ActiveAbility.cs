@@ -12,6 +12,19 @@ namespace CarGo
     public enum AbilityType { Flamethrower, RocketLauncher, Shockwave, TrapLauncher }
     public abstract class ActiveAbility:Entity
     {
+        protected Player player;
+        protected int damage;
+
+        protected ActiveAbility(Scene scene, Player player)
+        {
+            isActive = false;
+            activationCooldownTimer = 0;
+            livingTimer = 0;
+
+            this.player = player;
+            this.scene = scene;
+        }
+
         protected float activationCooldownTimer;
         protected float livingTimer;
         public bool isActive;
@@ -37,10 +50,7 @@ namespace CarGo
             }
         }
 
-        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
-        {
-            if(isActive)base.Draw(gameTime, spriteBatch, offset);
-        }
+        
     }
 
 }

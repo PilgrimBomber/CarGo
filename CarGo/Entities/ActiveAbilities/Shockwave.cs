@@ -14,17 +14,11 @@ namespace CarGo
     {
         private SoundEffectInstance soundShockWave;
         private Texture2D textureShockwave;
-        private Player player;
+        
         private List<Entity> collidedEntities;
-        public Shockwave(Scene scene, Player player)
+        public Shockwave(Scene scene, Player player):base(scene,player)
         {
-            isActive = false;
-            activationCooldownTimer = 0;
-            livingTimer = 0;
-
-            this.player = player;
-            this.scene = scene;
-
+            damage = 70;
             collidedEntities = new List<Entity>();
 
             texture = TextureCollection.getInstance().GetTexture(TextureType.Active_Shockwave);
@@ -53,7 +47,7 @@ namespace CarGo
             switch (entityCategory)
             {
                 case EntityCategory.Enemy:
-                    (entity as BaseEnemy).TakeDamage(70);
+                    (entity as BaseEnemy).TakeDamage(damage);
                     collidedEntities.Add(entity);
                     break;
             }
@@ -69,8 +63,11 @@ namespace CarGo
            
         }
 
-        
+        public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
+        {
+            if (isActive) spriteBatch.Draw(textureShockwave, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
+        }
 
-        
+
     }
 }

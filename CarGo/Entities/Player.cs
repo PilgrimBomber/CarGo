@@ -89,6 +89,9 @@ namespace CarGo
                 case AbilityType.Shockwave:
                     this.active = new Shockwave(scene, this);
                     break;
+                case AbilityType.TrapLauncher:
+                    this.active = new TrapLauncher(scene, this);
+                    break;
             }
             scene.addActiveAbility(active);
 

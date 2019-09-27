@@ -79,11 +79,18 @@ namespace CarGo
                 }
             }
 
-            spriteBatch.Draw(spritesheet, new Rectangle((int)(hitbox.Center.X-offset.X), (int)(hitbox.Center.Y-offset.Y), spritesheet.Width/frameCount, spritesheet.Height), new Rectangle(spritesheet.Width / frameCount * currentFrame, 0, spritesheet.Width / frameCount, spritesheet.Height), Color.White, hitbox.RotationRad, hitbox.Offset, SpriteEffects.None, 0f);
+            spriteBatch.Draw(spritesheet, new Rectangle((int)(hitbox.Center.X - (spritesheet.Width / frameCount)/2 - offset.X), (int)(hitbox.Center.Y - spritesheet.Height/2 - offset.Y), spritesheet.Width / frameCount, spritesheet.Height), new Rectangle(spritesheet.Width / frameCount * currentFrame, 0, spritesheet.Width / frameCount, spritesheet.Height), Color.White, hitbox.RotationRad, hitbox.Offset, SpriteEffects.None, 0f);
 
             return true;
      
         }
+
+        public void Reset()
+        {
+            currentFrame = 0;
+        }
+
+        //public void SetPosition(Vector2 position)
 
 
     }

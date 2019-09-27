@@ -27,7 +27,8 @@ namespace CarGo
         WorldObject_Cactus,
         WorldObject_CactusRip,
         Active_RocketLauncher,
-        Active_Shockwave
+        Active_Shockwave,
+        Active_Trap
     }
 
     public class TextureCollection
@@ -52,6 +53,7 @@ namespace CarGo
                     {
                         case TextureType.Active_RocketLauncher: textures.Add(content.Load<Texture2D>("textures/Rocket")); break;
                         case TextureType.Active_Shockwave: textures.Add(content.Load<Texture2D>("textures/Shockwave")); break; //noch benötigt
+                        case TextureType.Active_Trap: textures.Add(content.Load<Texture2D>("textures/Rocket")); break; // noch benötigt
                         case TextureType.Cargo: textures.Add(content.Load<Texture2D>("textures/Cargo")); break;
                         case TextureType.Car_Big: textures.Add(content.Load<Texture2D>("textures/Car_BigSize")); break;
                         case TextureType.Car_Medium: textures.Add(content.Load<Texture2D>("textures/Car_MediumSize")); break;

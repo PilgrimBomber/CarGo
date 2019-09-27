@@ -15,20 +15,12 @@ namespace CarGo
         private SoundEffectInstance soundExplosion;
         private SoundEffectInstance soundLaunch;
         private Texture2D textureExplosion;
-        private Player player;
         private bool isExploded;
         //private Animation animation;
 
-        public RocketLauncher(Scene scene, Player player)
+        public RocketLauncher(Scene scene, Player player):base(scene,player)
         {
-            isActive = false;
-            activationCooldownTimer = 0;
-            livingTimer = 0;
-
-            this.player = player;
-            this.scene = scene;
-           
-
+            damage = 99;
             texture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher);
             textureExplosion = TextureCollection.getInstance().GetTexture(TextureType.Explosion);
             soundLaunch = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Launch);
@@ -61,7 +53,7 @@ namespace CarGo
                     }
                     else
                     {
-                        entity1.TakeDamage(99);
+                        entity1.TakeDamage(damage);
                     }
                 }
             }
