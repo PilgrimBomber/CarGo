@@ -36,7 +36,7 @@ namespace CarGo
 
         public override void Collide(Entity entity, EntityCategory entityCategory)
         {
-            hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.005f);
+            hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.01f);
             if (noCollision)
             {
                 noCollision = false;
@@ -73,8 +73,14 @@ namespace CarGo
                         {
                             if (wasPushed)
                             {
+                                if ((entity as EnemyDummy).wasPushed)
+                                {
+                                    hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.01f);
+                                    return;
+                                }
                                 TakeDamage((int)(velocity - entity.Velocity).Length());
                                 entity.Velocity = velocity;
+                                (entity as EnemyDummy).wasPushed = true;
                                 //velocity *= 0.9f;
 
                             }
@@ -84,20 +90,20 @@ namespace CarGo
                                 {
                                     TakeDamage((int)(velocity - entity.Velocity).Length());
                                     velocity = entity.Velocity;
-
+                                    wasPushed = true;
                                     //entity.Velocity *= 0.9f;
                                 }
                                 else
                                 {
-                                    Vector2 otherVelocity = (entity as EnemyDummy).Velocity;
-                                    (entity as EnemyDummy).Velocity *= -0.4f;
-                                    (entity as EnemyDummy).Velocity += velocity * 0.4f;
-                                    (entity as EnemyDummy).noCollision = true;
-                                    velocity *= -0.4f;
-                                    velocity += otherVelocity * 0.4f;
-                                    entity.Hitbox.Move(velocity);
-                                    entity.Hitbox.Move((entity.Hitbox.Center - hitbox.Center) * 0.05f);
-                                    Hitbox.Move(velocity);
+                                //    Vector2 otherVelocity = (entity as EnemyDummy).Velocity;
+                                //    (entity as EnemyDummy).Velocity *= -0.4f;
+                                //    (entity as EnemyDummy).Velocity += velocity * 0.4f;
+                                //    (entity as EnemyDummy).noCollision = true;
+                                //    velocity *= -0.4f;
+                                //    velocity += otherVelocity * 0.4f;
+                                //    entity.Hitbox.Move(velocity);
+                                //    entity.Hitbox.Move((entity.Hitbox.Center - hitbox.Center) * 0.05f);
+                                //    Hitbox.Move(velocity);
                                 }
                             }
                         }
@@ -142,12 +148,12 @@ namespace CarGo
                 case EntityCategory.WorldObject:
                     {
                         Vector2 direction = Hitbox.Center - entity.Hitbox.Center;
-
-                        Hitbox.Move(direction / 15);
+                        
+                        Hitbox.Move(direction* (Hitbox.Offset.Length() + entity.Hitbox.Offset.Length()) / direction.Length());
                         //Collision with Rock
                         if (entity.GetType() == typeof(Rock) && wasPushed == true)
                         {
-                            Hitbox.Move(-velocity);
+                            //Hitbox.Move(-velocity);
                             this.TakeDamage((int)velocity.LengthSquared());
                             velocity *= -0.05f;
                         }

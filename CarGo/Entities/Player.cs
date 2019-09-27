@@ -306,7 +306,7 @@ namespace CarGo
         public void Accelerate(float accelerationFactor)
         {
             //Console.WriteLine("Geschwindigkeit " + velocity.Length().ToString());
-            Console.Write("Fehlerquelle beschleunigen: " + velocity.Length().ToString());
+            
             if (accelerationFactor>0 && velocity.Length()<0.8)
             {
                 soundAcceleration.Volume = accelerationFactor/8;
@@ -327,7 +327,6 @@ namespace CarGo
                 }
             }
 
-            Console.WriteLine("nach dem Beschleunigen: " + velocity.Length().ToString());
         }
 
         public void Boost()
