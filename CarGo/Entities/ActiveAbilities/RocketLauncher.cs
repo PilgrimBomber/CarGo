@@ -16,7 +16,7 @@ namespace CarGo
         private SoundEffectInstance soundLaunch;
         private Texture2D textureExplosion;
         private bool isExploded;
-        //private Animation animation;
+        private Animation animation;
 
         public RocketLauncher(Scene scene, Player player):base(scene,player)
         {
@@ -28,7 +28,7 @@ namespace CarGo
             soundExplosion = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Explosion);
             soundExplosion.Volume = 1f;
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
-           // animation = new Animation(AnimationType.Explosion, new RotRectangle(hitbox.RotationRad, hitbox.Center /* -offset */, new Vector2(textureExplosion.Width / 2, textureExplosion.Height / 2)));
+            animation = new Animation(AnimationType.Explosion, hitbox);
         }
 
 
@@ -66,8 +66,8 @@ namespace CarGo
             {
                 if (isExploded)
                 {
-                    spriteBatch.Draw(textureExplosion, hitbox.Center - offset, null, Color.White, 0, new Vector2(textureExplosion.Width / 2, textureExplosion.Height / 2), 1.0f, SpriteEffects.None, 0f);
-                    //animation.Draw(gameTime, spriteBatch, new Vector2(textureExplosion.Width / 2, textureExplosion.Height / 2));
+                    //spriteBatch.Draw(textureExplosion, hitbox.Center - offset, null, Color.White, 0, new Vector2(textureExplosion.Width / 2, textureExplosion.Height / 2), 1.0f, SpriteEffects.None, 0f);
+                    animation.Draw(gameTime, spriteBatch, offset);
                 }
                 else
                 {
@@ -94,9 +94,11 @@ namespace CarGo
             velocity.Y = -(float)Math.Cos(player.Hitbox.RotationRad);
             velocity.Normalize();
             velocity *= 15;
-            hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
+            hitbox.SetPosition(player.Hitbox.Center);
+            hitbox.RotationRad = player.Hitbox.RotationRad;
+            //hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2)); //Kein neues Objekt erzeugen, da die Animation von der ursprünglichen Hitbox abhängt
             isExploded = false;
-
+            animation.Reset();
             soundLaunch.Stop();
             soundLaunch.Play();
             soundExplosion.Stop();
@@ -112,7 +114,7 @@ namespace CarGo
 
         public override void GetPushed(Vector2 direction)
         {
-            throw new NotImplementedException();
+            
         }
     }
 
