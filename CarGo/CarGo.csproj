@@ -74,7 +74,7 @@
     <Compile Include="Entities\EnemyAI.cs" />
     <Compile Include="Entities\BaseEnemy.cs" />
     <Compile Include="Entities\Cargo.cs" />
-    <Compile Include="Entities\EnemyDummy.cs" />
+    <Compile Include="Entities\EnemySlow.cs" />
     <Compile Include="Entities\Entity.cs" />
     <Compile Include="Entities\Hook.cs" />
     <Compile Include="Entities\InputHandler.cs" />

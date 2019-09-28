@@ -125,11 +125,11 @@ namespace CarGo
             BaseEnemy enemy;
             switch (enemyType)
             {
-                case EnemyType.EnemyDummy: enemy = new EnemyDummy(this, center);
+                case EnemyType.EnemyDummy: enemy = new EnemySlow(this, center);
                     break;
                 case EnemyType.EnemyFast: enemy = new EnemyFast(this, center);
                     break;
-                default: enemy = new EnemyDummy(this, center);
+                default: enemy = new EnemySlow(this, center);
                     break;
             }
             enemies.Add(enemy);

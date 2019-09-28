@@ -66,7 +66,7 @@ namespace CarGo
                     {
 
                         //Collision with Dummy
-                        if (entity.GetType() == typeof(EnemyDummy) && !noCollision)
+                        if (entity.GetType() == typeof(EnemySlow) && !noCollision)
                         {
                             if (wasPushed)
                             {
@@ -77,7 +77,7 @@ namespace CarGo
                             }
                             else
                             {
-                                if ((entity as EnemyDummy).wasPushed)
+                                if ((entity as EnemySlow).wasPushed)
                                 {
                                     TakeDamage((int)(velocity - entity.Velocity).Length());
                                     velocity = entity.Velocity;
@@ -86,10 +86,10 @@ namespace CarGo
                                 }
                                 else
                                 {
-                                    Vector2 otherVelocity = (entity as EnemyDummy).Velocity;
-                                    (entity as EnemyDummy).Velocity *= -0.4f;
-                                    (entity as EnemyDummy).Velocity += velocity * 0.4f;
-                                    (entity as EnemyDummy).noCollision = true;
+                                    Vector2 otherVelocity = (entity as EnemySlow).Velocity;
+                                    (entity as EnemySlow).Velocity *= -0.4f;
+                                    (entity as EnemySlow).Velocity += velocity * 0.4f;
+                                    (entity as EnemySlow).noCollision = true;
                                     velocity *= -0.4f;
                                     velocity += otherVelocity * 0.4f;
                                     entity.Hitbox.Move(velocity);
