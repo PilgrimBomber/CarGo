@@ -128,7 +128,7 @@ namespace CarGo
             for (int i = 0; i < entityAmount; i++)
             {
                 types.Add(entityType);
-                switch (random.Next(1, 11))
+                switch (random.Next(1, 12))
                 {
                     default:
                         position = new Vector2();
