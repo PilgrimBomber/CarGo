@@ -34,6 +34,7 @@ namespace CarGo
         WorldObject_Skull,
         WorldObject_SkullRip,
         WorldObject_Rock,
+        Active_FlameThrower,
         Active_RocketLauncher,
         Active_Shockwave,
         Active_Trap
@@ -59,6 +60,7 @@ namespace CarGo
                 {
                     switch (textureType)
                     {
+                        case TextureType.Active_FlameThrower: textures.Add(content.Load<Texture2D>("textures/Cargo")); break;//noch benötigt
                         case TextureType.Active_RocketLauncher: textures.Add(content.Load<Texture2D>("textures/Rocket")); break;
                         case TextureType.Active_Shockwave: textures.Add(content.Load<Texture2D>("textures/Shockwave")); break; //noch benötigt
                         case TextureType.Active_Trap: textures.Add(content.Load<Texture2D>("textures/Rocket")); break; // noch benötigt

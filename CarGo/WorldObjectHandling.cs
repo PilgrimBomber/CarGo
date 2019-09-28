@@ -78,7 +78,7 @@ namespace CarGo
         {
             if(Timer.TotalMilliseconds>=500)
             {
-                Timer.Subtract(new TimeSpan(0,0,0,0,500));
+                Timer=Timer.Subtract(new TimeSpan(0,0,0,0,500));
                 foreach (WorldObject worldObject in worldObjects)
                 {
                     if (worldObject.Hitbox.Center.X < cargos[0].Hitbox.Center.X - 2000)

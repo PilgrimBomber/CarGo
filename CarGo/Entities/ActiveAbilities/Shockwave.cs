@@ -19,6 +19,8 @@ namespace CarGo
         public Shockwave(Scene scene, Player player):base(scene,player)
         {
             damage = 70;
+            resetActivationCooldownTimer = 3;
+            resetLivingTimer = 0.5f;
             collidedEntities = new List<Entity>();
 
             textureShockwave = TextureCollection.getInstance().GetTexture(TextureType.Active_Shockwave);
@@ -37,10 +39,9 @@ namespace CarGo
         public override void Use()
         {
             if (activationCooldownTimer > 0) return;
-            isActive =true;
+            base.Use();
             soundShockWave.Play();
-            activationCooldownTimer = 3;
-            livingTimer = 0.5f;
+            
         }
 
         public override void Collide(Entity entity, EntityCategory entityCategory)

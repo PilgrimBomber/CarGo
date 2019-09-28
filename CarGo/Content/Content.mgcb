@@ -55,6 +55,12 @@
 /processorParam:Quality=Best
 /build:sounds/Enemy_Monster_Hit.wav
 
+#begin sounds/Flamethrower.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Flamethrower.wav
+
 #begin sounds/RocketLauncher_EXPLOSION!!!.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor
@@ -72,6 +78,12 @@
 /processor:SoundEffectProcessor
 /processorParam:Quality=Best
 /build:sounds/Shockwave.wav
+
+#begin sounds/Trap_Launch.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Trap_Launch.wav
 
 #begin textures/Background_Sand.png
 /importer:TextureImporter

@@ -14,7 +14,11 @@ namespace CarGo
     {
         protected Player player;
         protected int damage;
-
+        protected float resetActivationCooldownTimer;
+        protected float activationCooldownTimer;
+        protected float resetLivingTimer;
+        protected float livingTimer;
+        public bool isActive;
         protected ActiveAbility(Scene scene, Player player)
         {
             isActive = false;
@@ -25,11 +29,14 @@ namespace CarGo
             this.scene = scene;
         }
 
-        protected float activationCooldownTimer;
-        protected float livingTimer;
-        public bool isActive;
 
-        public abstract void Use();
+
+        public virtual void Use()
+        {
+            livingTimer = resetLivingTimer;
+            activationCooldownTimer = resetActivationCooldownTimer;
+            isActive = true;
+        }
        
         public void Cooldown(GameTime gameTime)
         {

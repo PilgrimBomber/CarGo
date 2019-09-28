@@ -65,6 +65,7 @@
     <Compile Include="Animation.cs" />
     <Compile Include="Camera.cs" />
     <Compile Include="CollisionCheck.cs" />
+    <Compile Include="Entities\ActiveAbilities\FlameThrower.cs" />
     <Compile Include="Entities\ActiveAbilities\RocketLauncher.cs" />
     <Compile Include="Entities\ActiveAbilities\Shockwave.cs" />
     <Compile Include="Entities\ActiveAbilities\TrapLauncher.cs" />

@@ -22,6 +22,7 @@ namespace CarGo
         private CarFront carFront;
         private CarFrontType carFrontType;
         private ActiveAbility active;
+        private AbilityType abilityType;
         private bool noDamage;
         private float cooldownBoost = 0;
         private int idleCounter;
@@ -81,6 +82,7 @@ namespace CarGo
                     break;
             }
             hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
+            this.abilityType = ability;
             switch (ability)
             {
                 case AbilityType.RocketLauncher:
@@ -91,6 +93,9 @@ namespace CarGo
                     break;
                 case AbilityType.TrapLauncher:
                     this.active = new TrapLauncher(scene, this);
+                    break;
+                case AbilityType.Flamethrower:
+                    this.active = new FlameThrower(scene, this);
                     break;
             }
             scene.addActiveAbility(active);
@@ -288,6 +293,7 @@ namespace CarGo
             //Move the car
             hitbox.Move(direction);
             carFront.Move(direction);
+            if (abilityType == AbilityType.Flamethrower) active.Hitbox.Move(direction);
         }
 
         //Turn the player by rad to the right
@@ -300,6 +306,9 @@ namespace CarGo
                 carFront.Turn(rad * turnRate * (30 - velocity.Length()) / 20, hitbox.Center);
                 velocity = Geometry.Rotate(velocity, rad * turnRate * (30 - velocity.Length()) / 20 * (1 - drift));
                 lastTurn = rad;
+
+                if(abilityType== AbilityType.Flamethrower) active.Hitbox.RotatePoint(rad * turnRate * (30 - velocity.Length()) / 20, hitbox.Center);
+
             }
 
         }

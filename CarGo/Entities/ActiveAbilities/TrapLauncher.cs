@@ -15,8 +15,8 @@ namespace CarGo
 
         public bool isExploded;
         private Animation explosionAnimation;
-        private List<Entity> collidedEntities;
         private SoundEffectInstance soundExplosion;
+        private SoundEffectInstance soundTrapLaunch;
 
 
         public TrapLauncher(Scene scene, Player player):base(scene,player)
@@ -24,9 +24,13 @@ namespace CarGo
             texture = TextureCollection.getInstance().GetTexture(TextureType.Active_Trap);
             hitbox = new RotRectangle(0, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
             isExploded = false;
-            damage = 99; 
+            damage = 99;
+            resetLivingTimer = 8;
+            resetActivationCooldownTimer = 5;
             explosionAnimation = new Animation(AnimationType.Explosion, hitbox);
             soundExplosion = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Explosion);
+            soundTrapLaunch = SoundCollection.getInstance().GetSoundInstance(SoundType.Trap_Launch);
+            soundTrapLaunch.Volume = 0.08f;
         }
         public override void Collide(Entity entity, EntityCategory entityCategory)
         {
@@ -76,8 +80,8 @@ namespace CarGo
         {
             if (activationCooldownTimer > 0) return;
             hitbox.SetPosition(player.Hitbox.Center);
-
-            isActive = true;
+            soundTrapLaunch.Play();
+            
             if(isExploded)
             {
                 isExploded = false;
@@ -85,8 +89,7 @@ namespace CarGo
             }
             
             explosionAnimation.Reset();
-            activationCooldownTimer = 5f;
-            livingTimer = 5f;
+            base.Use();
         }
         public override void GetPushed(Vector2 direction)
         {

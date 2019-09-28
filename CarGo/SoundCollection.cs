@@ -21,9 +21,11 @@ namespace CarGo
         Car_Horn2,
         Enemy_Hit,
         Enemy_Growl,
+        FlameThrower,
         RocketLauncher_Explosion,
         RocketLauncher_Launch,
-        Shockwave    
+        Shockwave,
+        Trap_Launch
     }
     public class SoundCollection
     {
@@ -63,6 +65,9 @@ namespace CarGo
                     case SoundType.Enemy_Growl:
                         soundEffect.Add(content.Load<SoundEffect>("sounds/Enemy_Growl"));
                         break;
+                    case SoundType.FlameThrower:
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/FlameThrower"));
+                        break;
                     case SoundType.RocketLauncher_Launch:
                         soundEffect.Add(content.Load<SoundEffect>("sounds/RocketLauncher_Launch"));
                         break;
@@ -72,6 +77,9 @@ namespace CarGo
                     case SoundType.Shockwave:
                         soundEffect.Add(content.Load<SoundEffect>("sounds/Shockwave"));
                             break;
+                    case SoundType.Trap_Launch:
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/Trap_Launch"));
+                        break;
                 }
             }
         }
