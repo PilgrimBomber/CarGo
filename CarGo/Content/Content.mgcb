@@ -73,6 +73,54 @@
 /processorParam:Quality=Best
 /build:sounds/Shockwave.wav
 
+#begin textures/Background_Sand.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Background_Sand.png
+
+#begin textures/Background_Street_Bottom.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Background_Street_Bottom.png
+
+#begin textures/Background_Street_Middle.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Background_Street_Middle.png
+
+#begin textures/Background_Street_Top.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Background_Street_Top.png
+
 #begin textures/Cactus.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -84,6 +132,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/Cactus.png
+
+#begin textures/CactusCompletlyRip.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/CactusCompletlyRip.png
 
 #begin textures/CactusRip.png
 /importer:TextureImporter
@@ -241,6 +301,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/Mod_Front_Bumper.png
 
+#begin textures/Mod_Front_Small_Bumper.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Mod_Front_Small_Bumper.png
+
 #begin textures/Mod_Front_Spikes.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -288,16 +360,4 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/Shockwave.png
-
-#begin textures/Tile_0.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/Tile_0.png
 

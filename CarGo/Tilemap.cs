@@ -38,8 +38,10 @@ namespace CarGo
         {
             tilemap = new int[mapWidth,mapHeight];
             textures = new List<Texture2D>();
-            textures.Add(content.Load<Texture2D>("textures/Tile_0"));
-            textures.Add(content.Load<Texture2D>("textures/Enemy_Dummy"));
+            textures.Add(TextureCollection.getInstance().GetTexture(TextureType.Background_Sand));
+            textures.Add(TextureCollection.getInstance().GetTexture(TextureType.Background_Street_Top));
+            textures.Add(TextureCollection.getInstance().GetTexture(TextureType.Background_Street_Middle));
+            textures.Add(TextureCollection.getInstance().GetTexture(TextureType.Background_Street_Bottom));
             generateMap();
 
         }
@@ -51,17 +53,17 @@ namespace CarGo
             {
                 for (int y = 0; y < tilemap.GetLength(0); y++)
                 {
-                    tilemap[y, x] = 0 ;//aus datei oder random
+                    tilemap[y, x] = 0 ;
                     
                 }
             }
             
-            //for (int i = 0; i < tilemap.GetLength(0); i++)
-            //{
-            //    tilemap[i, 11] = random.Next() % 3 + 12;
-            //    tilemap[i, 12] = random.Next() % 3 + 15;
-            //    tilemap[i, 13] = random.Next() % 3 + 18;
-            //}
+            for (int i = 0; i < tilemap.GetLength(0); i++)
+            {
+                tilemap[i, 11] = 1;
+                tilemap[i, 12] = 2;
+                tilemap[i, 13] = 3;
+            }
         }
 
         //returns the grid coordinates for input world coordinates

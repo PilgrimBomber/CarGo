@@ -95,6 +95,7 @@ namespace CarGo
                         if(worldObject.GetType()== typeof(Cactus))
                         {
                             (worldObject as Cactus).isActivated = false;
+                            (worldObject as Cactus).isExploded= false;
                         }
                     }
                 }

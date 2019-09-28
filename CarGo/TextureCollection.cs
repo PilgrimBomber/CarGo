@@ -12,6 +12,10 @@ namespace CarGo
     public enum TextureType {
         Explosion,
         Explosion_Animation,
+        Background_Sand,
+        Background_Street_Top,
+        Background_Street_Middle,
+        Background_Street_Bottom,
         Cargo,
         Car_Big,
         Car_Medium,
@@ -22,10 +26,12 @@ namespace CarGo
         Enemy_Zombie_Fast,
         Enemy_Zombie_Fast_Animation,
         Front_Spikes,
+        Front_Small_Bumper,
         Front_Bumper,
         WorldObject_Rock,
         WorldObject_Cactus,
         WorldObject_CactusRip,
+        WorldObject_CactusCompletlyRip,
         Active_RocketLauncher,
         Active_Shockwave,
         Active_Trap
@@ -54,6 +60,10 @@ namespace CarGo
                         case TextureType.Active_RocketLauncher: textures.Add(content.Load<Texture2D>("textures/Rocket")); break;
                         case TextureType.Active_Shockwave: textures.Add(content.Load<Texture2D>("textures/Shockwave")); break; //noch benötigt
                         case TextureType.Active_Trap: textures.Add(content.Load<Texture2D>("textures/Rocket")); break; // noch benötigt
+                        case TextureType.Background_Sand: textures.Add(content.Load<Texture2D>("textures/Background_Sand")); break;
+                        case TextureType.Background_Street_Top: textures.Add(content.Load<Texture2D>("textures/Background_Street_Top")); break;
+                        case TextureType.Background_Street_Middle: textures.Add(content.Load<Texture2D>("textures/Background_Street_Middle")); break;
+                        case TextureType.Background_Street_Bottom: textures.Add(content.Load<Texture2D>("textures/Background_Street_Bottom")); break;
                         case TextureType.Cargo: textures.Add(content.Load<Texture2D>("textures/Cargo")); break;
                         case TextureType.Car_Big: textures.Add(content.Load<Texture2D>("textures/Car_BigSize")); break;
                         case TextureType.Car_Medium: textures.Add(content.Load<Texture2D>("textures/Car_MediumSize")); break;
@@ -66,9 +76,11 @@ namespace CarGo
                         case TextureType.Explosion: textures.Add(content.Load<Texture2D>("textures/Explosion")); break;
                         case TextureType.Explosion_Animation: textures.Add(content.Load<Texture2D>("textures/Explosion_Animation")); break;
                         case TextureType.Front_Bumper: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Bumper")); break;
+                        case TextureType.Front_Small_Bumper: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Small_Bumper")); break;
                         case TextureType.Front_Spikes: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Spikes")); break;
                         case TextureType.WorldObject_Cactus: textures.Add(content.Load<Texture2D>("textures/Cactus")); break;
                         case TextureType.WorldObject_CactusRip: textures.Add(content.Load<Texture2D>("textures/CactusRip")); break;
+                        case TextureType.WorldObject_CactusCompletlyRip: textures.Add(content.Load<Texture2D>("textures/CactusCompletlyRip")); break;
                         case TextureType.WorldObject_Rock: textures.Add(content.Load<Texture2D>("textures/Rock")); break;
                         
                        

@@ -13,16 +13,18 @@ namespace CarGo
     public class Cactus : WorldObject
     {
         public bool isActivated;
+        public bool isExploded;
         Texture2D ripTexture;
+        Texture2D completlyRipTexture;
         public Cactus(Scene scene, Vector2 center)
         {
             this.scene = scene;
-            //texture = textureCollection.GetTexture(TextureType.WorldObject_Cactus);
             texture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_Cactus);
-            //ripTexture = textureCollection.GetTexture(TextureType.WorldObject_CactusRip);
             ripTexture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_CactusRip);
+            completlyRipTexture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_CactusCompletlyRip);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             isActivated = false;
+            isExploded = false;
         }
         override public void Update(GameTime gameTime)
         {
@@ -33,8 +35,12 @@ namespace CarGo
         {
             if(!isActivated)
             {
+                //if (entity.GetType() == typeof(RocketLauncher)) 
+                // {
+                //    isExploded = true;
+                // }
+
                 isActivated = true;
-                
             }
              
         }
@@ -43,7 +49,14 @@ namespace CarGo
         {
             if(isActivated)
             {
-                spriteBatch.Draw(ripTexture, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.05f, SpriteEffects.None, 0f);
+                if (isExploded)
+                {
+                    spriteBatch.Draw(completlyRipTexture, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.05f, SpriteEffects.None, 0f);
+                }
+                else
+                {
+                  spriteBatch.Draw(ripTexture, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.05f, SpriteEffects.None, 0f);
+                }
             }
             else
             {
