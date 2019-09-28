@@ -167,7 +167,7 @@ namespace CarGo
                 case EntityCategory.Enemy:
                     {
                         //Collision with Dummy
-                        if (entity.GetType() == typeof(EnemyDummy))
+                        if (entity.GetType() == typeof(EnemySlow))
                         {
                             if (carFront.CheckCollision(entity))
                             {

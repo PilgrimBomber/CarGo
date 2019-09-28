@@ -11,14 +11,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public class EnemyDummy : BaseEnemy
+    public class EnemySlow : BaseEnemy
     {
         private SoundEffectInstance soundCrash;
         //private Animation animation;
         //private List<Location> path2;
         //public List<Location> Path2 { get => path2; set => path2 = value; }
 
-        public EnemyDummy(Scene scene, Vector2 center):base(scene)
+        public EnemySlow(Scene scene, Vector2 center):base(scene)
         {
 
             //Set dummy texture
@@ -69,24 +69,24 @@ namespace CarGo
                     {
 
                         //Collision with Dummy
-                        if (entity.GetType() == typeof(EnemyDummy) && !noCollision)
+                        if (entity.GetType() == typeof(EnemySlow) && !noCollision)
                         {
                             if (wasPushed)
                             {
-                                if ((entity as EnemyDummy).wasPushed)
+                                if ((entity as EnemySlow).wasPushed)
                                 {
                                     hitbox.Move((hitbox.Center - entity.Hitbox.Center) * 0.01f);
                                     return;
                                 }
                                 TakeDamage((int)(velocity - entity.Velocity).Length());
                                 entity.Velocity = velocity;
-                                (entity as EnemyDummy).wasPushed = true;
+                                (entity as EnemySlow).wasPushed = true;
                                 //velocity *= 0.9f;
 
                             }
                             else
                             {
-                                if ((entity as EnemyDummy).wasPushed)
+                                if ((entity as EnemySlow).wasPushed)
                                 {
                                     TakeDamage((int)(velocity - entity.Velocity).Length());
                                     velocity = entity.Velocity;
