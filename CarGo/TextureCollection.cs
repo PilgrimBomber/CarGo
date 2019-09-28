@@ -28,10 +28,12 @@ namespace CarGo
         Front_Spikes,
         Front_Small_Bumper,
         Front_Bumper,
-        WorldObject_Rock,
         WorldObject_Cactus,
         WorldObject_CactusRip,
         WorldObject_CactusCompletlyRip,
+        WorldObject_Skull,
+        WorldObject_SkullRip,
+        WorldObject_Rock,
         Active_RocketLauncher,
         Active_Shockwave,
         Active_Trap
@@ -80,10 +82,10 @@ namespace CarGo
                         case TextureType.Front_Spikes: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Spikes")); break;
                         case TextureType.WorldObject_Cactus: textures.Add(content.Load<Texture2D>("textures/Cactus")); break;
                         case TextureType.WorldObject_CactusRip: textures.Add(content.Load<Texture2D>("textures/CactusRip")); break;
+                        case TextureType.WorldObject_Skull: textures.Add(content.Load<Texture2D>("textures/Skull")); break;
+                        case TextureType.WorldObject_SkullRip: textures.Add(content.Load<Texture2D>("textures/SkullRip")); break;
                         case TextureType.WorldObject_CactusCompletlyRip: textures.Add(content.Load<Texture2D>("textures/CactusCompletlyRip")); break;
                         case TextureType.WorldObject_Rock: textures.Add(content.Load<Texture2D>("textures/Rock")); break;
-                        
-                       
                     }
                 }
             }

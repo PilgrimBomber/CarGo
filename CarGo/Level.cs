@@ -244,6 +244,7 @@ namespace CarGo
                 switch (types[i])
                 {
                     case EntityType.Cactus: scene.addCactus(Position); break;
+                    case EntityType.Skull: scene.addSkull(Position); break;
                     case EntityType.EnemyDummy: scene.addEnemy(EnemyType.EnemyDummy, Position); break;
                     case EntityType.EnemyFast: scene.addEnemy(EnemyType.EnemyFast, Position); break;
                     case EntityType.Rock: scene.addRock(Position); break;

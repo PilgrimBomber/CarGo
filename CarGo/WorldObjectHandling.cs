@@ -47,12 +47,15 @@ namespace CarGo
                 {
                     Center.Y += 140;
                 }
-
-                if (random.Next(0, 2) == 0)
+                int number = random.Next(0, 11);
+                if (number == 0)
+                {
+                    scene.addSkull(Center);
+                }
+                else if (number%2 == 0)
                 {
                     scene.addCactus(Center);
-                }
-                else
+                }else
                 {
                     scene.addRock(Center);
                 }
@@ -96,6 +99,11 @@ namespace CarGo
                         {
                             (worldObject as Cactus).isActivated = false;
                             (worldObject as Cactus).isExploded= false;
+                        }
+
+                        if (worldObject.GetType() == typeof(Skull))
+                        {
+                            (worldObject as Skull).isActivated = false;
                         }
                     }
                 }

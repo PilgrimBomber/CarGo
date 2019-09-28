@@ -107,6 +107,12 @@ namespace CarGo
             addEntity(rock);
             worldObjects.Add(rock);
         }
+        public void addSkull(Vector2 center)
+        {
+            Skull skull = new Skull(this, center);
+            addEntity(skull);
+            worldObjects.Add(skull);
+        }
 
         public void removeWorldObject(WorldObject worldObject)
         {

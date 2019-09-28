@@ -79,6 +79,7 @@
     <Compile Include="Entities\Hook.cs" />
     <Compile Include="Entities\InputHandler.cs" />
     <Compile Include="Entities\Player.cs" />
+    <Compile Include="Entities\WorldObjects\Skull.cs" />
     <Compile Include="Entities\WorldObjects\WorldObject.cs" />
     <Compile Include="Entities\WorldObjects\Rock.cs" />
     <Compile Include="HUD.cs" />
