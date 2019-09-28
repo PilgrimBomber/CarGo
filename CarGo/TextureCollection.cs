@@ -26,6 +26,7 @@ namespace CarGo
         Enemy_Zombie_Fast,
         Enemy_Zombie_Fast_Animation,
         Front_Spikes,
+        Front_Small_Spikes,
         Front_Small_Bumper,
         Front_Bumper,
         WorldObject_Cactus,
@@ -80,6 +81,7 @@ namespace CarGo
                         case TextureType.Front_Bumper: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Bumper")); break;
                         case TextureType.Front_Small_Bumper: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Small_Bumper")); break;
                         case TextureType.Front_Spikes: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Spikes")); break;
+                        case TextureType.Front_Small_Spikes: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Small_Spikes")); break;
                         case TextureType.WorldObject_Cactus: textures.Add(content.Load<Texture2D>("textures/Cactus")); break;
                         case TextureType.WorldObject_CactusRip: textures.Add(content.Load<Texture2D>("textures/CactusRip")); break;
                         case TextureType.WorldObject_Skull: textures.Add(content.Load<Texture2D>("textures/Skull")); break;

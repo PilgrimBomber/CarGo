@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CarGo
 {
-    public enum CarFrontType { Spikes, Bumper, Small_Bumper, No }
+    public enum CarFrontType { Spikes, Small_Spikes, Bumper, Small_Bumper, No }
     class CarFront
     {
         
@@ -31,6 +31,10 @@ namespace CarGo
                     break;
                 case CarFrontType.Small_Bumper:
                     texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Small_Bumper);
+                    Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
+                    break;
+                case CarFrontType.Small_Spikes:
+                    texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Small_Spikes);
                     Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                     break;
                 case CarFrontType.Spikes:
