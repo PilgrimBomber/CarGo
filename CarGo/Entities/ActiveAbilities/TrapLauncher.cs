@@ -21,12 +21,14 @@ namespace CarGo
 
         public TrapLauncher(Scene scene, Player player):base(scene,player)
         {
-            texture = TextureCollection.getInstance().GetTexture(TextureType.Active_Trap);
-            hitbox = new RotRectangle(0, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
-            isExploded = false;
             damage = 99;
             resetLivingTimer = 8;
             resetActivationCooldownTimer = 5;
+            
+            texture = TextureCollection.getInstance().GetTexture(TextureType.Active_Trap);
+            hitbox = new RotRectangle(0, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
+            isExploded = false;
+            
             explosionAnimation = new Animation(AnimationType.Explosion, hitbox);
             soundExplosion = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Explosion);
             soundTrapLaunch = SoundCollection.getInstance().GetSoundInstance(SoundType.Trap_Launch);
