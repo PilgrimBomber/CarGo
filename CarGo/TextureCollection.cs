@@ -40,7 +40,9 @@ namespace CarGo
         Active_FlameThrower,
         Active_RocketLauncher,
         Active_Shockwave,
-        Active_Trap
+        Active_Trap,
+        MainMenuBackground,
+        MainMenuCarrier
     }
 
     public class TextureCollection
@@ -94,6 +96,9 @@ namespace CarGo
                         case TextureType.WorldObject_SkullRip: textures.Add(content.Load<Texture2D>("textures/SkullRip")); break;
                         case TextureType.WorldObject_CactusCompletlyRip: textures.Add(content.Load<Texture2D>("textures/CactusCompletlyRip")); break;
                         case TextureType.WorldObject_Rock: textures.Add(content.Load<Texture2D>("textures/Rock")); break;
+                        case TextureType.MainMenuBackground: textures.Add(content.Load<Texture2D>("textures/Splashscreen_0")); break;
+                        case TextureType.MainMenuCarrier: textures.Add(content.Load<Texture2D>("textures/MainMenuCarrier_0")); break;
+
                     }
                 }
             }

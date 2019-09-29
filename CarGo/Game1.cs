@@ -9,14 +9,17 @@ namespace CarGo
     /// This is the main type for your game.
     /// </summary>
     
-    public enum GameState {Playing,MenuMain, MenuModificationSelection,MenuPause,MenuLost,MenuWon, LevelEditor }
+    public enum GameState {Playing,MenuMain, MenuModificationSelection,MenuPause,MenuLost,MenuWon, LevelEditor, Exit }
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
         Scene scene;
+        MainMenu mainMenu;
+
         private GameState gameState;
         public GameState GameState { get => gameState; set => gameState = value; }
+
 
         public Game1()
         {
@@ -33,7 +36,7 @@ namespace CarGo
             graphics.ToggleFullScreen();
 #endif
             Content.RootDirectory = "Content";
-            GameState = GameState.Playing;
+            GameState = GameState.MenuMain;
         }
 
         /// <summary>
@@ -47,6 +50,8 @@ namespace CarGo
             // TODO: Add your initialization logic here
             spriteBatch = new SpriteBatch(GraphicsDevice);
             scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight));
+            mainMenu = new MainMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content);
+
             // Add a player for each connected Controller
             int playercount = 0;
             for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
@@ -92,7 +97,7 @@ namespace CarGo
         {
             if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-
+            gameState = this.GameState; //save current game state
             // TODO: Add your update logic here
             switch (this.GameState)
             {
@@ -100,6 +105,13 @@ namespace CarGo
                     scene.Update(gameTime);
                     break;
                 case GameState.MenuPause:
+                    break;
+                case GameState.MenuMain:
+                    if (mainMenu.Update(GameState) != gameState) //if gamestate is changed in Menu 
+                        GameState = mainMenu.Update(GameState); //update gamestate                   
+                    break;
+                case GameState.Exit:
+                    Exit();
                     break;
                 default:break;
             }
@@ -119,6 +131,9 @@ namespace CarGo
                     scene.Draw(gameTime);
                     break;
                 case GameState.MenuPause:
+                    break;
+                case GameState.MenuMain:
+                    mainMenu.Draw();
                     break;
                 default: break; ;
             }
