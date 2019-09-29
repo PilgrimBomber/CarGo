@@ -30,7 +30,9 @@ namespace CarGo
 
             animation = new Animation(AnimationType.Zombie_Slow, hitbox);
             hitpoints = 100;
+            maxLife = 100;
             baseSpeed = 2;
+            Damage = 75;
         }
         
 
@@ -58,7 +60,7 @@ namespace CarGo
                     {
                         
                         //Hitbox.Move(-velocity);
-                        entity.TakeDamage(10);
+                        entity.TakeDamage((int)(Damage * getPercentLife() / 100));
                         hitpoints = 0;
                         //velocity *= -0.05f;
                         break;

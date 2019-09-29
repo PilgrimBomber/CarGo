@@ -18,6 +18,7 @@ namespace CarGo
         protected List<Vector2> path;
         protected List<Cargo> cargos;
         protected float baseSpeed;
+        protected int Damage;
         protected Animation animation;
         public List<Vector2> Path { get => path; set => path = value; }
         

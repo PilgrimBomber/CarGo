@@ -28,7 +28,9 @@ namespace CarGo
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             animation = new Animation(AnimationType.Zombie_Fast, hitbox);
             hitpoints = 50;
+            maxLife = 50;
             baseSpeed = 4;
+            Damage = 50;
         }
 
 
@@ -55,7 +57,7 @@ namespace CarGo
                     {
 
                         //Hitbox.Move(-velocity);
-                        entity.TakeDamage(10);
+                        entity.TakeDamage((int)(Damage * getPercentLife() / 100));
                         hitpoints = 0;
                         //velocity *= -0.05f;
                         break;
