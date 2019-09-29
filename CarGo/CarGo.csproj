@@ -87,6 +87,7 @@
     <Compile Include="FontCollection.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\ModifierMenu.cs" />
+    <Compile Include="Menus\PostGameMenu.cs" />
     <Compile Include="WorldObjectHandling.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Geometry.cs" />

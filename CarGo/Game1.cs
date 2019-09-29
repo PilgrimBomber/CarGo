@@ -17,6 +17,7 @@ namespace CarGo
         SpriteBatch spriteBatch;
         public Scene scene;
         MainMenu mainMenu;
+        PostGameMenu postGameMenu;
         ModifierMenu modifierMenu;
         SoundEffectInstance musicMenu;
 
@@ -39,7 +40,7 @@ namespace CarGo
             graphics.ToggleFullScreen();
 #endif
             Content.RootDirectory = "Content";
-            GameState = GameState.Playing;
+            GameState = GameState.MenuLost;
         }
 
         /// <summary>
@@ -54,6 +55,7 @@ namespace CarGo
             spriteBatch = new SpriteBatch(GraphicsDevice);
             scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
             mainMenu = new MainMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
+            postGameMenu = new PostGameMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
             modifierMenu = new ModifierMenu(spriteBatch, this);
 
             // Add a player for each connected Controller
@@ -94,7 +96,7 @@ namespace CarGo
             musicMenu.Play();
 
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
-            if (playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Big, CarFrontType.Bumper, AbilityType.RocketLauncher);
+            if (playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Big, CarFrontType.Bumper, AbilityType.Flamethrower);
             
           // scene.addPlayer(PlayerIndex.Four, new Vector2(800, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
         }
@@ -148,7 +150,10 @@ namespace CarGo
                     Exit();
                     break;
                 case GameState.MenuWon:
-                    Exit();
+                    postGameMenu.Update();
+                    break;
+                case GameState.MenuLost:
+                    postGameMenu.Update();
                     break;
                 default:break;
             }
@@ -174,6 +179,12 @@ namespace CarGo
                     break;
                 case GameState.MenuModificationSelection:
                     modifierMenu.Draw();
+                    break;
+                case GameState.MenuWon:
+                    postGameMenu.Draw();
+                    break;
+                case GameState.MenuLost:
+                    postGameMenu.Draw();
                     break;
                 default: break; ;
             }

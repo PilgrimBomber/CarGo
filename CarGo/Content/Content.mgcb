@@ -350,6 +350,30 @@
 /processorParam:TextureFormat=Color
 /build:textures/MainMenuCarrier_03.png
 
+#begin textures/Menu_Defeatscreen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Menu_Defeatscreen.png
+
+#begin textures/Menu_Victoryscreen.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Menu_Victoryscreen.png
+
 #begin textures/Mod_Front_Big_Bumper.png
 /importer:TextureImporter
 /processor:TextureProcessor

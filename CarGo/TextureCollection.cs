@@ -44,7 +44,9 @@ namespace CarGo
         Active_ShockwaveAnimation,
         Active_Trap,
         MainMenuBackground,
-        MainMenuCarrier
+        MainMenuCarrier,
+        Menu_VictoryScreen,
+        Menu_DefeatScreen
     }
 
     public class TextureCollection
@@ -102,6 +104,8 @@ namespace CarGo
                         case TextureType.WorldObject_Rock: textures.Add(content.Load<Texture2D>("textures/Rock")); break;
                         case TextureType.MainMenuBackground: textures.Add(content.Load<Texture2D>("textures/Splashscreen_0")); break;
                         case TextureType.MainMenuCarrier: textures.Add(content.Load<Texture2D>("textures/MainMenuCarrier_0")); break;
+                        case TextureType.Menu_VictoryScreen: textures.Add(content.Load<Texture2D>("textures/Menu_VictoryScreen")); break;
+                        case TextureType.Menu_DefeatScreen: textures.Add(content.Load<Texture2D>("textures/Menu_DefeatScreen")); break;
 
                     }
                 }
