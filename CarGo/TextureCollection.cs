@@ -25,10 +25,12 @@ namespace CarGo
         Enemy_Zombie_Slow_Animation,
         Enemy_Zombie_Fast,
         Enemy_Zombie_Fast_Animation,
-        Front_Spikes,
         Front_Small_Spikes,
+        Front_Spikes,
+        Front_Big_Spikes,
         Front_Small_Bumper,
         Front_Bumper,
+        Front_Big_Bumper,
         WorldObject_Cactus,
         WorldObject_CactusRip,
         WorldObject_CactusCompletlyRip,
@@ -64,7 +66,7 @@ namespace CarGo
                         case TextureType.Active_FlameThrower: textures.Add(content.Load<Texture2D>("textures/Cargo")); break;//noch benötigt
                         case TextureType.Active_RocketLauncher: textures.Add(content.Load<Texture2D>("textures/Rocket")); break;
                         case TextureType.Active_Shockwave: textures.Add(content.Load<Texture2D>("textures/Shockwave")); break; //noch benötigt
-                        case TextureType.Active_Trap: textures.Add(content.Load<Texture2D>("textures/Rocket")); break; // noch benötigt
+                        case TextureType.Active_Trap: textures.Add(content.Load<Texture2D>("textures/TurtleMine")); break;
                         case TextureType.Background_Sand: textures.Add(content.Load<Texture2D>("textures/Background_Sand")); break;
                         case TextureType.Background_Street_Top: textures.Add(content.Load<Texture2D>("textures/Background_Street_Top")); break;
                         case TextureType.Background_Street_Middle: textures.Add(content.Load<Texture2D>("textures/Background_Street_Middle")); break;
@@ -82,8 +84,10 @@ namespace CarGo
                         case TextureType.Explosion_Animation: textures.Add(content.Load<Texture2D>("textures/Explosion_Animation")); break;
                         case TextureType.Front_Bumper: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Bumper")); break;
                         case TextureType.Front_Small_Bumper: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Small_Bumper")); break;
+                        case TextureType.Front_Big_Bumper: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Big_Bumper")); break;
                         case TextureType.Front_Spikes: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Spikes")); break;
                         case TextureType.Front_Small_Spikes: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Small_Spikes")); break;
+                        case TextureType.Front_Big_Spikes: textures.Add(content.Load<Texture2D>("textures/Mod_Front_Big_Spikes")); break;
                         case TextureType.WorldObject_Cactus: textures.Add(content.Load<Texture2D>("textures/Cactus")); break;
                         case TextureType.WorldObject_CactusRip: textures.Add(content.Load<Texture2D>("textures/CactusRip")); break;
                         case TextureType.WorldObject_Skull: textures.Add(content.Load<Texture2D>("textures/Skull")); break;

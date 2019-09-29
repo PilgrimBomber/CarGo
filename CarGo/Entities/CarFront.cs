@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Graphics;
 
 namespace CarGo
 {
-    public enum CarFrontType { Spikes, Small_Spikes, Bumper, Small_Bumper, No }
+    public enum CarFrontType { Spikes, Small_Spikes, Big_Spikes, Bumper, Small_Bumper, Big_Bumper, No }
     class CarFront
     {
         
@@ -25,12 +25,16 @@ namespace CarGo
             carFront = frontType;
             switch (frontType)
             {
+                case CarFrontType.Small_Bumper:
+                    texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Small_Bumper);
+                    Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
+                    break;
                 case CarFrontType.Bumper:
                     texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Bumper);
                     Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                     break;
-                case CarFrontType.Small_Bumper:
-                    texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Small_Bumper);
+                case CarFrontType.Big_Bumper:
+                    texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Big_Bumper);
                     Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                     break;
                 case CarFrontType.Small_Spikes:
@@ -39,6 +43,10 @@ namespace CarGo
                     break;
                 case CarFrontType.Spikes:
                     texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Spikes);
+                    Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
+                    break;
+                case CarFrontType.Big_Spikes:
+                    texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Big_Spikes);
                     Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                     break;
                 case CarFrontType.No:
