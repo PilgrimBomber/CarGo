@@ -10,7 +10,7 @@ namespace CarGo
     /// This is the main type for your game.
     /// </summary>
     
-    public enum GameState {Playing,MenuMain, MenuModificationSelection,MenuPause,MenuLost,MenuWon, LevelEditor, Exit }
+    public enum GameState {Playing,MenuMain, MenuModificationSelection,MenuPause,MenuLost,MenuWon, LevelEditor, Exit, MenuControls}
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -18,6 +18,7 @@ namespace CarGo
         public Scene scene;
         MainMenu mainMenu;
         PostGameMenu postGameMenu;
+        MenuControls menuControls;
         ModifierMenu modifierMenu;
         SoundEffectInstance musicMenu;
 
@@ -57,6 +58,7 @@ namespace CarGo
             mainMenu = new MainMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
             postGameMenu = new PostGameMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
             modifierMenu = new ModifierMenu(spriteBatch, this);
+            menuControls = new MenuControls(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
 
             // Add a player for each connected Controller
             int playercount = 0;
@@ -155,6 +157,9 @@ namespace CarGo
                 case GameState.MenuLost:
                     postGameMenu.Update();
                     break;
+                case GameState.MenuControls:
+                    menuControls.Update();
+                    break;
                 default:break;
             }
         }
@@ -185,6 +190,9 @@ namespace CarGo
                     break;
                 case GameState.MenuLost:
                     postGameMenu.Draw();
+                    break;
+                case GameState.MenuControls:
+                    menuControls.Draw();
                     break;
                 default: break; ;
             }

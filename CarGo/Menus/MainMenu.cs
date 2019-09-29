@@ -88,7 +88,7 @@ namespace CarGo
                         break;
                     case 1:
                         buttonBoxCorners = rotRectangle.Corners;
-                        spriteBatch.DrawString(spriteFont, "Options", buttonBoxCorners[2], Color.Black);
+                        spriteBatch.DrawString(spriteFont, "Controls", buttonBoxCorners[2], Color.Black);
                         i++;
                         break;
                     case 2:
@@ -122,10 +122,11 @@ namespace CarGo
                     theGame.GameState = GameState.MenuModificationSelection;
                 }
                 //Options (Non existent atm)
-                //if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[1]) == true)
-                //{
-                //    return stateofgame = GameState.Playing;
-                //}
+                if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[1]) == true)
+                {
+                    theGame.GameState = GameState.MenuControls;
+                }
+
                 //Credits (non existent atm)
                 //if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[2]) == true)
                 //{
