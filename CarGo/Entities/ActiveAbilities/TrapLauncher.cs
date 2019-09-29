@@ -21,7 +21,7 @@ namespace CarGo
 
         public TrapLauncher(Scene scene, Player player):base(scene,player)
         {
-            damage = 99;
+            damage = 200;
             resetLivingTimer = 8;
             resetActivationCooldownTimer = 5;
             
@@ -75,8 +75,8 @@ namespace CarGo
             soundExplosion.Play();
             isExploded = true;
             //hitbox.Scale(5);
-            livingTimer = 1;
-            activationCooldownTimer = 1;
+            livingTimer = 2;
+            activationCooldownTimer = 2;
         }
         public override void Use()
         {

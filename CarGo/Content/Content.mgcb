@@ -308,42 +308,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/Explosion_Animation.png
 
-#begin textures/Mod_Front_Big_Bumper.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/Mod_Front_Big_Bumper.png
-
-#begin textures/Mod_Front_Big_Spikes.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/Mod_Front_Big_Spikes.png
-
-#begin textures/Explosion_Animation.png
-/importer:TextureImporter
-/processor:TextureProcessor
-/processorParam:ColorKeyColor=255,0,255,255
-/processorParam:ColorKeyEnabled=True
-/processorParam:GenerateMipmaps=False
-/processorParam:PremultiplyAlpha=True
-/processorParam:ResizeToPowerOfTwo=False
-/processorParam:MakeSquare=False
-/processorParam:TextureFormat=Color
-/build:textures/Explosion_Animation.png
-
 #begin textures/MainMenuCarrier_0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -367,6 +331,30 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/MainMenuCarrier_03.png
+
+#begin textures/Mod_Front_Big_Bumper.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Mod_Front_Big_Bumper.png
+
+#begin textures/Mod_Front_Big_Spikes.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Mod_Front_Big_Spikes.png
 
 #begin textures/Mod_Front_Bumper.png
 /importer:TextureImporter
@@ -452,6 +440,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/Shockwave.png
 
+#begin textures/Shockwave_Animation.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Shockwave_Animation.png
+
 #begin textures/Skull.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -476,7 +476,6 @@
 /processorParam:TextureFormat=Color
 /build:textures/SkullRip.png
 
-#begin textures/TurtleMine.png
 #begin textures/Splashscreen_0.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -489,7 +488,7 @@
 /processorParam:TextureFormat=Color
 /build:textures/Splashscreen_0.png
 
-#begin textures/Tile_0.png
+#begin textures/TurtleMine.png
 /importer:TextureImporter
 /processor:TextureProcessor
 /processorParam:ColorKeyColor=255,0,255,255

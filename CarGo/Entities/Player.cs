@@ -68,15 +68,15 @@ namespace CarGo
                     texture = TextureCollection.getInstance().GetTexture(TextureType.Car_Medium);
                     acceleration = 0.08f;
                     maxSpeed = 14.0f;
-                    turnRate = 1.8f;//1 is default
+                    turnRate = 2.2f;//1 is default
                     drift = 0.15f;//number between 0 and 1
                     hitpoints = 1000;
                     break;
                 case CarType.Big:
                     texture = TextureCollection.getInstance().GetTexture(TextureType.Car_Big);
-                    acceleration = 0.05f;
+                    acceleration = 0.06f;
                     maxSpeed = 16.0f;
-                    turnRate = 1.3f;//1 is default
+                    turnRate = 1.5f;//1 is default
                     drift = 0.05f;//number between 0 and 1
                     hitpoints = 1500;
                     break;
@@ -182,15 +182,18 @@ namespace CarGo
                                 switch(carType)
                                 {
                                     case CarType.Big:
-                                        entity.GetPushed(velocity*1.3f);
+                                        if(carFrontType== CarFrontType.Bumper) entity.GetPushed(velocity * 1.8f);
+                                        else entity.GetPushed(velocity*1.3f);
                                         velocity *= 0.8f;
                                         break;
                                     case CarType.Medium:
-                                        entity.GetPushed(velocity);
+                                        if (carFrontType == CarFrontType.Bumper) entity.GetPushed(velocity * 1.3f);
+                                        else entity.GetPushed(velocity);
                                         velocity *= 0.5f;
                                         break;
                                     case CarType.Small:
-                                        entity.GetPushed(velocity*0.8f);
+                                        if (carFrontType == CarFrontType.Bumper) entity.GetPushed(velocity * 1f);
+                                        else entity.GetPushed(velocity*0.8f);
                                         velocity *= 0.3f;
                                         break;
                                 }
@@ -299,7 +302,7 @@ namespace CarGo
         //Turn the player by rad to the right
         public void Turn(float rad)
         {
-            if (velocity.Length() > 1.5f)
+            if (velocity.Length() > 0.8f)
             {
                 
                 hitbox.Rotate(rad * turnRate * (30 - velocity.Length()) / 20);
@@ -369,6 +372,13 @@ namespace CarGo
         {
             active.Use();
         }
+
+        public void ResetPosition()
+        {
+            SetPosition(scene.GetCargos()[0].Hitbox.Center + new Vector2(-400, -400));
+            velocity *= 0;
+        }
+
         public override void TakeDamage(int damage)
         {
             if (!noDamage) hitpoints -= damage;
@@ -387,7 +397,7 @@ namespace CarGo
                     }
                 case CarFrontType.Bumper:
                     {
-                        damage = (int)velocity.Length() * 4;
+                        damage = (int)velocity.Length() * 6;
                         break;
                         //return damage;
                     }
@@ -410,10 +420,10 @@ namespace CarGo
                     damage *= 2f;
                     break;
                 case CarType.Medium:
-                    damage *= 1f;
+                    damage *= 1.3f;
                     break;
                 case CarType.Small:
-                    damage *= 0.75f;
+                    damage *= 1f;
                     break;
             }
 

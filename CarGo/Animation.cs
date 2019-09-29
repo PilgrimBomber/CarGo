@@ -9,14 +9,14 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public enum AnimationType { Explosion, Zombie_Slow, Zombie_Fast }
+    public enum AnimationType { Explosion, Zombie_Slow, Zombie_Fast, Shockwave}
 
     public class Animation
     {
         private TimeSpan timeExisting;
         private RotRectangle hitbox;
         private AnimationType animationType;
-        private bool reapeating;
+        private bool repeating;
         private TimeSpan frameTime;
         private int frameCount;
         private int currentFrame;
@@ -36,22 +36,28 @@ namespace CarGo
             switch (animationType)
             {
                 case AnimationType.Explosion:
-                    reapeating = false;
+                    repeating = false;
                     frameTime = new TimeSpan(0, 0, 0, 0, 100);
                     frameCount = 11;
                     spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Explosion_Animation);
                     break;
                 case AnimationType.Zombie_Slow:
-                    reapeating = true;
+                    repeating = true;
                     frameTime = new TimeSpan(0, 0, 0, 0, 150);
                     frameCount = 8;
                     spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie_Slow_Animation);
                     break;
                 case AnimationType.Zombie_Fast:
-                    reapeating = true;
+                    repeating = true;
                     frameTime = new TimeSpan(0, 0, 0, 0, 150);
                     frameCount = 8;
                     spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie_Fast_Animation);
+                    break;
+                case AnimationType.Shockwave:
+                    repeating = false;
+                    frameCount = 7;
+                    frameTime = new TimeSpan(0, 0, 0, 0, 500 / 7);
+                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Active_ShockwaveAnimation);
                     break;
             }
 
@@ -71,7 +77,7 @@ namespace CarGo
                 currentFrame++;
                 if (currentFrame >= frameCount)
                 {
-                    if(reapeating)
+                    if(repeating)
                     {
                         currentFrame = 0;
                       

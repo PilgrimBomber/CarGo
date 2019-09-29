@@ -19,8 +19,8 @@ namespace CarGo
         public FlameThrower(Scene scene, Player player):base(scene,player)
         {
             damage = 400;
-            resetActivationCooldownTimer = 8;
-            resetLivingTimer = 4;
+            resetActivationCooldownTimer = 6;
+            resetLivingTimer = 3;
             damagePerTick = (int)(damage / (resetLivingTimer* 4));
             
             texture = TextureCollection.getInstance().GetTexture(TextureType.Active_FlameThrower);
@@ -29,7 +29,7 @@ namespace CarGo
             damageTick = false;
             tickTimer = new TimeSpan(0,0,0,0,0);
             soundFlame = SoundCollection.getInstance().GetSoundInstance(SoundType.FlameThrower);
-            soundFlame.Volume = 0.1f;
+            soundFlame.Volume = 0.4f;
         }
 
 

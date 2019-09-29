@@ -83,7 +83,10 @@ namespace CarGo
                 {
                     player.Active();
                 }
-
+                if(state.IsButtonDown(Buttons.Back)&& previousState.IsButtonUp(Buttons.Back))
+                {
+                    player.ResetPosition();
+                }
                 if (playerAction) player.Idle(false);
                 else player.Idle(true);
 

@@ -20,9 +20,9 @@ namespace CarGo
 
         public RocketLauncher(Scene scene, Player player):base(scene,player)
         {
-            damage = 99;
+            damage = 200;
             resetLivingTimer = 10;
-            resetActivationCooldownTimer = 2;
+            resetActivationCooldownTimer = 4;
             texture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher);
             textureExplosion = TextureCollection.getInstance().GetTexture(TextureType.Explosion);
             soundLaunch = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Launch);

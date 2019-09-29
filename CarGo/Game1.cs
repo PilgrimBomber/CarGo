@@ -49,32 +49,32 @@ namespace CarGo
         {
             // TODO: Add your initialization logic here
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight));
+            scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
             mainMenu = new MainMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content);
 
             // Add a player for each connected Controller
             int playercount = 0;
-            //for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
-            //{
-            //    if (GamePad.GetCapabilities(index).IsConnected)
-            //    {
-            //        scene.addPlayer(index, new Vector2(400 + (int)index * 100, 400),CarType.Small, CarFrontType.Bumper, AbilityType.RocketLauncher);
-            //        playercount++;
-            //    }
-            //}
+            for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+            {
+                if (GamePad.GetCapabilities(index).IsConnected)
+                {
+                    //scene.addPlayer(index, new Vector2(400 + (int)index * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.RocketLauncher);
+                    playercount++;
+                }
+            }
             if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
             {
-                scene.addPlayer(PlayerIndex.One, new Vector2(400 + (int)PlayerIndex.One * 100, 400), CarType.Medium, CarFrontType.Spikes, AbilityType.RocketLauncher);
+                scene.addPlayer(PlayerIndex.One, new Vector2(400 + (int)PlayerIndex.One * 100, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.Shockwave);
                 playercount++;
             }
             if (GamePad.GetCapabilities(PlayerIndex.Two).IsConnected)
             {
-                scene.addPlayer(PlayerIndex.Two, new Vector2(400 + (int)PlayerIndex.Two * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.RocketLauncher);
+                scene.addPlayer(PlayerIndex.Two, new Vector2(400 + (int)PlayerIndex.Two * 100, 400), CarType.Big, CarFrontType.Spikes, AbilityType.Shockwave);
                 playercount++;
             }
             if (GamePad.GetCapabilities(PlayerIndex.Three).IsConnected)
             {
-                scene.addPlayer(PlayerIndex.Three, new Vector2(400 + (int)PlayerIndex.Three * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.RocketLauncher);
+                scene.addPlayer(PlayerIndex.Three, new Vector2(400 + (int)PlayerIndex.Three * 100, 400), CarType.Small, CarFrontType.Spikes, AbilityType.TrapLauncher);
                 playercount++;
             }
             if (GamePad.GetCapabilities(PlayerIndex.Four).IsConnected)
@@ -85,7 +85,7 @@ namespace CarGo
 
 
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
-            if (playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Big, CarFrontType.Bumper, AbilityType.TrapLauncher);
+            if (playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Big, CarFrontType.Bumper, AbilityType.RocketLauncher);
             
           // scene.addPlayer(PlayerIndex.Four, new Vector2(800, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
         }
@@ -117,7 +117,7 @@ namespace CarGo
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed || Keyboard.GetState().IsKeyDown(Keys.Escape))
+            if (/*GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||*/ Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
             gameState = this.GameState; //save current game state
             // TODO: Add your update logic here
@@ -133,6 +133,9 @@ namespace CarGo
                         GameState = mainMenu.Update(GameState); //update gamestate                   
                     break;
                 case GameState.Exit:
+                    Exit();
+                    break;
+                case GameState.MenuWon:
                     Exit();
                     break;
                 default:break;
@@ -157,6 +160,7 @@ namespace CarGo
                 case GameState.MenuMain:
                     mainMenu.Draw();
                     break;
+                
                 default: break; ;
             }
             

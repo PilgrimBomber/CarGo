@@ -13,6 +13,7 @@ namespace CarGo
 {
     public class Scene
     {
+        private Game1 game;
         private Camera camera;
         private CollisionCheck collisionCheck;
         private EnemyAI enemyAI;
@@ -29,7 +30,7 @@ namespace CarGo
         private Tilemap tilemap;
        
         //private SpriteBatch spriteBatch;
-        public Scene(SpriteBatch spriteBatch, ContentManager content, Vector2 screenSize)
+        public Scene(SpriteBatch spriteBatch, ContentManager content, Vector2 screenSize, Game1 game)
         {
             entities = new List<Entity>();
             deadEntities = new List<Entity>();
@@ -47,7 +48,7 @@ namespace CarGo
             camera = new Camera(spriteBatch, screenSize, cargos, players, enemies, worldObjects, activeAbilities);
             worldObjectHandling = new WorldObjectHandling(this, worldObjects);
             tilemap = new Tilemap(1, content);
-            
+            this.game = game;
             //enemyAI = new EnemyAI(tilemap, enemies, cargo);
             enemyAI = new EnemyAI(worldObjects, enemies, cargos);
             this.content = content;
@@ -186,6 +187,14 @@ namespace CarGo
         {
             activeAbilities.Remove(activeAbility);
             removeEntity(activeAbility);
+        }
+
+        public void Finish(bool won)
+        {
+            if (won) game.GameState = GameState.MenuWon;
+            else game.GameState = GameState.MenuLost;
+
+
         }
     }
 }

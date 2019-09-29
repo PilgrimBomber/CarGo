@@ -202,7 +202,7 @@ namespace CarGo
                 switch (types[i])
                 {
                     //case EntityType.Cactus: scene.addCactus(Position); break;
-                    case EntityType.EnemyDummy: scene.addEnemy(EnemyType.EnemyDummy, Position); break;
+                    case EntityType.EnemySlow: scene.addEnemy(EnemyType.EnemyDummy, Position); break;
                     case EntityType.EnemyFast: scene.addEnemy(EnemyType.EnemyFast, Position); break;
                     //case EntityType.Rock: scene.addRock(Position); break;
                 }
@@ -245,7 +245,7 @@ namespace CarGo
                 {
                     case EntityType.Cactus: scene.addCactus(Position); break;
                     case EntityType.Skull: scene.addSkull(Position); break;
-                    case EntityType.EnemyDummy: scene.addEnemy(EnemyType.EnemyDummy, Position); break;
+                    case EntityType.EnemySlow: scene.addEnemy(EnemyType.EnemyDummy, Position); break;
                     case EntityType.EnemyFast: scene.addEnemy(EnemyType.EnemyFast, Position); break;
                     case EntityType.Rock: scene.addRock(Position); break;
                     case EntityType.Player: scene.addPlayer(PlayerIndex.One, Position,CarType.Medium,CarFrontType.Bumper,AbilityType.RocketLauncher); break;
@@ -255,7 +255,18 @@ namespace CarGo
         }
     }
 
+    public class FinishEvent : SpawnEvent
+    {
+        public FinishEvent(int triggerDistance, Scene scene) : base(triggerDistance, scene)
+        {
 
+        }
+
+        public override void SpawnAll(int distanceTravelled)
+        {
+            scene.Finish(true);
+        }
+    }
     public class Level1:Level
     {
         
@@ -272,26 +283,38 @@ namespace CarGo
 
             spawnEvents.Add(new SpawnEvent(0, scene));
             spawnEvents[1].AddSpawn(EntityType.EnemyFast,2);
-            spawnEvents[1].AddSpawn(EntityType.EnemyDummy, 5);
+            spawnEvents[1].AddSpawn(EntityType.EnemySlow, 5);
 
             spawnEvents.Add(new SpawnEvent(500, scene));
-            spawnEvents[2].AddSpawn(EntityType.EnemyDummy,2);
+            spawnEvents[2].AddSpawn(EntityType.EnemySlow,5);
+            spawnEvents[2].AddSpawn(EntityType.EnemyFast, 2);
 
             spawnEvents.Add(new SpawnEvent(1000, scene));
-            spawnEvents[3].AddSpawn(EntityType.EnemyDummy, 2);
+            spawnEvents[3].AddSpawn(EntityType.EnemySlow, 6);
 
             spawnEvents.Add(new SpawnEvent(1500, scene));
-            spawnEvents[4].AddSpawn(EntityType.EnemyDummy, 2);
+            spawnEvents[4].AddSpawn(EntityType.EnemySlow, 2);
+            spawnEvents[4].AddSpawn(EntityType.EnemyFast, 3);
 
             spawnEvents.Add(new SpawnEvent(3000, scene));
-            spawnEvents[5].AddSpawn(EntityType.EnemyDummy, 5);
+            spawnEvents[5].AddSpawn(EntityType.EnemySlow, 5);
 
             spawnEvents.Add(new SpawnEvent(5000, scene));
-            spawnEvents[6].AddSpawn(EntityType.EnemyDummy, 4);
+            spawnEvents[6].AddSpawn(EntityType.EnemySlow, 5);
+            spawnEvents[6].AddSpawn(EntityType.EnemyFast, 3);
 
             spawnEvents.Add(new SpawnEvent(8000, scene));
-            spawnEvents[7].AddSpawn(EntityType.EnemyDummy, 4);
+            spawnEvents[7].AddSpawn(EntityType.EnemySlow, 15);
+            spawnEvents[7].AddSpawn(EntityType.EnemyFast, 1);
 
+            spawnEvents.Add(new SpawnEvent(9000, scene));
+            spawnEvents[8].AddSpawn(EntityType.EnemySlow, 10);
+
+            spawnEvents.Add(new SpawnEvent(11000, scene));
+            spawnEvents[9].AddSpawn(EntityType.EnemySlow, 6);
+            spawnEvents[9].AddSpawn(EntityType.EnemyFast, 4);
+
+            spawnEvents.Add(new FinishEvent(15000, scene));
             HandleStartSpawn();
         }
 

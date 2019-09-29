@@ -14,7 +14,7 @@ namespace CarGo
     {
         private SoundEffectInstance soundShockWave;
         private Texture2D textureShockwave;
-        
+        private Animation animation;
         private List<Entity> collidedEntities;
         public Shockwave(Scene scene, Player player):base(scene,player)
         {
@@ -24,9 +24,12 @@ namespace CarGo
             collidedEntities = new List<Entity>();
 
             textureShockwave = TextureCollection.getInstance().GetTexture(TextureType.Active_Shockwave);
+            
+
             soundShockWave = SoundCollection.getInstance().GetSoundInstance(SoundType.Shockwave);
             soundShockWave.Volume = 0.2f;
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(textureShockwave.Width / 2, textureShockwave.Height / 2));
+            animation = new Animation(AnimationType.Shockwave, hitbox);
             // animation = new Animation(AnimationType.Explosion, new RotRectangle(hitbox.RotationRad, hitbox.Center /* -offset */, new Vector2(textureExplosion.Width / 2, textureExplosion.Height / 2)));
         }
 
@@ -40,6 +43,7 @@ namespace CarGo
         {
             if (activationCooldownTimer > 0) return;
             base.Use();
+            animation.Reset();
             soundShockWave.Play();
             
         }
@@ -68,7 +72,7 @@ namespace CarGo
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
         {
-            if (isActive) spriteBatch.Draw(textureShockwave, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
+            if (isActive) animation.Draw(gameTime, spriteBatch, offset);//spriteBatch.Draw(textureShockwave, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
         }
 
 
