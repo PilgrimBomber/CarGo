@@ -12,10 +12,9 @@ namespace CarGo
 {
     public class HUD
     {
-        private Camera camera;
         private List<Player> players;
         private List<Cargo> cargos;
-        private List<BaseEnemy> enemies;
+        //private List<BaseEnemy> enemies;
         private List<ActiveAbility> activeAbilities;
         private GraphicsDevice graphicsDevice;
         private Vector2 screenSize;

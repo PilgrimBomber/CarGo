@@ -9,7 +9,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public enum AnimationType { Explosion, Zombie_Slow, Zombie_Fast, Shockwave}
+    public enum AnimationType { Explosion, Zombie_Slow, Zombie_Fast, Shockwave, Flamethrower}
 
     public class Animation
     {
@@ -40,6 +40,12 @@ namespace CarGo
                     frameTime = new TimeSpan(0, 0, 0, 0, 100);
                     frameCount = 11;
                     spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Explosion_Animation);
+                    break;
+                case AnimationType.Flamethrower:
+                    repeating = true;
+                    frameTime = new TimeSpan(0, 0, 0, 0, 100);
+                    frameCount = 10;
+                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Active_FlamethrowerAnimation);
                     break;
                 case AnimationType.Zombie_Slow:
                     repeating = true;

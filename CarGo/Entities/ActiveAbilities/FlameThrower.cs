@@ -16,6 +16,7 @@ namespace CarGo
         private bool damageTick;
         private TimeSpan tickTimer;
         private SoundEffectInstance soundFlame;
+        private Animation animation;
         public FlameThrower(Scene scene, Player player):base(scene,player)
         {
             damage = 400;
@@ -30,6 +31,7 @@ namespace CarGo
             tickTimer = new TimeSpan(0,0,0,0,0);
             soundFlame = SoundCollection.getInstance().GetSoundInstance(SoundType.FlameThrower);
             soundFlame.Volume = 0.4f;
+            animation = new Animation(AnimationType.Flamethrower, hitbox);
         }
 
 
@@ -68,11 +70,12 @@ namespace CarGo
             base.Use();
             soundFlame.Play();
             damageTick = true;
+            animation.Reset();
         }
 
         public override void Draw(GameTime gameTime, SpriteBatch spriteBatch, Vector2 offset)
         {
-            if (isActive) spriteBatch.Draw(texture, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
+            if (isActive) animation.Draw(gameTime, spriteBatch, offset);//spriteBatch.Draw(texture, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
         }
 
 

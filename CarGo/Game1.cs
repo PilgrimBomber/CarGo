@@ -50,7 +50,7 @@ namespace CarGo
         {
             // TODO: Add your initialization logic here
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight));
+            scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
             mainMenu = new MainMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
             modifierMenu = new ModifierMenu(spriteBatch, this);
 
@@ -66,12 +66,12 @@ namespace CarGo
             }
             if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
             {
-                scene.addPlayer(PlayerIndex.One, new Vector2(400 + (int)PlayerIndex.One * 100, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.Shockwave);
+                scene.addPlayer(PlayerIndex.One, new Vector2(400 + (int)PlayerIndex.One * 100, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.TrapLauncher);
                 playercount++;
             }
             if (GamePad.GetCapabilities(PlayerIndex.Two).IsConnected)
             {
-                scene.addPlayer(PlayerIndex.Two, new Vector2(400 + (int)PlayerIndex.Two * 100, 400), CarType.Big, CarFrontType.Spikes, AbilityType.Shockwave);
+                scene.addPlayer(PlayerIndex.Two, new Vector2(400 + (int)PlayerIndex.Two * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.Flamethrower);
                 playercount++;
             }
             if (GamePad.GetCapabilities(PlayerIndex.Three).IsConnected)
@@ -84,6 +84,8 @@ namespace CarGo
                 scene.addPlayer(PlayerIndex.Four, new Vector2(400 + (int)PlayerIndex.Four * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.RocketLauncher);
                 playercount++;
             }
+
+            
 
 
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen

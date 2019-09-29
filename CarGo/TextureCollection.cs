@@ -38,6 +38,7 @@ namespace CarGo
         WorldObject_SkullRip,
         WorldObject_Rock,
         Active_FlameThrower,
+        Active_FlamethrowerAnimation,
         Active_RocketLauncher,
         Active_Shockwave,
         Active_ShockwaveAnimation,
@@ -67,9 +68,10 @@ namespace CarGo
                     switch (textureType)
                     {
                         case TextureType.Active_FlameThrower: textures.Add(content.Load<Texture2D>("textures/Cargo")); break;//noch benötigt
+                        case TextureType.Active_FlamethrowerAnimation: textures.Add(content.Load<Texture2D>("textures/Flamethrower_Animation")); break;
                         case TextureType.Active_RocketLauncher: textures.Add(content.Load<Texture2D>("textures/Rocket")); break;
-                        case TextureType.Active_Shockwave: textures.Add(content.Load<Texture2D>("textures/Shockwave")); break; //noch benötigt
-                        case TextureType.Active_ShockwaveAnimation: textures.Add(content.Load<Texture2D>("textures/Shockwave_Animation")); break; //noch benötigt
+                        case TextureType.Active_Shockwave: textures.Add(content.Load<Texture2D>("textures/Shockwave")); break;
+                        case TextureType.Active_ShockwaveAnimation: textures.Add(content.Load<Texture2D>("textures/Shockwave_Animation")); break;
                         case TextureType.Active_Trap: textures.Add(content.Load<Texture2D>("textures/TurtleMine")); break;
                         case TextureType.Background_Sand: textures.Add(content.Load<Texture2D>("textures/Background_Sand")); break;
                         case TextureType.Background_Street_Top: textures.Add(content.Load<Texture2D>("textures/Background_Street_Top")); break;

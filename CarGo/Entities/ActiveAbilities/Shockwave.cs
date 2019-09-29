@@ -19,7 +19,7 @@ namespace CarGo
         public Shockwave(Scene scene, Player player):base(scene,player)
         {
             damage = 70;
-            resetActivationCooldownTimer = 3;
+            resetActivationCooldownTimer = 2.5f;
             resetLivingTimer = 0.5f;
             collidedEntities = new List<Entity>();
 

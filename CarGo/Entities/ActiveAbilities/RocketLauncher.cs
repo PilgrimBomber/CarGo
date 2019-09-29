@@ -22,7 +22,7 @@ namespace CarGo
         {
             damage = 200;
             resetLivingTimer = 10;
-            resetActivationCooldownTimer = 4;
+            resetActivationCooldownTimer = 5;
             texture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher);
             textureExplosion = TextureCollection.getInstance().GetTexture(TextureType.Explosion);
             soundLaunch = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Launch);

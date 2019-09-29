@@ -58,7 +58,7 @@ namespace CarGo
                    
                 if (state.Triggers.Left > 0.1)
                 {
-                    player.Accelerate(-state.Triggers.Left / 3);
+                    player.Accelerate(-state.Triggers.Left * 0.5f);
                     playerAction = true;
                 }
                     
