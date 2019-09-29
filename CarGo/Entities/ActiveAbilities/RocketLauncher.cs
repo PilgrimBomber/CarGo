@@ -21,6 +21,8 @@ namespace CarGo
         public RocketLauncher(Scene scene, Player player):base(scene,player)
         {
             damage = 99;
+            resetLivingTimer = 10;
+            resetActivationCooldownTimer = 2;
             texture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher);
             textureExplosion = TextureCollection.getInstance().GetTexture(TextureType.Explosion);
             soundLaunch = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Launch);
@@ -29,8 +31,7 @@ namespace CarGo
             soundExplosion.Volume = 1f;
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
             animation = new Animation(AnimationType.Explosion, hitbox);
-            resetLivingTimer = 10;
-            resetActivationCooldownTimer = 2;
+            
         }
 
 
