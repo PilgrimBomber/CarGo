@@ -41,7 +41,7 @@ namespace CarGo
             graphics.ToggleFullScreen();
 #endif
             Content.RootDirectory = "Content";
-            GameState = GameState.MenuLost;
+            GameState = GameState.MenuMain;
         }
 
         /// <summary>
@@ -72,22 +72,22 @@ namespace CarGo
             }
             if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
             {
-                scene.addPlayer(PlayerIndex.One, new Vector2(400 + (int)PlayerIndex.One * 100, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.TrapLauncher);
+                scene.addPlayer(PlayerIndex.One, new Vector2(400 + (int)PlayerIndex.One * 100, 400), CarType.Medium, CarFrontType.Spikes, AbilityType.TrapLauncher);
                 playercount++;
             }
             if (GamePad.GetCapabilities(PlayerIndex.Two).IsConnected)
             {
-                scene.addPlayer(PlayerIndex.Two, new Vector2(400 + (int)PlayerIndex.Two * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.Flamethrower);
+                scene.addPlayer(PlayerIndex.Two, new Vector2(400 + (int)PlayerIndex.Two * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.Shockwave);
                 playercount++;
             }
             if (GamePad.GetCapabilities(PlayerIndex.Three).IsConnected)
             {
-                scene.addPlayer(PlayerIndex.Three, new Vector2(400 + (int)PlayerIndex.Three * 100, 400), CarType.Small, CarFrontType.Spikes, AbilityType.TrapLauncher);
+                scene.addPlayer(PlayerIndex.Three, new Vector2(400 + (int)PlayerIndex.Three * 100, 400), CarType.Big, CarFrontType.Spikes, AbilityType.Flamethrower);
                 playercount++;
             }
             if (GamePad.GetCapabilities(PlayerIndex.Four).IsConnected)
             {
-                scene.addPlayer(PlayerIndex.Four, new Vector2(400 + (int)PlayerIndex.Four * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.RocketLauncher);
+                scene.addPlayer(PlayerIndex.Four, new Vector2(400 + (int)PlayerIndex.Four * 100, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
                 playercount++;
             }
 

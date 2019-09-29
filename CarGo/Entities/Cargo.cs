@@ -29,7 +29,11 @@ namespace CarGo
         }
         override public void Update(GameTime gameTime)
         {
-            if (hitpoints <= 0) scene.Finish(false);
+            if (hitpoints <= 0)
+            {
+                scene.Finish(false);
+                hitpoints = 1000;
+            }
             hitbox.Move(velocity);
             carFront.Move(velocity);
             //throw new NotImplementedException();

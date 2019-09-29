@@ -119,7 +119,7 @@ namespace CarGo
                 if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[0]) == true)
                 {
                     soundHorn.Play();
-                    theGame.GameState = GameState.MenuModificationSelection;
+                    theGame.GameState = GameState.Playing;
                 }
                 //Options (Non existent atm)
                 if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[1]) == true)
