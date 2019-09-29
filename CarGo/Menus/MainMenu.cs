@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 using Microsoft.Xna.Framework.Graphics;
+using Microsoft.Xna.Framework.Audio;
 using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
@@ -23,10 +24,16 @@ namespace CarGo
         private Vector2[] carrierBoxConers;
         //private Vector2[] carBoxCorners;
         private Vector2[] buttonBoxCorners;
+        private SoundEffectInstance soundHorn;
+        private Game1 theGame;
+        private KeyboardState previousKeyBoardState;
+        private GamePadState previousState;
 
-        public MainMenu(SpriteBatch spriteBatchInit,Vector2 screenSize, ContentManager contentManager)
+        public MainMenu(SpriteBatch spriteBatchInit,Vector2 screenSize, ContentManager contentManager, Game1 game)
         {
             spriteBatch = spriteBatchInit;
+            theGame = game;
+            previousKeyBoardState = Keyboard.GetState();
 
             //Boxes
             //Create Buttons 
@@ -52,6 +59,7 @@ namespace CarGo
             FontCollection.getInstance().LoadFonts(contentManager);
             spriteFont = FontCollection.getInstance().GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
 
+           soundHorn = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Horn);
         }
 
         //Draw the Menu 
@@ -100,16 +108,18 @@ namespace CarGo
             spriteBatch.End();
         }
      
-        public GameState Update(GameState stateofgame)
+        public void Update()
         {
+            //TODO: Gamepad Input
             //Check which Button is selected 
             this.Input();
-            if (Keyboard.GetState().IsKeyDown(Keys.Enter))
+            if (Keyboard.GetState().IsKeyDown(Keys.Enter) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.A))
             {
                 //Play
                 if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[0]) == true)
                 {
-                    return stateofgame = GameState.Playing;
+                    soundHorn.Play();
+                    theGame.GameState = GameState.MenuModificationSelection;
                 }
                 //Options (Non existent atm)
                 //if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[1]) == true)
@@ -124,38 +134,67 @@ namespace CarGo
                 //Exit
                 if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[3]) == true)
                 {
-                    return stateofgame = GameState.Exit;
+                    soundHorn.Play();
+                    theGame.GameState = GameState.Exit;
                 }
-
-                return stateofgame;
             }
-            return stateofgame;
         }
 
         private void Input()
         {
-            //Up
-            if (Keyboard.GetState().IsKeyDown(Keys.W))
+            if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
             {
-                if (carrierBox.Center.Y <= ButtonHitboxes[0].Center.Y)
-                { return; }
-                else
-                {
-                    carrierBox.Move(new Vector2(0, -100));
-                }
-            }
+                GamePadState state = GamePad.GetState(PlayerIndex.One);
 
-            //Down
-            if (Keyboard.GetState().IsKeyDown(Keys.S))
-            {
-                if (carrierBox.Center.Y >= ButtonHitboxes[3].Center.Y)
-                { return; }
-                else
+                if (state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0)
                 {
-                    carrierBox.Move(new Vector2(0, 50));
+                    if (carrierBox.Center.Y >= ButtonHitboxes[3].Center.Y)
+                    { return; }
+                    else
+                    {
+                        carrierBox.Move(new Vector2(0, 100));
+                    }
                 }
+                if (state.ThumbSticks.Left.Y > 0f && previousState.ThumbSticks.Left.Y == 0)
+                {
+                    if (carrierBox.Center.Y <= ButtonHitboxes[0].Center.Y)
+                    { return; }
+                    else
+                    {
+                        carrierBox.Move(new Vector2(0, -100));
+                    }
+                }
+
+                previousState = state;
+            }
+            else //use Keyboard
+            {
+                KeyboardState keyboardstate = Keyboard.GetState();
+                //Up
+                if (keyboardstate.IsKeyDown(Keys.W) && previousKeyBoardState.IsKeyUp(Keys.W) || keyboardstate.IsKeyDown(Keys.Up) && previousKeyBoardState.IsKeyUp(Keys.Up))
+                {
+                    if (carrierBox.Center.Y <= ButtonHitboxes[0].Center.Y)
+                    { return; }
+                    else
+                    {
+                        carrierBox.Move(new Vector2(0, -100));
+                    }
+                }
+
+                //Down
+                if (keyboardstate.IsKeyDown(Keys.S) && previousKeyBoardState.IsKeyUp(Keys.S) || keyboardstate.IsKeyDown(Keys.Down) && previousKeyBoardState.IsKeyUp(Keys.Down))
+                {
+                    if (carrierBox.Center.Y >= ButtonHitboxes[3].Center.Y)
+                    { return; }
+                    else
+                    {
+                        carrierBox.Move(new Vector2(0, 100));
+                    }
+                }
+                previousKeyBoardState = keyboardstate;
             }
         }
+
     }
 }
 

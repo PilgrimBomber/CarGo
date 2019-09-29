@@ -14,8 +14,9 @@ namespace CarGo
     {
         GraphicsDeviceManager graphics;
         SpriteBatch spriteBatch;
-        Scene scene;
+        public Scene scene;
         MainMenu mainMenu;
+        ModifierMenu modifierMenu;
 
         private GameState gameState;
         public GameState GameState { get => gameState; set => gameState = value; }
@@ -49,8 +50,9 @@ namespace CarGo
         {
             // TODO: Add your initialization logic here
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
-            mainMenu = new MainMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content);
+            scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight));
+            mainMenu = new MainMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
+            modifierMenu = new ModifierMenu(spriteBatch, this);
 
             // Add a player for each connected Controller
             int playercount = 0;
@@ -129,8 +131,10 @@ namespace CarGo
                 case GameState.MenuPause:
                     break;
                 case GameState.MenuMain:
-                    if (mainMenu.Update(GameState) != gameState) //if gamestate is changed in Menu 
-                        GameState = mainMenu.Update(GameState); //update gamestate                   
+                    mainMenu.Update();               
+                    break;
+                case GameState.MenuModificationSelection:
+                    modifierMenu.Update();
                     break;
                 case GameState.Exit:
                     Exit();
@@ -160,7 +164,9 @@ namespace CarGo
                 case GameState.MenuMain:
                     mainMenu.Draw();
                     break;
-                
+                case GameState.MenuModificationSelection:
+                    modifierMenu.Draw();
+                    break;
                 default: break; ;
             }
             

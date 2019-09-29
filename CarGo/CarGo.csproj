@@ -85,7 +85,8 @@
     <Compile Include="Entities\WorldObjects\Rock.cs" />
     <Compile Include="HUD.cs" />
     <Compile Include="FontCollection.cs" />
-    <Compile Include="MainMenu.cs" />
+    <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\ModifierMenu.cs" />
     <Compile Include="WorldObjectHandling.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Geometry.cs" />
