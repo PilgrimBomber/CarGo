@@ -42,9 +42,9 @@ namespace CarGo
             SoundCollection.getInstance().LoadSounds(content);
             //textureCollection = new TextureCollection(content);
             TextureCollection.getInstance().loadTextures(content);
-            camera = new Camera(spriteBatch,screenSize, cargos,players,enemies,worldObjects, activeAbilities);
             collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects, activeAbilities);
             levelControl = new LevelControl(this,content, cargos);
+            camera = new Camera(spriteBatch, screenSize, cargos, players, enemies, worldObjects, activeAbilities);
             worldObjectHandling = new WorldObjectHandling(this, worldObjects);
             tilemap = new Tilemap(1, content);
             

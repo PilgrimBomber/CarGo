@@ -25,7 +25,7 @@ namespace CarGo
 
             textureShockwave = TextureCollection.getInstance().GetTexture(TextureType.Active_Shockwave);
             soundShockWave = SoundCollection.getInstance().GetSoundInstance(SoundType.Shockwave);
-            soundShockWave.Volume = 0.5f;
+            soundShockWave.Volume = 0.2f;
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(textureShockwave.Width / 2, textureShockwave.Height / 2));
             // animation = new Animation(AnimationType.Explosion, new RotRectangle(hitbox.RotationRad, hitbox.Center /* -offset */, new Vector2(textureExplosion.Width / 2, textureExplosion.Height / 2)));
         }

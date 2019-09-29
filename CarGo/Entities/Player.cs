@@ -101,7 +101,7 @@ namespace CarGo
             scene.addActiveAbility(active);
 
             
-            carFront = new CarFront(frontType, hitbox);
+            carFront = new CarFront(frontType, carType, hitbox);
             carFrontType = frontType;
             noDamage = false;
             idleCounter = 0;

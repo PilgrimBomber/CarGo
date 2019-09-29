@@ -19,6 +19,7 @@ namespace CarGo
         private List<ActiveAbility> activeAbilities;
         private GraphicsDevice graphicsDevice;
         private Vector2 screenSize;
+        private Texture2D cargoLifeBar;
 
         public HUD(SpriteBatch spriteBatch, List<Player> players, List<Cargo> cargos, List<ActiveAbility> activeAbilities, Vector2 screenSize)
         {
@@ -27,21 +28,28 @@ namespace CarGo
             this.activeAbilities = activeAbilities;
             this.screenSize = screenSize;
             graphicsDevice = spriteBatch.GraphicsDevice;
+            cargoLifeBar = new Texture2D(graphicsDevice, 1, 1);
+        }
+
+        public void Update()
+        {
+            cargoLifeBar = createLifebar(cargoLifeBar, 1380, 20, cargos[0].getPercentLife(), 2);
         }
 
         public void Draw(SpriteBatch spriteBatch)
         {
-            spriteBatch.Draw(createLifebar(1380, 20, cargos[0].getPercentLife(), 2), new Vector2 (300 ,30), Color.White );
+            spriteBatch.Draw(cargoLifeBar, new Vector2 (300 ,30), Color.White );
         }
 
-        private Texture2D createLifebar(int width, int height, float percentLife)
+        private Texture2D createLifebar(Texture2D texture, int width, int height, float percentLife)
         {
-            return createLifebar(width, height, percentLife, 1);
+            return createLifebar(texture ,width, height, percentLife, 1);
         }
 
-        private Texture2D createLifebar(int width, int height, float percentLife, int borderThickness)
+        private Texture2D createLifebar(Texture2D lifeBar, int width, int height, float percentLife, int borderThickness)
         {
-            Texture2D lifeBar = new Texture2D(graphicsDevice, width, height);
+            if (lifeBar == null) lifeBar = new Texture2D(graphicsDevice, width, height);
+            else if(lifeBar.Width != width || lifeBar.Height != height) lifeBar = new Texture2D(graphicsDevice, width, height);
             Color[] data = new Color[width * height];
             int redPart = (int)((width - borderThickness * 2) * percentLife / 100);
 

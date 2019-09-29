@@ -40,6 +40,7 @@ namespace CarGo
 
         public void Update()
         {
+            hud.Update();
             List<Vector2> centers=new List<Vector2>();
             foreach (Cargo cargo in cargos)
             {

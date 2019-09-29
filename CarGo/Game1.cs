@@ -54,17 +54,39 @@ namespace CarGo
 
             // Add a player for each connected Controller
             int playercount = 0;
-            for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+            //for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+            //{
+            //    if (GamePad.GetCapabilities(index).IsConnected)
+            //    {
+            //        scene.addPlayer(index, new Vector2(400 + (int)index * 100, 400),CarType.Small, CarFrontType.Bumper, AbilityType.RocketLauncher);
+            //        playercount++;
+            //    }
+            //}
+            if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
             {
-                if (GamePad.GetCapabilities(index).IsConnected)
-                {
-                    scene.addPlayer(index, new Vector2(400 + (int)index * 100, 400),CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
-                    playercount++;
-                }
+                scene.addPlayer(PlayerIndex.One, new Vector2(400 + (int)PlayerIndex.One * 100, 400), CarType.Medium, CarFrontType.Spikes, AbilityType.RocketLauncher);
+                playercount++;
             }
+            if (GamePad.GetCapabilities(PlayerIndex.Two).IsConnected)
+            {
+                scene.addPlayer(PlayerIndex.Two, new Vector2(400 + (int)PlayerIndex.Two * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.RocketLauncher);
+                playercount++;
+            }
+            if (GamePad.GetCapabilities(PlayerIndex.Three).IsConnected)
+            {
+                scene.addPlayer(PlayerIndex.Three, new Vector2(400 + (int)PlayerIndex.Three * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.RocketLauncher);
+                playercount++;
+            }
+            if (GamePad.GetCapabilities(PlayerIndex.Four).IsConnected)
+            {
+                scene.addPlayer(PlayerIndex.Four, new Vector2(400 + (int)PlayerIndex.Four * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.RocketLauncher);
+                playercount++;
+            }
+
+
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
-            if(playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Big, CarFrontType.Big_Spikes, AbilityType.TrapLauncher);
-           
+            if (playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Big, CarFrontType.Bumper, AbilityType.TrapLauncher);
+            
           // scene.addPlayer(PlayerIndex.Four, new Vector2(800, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
         }
 

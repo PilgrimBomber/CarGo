@@ -24,11 +24,9 @@ namespace CarGo
                 {
                     switch (fontTyp)
                     {
-
                         case Fonttyp.MainMenuButtonFont:
                             fonts.Add(content.Load<SpriteFont>("fonts/Arial"));
                             break;
-                   
                     }
                 }
             }

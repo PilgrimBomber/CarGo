@@ -155,7 +155,11 @@ namespace CarGo
                 {
                     if (CheckCollision(worldObjects[i], activeAbilities[j]))
                     {
-                        if (activeAbilities[j].isActive) activeAbilities[j].Collide(worldObjects[i], EntityCategory.WorldObject);
+                        if (activeAbilities[j].isActive)
+                        {
+                            activeAbilities[j].Collide(worldObjects[i], EntityCategory.WorldObject);
+                            worldObjects[i].Collide(activeAbilities[j], EntityCategory.ActiveAbility);
+                        }
                     }
                 }
 

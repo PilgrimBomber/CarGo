@@ -35,10 +35,10 @@ namespace CarGo
         {
             if(!isActivated)
             {
-                //if (entity.GetType() == typeof(RocketLauncher)) 
-                // {
-                //    isExploded = true;
-                // }
+                if (entityCategory== EntityCategory.ActiveAbility) 
+                 {
+                    isExploded = true;
+                 }
 
                 isActivated = true;
             }
