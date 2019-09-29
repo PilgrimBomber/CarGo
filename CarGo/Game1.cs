@@ -2,6 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
+using Microsoft.Xna.Framework.Audio;
 
 namespace CarGo
 {
@@ -17,6 +18,7 @@ namespace CarGo
         public Scene scene;
         MainMenu mainMenu;
         ModifierMenu modifierMenu;
+        SoundEffectInstance musicMenu;
 
         private GameState gameState;
         public GameState GameState { get => gameState; set => gameState = value; }
@@ -37,7 +39,7 @@ namespace CarGo
             graphics.ToggleFullScreen();
 #endif
             Content.RootDirectory = "Content";
-            GameState = GameState.MenuMain;
+            GameState = GameState.Playing;
         }
 
         /// <summary>
@@ -85,8 +87,11 @@ namespace CarGo
                 playercount++;
             }
 
-            
 
+            musicMenu = SoundCollection.getInstance().GetSoundInstance(SoundType.Menu_Music);
+            musicMenu.IsLooped = true;
+            musicMenu.Volume = 0.5f;
+            musicMenu.Play();
 
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
             if (playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Big, CarFrontType.Bumper, AbilityType.RocketLauncher);
@@ -131,6 +136,7 @@ namespace CarGo
                     scene.Update(gameTime);
                     break;
                 case GameState.MenuPause:
+
                     break;
                 case GameState.MenuMain:
                     mainMenu.Update();               

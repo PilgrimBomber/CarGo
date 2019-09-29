@@ -68,6 +68,18 @@
 /processorParam:Quality=Best
 /build:sounds/Flamethrower.wav
 
+#begin sounds/Lone_Wolf.mp3
+/importer:Mp3Importer
+/processor:SongProcessor
+/processorParam:Quality=Best
+/build:sounds/Lone_Wolf.mp3
+
+#begin sounds/Lone_Wolf.wav
+/importer:WavImporter
+/processor:SoundEffectProcessor
+/processorParam:Quality=Best
+/build:sounds/Lone_Wolf.wav
+
 #begin sounds/RocketLauncher_EXPLOSION!!!.wav
 /importer:WavImporter
 /processor:SoundEffectProcessor

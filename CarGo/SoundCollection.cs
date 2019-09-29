@@ -25,7 +25,8 @@ namespace CarGo
         RocketLauncher_Explosion,
         RocketLauncher_Launch,
         Shockwave,
-        Trap_Launch
+        Trap_Launch,
+        Menu_Music
     }
     public class SoundCollection
     {
@@ -79,6 +80,9 @@ namespace CarGo
                             break;
                     case SoundType.Trap_Launch:
                         soundEffect.Add(content.Load<SoundEffect>("sounds/Trap_Launch"));
+                        break;
+                    case SoundType.Menu_Music:
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/Lone_Wolf"));
                         break;
                 }
             }
