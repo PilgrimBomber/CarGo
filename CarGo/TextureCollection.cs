@@ -117,7 +117,7 @@ namespace CarGo
                         case TextureType.Menu_Select_Flamethrower: textures.Add(content.Load<Texture2D>("textures/Menu_Select_Flamethrower")); break;
                         case TextureType.Menu_Select_Shockwave: textures.Add(content.Load<Texture2D>("textures/Menu_Select_Shockwave")); break;
                         case TextureType.Menu_Selection_BoxBox: textures.Add(content.Load<Texture2D>("textures/Menu_Selection_BoxBox")); break;
-                        case TextureType.CreditScreen: textures.Add(content.Load<Texture2D>("textures/Menu_Controls")); break;
+                        case TextureType.CreditScreen: textures.Add(content.Load<Texture2D>("textures/CreditScreen")); break;
 
                     }
                 }
