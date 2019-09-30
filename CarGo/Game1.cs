@@ -19,7 +19,7 @@ namespace CarGo
         MainMenu mainMenu;
         PostGameMenu postGameMenu;
         MenuControls menuControls;
-        ModifierMenu modifierMenu;
+        public ModifierMenu modifierMenu;
         SoundEffectInstance musicMenu;
 
         private GameState gameState;

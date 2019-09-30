@@ -69,7 +69,8 @@ namespace CarGo
 
                 if (state.IsButtonUp(Buttons.A) && previousState.IsButtonDown(Buttons.A))
                 {
-                    
+                    theGame.scene.Reset();
+                    theGame.modifierMenu.Reset();
                     theGame.GameState = GameState.MenuMain;
                 }
 
@@ -81,6 +82,8 @@ namespace CarGo
 
                 if (keyboardstate.IsKeyUp(Keys.Enter) && previousKeyBoardState.IsKeyDown(Keys.Enter))
                 {
+                    theGame.scene.Reset();
+                    theGame.modifierMenu.Reset();
                     theGame.GameState = GameState.MenuMain;
                 }
 

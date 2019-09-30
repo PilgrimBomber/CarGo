@@ -55,7 +55,7 @@ namespace CarGo
 
         }
 
-        public void Reset(SpriteBatch spriteBatch, Vector2 screenSize)
+        public void Reset()
         {
             entities = new List<Entity>();
             deadEntities = new List<Entity>();
@@ -66,7 +66,7 @@ namespace CarGo
             activeAbilities = new List<ActiveAbility>();
             collisionCheck = new CollisionCheck(cargos, players, enemies, worldObjects, activeAbilities);
             levelControl = new LevelControl(this, content, cargos);
-            camera = new Camera(spriteBatch, screenSize, cargos, players, enemies, worldObjects, activeAbilities);
+            camera.Reset(cargos,players,enemies,worldObjects,activeAbilities);
             worldObjectHandling = new WorldObjectHandling(this, worldObjects);
             tilemap = new Tilemap(1, content);
             //enemyAI = new EnemyAI(tilemap, enemies, cargo);

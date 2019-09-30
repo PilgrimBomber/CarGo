@@ -38,6 +38,15 @@ namespace CarGo
             this.activeAbilities = activeAbilities;
         }
 
+        public void Reset(List<Cargo> cargos, List<Player> players, List<BaseEnemy> enemies, List<WorldObject> worldObjects, List<ActiveAbility> activeAbilities)
+        {
+            this.cargos = cargos;
+            this.players = players;
+            this.enemies = enemies;
+            this.worldObjects = worldObjects;
+            this.activeAbilities = activeAbilities;
+        }
+
         public void Update()
         {
             hud.Update();

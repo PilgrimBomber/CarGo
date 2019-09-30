@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    class ModifierMenu
+    public class ModifierMenu
     {
         private List<RotRectangle> playerBoxes;
         private List<RotRectangle> selectionDescription;
@@ -103,6 +103,14 @@ namespace CarGo
             soundHorn = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Horn);
 
 
+        }
+
+        public void Reset()
+        {
+            for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+            {
+                currentStage[(int)index] = 0;
+            }
         }
 
         public void Draw()
