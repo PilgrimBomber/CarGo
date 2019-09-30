@@ -45,6 +45,7 @@ namespace CarGo
             this.enemies = enemies;
             this.worldObjects = worldObjects;
             this.activeAbilities = activeAbilities;
+            hud = new HUD(spriteBatch, players, cargos, activeAbilities, screenSize);
         }
 
         public void Update()
