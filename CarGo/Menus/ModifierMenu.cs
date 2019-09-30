@@ -331,12 +331,15 @@ namespace CarGo
                         {
                             case 0:
                                 if ((int)carTypes[(int)index] > 0) carTypes[(int)index]--;
+                                else carTypes[(int)index] = CarType.Big;
                                 break;
                             case 1:
                                 if ((int)frontTypes[(int)index] > 0) frontTypes[(int)index]--;
+                                else frontTypes[(int)index] = CarFrontType.Bumper;
                                 break;
                             case 2:
                                 if ((int)abilityTypes[(int)index] > 0) abilityTypes[(int)index]--;
+                                else abilityTypes[(int)index] = AbilityType.TrapLauncher;
                                 break;
                         }
                     }
@@ -346,12 +349,15 @@ namespace CarGo
                         {
                             case 0:
                                 if (carTypes[(int)index] != CarType.Big) carTypes[(int)index]++;
+                                else carTypes[(int)index] = CarType.Small;
                                 break;
                             case 1:
                                 if (frontTypes[(int)index] != CarFrontType.Bumper) frontTypes[(int)index]++;
+                                else frontTypes[(int)index] = CarFrontType.Spikes;
                                 break;
                             case 2:
                                 if (abilityTypes[(int)index] != AbilityType.TrapLauncher) abilityTypes[(int)index]++;
+                                else abilityTypes[(int)index] = AbilityType.Flamethrower;
                                 break;
                         }
                     }
@@ -365,6 +371,12 @@ namespace CarGo
                     {
                         if (currentStage[(int)index] > 0) currentStage[(int)index]--;
                     }
+
+                    if(state.IsButtonDown(Buttons.Back) && previousState[(int)index].IsButtonUp(Buttons.Back))
+                    {
+                        theGame.GameState = GameState.MenuMain;
+                    }
+
                     previousState[(int)index] = state;
                 }
 
@@ -372,6 +384,7 @@ namespace CarGo
 
 
             }
+
 
             
             //if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)

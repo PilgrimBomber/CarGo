@@ -19,6 +19,7 @@ namespace CarGo
         Car_Boost,
         Car_Horn,
         Car_Horn2,
+        Car_Horn3,
         Enemy_Hit,
         Enemy_Growl,
         FlameThrower,
@@ -59,6 +60,9 @@ namespace CarGo
                         break;
                     case SoundType.Car_Horn2:
                         soundEffect.Add(content.Load<SoundEffect>("sounds/Car_Horn2"));
+                        break;
+                    case SoundType.Car_Horn3:
+                        soundEffect.Add(content.Load<SoundEffect>("sounds/Car_Horn3"));
                         break;
                     case SoundType.Enemy_Hit:
                         soundEffect.Add(content.Load<SoundEffect>("sounds/Enemy_Monster_Hit"));

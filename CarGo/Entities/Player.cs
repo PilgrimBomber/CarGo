@@ -31,6 +31,7 @@ namespace CarGo
         private SoundEffectInstance soundBoost;
         private SoundEffectInstance soundHorn;
         private SoundEffectInstance soundHorn2;
+        private SoundEffectInstance soundHorn3;
 
         //public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float TurnRate { get => turnRate; set => turnRate = value; }
@@ -50,9 +51,11 @@ namespace CarGo
             soundBoost = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Boost);
             soundBoost.Volume = 0.1f;
             soundHorn = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Horn);
-            soundHorn.Volume = 0.3f;
+            soundHorn.Volume = 0.6f;
             soundHorn2 = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Horn2);
             soundHorn2.Volume = 0.2f;
+            soundHorn3 = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Horn3);
+            soundHorn3.Volume = 0.4f;
             this.carType = carType;
             switch (carType)
             {
@@ -358,6 +361,7 @@ namespace CarGo
             {
                 case 1: soundHorn.Play(); break;
                 case 2: soundHorn2.Play(); break;
+                case 3: soundHorn3.Play(); break;
             }
             
         }
