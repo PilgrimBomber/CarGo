@@ -21,7 +21,7 @@ namespace CarGo
         {
             damage = 400;
             resetActivationCooldownTimer = 6;
-            resetLivingTimer = 3;
+            resetLivingTimer = 4;
             damagePerTick = (int)(damage / (resetLivingTimer* 4));
             
             texture = TextureCollection.getInstance().GetTexture(TextureType.Active_FlameThrower);
