@@ -47,7 +47,8 @@ namespace CarGo
         MainMenuCarrier,
         Menu_VictoryScreen,
         Menu_DefeatScreen,
-        Menu_Controls
+        Menu_Controls,
+        CreditScreen
     }
 
     public class TextureCollection
@@ -108,6 +109,7 @@ namespace CarGo
                         case TextureType.Menu_VictoryScreen: textures.Add(content.Load<Texture2D>("textures/Menu_VictoryScreen")); break;
                         case TextureType.Menu_DefeatScreen: textures.Add(content.Load<Texture2D>("textures/Menu_DefeatScreen")); break;
                         case TextureType.Menu_Controls: textures.Add(content.Load<Texture2D>("textures/Menu_Controls")); break;
+                        case TextureType.CreditScreen: textures.Add(content.Load<Texture2D>("textures/Menu_Controls")); break;
 
                     }
                 }

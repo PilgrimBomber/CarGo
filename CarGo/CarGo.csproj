@@ -85,6 +85,7 @@
     <Compile Include="Entities\WorldObjects\Rock.cs" />
     <Compile Include="HUD.cs" />
     <Compile Include="FontCollection.cs" />
+    <Compile Include="Menus\CreditScreen.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\MenuControls.cs" />
     <Compile Include="Menus\ModifierMenu.cs" />

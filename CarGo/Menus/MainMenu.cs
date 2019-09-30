@@ -128,10 +128,11 @@ namespace CarGo
                 }
 
                 //Credits (non existent atm)
-                //if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[2]) == true)
-                //{
-                //    return stateofgame = GameState.Playing;
-                //}
+                if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[2]) == true)
+                {
+                    theGame.GameState = GameState.CreditScreen;
+                }
+
                 //Exit
                 if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[3]) == true)
                 {

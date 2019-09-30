@@ -10,7 +10,7 @@ namespace CarGo
     /// This is the main type for your game.
     /// </summary>
     
-    public enum GameState {Playing,MenuMain, MenuModificationSelection,MenuPause,MenuLost,MenuWon, LevelEditor, Exit, MenuControls}
+    public enum GameState {Playing,MenuMain, MenuModificationSelection,MenuPause,MenuLost,MenuWon, LevelEditor, Exit, MenuControls, CreditScreen}
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -19,6 +19,7 @@ namespace CarGo
         MainMenu mainMenu;
         PostGameMenu postGameMenu;
         MenuControls menuControls;
+        CreditScreen creditScreen;
         public ModifierMenu modifierMenu;
         SoundEffectInstance musicMenu;
 
@@ -59,6 +60,7 @@ namespace CarGo
             postGameMenu = new PostGameMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
             modifierMenu = new ModifierMenu(spriteBatch, this);
             menuControls = new MenuControls(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
+            creditScreen = new CreditScreen(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
 
             // Add a player for each connected Controller
             int playercount = 0;
@@ -160,6 +162,9 @@ namespace CarGo
                 case GameState.MenuControls:
                     menuControls.Update();
                     break;
+                case GameState.CreditScreen:
+                    creditScreen.Update();
+                    break;
                 default:break;
             }
         }
@@ -193,6 +198,9 @@ namespace CarGo
                     break;
                 case GameState.MenuControls:
                     menuControls.Draw();
+                    break;
+                case GameState.CreditScreen:
+                    creditScreen.Draw();
                     break;
                 default: break; ;
             }
