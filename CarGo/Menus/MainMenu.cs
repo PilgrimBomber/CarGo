@@ -74,7 +74,7 @@ namespace CarGo
             spriteBatch.Draw(carrierTexture, carrierBoxConers[2], Color.Cornsilk);
             //spriteBatch.Draw(carTexture, carBox.Center - carBox.Offset, null, Color.Cornsilk, carBox.RotationRad, carBox.Offset, 1.0f, SpriteEffects.None, 0f);
 
-            //Draw Buttons
+            //Draw Button
             int i = 0;
             foreach(RotRectangle rotRectangle in ButtonHitboxes)
             {
@@ -119,7 +119,7 @@ namespace CarGo
                 if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[0]) == true)
                 {
                     soundHorn.Play();
-                    theGame.GameState = GameState.Playing;
+                    theGame.GameState = GameState.MenuModificationSelection;
                 }
                 //Options (Non existent atm)
                 if (CollisionCheck.CheckCollision(carrierBox, ButtonHitboxes[1]) == true)

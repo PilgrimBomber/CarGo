@@ -19,7 +19,8 @@ namespace CarGo
         private List<RotRectangle> frontSelectionBoxes; //for drawing
         private List<RotRectangle> abilitiesSelectionBoxes; //for drawing 
         //List Stage: if all 3 then all ready
-        //List Player: which is connected 
+        //List Player: which is connected
+        private int[] currentStage;
         private bool[] gamePadConnected;
         private CarType[] carTypes;
         private CarFrontType[] frontTypes;
@@ -31,7 +32,7 @@ namespace CarGo
         private Vector2[] boxConers;
         private Game1 theGame;
         private KeyboardState previousKeyBoardState;
-        private GamePadState previousState;
+        private GamePadState[] previousState;
         private SoundEffectInstance soundHorn;
 
         public ModifierMenu(SpriteBatch spriteBatchInit, Game1 game )
@@ -41,6 +42,16 @@ namespace CarGo
 
             //GamePads connected
             gamePadConnected = new bool[4];
+            currentStage = new int[4];
+            for (int i = 0; i < 4; i++)
+            {
+                if(i==0) currentStage[i] = -1;
+                else currentStage[i] = 0;
+            }
+            carTypes = new CarType[4];
+            frontTypes = new CarFrontType[4];
+            abilityTypes = new AbilityType[4];
+            previousState = new GamePadState[4];
             for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
             {
                 if (GamePad.GetCapabilities(index).IsConnected)
@@ -159,32 +170,32 @@ namespace CarGo
             foreach (RotRectangle rotRectangle in carSelectionBoxes)
             {
                 //spriteBatch.DrawString(spriteFont, "Play", rotRectangle.Center, Color.Black);
-                switch (i)
+                switch (carTypes[i])
                 {
-                    case 0:
+                    case CarType.Medium:
                         boxConers = rotRectangle.Corners;
                         showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Medium); ;
                         spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
                         i++;
                         break;
-                    case 1:
+                    case CarType.Small:
                         boxConers = rotRectangle.Corners;
                         showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Small); ;
                         spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
                         i++;
                         break;
-                    case 2:
+                    case CarType.Big:
                         boxConers = rotRectangle.Corners;
                         showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Big); ;
                         spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
                         i++;
                         break;
-                    case 3:
-                        boxConers = rotRectangle.Corners;
-                        showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Cargo); ;
-                        spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                        i++;
-                        break;
+                    //case 3:
+                    //    boxConers = rotRectangle.Corners;
+                    //    showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Cargo); ;
+                    //    spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
+                    //    i++;
+                    //    break;
                 }
             }
 
@@ -194,32 +205,32 @@ namespace CarGo
             foreach (RotRectangle rotRectangle in frontSelectionBoxes)
                 {
                     //spriteBatch.DrawString(spriteFont, "Play", rotRectangle.Center, Color.Black);
-                    switch (i)
+                    switch (frontTypes[i])
                     {
-                        case 0:
+                        case CarFrontType.Bumper:
                             boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Bumper); ;
                             spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
                             i++;
                             break;
-                        case 1:
+                        case CarFrontType.Spikes:
                             boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Big_Spikes); ;
                             spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
                             i++;
                             break;
-                        case 2:
-                            boxConers = rotRectangle.Corners;
-                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Spikes); ;
-                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                            i++;
-                            break;
-                        case 3:
-                            boxConers = rotRectangle.Corners;
-                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Big_Bumper); ;
-                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                            i++;
-                            break;
+                        //case 2:
+                        //    boxConers = rotRectangle.Corners;
+                        //    showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Spikes); ;
+                        //    spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
+                        //    i++;
+                        //    break;
+                        //case 3:
+                        //    boxConers = rotRectangle.Corners;
+                        //    showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Big_Bumper); ;
+                        //    spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
+                        //    i++;
+                        //    break;
                     }
                 }
 
@@ -228,27 +239,27 @@ namespace CarGo
             foreach (RotRectangle rotRectangle in abilitiesSelectionBoxes)
                     {
                         //spriteBatch.DrawString(spriteFont, "Play", rotRectangle.Center, Color.Black);
-                        switch (i)
+                        switch (abilityTypes[i])
                         {
-                            case 0:
+                            case AbilityType.Flamethrower:
                                 boxConers = rotRectangle.Corners;
                                 showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_FlameThrower); ;
                                 spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
                                 i++;
                                 break;
-                            case 1:
+                            case AbilityType.RocketLauncher:
                                 boxConers = rotRectangle.Corners;
                                 showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher); ;
                                 spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
                                 i++;
                                 break;
-                            case 2:
+                            case AbilityType.Shockwave:
                                 boxConers = rotRectangle.Corners;
                                 showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_Shockwave); ;
                                 spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
                                 i++;
                                 break;
-                            case 3:
+                            case AbilityType.TrapLauncher:
                                 boxConers = rotRectangle.Corners;
                                 showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_Trap); ;
                                 spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
@@ -263,53 +274,135 @@ namespace CarGo
         public void Update()
         {
             this.Input();
+            if(CheckReady())
+            {
+                for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+                {
+                    if (gamePadConnected[(int)index])
+                    {
+                        theGame.scene.addPlayer(index, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index]);
+                        theGame.GameState = GameState.Playing;
+                    }
+                }
+            }
         }
 
         public void Input()
         {
 
-            if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
+            for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
             {
-                GamePadState state = GamePad.GetState(PlayerIndex.One);
+                
+                if (gamePadConnected[(int)index])
+                {
+                    GamePadState state = GamePad.GetState(index);
 
-                if (state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0)
-                {
-                    
-                }
-                if (state.ThumbSticks.Left.Y > 0f && previousState.ThumbSticks.Left.Y == 0)
-                {
-                    
-                }
-                //May go in the end
-                if (state.IsButtonDown(Buttons.B))
-                {
-                    soundHorn.Play();
-                    theGame.GameState = GameState.MenuMain;
-                }
-                previousState = state;
-            }
-            else //use Keyboard
-            {
-                KeyboardState keyboardstate = Keyboard.GetState();
-                //Up
-                if (keyboardstate.IsKeyDown(Keys.W) && previousKeyBoardState.IsKeyUp(Keys.W) || keyboardstate.IsKeyDown(Keys.Up) && previousKeyBoardState.IsKeyUp(Keys.Up))
-                {
-                    
+                    if (state.ThumbSticks.Left.X < 0f && previousState[(int)index].ThumbSticks.Left.X == 0)
+                    {
+
+                        switch(currentStage[(int)index])
+                        {
+                            case 0:
+                                if ((int)carTypes[(int)index] > 0) carTypes[(int)index]--;
+                                break;
+                            case 1:
+                                if ((int)frontTypes[(int)index] > 0) frontTypes[(int)index]--;
+                                break;
+                            case 2:
+                                if ((int)abilityTypes[(int)index] > 0) abilityTypes[(int)index]--;
+                                break;
+                        }
+                    }
+                    if (state.ThumbSticks.Left.X > 0f && previousState[(int)index].ThumbSticks.Left.X == 0)
+                    {
+                        switch (currentStage[(int)index])
+                        {
+                            case 0:
+                                if (carTypes[(int)index] != CarType.Big) carTypes[(int)index]++;
+                                break;
+                            case 1:
+                                if (frontTypes[(int)index] != CarFrontType.Bumper) frontTypes[(int)index]++;
+                                break;
+                            case 2:
+                                if (abilityTypes[(int)index] != AbilityType.TrapLauncher) abilityTypes[(int)index]++;
+                                break;
+                        }
+                    }
+
+                    if(state.IsButtonDown(Buttons.A) && previousState[(int)index].IsButtonUp(Buttons.A))
+                    {
+                        if (currentStage[(int)index] < 3) currentStage[(int)index]++;
+                    }
+
+                    if (state.IsButtonDown(Buttons.B) && previousState[(int)index].IsButtonUp(Buttons.B))
+                    {
+                        if (currentStage[(int)index] > 0) currentStage[(int)index]--;
+                    }
+                    previousState[(int)index] = state;
                 }
 
-                //Down
-                if (keyboardstate.IsKeyDown(Keys.S) && previousKeyBoardState.IsKeyUp(Keys.S) || keyboardstate.IsKeyDown(Keys.Down) && previousKeyBoardState.IsKeyUp(Keys.Down))
-                {
-                    
-                }
-                if (Keyboard.GetState().IsKeyDown(Keys.Back))
-                {
-                    soundHorn.Play();
-                    theGame.GameState = GameState.MenuMain;
-                }
-                previousKeyBoardState = keyboardstate;
+
+
+
             }
+
             
+            //if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
+            //{
+            //    GamePadState state = GamePad.GetState(PlayerIndex.One);
+
+            //    if (state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0)
+            //    {
+                    
+            //    }
+            //    if (state.ThumbSticks.Left.Y > 0f && previousState.ThumbSticks.Left.Y == 0)
+            //    {
+                    
+            //    }
+            //    //May go in the end
+            //    if (state.IsButtonDown(Buttons.B))
+            //    {
+            //        soundHorn.Play();
+            //        theGame.GameState = GameState.MenuMain;
+            //    }
+            //    previousState = state;
+            //}
+            //else //use Keyboard
+            //{
+            //    KeyboardState keyboardstate = Keyboard.GetState();
+            //    //Up
+            //    if (keyboardstate.IsKeyDown(Keys.W) && previousKeyBoardState.IsKeyUp(Keys.W) || keyboardstate.IsKeyDown(Keys.Up) && previousKeyBoardState.IsKeyUp(Keys.Up))
+            //    {
+                    
+            //    }
+
+            //    //Down
+            //    if (keyboardstate.IsKeyDown(Keys.S) && previousKeyBoardState.IsKeyUp(Keys.S) || keyboardstate.IsKeyDown(Keys.Down) && previousKeyBoardState.IsKeyUp(Keys.Down))
+            //    {
+                    
+            //    }
+            //    if (Keyboard.GetState().IsKeyDown(Keys.Back))
+            //    {
+            //        soundHorn.Play();
+            //        theGame.GameState = GameState.MenuMain;
+            //    }
+            //    previousKeyBoardState = keyboardstate;
+            //}
+            
+        }
+
+        public bool CheckReady()
+        {
+            bool ready = true;
+            for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+            {
+                if(gamePadConnected[(int)index] && currentStage[(int)index]!=3)
+                {
+                    ready = false;
+                }
+            }
+            return ready;
+
         }
     }
 }

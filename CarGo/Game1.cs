@@ -70,26 +70,26 @@ namespace CarGo
                     playercount++;
                 }
             }
-            if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
-            {
-                scene.addPlayer(PlayerIndex.One, new Vector2(400 + (int)PlayerIndex.One * 100, 400), CarType.Medium, CarFrontType.Spikes, AbilityType.TrapLauncher);
-                playercount++;
-            }
-            if (GamePad.GetCapabilities(PlayerIndex.Two).IsConnected)
-            {
-                scene.addPlayer(PlayerIndex.Two, new Vector2(400 + (int)PlayerIndex.Two * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.Shockwave);
-                playercount++;
-            }
-            if (GamePad.GetCapabilities(PlayerIndex.Three).IsConnected)
-            {
-                scene.addPlayer(PlayerIndex.Three, new Vector2(400 + (int)PlayerIndex.Three * 100, 400), CarType.Big, CarFrontType.Spikes, AbilityType.Flamethrower);
-                playercount++;
-            }
-            if (GamePad.GetCapabilities(PlayerIndex.Four).IsConnected)
-            {
-                scene.addPlayer(PlayerIndex.Four, new Vector2(400 + (int)PlayerIndex.Four * 100, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
-                playercount++;
-            }
+            //if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
+            //{
+            //    scene.addPlayer(PlayerIndex.One, new Vector2(400 + (int)PlayerIndex.One * 100, 400), CarType.Medium, CarFrontType.Spikes, AbilityType.TrapLauncher);
+            //    playercount++;
+            //}
+            //if (GamePad.GetCapabilities(PlayerIndex.Two).IsConnected)
+            //{
+            //    scene.addPlayer(PlayerIndex.Two, new Vector2(400 + (int)PlayerIndex.Two * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.Shockwave);
+            //    playercount++;
+            //}
+            //if (GamePad.GetCapabilities(PlayerIndex.Three).IsConnected)
+            //{
+            //    scene.addPlayer(PlayerIndex.Three, new Vector2(400 + (int)PlayerIndex.Three * 100, 400), CarType.Big, CarFrontType.Spikes, AbilityType.Flamethrower);
+            //    playercount++;
+            //}
+            //if (GamePad.GetCapabilities(PlayerIndex.Four).IsConnected)
+            //{
+            //    scene.addPlayer(PlayerIndex.Four, new Vector2(400 + (int)PlayerIndex.Four * 100, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
+            //    playercount++;
+            //}
 
 
             musicMenu = SoundCollection.getInstance().GetSoundInstance(SoundType.Menu_Music);

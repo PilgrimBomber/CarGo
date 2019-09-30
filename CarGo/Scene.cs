@@ -55,6 +55,25 @@ namespace CarGo
 
         }
 
+        public void Reset(SpriteBatch spriteBatch, Vector2 screenSize)
+        {
+            entities = new List<Entity>();
+            deadEntities = new List<Entity>();
+            players = new List<Player>();
+            enemies = new List<BaseEnemy>();
+            worldObjects = new List<WorldObject>();
+            cargos = new List<Cargo>();
+            activeAbilities = new List<ActiveAbility>();
+            collisionCheck = new CollisionCheck(cargos, players, enemies, worldObjects, activeAbilities);
+            levelControl = new LevelControl(this, content, cargos);
+            camera = new Camera(spriteBatch, screenSize, cargos, players, enemies, worldObjects, activeAbilities);
+            worldObjectHandling = new WorldObjectHandling(this, worldObjects);
+            tilemap = new Tilemap(1, content);
+            //enemyAI = new EnemyAI(tilemap, enemies, cargo);
+            enemyAI = new EnemyAI(worldObjects, enemies, cargos);
+        }
+
+
         private void RemoveDeadEntities()
         {
             foreach (Entity entity in deadEntities)
