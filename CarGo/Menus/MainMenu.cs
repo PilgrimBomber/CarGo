@@ -69,10 +69,10 @@ namespace CarGo
 
             //Draw Background and Selection
             //spriteBatch.Draw(texture, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
-            spriteBatch.Draw(MainMenuBackground, new Vector2(0, 0), Color.Cornsilk);
+            spriteBatch.Draw(MainMenuBackground, new Vector2(0, 0), Color.White);
             carrierBoxConers = carrierBox.Corners;
-            spriteBatch.Draw(carrierTexture, carrierBoxConers[2], Color.Cornsilk);
-            //spriteBatch.Draw(carTexture, carBox.Center - carBox.Offset, null, Color.Cornsilk, carBox.RotationRad, carBox.Offset, 1.0f, SpriteEffects.None, 0f);
+            spriteBatch.Draw(carrierTexture, carrierBoxConers[2], Color.White);
+            //spriteBatch.Draw(carTexture, carBox.Center - carBox.Offset, null, Color.White, carBox.RotationRad, carBox.Offset, 1.0f, SpriteEffects.None, 0f);
 
             //Draw Button
             int i = 0;

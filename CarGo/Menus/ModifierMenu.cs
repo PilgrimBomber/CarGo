@@ -26,19 +26,20 @@ namespace CarGo
         private CarFrontType[] frontTypes;
         private AbilityType[] abilityTypes; 
         private Texture2D showSelectionTexture;
-        private Texture2D testing;
+        private Texture2D background;
         private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
         private Vector2[] boxConers;
         private Game1 theGame;
-        private KeyboardState previousKeyBoardState;
         private GamePadState[] previousState;
         private SoundEffectInstance soundHorn;
-
+        private Texture2D selectionBoxBox;
         public ModifierMenu(SpriteBatch spriteBatchInit, Game1 game )
         {
             spriteBatch = spriteBatchInit;
             theGame = game;
+            background = TextureCollection.getInstance().GetTexture(TextureType.Menu_Background);
+            selectionBoxBox = TextureCollection.getInstance().GetTexture(TextureType.Menu_Selection_BoxBox);
 
             //GamePads connected
             gamePadConnected = new bool[4];
@@ -116,36 +117,37 @@ namespace CarGo
         public void Draw()
         {
             spriteBatch.Begin();
-
+            spriteBatch.Draw(background, new Vector2(0,0), Color.White);
             int i = 0;
 
             //Player 
             foreach (RotRectangle rotRectangle in playerBoxes)
             {
                 //spriteBatch.DrawString(spriteFont, "Play", rotRectangle.Center, Color.Black);
-                switch (i)
+                if(gamePadConnected[i])
                 {
-                    case 0:
-                        boxConers = rotRectangle.Corners;
-                        spriteBatch.DrawString(spriteFont, "Player 1", boxConers[2], Color.Blue);   
-                        i++;
-                        break;
-                    case 1:
-                        boxConers = rotRectangle.Corners;
-                        spriteBatch.DrawString(spriteFont, "Player 2", boxConers[2], Color.Red);   
-                        i++;
-                        break;
-                    case 2:
-                        boxConers = rotRectangle.Corners;
-                        spriteBatch.DrawString(spriteFont, "Player 3", boxConers[2], Color.Green);   
-                        i++;
-                        break;
-                    case 3:
-                        boxConers = rotRectangle.Corners;
-                        spriteBatch.DrawString(spriteFont, "Player 4", boxConers[2], Color.Pink);   
-                        i++;
-                        break;
+                    switch (i)
+                    {
+                        case 0:
+                            boxConers = rotRectangle.Corners;
+                            spriteBatch.DrawString(spriteFont, "Player 1", boxConers[2], Color.Blue);
+                            break;
+                        case 1:
+                            boxConers = rotRectangle.Corners;
+                            spriteBatch.DrawString(spriteFont, "Player 2", boxConers[2], Color.Red);
+                            break;
+                        case 2:
+                            boxConers = rotRectangle.Corners;
+                            spriteBatch.DrawString(spriteFont, "Player 3", boxConers[2], Color.Green);
+                            break;
+                        case 3:
+                            boxConers = rotRectangle.Corners;
+                            spriteBatch.DrawString(spriteFont, "Player 4", boxConers[2], Color.Pink);
+                            break;
+                    }
                 }
+                i++;
+                
             }
 
             //Description 
@@ -154,23 +156,21 @@ namespace CarGo
             {
                 //spriteBatch.DrawString(spriteFont, "Play", rotRectangle.Center, Color.Black);
                 switch (i)
-                {
-                    case 0:
-                        boxConers = rotRectangle.Corners;
-                        spriteBatch.DrawString(spriteFont, "Car Type", boxConers[2], Color.Black);
-                        i++;
-                        break;
-                    case 1:
-                        boxConers = rotRectangle.Corners;
-                        spriteBatch.DrawString(spriteFont, "Front", boxConers[2], Color.Black);
-                        i++;
-                        break;
-                    case 2:
-                        boxConers = rotRectangle.Corners;
-                        spriteBatch.DrawString(spriteFont, "Abilities", boxConers[2], Color.Black);
-                        i++;
-                        break;
-                }
+                    {
+                        case 0:
+                            boxConers = rotRectangle.Corners;
+                            spriteBatch.DrawString(spriteFont, "Car Type", boxConers[2], Color.Black);
+                            break;
+                        case 1:
+                            boxConers = rotRectangle.Corners;
+                            spriteBatch.DrawString(spriteFont, "Front", boxConers[2], Color.Black);
+                            break;
+                        case 2:
+                            boxConers = rotRectangle.Corners;
+                            spriteBatch.DrawString(spriteFont, "Abilities", boxConers[2], Color.Black);
+                            break;
+                    }
+                i++;
             }
 
             //Selection Car
@@ -178,103 +178,122 @@ namespace CarGo
             foreach (RotRectangle rotRectangle in carSelectionBoxes)
             {
                 //spriteBatch.DrawString(spriteFont, "Play", rotRectangle.Center, Color.Black);
-                switch (carTypes[i])
+                if (gamePadConnected[i])
                 {
-                    case CarType.Medium:
-                        boxConers = rotRectangle.Corners;
-                        showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Medium); ;
-                        spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                        i++;
-                        break;
-                    case CarType.Small:
-                        boxConers = rotRectangle.Corners;
-                        showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Small); ;
-                        spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                        i++;
-                        break;
-                    case CarType.Big:
-                        boxConers = rotRectangle.Corners;
-                        showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Big); ;
-                        spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                        i++;
-                        break;
-                    //case 3:
-                    //    boxConers = rotRectangle.Corners;
-                    //    showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Cargo); ;
-                    //    spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                    //    i++;
-                    //    break;
+
+                    switch (carTypes[i])
+                    {
+                        case CarType.Medium:
+                            boxConers = rotRectangle.Corners;
+                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Medium); ;
+                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.White);
+                            break;
+                        case CarType.Small:
+                            boxConers = rotRectangle.Corners;
+                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Small); ;
+                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.White);
+                            break;
+                        case CarType.Big:
+                            boxConers = rotRectangle.Corners;
+                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Big); ;
+                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.White);
+                            break;
+                    }
                 }
+                i++;
             }
 
             //Selection Front
             //TODO: Scale Texture spriteBatch.Draw(texture, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
             i = 0;
             foreach (RotRectangle rotRectangle in frontSelectionBoxes)
+            {
+                //spriteBatch.DrawString(spriteFont, "Play", rotRectangle.Center, Color.Black);
+
+                if (gamePadConnected[i])
                 {
-                    //spriteBatch.DrawString(spriteFont, "Play", rotRectangle.Center, Color.Black);
                     switch (frontTypes[i])
                     {
                         case CarFrontType.Bumper:
                             boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Bumper); ;
-                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                            i++;
+                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.White);
                             break;
                         case CarFrontType.Spikes:
                             boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Big_Spikes); ;
-                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                            i++;
+                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.White);
                             break;
-                        //case 2:
-                        //    boxConers = rotRectangle.Corners;
-                        //    showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Spikes); ;
-                        //    spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                        //    i++;
-                        //    break;
-                        //case 3:
-                        //    boxConers = rotRectangle.Corners;
-                        //    showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Big_Bumper); ;
-                        //    spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                        //    i++;
-                        //    break;
                     }
                 }
+                i++;
+            }
 
             //Selection Abilities
             i = 0;
             foreach (RotRectangle rotRectangle in abilitiesSelectionBoxes)
+            {
+                //spriteBatch.DrawString(spriteFont, "Play", rotRectangle.Center, Color.Black);
+
+                if (gamePadConnected[i])
+                {
+                    switch (abilityTypes[i])
                     {
-                        //spriteBatch.DrawString(spriteFont, "Play", rotRectangle.Center, Color.Black);
-                        switch (abilityTypes[i])
-                        {
-                            case AbilityType.Flamethrower:
-                                boxConers = rotRectangle.Corners;
-                                showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_FlameThrower); ;
-                                spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                                i++;
-                                break;
-                            case AbilityType.RocketLauncher:
-                                boxConers = rotRectangle.Corners;
-                                showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher); ;
-                                spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                                i++;
-                                break;
-                            case AbilityType.Shockwave:
-                                boxConers = rotRectangle.Corners;
-                                showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_Shockwave); ;
-                                spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                                i++;
-                                break;
-                            case AbilityType.TrapLauncher:
-                                boxConers = rotRectangle.Corners;
-                                showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_Trap); ;
-                                spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.Cornsilk);
-                                i++;
-                                break;
-                        }
+                        case AbilityType.Flamethrower:
+                            boxConers = rotRectangle.Corners;
+                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Menu_Select_Flamethrower); ;
+                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.White);
+                            break;
+                        case AbilityType.RocketLauncher:
+                            boxConers = rotRectangle.Corners;
+                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher); ;
+                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.White);
+                            break;
+                        case AbilityType.Shockwave:
+                            boxConers = rotRectangle.Corners;
+                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Menu_Select_Shockwave); ;
+                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.White);
+                            break;
+                        case AbilityType.TrapLauncher:
+                            boxConers = rotRectangle.Corners;
+                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_Trap); ;
+                            spriteBatch.Draw(showSelectionTexture, boxConers[2], Color.White);
+                            break;
                     }
+                }
+                i++;
+            }
+
+            
+            for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+            {
+                if (gamePadConnected[(int)index])
+                {
+                    switch(currentStage[(int)index])
+                    {
+                        case 0:
+                            spriteBatch.Draw(selectionBoxBox, carSelectionBoxes[(int)index].Corners[2] - new Vector2(Math.Abs(carSelectionBoxes[(int)index].Offset.X/2), Math.Abs(carSelectionBoxes[(int)index].Offset.Y)), Color.White);
+                            break;
+                        case 1:
+                            //boxConers = frontSelectionBoxes[(int)index].Corners;
+                            //spriteBatch.Draw(selectionBoxBox, boxConers[2], Color.White);
+                            spriteBatch.Draw(selectionBoxBox, frontSelectionBoxes[(int)index].Corners[2] - new Vector2(Math.Abs(frontSelectionBoxes[(int)index].Offset.X/2), Math.Abs(frontSelectionBoxes[(int)index].Offset.Y)), Color.White);
+
+                            break;
+                        case 2:
+                            //boxConers = abilitiesSelectionBoxes[(int)index].Corners;
+                            //spriteBatch.Draw(selectionBoxBox, boxConers[2], Color.White);
+                            spriteBatch.Draw(selectionBoxBox, abilitiesSelectionBoxes[(int)index].Corners[2] - new Vector2(Math.Abs(abilitiesSelectionBoxes[(int)index].Offset.X/2), Math.Abs(abilitiesSelectionBoxes[(int)index].Offset.Y/2)), Color.White);
+
+                            break;
+                        default:
+                            break;
+                    }
+                    
+                    
+                }
+            }
+
 
             spriteBatch.End();
         }
@@ -305,7 +324,7 @@ namespace CarGo
                 {
                     GamePadState state = GamePad.GetState(index);
 
-                    if (state.ThumbSticks.Left.X < 0f && previousState[(int)index].ThumbSticks.Left.X == 0)
+                    if ((state.ThumbSticks.Left.X < 0f && previousState[(int)index].ThumbSticks.Left.X == 0) || (state.IsButtonDown(Buttons.DPadLeft) && previousState[(int)index].IsButtonUp(Buttons.DPadLeft))) 
                     {
 
                         switch(currentStage[(int)index])
@@ -321,7 +340,7 @@ namespace CarGo
                                 break;
                         }
                     }
-                    if (state.ThumbSticks.Left.X > 0f && previousState[(int)index].ThumbSticks.Left.X == 0)
+                    if ((state.ThumbSticks.Left.X > 0f && previousState[(int)index].ThumbSticks.Left.X == 0) || (state.IsButtonDown(Buttons.DPadRight) && previousState[(int)index].IsButtonUp(Buttons.DPadRight)))
                     {
                         switch (currentStage[(int)index])
                         {

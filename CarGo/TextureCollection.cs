@@ -45,9 +45,13 @@ namespace CarGo
         Active_Trap,
         MainMenuBackground,
         MainMenuCarrier,
+        Menu_Background,
         Menu_VictoryScreen,
         Menu_DefeatScreen,
         Menu_Controls,
+        Menu_Select_Flamethrower,
+        Menu_Select_Shockwave,
+        Menu_Selection_BoxBox,
         CreditScreen
     }
 
@@ -104,11 +108,15 @@ namespace CarGo
                         case TextureType.WorldObject_SkullRip: textures.Add(content.Load<Texture2D>("textures/SkullRip")); break;
                         case TextureType.WorldObject_CactusCompletlyRip: textures.Add(content.Load<Texture2D>("textures/CactusCompletlyRip")); break;
                         case TextureType.WorldObject_Rock: textures.Add(content.Load<Texture2D>("textures/Rock")); break;
+                        case TextureType.Menu_Background: textures.Add(content.Load<Texture2D>("textures/Menu_Background")); break;
                         case TextureType.MainMenuBackground: textures.Add(content.Load<Texture2D>("textures/Splashscreen_0")); break;
                         case TextureType.MainMenuCarrier: textures.Add(content.Load<Texture2D>("textures/MainMenuCarrier_0")); break;
                         case TextureType.Menu_VictoryScreen: textures.Add(content.Load<Texture2D>("textures/Menu_VictoryScreen")); break;
                         case TextureType.Menu_DefeatScreen: textures.Add(content.Load<Texture2D>("textures/Menu_DefeatScreen")); break;
                         case TextureType.Menu_Controls: textures.Add(content.Load<Texture2D>("textures/Menu_Controls")); break;
+                        case TextureType.Menu_Select_Flamethrower: textures.Add(content.Load<Texture2D>("textures/Menu_Select_Flamethrower")); break;
+                        case TextureType.Menu_Select_Shockwave: textures.Add(content.Load<Texture2D>("textures/Menu_Select_Shockwave")); break;
+                        case TextureType.Menu_Selection_BoxBox: textures.Add(content.Load<Texture2D>("textures/Menu_Selection_BoxBox")); break;
                         case TextureType.CreditScreen: textures.Add(content.Load<Texture2D>("textures/Menu_Controls")); break;
 
                     }

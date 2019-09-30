@@ -17,8 +17,6 @@ namespace CarGo
         private SpriteBatch spriteBatch;
 
         private Game1 theGame;
-        private KeyboardState previousKeyBoardState;
-        private GamePadState previousState;
 
         public CreditScreen(SpriteBatch spriteBatchInit, Vector2 screenSize, ContentManager contentManager, Game1 game)
         {
