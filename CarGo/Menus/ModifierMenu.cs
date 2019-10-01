@@ -353,6 +353,7 @@ namespace CarGo
                     if (state.IsButtonDown(Buttons.B) && previousState[(int)index].IsButtonUp(Buttons.B))
                     {
                         if (currentStage[(int)index] > 0) currentStage[(int)index]--;
+                        else gamePadConnected[(int)index] = false;
                     }
 
                     if(state.IsButtonDown(Buttons.Back) && previousState[(int)index].IsButtonUp(Buttons.Back))
