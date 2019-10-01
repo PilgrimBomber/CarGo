@@ -46,21 +46,21 @@ namespace CarGo
             currentStage = new int[4];
             for (int i = 0; i < 4; i++)
             {
-                if(i==0) currentStage[i] = -1;
+                if(i==0) currentStage[i] = 0;
                 else currentStage[i] = 0;
             }
             carTypes = new CarType[4];
             frontTypes = new CarFrontType[4];
             abilityTypes = new AbilityType[4];
             previousState = new GamePadState[4];
-            for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
-            {
-                if (GamePad.GetCapabilities(index).IsConnected)
-                {
-                    gamePadConnected[(int)index] = true;
-                }
-                else { gamePadConnected[(int)index] = false; }
-            }
+            //for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+            //{
+            //    if (GamePad.GetCapabilities(index).IsConnected)
+            //    {
+            //        gamePadConnected[(int)index] = true;
+            //    }
+            //    else { gamePadConnected[(int)index] = false; }
+            //}
          
             //Player 1-4 font
             playerBoxes = new List<RotRectangle>();
@@ -154,15 +154,12 @@ namespace CarGo
                 switch (i)
                     {
                         case 0:
-                            boxConers = rotRectangle.Corners;
                             spriteBatch.DrawString(spriteFont, "Car Type", rotRectangle.Center, Color.Black);
                             break;
                         case 1:
-                            boxConers = rotRectangle.Corners;
                             spriteBatch.DrawString(spriteFont, "Front", rotRectangle.Center, Color.Black);
                             break;
                         case 2:
-                            boxConers = rotRectangle.Corners;
                             spriteBatch.DrawString(spriteFont, "Abilities", rotRectangle.Center, Color.Black);
                             break;
                     }
@@ -180,17 +177,14 @@ namespace CarGo
                     switch (carTypes[i])
                     {
                         case CarType.Medium:
-                            boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Medium); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width/2, showSelectionTexture.Height/2), Color.White);
                             break;
                         case CarType.Small:
-                            boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Small); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                         case CarType.Big:
-                            boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Big); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
@@ -211,17 +205,23 @@ namespace CarGo
                     switch (frontTypes[i])
                     {
                         case CarFrontType.Bumper:
-                            boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Bumper); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                         case CarFrontType.Spikes:
-                            boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Big_Spikes); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                     }
                 }
+                //Press A to Connect Buttons
+                else
+                {
+                    spriteBatch.DrawString(spriteFont, "Press A\nto connect", rotRectangle.Center - new Vector2(80,50),Color.Green);
+                }
+
+
+
                 i++;
             }
 
@@ -236,22 +236,18 @@ namespace CarGo
                     switch (abilityTypes[i])
                     {
                         case AbilityType.Flamethrower:
-                            boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Menu_Select_Flamethrower); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                         case AbilityType.RocketLauncher:
-                            boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                         case AbilityType.Shockwave:
-                            boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Menu_Select_Shockwave); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                         case AbilityType.TrapLauncher:
-                            boxConers = rotRectangle.Corners;
                             showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_Trap); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
@@ -271,26 +267,16 @@ namespace CarGo
                             spriteBatch.Draw(selectionBoxBox, carSelectionBoxes[(int)index].Center- new Vector2(selectionBoxBox.Width/2, selectionBoxBox.Height/2), Color.White);
                             break;
                         case 1:
-                            //boxConers = frontSelectionBoxes[(int)index].Corners;
-                            //spriteBatch.Draw(selectionBoxBox, rotRectangle.Center, Color.White);
                             spriteBatch.Draw(selectionBoxBox, frontSelectionBoxes[(int)index].Center - new Vector2(selectionBoxBox.Width / 2, selectionBoxBox.Height / 2), Color.White);
-
                             break;
                         case 2:
-                            //boxConers = abilitiesSelectionBoxes[(int)index].Corners;
-                            //spriteBatch.Draw(selectionBoxBox, rotRectangle.Center, Color.White);
                             spriteBatch.Draw(selectionBoxBox, abilitiesSelectionBoxes[(int)index].Center - new Vector2(selectionBoxBox.Width / 2, selectionBoxBox.Height / 2), Color.White);
-
                             break;
                         default:
                             break;
                     }
-                    
-                    
                 }
-                
             }
-
 
             spriteBatch.End();
         }
@@ -377,6 +363,18 @@ namespace CarGo
                     previousState[(int)index] = state;
                 }
 
+                else
+                {
+                    if(GamePad.GetCapabilities(index).IsConnected)
+                    {
+                        GamePadState state = GamePad.GetState(index);
+                        if (state.IsButtonDown(Buttons.A)&& previousState[(int)index].IsButtonUp(Buttons.A))
+                        {
+                            gamePadConnected[(int)index] = true;
+                        }
+                        previousState[(int) index] = state;
+                    }
+                }
 
 
 

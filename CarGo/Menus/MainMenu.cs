@@ -139,6 +139,7 @@ namespace CarGo
                     soundHorn.Play();
                     theGame.GameState = GameState.Exit;
                 }
+                
             }
         }
 
