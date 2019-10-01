@@ -60,14 +60,6 @@ namespace CarGo
 
         protected void FollowPath()
         {
-            //if(path2!=null)if (Tilemap.CoordinatesWorldToGrid(this).Equals(path2.First()))
-            //{
-            //    path2.RemoveAt(0);
-            //    velocity = (Tilemap.CoordinatesGridToWorld(path2.First())-this.hitbox.Center);
-            //    velocity.Normalize();
-            //    velocity *= 2.5f;
-            //}
-
             if (path != null)
             {
                 if (Vector2.Distance(path.First(), hitbox.Center) < 10)
@@ -86,9 +78,6 @@ namespace CarGo
                     }
 
                 }
-                //velocity = path.First() - this.hitbox.Center;
-                //velocity.Normalize();
-                //velocity *= 2.1f;
 
             }
         }

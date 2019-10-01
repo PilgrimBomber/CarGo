@@ -271,7 +271,7 @@ namespace CarGo
         /// <param name="direction"></param>
         /// <param name="rotRectangle"></param>
         /// <returns></returns>
-        public static bool CheckCollision(Vector2 position, Vector2 direction, int width, RotRectangle rotRectangle)
+        public static bool CheckCollision(Vector2 position, Vector2 direction, float width, RotRectangle rotRectangle)
         {
             
             //Vector2 direction = target - position;
