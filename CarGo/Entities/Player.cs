@@ -47,15 +47,11 @@ namespace CarGo
             inputHandler = new InputHandler(this, playerIndex);
             soundAcceleration = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Accelerate);
             soundBackground = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Background);
-            soundBackground.Volume = 0.07f;
             soundBoost = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Boost);
-            soundBoost.Volume = 0.1f;
             soundHorn = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Horn);
-            soundHorn.Volume = 0.6f;
             soundHorn2 = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Horn2);
-            soundHorn2.Volume = 0.2f;
             soundHorn3 = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Horn3);
-            soundHorn3.Volume = 0.4f;
+            UpdateVolume();
             this.carType = carType;
             switch (carType)
             {
@@ -445,6 +441,16 @@ namespace CarGo
             {
                 cooldownBoost -= (float)gameTime.ElapsedGameTime.TotalMilliseconds;
             }
+        }
+
+       
+        public override void UpdateVolume()
+        {
+            soundBackground.Volume = 0.07f * Settings.Instance.VolumeSound;
+            soundBoost.Volume = 0.1f * Settings.Instance.VolumeSound;
+            soundHorn.Volume = 0.6f * Settings.Instance.VolumeSound;
+            soundHorn2.Volume = 0.2f * Settings.Instance.VolumeSound;
+            soundHorn3.Volume = 0.4f * Settings.Instance.VolumeSound;
         }
     }
 }

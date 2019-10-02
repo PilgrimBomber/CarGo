@@ -25,7 +25,7 @@ namespace CarGo
             this.velocity = new Vector2(2f, 0);
             maxLife = 1000;
             hitpoints = 1000;
-
+            UpdateVolume();
         }
         override public void Update(GameTime gameTime)
         {
@@ -66,6 +66,11 @@ namespace CarGo
         public override void TakeDamage(int damage)
         {
             hitpoints -= damage;
+        }
+
+        public override void UpdateVolume()
+        {
+
         }
     }
 }

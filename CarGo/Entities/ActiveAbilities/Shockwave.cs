@@ -27,7 +27,7 @@ namespace CarGo
             
 
             soundShockWave = SoundCollection.Instance.GetSoundInstance(SoundType.Shockwave);
-            soundShockWave.Volume = 0.2f;
+            UpdateVolume();
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(textureShockwave.Width / 2, textureShockwave.Height / 2));
             animation = new Animation(AnimationType.Shockwave, hitbox);
             // animation = new Animation(AnimationType.Explosion, new RotRectangle(hitbox.RotationRad, hitbox.Center /* -offset */, new Vector2(textureExplosion.Width / 2, textureExplosion.Height / 2)));
@@ -75,6 +75,9 @@ namespace CarGo
             if (isActive) animation.Draw(gameTime, spriteBatch, offset);//spriteBatch.Draw(textureShockwave, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
         }
 
-
+        public override void UpdateVolume()
+        {
+            soundShockWave.Volume = 0.2f * Settings.Instance.VolumeSound;
+        }
     }
 }

@@ -51,6 +51,8 @@ namespace CarGo
         }
         public abstract void GetPushed(Vector2 direction);
         public abstract void TakeDamage(int damage);
+
+        public abstract void UpdateVolume();
         public float getPercentLife()
         {
             Console.WriteLine(((float)hitpoints / maxLife) * 100f+ "hitpoints "+ hitpoints );

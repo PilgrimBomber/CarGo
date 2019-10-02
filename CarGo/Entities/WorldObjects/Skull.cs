@@ -22,6 +22,7 @@ namespace CarGo
             ripTexture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_SkullRip);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             isActivated = false;
+            UpdateVolume();
         }
         override public void Update(GameTime gameTime)
         {
@@ -56,6 +57,10 @@ namespace CarGo
         public override void TakeDamage(int damage)
         {
             //throw new NotImplementedException();
+        }
+
+        public override void UpdateVolume()
+        {
         }
     }
 }

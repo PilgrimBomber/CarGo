@@ -32,5 +32,10 @@ namespace CarGo
         {
             throw new NotImplementedException();
         }
+
+        public override void UpdateVolume()
+        {
+            throw new NotImplementedException();
+        }
     }
 }

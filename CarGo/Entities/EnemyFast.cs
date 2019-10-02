@@ -25,6 +25,7 @@ namespace CarGo
             texture = TextureCollection.Instance.GetTexture(TextureType.Enemy_Zombie_Fast);
             //textureCollection.GetTexture(TextureType.Enemy_Zombie);
             soundCrash = SoundCollection.Instance.GetSoundInstance(SoundType.Enemy_Hit);
+            UpdateVolume();
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             animation = new Animation(AnimationType.Zombie_Fast, hitbox);
             hitpoints = 50;
@@ -174,6 +175,11 @@ namespace CarGo
         public override void TakeDamage(int damage)
         {
             hitpoints -= damage;
+        }
+
+        public override void UpdateVolume()
+        {
+            soundCrash.Volume = 1 * Settings.Instance.VolumeSound;
         }
     }
 }

@@ -17,6 +17,7 @@ namespace CarGo
             this.scene = scene;
             texture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_Rock);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
+            UpdateVolume();
         }
         override public void Update(GameTime gameTime)
         {
@@ -38,6 +39,10 @@ namespace CarGo
         public override void TakeDamage(int damage)
         {
             
+        }
+
+        public override void UpdateVolume()
+        {
         }
     }
 }

@@ -30,7 +30,7 @@ namespace CarGo
             damageTick = false;
             tickTimer = new TimeSpan(0,0,0,0,0);
             soundFlame = SoundCollection.Instance.GetSoundInstance(SoundType.FlameThrower);
-            soundFlame.Volume = 0.4f;
+            UpdateVolume();
             animation = new Animation(AnimationType.Flamethrower, hitbox);
         }
 
@@ -86,6 +86,12 @@ namespace CarGo
 
         public override void TakeDamage(int damage)
         {
+        }
+
+        public override void UpdateVolume()
+        {
+            soundFlame.Volume = 0.4f * Settings.Instance.VolumeSound;
+
         }
     }
 }

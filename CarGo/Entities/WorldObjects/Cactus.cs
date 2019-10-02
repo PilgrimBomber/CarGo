@@ -72,5 +72,10 @@ namespace CarGo
         {
             
         }
+
+        public override void UpdateVolume()
+        {
+            UpdateVolume();
+        }
     }
 }

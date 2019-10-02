@@ -32,7 +32,8 @@ namespace CarGo
             explosionAnimation = new Animation(AnimationType.Explosion, hitbox);
             soundExplosion = SoundCollection.Instance.GetSoundInstance(SoundType.RocketLauncher_Explosion);
             soundTrapLaunch = SoundCollection.Instance.GetSoundInstance(SoundType.Trap_Launch);
-            soundTrapLaunch.Volume = 0.08f;
+            UpdateVolume();
+
         }
         public override void Collide(Entity entity, EntityCategory entityCategory)
         {
@@ -103,8 +104,10 @@ namespace CarGo
             
         }
 
-        
-
-        
+        public override void UpdateVolume()
+        {
+            soundTrapLaunch.Volume = 0.08f * Settings.Instance.VolumeSound;
+            soundExplosion.Volume = 1 * Settings.Instance.VolumeSound;
+        }
     }
 }

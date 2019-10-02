@@ -26,10 +26,11 @@ namespace CarGo
             texture = TextureCollection.Instance.GetTexture(TextureType.Active_RocketLauncher);
             textureExplosion = TextureCollection.Instance.GetTexture(TextureType.Explosion);
             soundLaunch = SoundCollection.Instance.GetSoundInstance(SoundType.RocketLauncher_Launch);
-            soundLaunch.Volume = 0.225f;
+            
             soundExplosion = SoundCollection.Instance.GetSoundInstance(SoundType.RocketLauncher_Explosion);
-            soundExplosion.Volume = 1f;
+            UpdateVolume();
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
+
             animation = new Animation(AnimationType.Explosion, hitbox);
             
         }
@@ -116,6 +117,13 @@ namespace CarGo
         public override void GetPushed(Vector2 direction)
         {
             
+        }
+
+        public override void UpdateVolume()
+        {
+            soundLaunch.Volume = 0.225f * Settings.Instance.VolumeSound;
+            soundExplosion.Volume = 1f * Settings.Instance.VolumeSound;
+
         }
     }
 
