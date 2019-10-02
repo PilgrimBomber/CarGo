@@ -380,51 +380,6 @@ namespace CarGo
 
 
             }
-
-
-            
-            //if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
-            //{
-            //    GamePadState state = GamePad.GetState(PlayerIndex.One);
-
-            //    if (state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0)
-            //    {
-                    
-            //    }
-            //    if (state.ThumbSticks.Left.Y > 0f && previousState.ThumbSticks.Left.Y == 0)
-            //    {
-                    
-            //    }
-            //    //May go in the end
-            //    if (state.IsButtonDown(Buttons.B))
-            //    {
-            //        soundHorn.Play();
-            //        theGame.GameState = GameState.MenuMain;
-            //    }
-            //    previousState = state;
-            //}
-            //else //use Keyboard
-            //{
-            //    KeyboardState keyboardstate = Keyboard.GetState();
-            //    //Up
-            //    if (keyboardstate.IsKeyDown(Keys.W) && previousKeyBoardState.IsKeyUp(Keys.W) || keyboardstate.IsKeyDown(Keys.Up) && previousKeyBoardState.IsKeyUp(Keys.Up))
-            //    {
-                    
-            //    }
-
-            //    //Down
-            //    if (keyboardstate.IsKeyDown(Keys.S) && previousKeyBoardState.IsKeyUp(Keys.S) || keyboardstate.IsKeyDown(Keys.Down) && previousKeyBoardState.IsKeyUp(Keys.Down))
-            //    {
-                    
-            //    }
-            //    if (Keyboard.GetState().IsKeyDown(Keys.Back))
-            //    {
-            //        soundHorn.Play();
-            //        theGame.GameState = GameState.MenuMain;
-            //    }
-            //    previousKeyBoardState = keyboardstate;
-            //}
-            
         }
 
         public bool CheckReady()
