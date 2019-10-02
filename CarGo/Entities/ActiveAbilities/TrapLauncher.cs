@@ -25,13 +25,13 @@ namespace CarGo
             resetLivingTimer = 8;
             resetActivationCooldownTimer = 5;
             
-            texture = TextureCollection.getInstance().GetTexture(TextureType.Active_Trap);
+            texture = TextureCollection.Instance.GetTexture(TextureType.Active_Trap);
             hitbox = new RotRectangle(0, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
             isExploded = false;
             
             explosionAnimation = new Animation(AnimationType.Explosion, hitbox);
-            soundExplosion = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Explosion);
-            soundTrapLaunch = SoundCollection.getInstance().GetSoundInstance(SoundType.Trap_Launch);
+            soundExplosion = SoundCollection.Instance.GetSoundInstance(SoundType.RocketLauncher_Explosion);
+            soundTrapLaunch = SoundCollection.Instance.GetSoundInstance(SoundType.Trap_Launch);
             soundTrapLaunch.Volume = 0.08f;
         }
         public override void Collide(Entity entity, EntityCategory entityCategory)

@@ -19,9 +19,9 @@ namespace CarGo
         public Cactus(Scene scene, Vector2 center)
         {
             this.scene = scene;
-            texture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_Cactus);
-            ripTexture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_CactusRip);
-            completlyRipTexture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_CactusCompletlyRip);
+            texture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_Cactus);
+            ripTexture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_CactusRip);
+            completlyRipTexture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_CactusCompletlyRip);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             isActivated = false;
             isExploded = false;

@@ -90,6 +90,7 @@
     <Compile Include="Menus\MenuControls.cs" />
     <Compile Include="Menus\ModifierMenu.cs" />
     <Compile Include="Menus\PostGameMenu.cs" />
+    <Compile Include="Settings.cs" />
     <Compile Include="WorldObjectHandling.cs" />
     <Compile Include="Game1.cs" />
     <Compile Include="Geometry.cs" />

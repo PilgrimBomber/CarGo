@@ -39,31 +39,31 @@ namespace CarGo
                     repeating = false;
                     frameTime = new TimeSpan(0, 0, 0, 0, 100);
                     frameCount = 11;
-                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Explosion_Animation);
+                    spritesheet = TextureCollection.Instance.GetTexture(TextureType.Explosion_Animation);
                     break;
                 case AnimationType.Flamethrower:
                     repeating = true;
                     frameTime = new TimeSpan(0, 0, 0, 0, 100);
                     frameCount = 10;
-                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Active_FlamethrowerAnimation);
+                    spritesheet = TextureCollection.Instance.GetTexture(TextureType.Active_FlamethrowerAnimation);
                     break;
                 case AnimationType.Zombie_Slow:
                     repeating = true;
                     frameTime = new TimeSpan(0, 0, 0, 0, 150);
                     frameCount = 8;
-                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie_Slow_Animation);
+                    spritesheet = TextureCollection.Instance.GetTexture(TextureType.Enemy_Zombie_Slow_Animation);
                     break;
                 case AnimationType.Zombie_Fast:
                     repeating = true;
                     frameTime = new TimeSpan(0, 0, 0, 0, 150);
                     frameCount = 8;
-                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie_Fast_Animation);
+                    spritesheet = TextureCollection.Instance.GetTexture(TextureType.Enemy_Zombie_Fast_Animation);
                     break;
                 case AnimationType.Shockwave:
                     repeating = false;
                     frameCount = 7;
                     frameTime = new TimeSpan(0, 0, 0, 0, 500 / 7);
-                    spritesheet = TextureCollection.getInstance().GetTexture(TextureType.Active_ShockwaveAnimation);
+                    spritesheet = TextureCollection.Instance.GetTexture(TextureType.Active_ShockwaveAnimation);
                     break;
             }
 

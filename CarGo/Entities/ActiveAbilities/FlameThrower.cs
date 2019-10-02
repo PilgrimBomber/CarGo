@@ -24,12 +24,12 @@ namespace CarGo
             resetLivingTimer = 4;
             damagePerTick = (int)(damage / (resetLivingTimer* 4));
             
-            texture = TextureCollection.getInstance().GetTexture(TextureType.Active_FlameThrower);
+            texture = TextureCollection.Instance.GetTexture(TextureType.Active_FlameThrower);
             hitbox = new RotRectangle(0,new Vector2((player.Hitbox.Corners[1].X+ player.Hitbox.Corners[2].X)/2, player.Hitbox.Corners[2].Y - texture.Height / 2), new Vector2(texture.Width / 2, texture.Height / 2));
             
             damageTick = false;
             tickTimer = new TimeSpan(0,0,0,0,0);
-            soundFlame = SoundCollection.getInstance().GetSoundInstance(SoundType.FlameThrower);
+            soundFlame = SoundCollection.Instance.GetSoundInstance(SoundType.FlameThrower);
             soundFlame.Volume = 0.4f;
             animation = new Animation(AnimationType.Flamethrower, hitbox);
         }

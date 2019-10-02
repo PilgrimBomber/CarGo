@@ -92,10 +92,13 @@ namespace CarGo
             }
         }
 
-        public static SoundCollection getInstance()
+        public static SoundCollection Instance
         {
-            if (instance == null) instance = new SoundCollection();
-            return instance;
+            get
+            {
+                if (instance == null) instance = new SoundCollection();
+                return instance;
+            }
         }
 
         public SoundEffectInstance GetSoundInstance(SoundType soundType)

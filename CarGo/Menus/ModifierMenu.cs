@@ -38,8 +38,8 @@ namespace CarGo
         {
             spriteBatch = spriteBatchInit;
             theGame = game;
-            background = TextureCollection.getInstance().GetTexture(TextureType.Menu_Background);
-            selectionBoxBox = TextureCollection.getInstance().GetTexture(TextureType.Menu_Selection_BoxBox);
+            background = TextureCollection.Instance.GetTexture(TextureType.Menu_Background);
+            selectionBoxBox = TextureCollection.Instance.GetTexture(TextureType.Menu_Selection_BoxBox);
 
             //GamePads connected
             gamePadConnected = new bool[4];
@@ -100,8 +100,8 @@ namespace CarGo
             }
             abilityTypes = new AbilityType[4];
 
-            spriteFont = FontCollection.getInstance().GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
-            soundHorn = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Horn);
+            spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
+            soundHorn = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Horn);
 
 
         }
@@ -177,15 +177,15 @@ namespace CarGo
                     switch (carTypes[i])
                     {
                         case CarType.Medium:
-                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Medium); ;
+                            showSelectionTexture = TextureCollection.Instance.GetTexture(TextureType.Car_Medium); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width/2, showSelectionTexture.Height/2), Color.White);
                             break;
                         case CarType.Small:
-                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Small); ;
+                            showSelectionTexture = TextureCollection.Instance.GetTexture(TextureType.Car_Small); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                         case CarType.Big:
-                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Big); ;
+                            showSelectionTexture = TextureCollection.Instance.GetTexture(TextureType.Car_Big); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                     }
@@ -205,11 +205,11 @@ namespace CarGo
                     switch (frontTypes[i])
                     {
                         case CarFrontType.Bumper:
-                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Bumper); ;
+                            showSelectionTexture = TextureCollection.Instance.GetTexture(TextureType.Front_Bumper); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                         case CarFrontType.Spikes:
-                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Front_Big_Spikes); ;
+                            showSelectionTexture = TextureCollection.Instance.GetTexture(TextureType.Front_Big_Spikes); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                     }
@@ -236,19 +236,19 @@ namespace CarGo
                     switch (abilityTypes[i])
                     {
                         case AbilityType.Flamethrower:
-                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Menu_Select_Flamethrower); ;
+                            showSelectionTexture = TextureCollection.Instance.GetTexture(TextureType.Menu_Select_Flamethrower); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                         case AbilityType.RocketLauncher:
-                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher); ;
+                            showSelectionTexture = TextureCollection.Instance.GetTexture(TextureType.Active_RocketLauncher); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                         case AbilityType.Shockwave:
-                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Menu_Select_Shockwave); ;
+                            showSelectionTexture = TextureCollection.Instance.GetTexture(TextureType.Menu_Select_Shockwave); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                         case AbilityType.TrapLauncher:
-                            showSelectionTexture = TextureCollection.getInstance().GetTexture(TextureType.Active_Trap); ;
+                            showSelectionTexture = TextureCollection.Instance.GetTexture(TextureType.Active_Trap); ;
                             spriteBatch.Draw(showSelectionTexture, rotRectangle.Center - new Vector2(showSelectionTexture.Width / 2, showSelectionTexture.Height / 2), Color.White);
                             break;
                     }

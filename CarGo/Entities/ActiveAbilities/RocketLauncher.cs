@@ -23,11 +23,11 @@ namespace CarGo
             damage = 200;
             resetLivingTimer = 10;
             resetActivationCooldownTimer = 5;
-            texture = TextureCollection.getInstance().GetTexture(TextureType.Active_RocketLauncher);
-            textureExplosion = TextureCollection.getInstance().GetTexture(TextureType.Explosion);
-            soundLaunch = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Launch);
+            texture = TextureCollection.Instance.GetTexture(TextureType.Active_RocketLauncher);
+            textureExplosion = TextureCollection.Instance.GetTexture(TextureType.Explosion);
+            soundLaunch = SoundCollection.Instance.GetSoundInstance(SoundType.RocketLauncher_Launch);
             soundLaunch.Volume = 0.225f;
-            soundExplosion = SoundCollection.getInstance().GetSoundInstance(SoundType.RocketLauncher_Explosion);
+            soundExplosion = SoundCollection.Instance.GetSoundInstance(SoundType.RocketLauncher_Explosion);
             soundExplosion.Volume = 1f;
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(texture.Width / 2, texture.Height / 2));
             animation = new Animation(AnimationType.Explosion, hitbox);

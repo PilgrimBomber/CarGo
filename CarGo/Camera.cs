@@ -36,6 +36,7 @@ namespace CarGo
             this.enemies = enemies;
             this.worldObjects = worldObjects;
             this.activeAbilities = activeAbilities;
+            
         }
 
         public void Reset(List<Cargo> cargos, List<Player> players, List<BaseEnemy> enemies, List<WorldObject> worldObjects, List<ActiveAbility> activeAbilities)

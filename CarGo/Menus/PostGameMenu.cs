@@ -29,12 +29,12 @@ namespace CarGo
             //Texture
             //Set Background 
 
-            PostGameMenuBackgroundWin = TextureCollection.getInstance().GetTexture(TextureType.Menu_VictoryScreen);
-            PostGameMenuBackgroundLose = TextureCollection.getInstance().GetTexture(TextureType.Menu_DefeatScreen);
+            PostGameMenuBackgroundWin = TextureCollection.Instance.GetTexture(TextureType.Menu_VictoryScreen);
+            PostGameMenuBackgroundLose = TextureCollection.Instance.GetTexture(TextureType.Menu_DefeatScreen);
 
             //Set font for Buttontext 
-            FontCollection.getInstance().LoadFonts(contentManager);
-            spriteFont = FontCollection.getInstance().GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
+            FontCollection.Instance.LoadFonts(contentManager);
+            spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
 
         }
 

@@ -18,8 +18,8 @@ namespace CarGo
         public Skull(Scene scene, Vector2 center)
         {
             this.scene = scene;
-            texture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_Skull);
-            ripTexture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_SkullRip);
+            texture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_Skull);
+            ripTexture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_SkullRip);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
             isActivated = false;
         }

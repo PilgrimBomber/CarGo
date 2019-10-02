@@ -40,9 +40,9 @@ namespace CarGo
             cargos = new List<Cargo>();
             activeAbilities = new List<ActiveAbility>();
 
-            SoundCollection.getInstance().LoadSounds(content);
+            SoundCollection.Instance.LoadSounds(content);
             //textureCollection = new TextureCollection(content);
-            TextureCollection.getInstance().loadTextures(content);
+            TextureCollection.Instance.loadTextures(content);
             collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects, activeAbilities);
             levelControl = new LevelControl(this,content, cargos);
             camera = new Camera(spriteBatch, screenSize, cargos, players, enemies, worldObjects, activeAbilities);

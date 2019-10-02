@@ -15,7 +15,7 @@ namespace CarGo
         public Rock(Scene scene, Vector2 center)
         {
             this.scene = scene;
-            texture = TextureCollection.getInstance().GetTexture(TextureType.WorldObject_Rock);
+            texture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_Rock);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
         }
         override public void Update(GameTime gameTime)

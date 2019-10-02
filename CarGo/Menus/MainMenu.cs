@@ -50,16 +50,16 @@ namespace CarGo
             
             //Texture
             //Set Background 
-            //TextureCollection.getInstance().loadTextures(contentManager);
-            MainMenuBackground = TextureCollection.getInstance().GetTexture(TextureType.MainMenuBackground);
-            carrierTexture = TextureCollection.getInstance().GetTexture(TextureType.MainMenuCarrier);
-            //carTexture = TextureCollection.getInstance().GetTexture(TextureType.Car_Medium);
+            //TextureCollection.Instance.loadTextures(contentManager);
+            MainMenuBackground = TextureCollection.Instance.GetTexture(TextureType.MainMenuBackground);
+            carrierTexture = TextureCollection.Instance.GetTexture(TextureType.MainMenuCarrier);
+            //carTexture = TextureCollection.Instance.GetTexture(TextureType.Car_Medium);
 
             //Set font for Buttontext 
-            FontCollection.getInstance().LoadFonts(contentManager);
-            spriteFont = FontCollection.getInstance().GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
+            FontCollection.Instance.LoadFonts(contentManager);
+            spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
 
-           soundHorn = SoundCollection.getInstance().GetSoundInstance(SoundType.Car_Horn);
+           soundHorn = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Horn);
         }
 
         //Draw the Menu 

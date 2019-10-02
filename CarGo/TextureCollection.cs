@@ -61,6 +61,14 @@ namespace CarGo
 
         private static TextureCollection instance;
 
+        public static TextureCollection Instance
+        { get
+            {
+                if (instance == null) instance = new TextureCollection();
+                return instance;
+            }
+        }
+
         private TextureCollection()
         { }
 
@@ -124,13 +132,6 @@ namespace CarGo
             }
             
         }
-
-        public static TextureCollection getInstance()
-        {
-            if (instance == null) instance = new TextureCollection();
-            return instance;
-        }
-
 
         public Texture2D GetTexture(TextureType textureType)
         {

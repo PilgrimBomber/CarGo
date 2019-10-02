@@ -94,7 +94,7 @@ namespace CarGo
             //}
 
 
-            musicMenu = SoundCollection.getInstance().GetSoundInstance(SoundType.Menu_Music);
+            musicMenu = SoundCollection.Instance.GetSoundInstance(SoundType.Menu_Music);
             musicMenu.IsLooped = true;
             musicMenu.Volume = 0.5f;
             musicMenu.Play();

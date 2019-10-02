@@ -12,30 +12,35 @@ namespace CarGo
     {
         public enum Fonttyp { MainMenuButtonFont }
 
-            private List<SpriteFont> fonts = new List<SpriteFont>();
-            private static FontCollection fontinstance;
+        private List<SpriteFont> fonts = new List<SpriteFont>();
+        private static FontCollection fontinstance;
 
-            private FontCollection()
-            { }
+        private FontCollection()
+        { }
 
-            public void LoadFonts(ContentManager content)
+        public void LoadFonts(ContentManager content)
+        {
+            foreach (Fonttyp fontTyp in Enum.GetValues(typeof(Fonttyp)).Cast<Fonttyp>().ToList<Fonttyp>())
             {
-                foreach (Fonttyp fontTyp in Enum.GetValues(typeof(Fonttyp)).Cast<Fonttyp>().ToList<Fonttyp>())
+                switch (fontTyp)
                 {
-                    switch (fontTyp)
-                    {
-                        case Fonttyp.MainMenuButtonFont:
-                            fonts.Add(content.Load<SpriteFont>("fonts/Arial"));
-                            break;
-                    }
+                    case Fonttyp.MainMenuButtonFont:
+                        fonts.Add(content.Load<SpriteFont>("fonts/Arial"));
+                        break;
                 }
             }
+        }
 
-            public static FontCollection getInstance()
+        public static FontCollection Instance
+        {
+            get
             {
                 if (fontinstance == null) fontinstance = new FontCollection();
                 return fontinstance;
             }
+
+
+        }
 
         public SpriteFont GetFont(Fonttyp fontType)
         {

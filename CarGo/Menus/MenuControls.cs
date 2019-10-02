@@ -26,7 +26,7 @@ namespace CarGo
             //Texture
             //Set Background 
 
-           MenuControlsBackground = TextureCollection.getInstance().GetTexture(TextureType.Menu_Controls);
+           MenuControlsBackground = TextureCollection.Instance.GetTexture(TextureType.Menu_Controls);
         }
 
         //Draw the Menu 

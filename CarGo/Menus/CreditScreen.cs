@@ -26,7 +26,7 @@ namespace CarGo
             //Texture
             //Set Background 
 
-            CreditScreenBackground = TextureCollection.getInstance().GetTexture(TextureType.CreditScreen);
+            CreditScreenBackground = TextureCollection.Instance.GetTexture(TextureType.CreditScreen);
         }
 
         //Draw the Menu 

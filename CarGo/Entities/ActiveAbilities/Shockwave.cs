@@ -23,10 +23,10 @@ namespace CarGo
             resetLivingTimer = 0.5f;
             collidedEntities = new List<Entity>();
 
-            textureShockwave = TextureCollection.getInstance().GetTexture(TextureType.Active_Shockwave);
+            textureShockwave = TextureCollection.Instance.GetTexture(TextureType.Active_Shockwave);
             
 
-            soundShockWave = SoundCollection.getInstance().GetSoundInstance(SoundType.Shockwave);
+            soundShockWave = SoundCollection.Instance.GetSoundInstance(SoundType.Shockwave);
             soundShockWave.Volume = 0.2f;
             hitbox = new RotRectangle(player.Hitbox.RotationRad, player.Hitbox.Center, new Vector2(textureShockwave.Width / 2, textureShockwave.Height / 2));
             animation = new Animation(AnimationType.Shockwave, hitbox);

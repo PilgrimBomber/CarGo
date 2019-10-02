@@ -29,15 +29,15 @@ namespace CarGo
                     switch (carType)
                     {
                         case CarType.Small:
-                            texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Small_Bumper);
+                            texture = TextureCollection.Instance.GetTexture(TextureType.Front_Small_Bumper);
                             Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                             break;
                         case CarType.Medium:
-                            texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Bumper);
+                            texture = TextureCollection.Instance.GetTexture(TextureType.Front_Bumper);
                             Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                             break;
                         case CarType.Big:
-                            texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Big_Bumper);
+                            texture = TextureCollection.Instance.GetTexture(TextureType.Front_Big_Bumper);
                             Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                             break;
                     }
@@ -46,15 +46,15 @@ namespace CarGo
                     switch(carType)
                     {
                         case CarType.Small:
-                            texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Small_Spikes);
+                            texture = TextureCollection.Instance.GetTexture(TextureType.Front_Small_Spikes);
                             Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                             break;
                         case CarType.Medium:
-                            texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Spikes);
+                            texture = TextureCollection.Instance.GetTexture(TextureType.Front_Spikes);
                             Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                             break;
                         case CarType.Big:
-                            texture = TextureCollection.getInstance().GetTexture(TextureType.Front_Big_Spikes);
+                            texture = TextureCollection.Instance.GetTexture(TextureType.Front_Big_Spikes);
                             Hitbox = new RotRectangle(0, (CarHitbox.Corners[1] + CarHitbox.Corners[2]) / 2, new Vector2(texture.Width / 2, texture.Height / 2));
                             break;
                     }

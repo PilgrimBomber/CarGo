@@ -38,10 +38,10 @@ namespace CarGo
         {
             tilemap = new int[mapWidth,mapHeight];
             textures = new List<Texture2D>();
-            textures.Add(TextureCollection.getInstance().GetTexture(TextureType.Background_Sand));
-            textures.Add(TextureCollection.getInstance().GetTexture(TextureType.Background_Street_Top));
-            textures.Add(TextureCollection.getInstance().GetTexture(TextureType.Background_Street_Middle));
-            textures.Add(TextureCollection.getInstance().GetTexture(TextureType.Background_Street_Bottom));
+            textures.Add(TextureCollection.Instance.GetTexture(TextureType.Background_Sand));
+            textures.Add(TextureCollection.Instance.GetTexture(TextureType.Background_Street_Top));
+            textures.Add(TextureCollection.Instance.GetTexture(TextureType.Background_Street_Middle));
+            textures.Add(TextureCollection.Instance.GetTexture(TextureType.Background_Street_Bottom));
             generateMap();
 
         }

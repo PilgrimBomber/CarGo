@@ -22,10 +22,10 @@ namespace CarGo
         {
 
             //Set dummy texture
-            texture = TextureCollection.getInstance().GetTexture(TextureType.Enemy_Zombie_Slow);
+            texture = TextureCollection.Instance.GetTexture(TextureType.Enemy_Zombie_Slow);
             
             //textureCollection.GetTexture(TextureType.Enemy_Zombie);
-            soundCrash = SoundCollection.getInstance().GetSoundInstance(SoundType.Enemy_Hit);
+            soundCrash = SoundCollection.Instance.GetSoundInstance(SoundType.Enemy_Hit);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));
 
             animation = new Animation(AnimationType.Zombie_Slow, hitbox);
