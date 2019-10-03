@@ -1,10 +1,11 @@
-﻿using Microsoft.Xna.Framework;
-using System;
+﻿using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
-
+using System.Configuration;
+using Microsoft.Xna.Framework;
+using Microsoft.Xna.Framework.Content;
 namespace CarGo
 {
     public class Settings
@@ -13,10 +14,11 @@ namespace CarGo
         private float volumeMusic;
         private float volumeSound;
         private Vector2 screenSize;
-
+        private Configuration config;
 
         private Settings()
         {
+            config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
 
         }
 
@@ -37,6 +39,8 @@ namespace CarGo
                 if (value >= 0 && value <= 1)
                 {
                     volumeMusic = value;
+                    config.AppSettings.Settings["VolumeMusic"].Value = value.ToString();
+                    
                 }
             }
         }
@@ -48,6 +52,7 @@ namespace CarGo
                 if (value >= 0 && value <= 1)
                 {
                     volumeSound = value;
+                    config.AppSettings.Settings["VolumeSound"].Value = value.ToString();
                 }
             }
         }
@@ -56,12 +61,14 @@ namespace CarGo
 
         public void loadSettings()
         {
-            //ToDo: load settings from File.
+            AppSettingsReader settingsReader = new AppSettingsReader();
+            VolumeMusic = Convert.ToSingle( config.AppSettings.Settings["VolumeMusic"].Value);
+            VolumeSound = (float)settingsReader.GetValue("VolumeSound", typeof(float));
         }
 
         public void saveSettings()
         {
-            //ToDo: save settings to File.
+            config.Save(ConfigurationSaveMode.Full);
         }
 
 

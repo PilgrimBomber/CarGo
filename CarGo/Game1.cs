@@ -53,6 +53,7 @@ namespace CarGo
         /// </summary>
         protected override void Initialize()
         {
+            Settings.Instance.loadSettings();
             // TODO: Add your initialization logic here
             spriteBatch = new SpriteBatch(GraphicsDevice);
             scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
@@ -72,31 +73,10 @@ namespace CarGo
                     playercount++;
                 }
             }
-            //if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
-            //{
-            //    scene.addPlayer(PlayerIndex.One, new Vector2(400 + (int)PlayerIndex.One * 100, 400), CarType.Medium, CarFrontType.Spikes, AbilityType.TrapLauncher);
-            //    playercount++;
-            //}
-            //if (GamePad.GetCapabilities(PlayerIndex.Two).IsConnected)
-            //{
-            //    scene.addPlayer(PlayerIndex.Two, new Vector2(400 + (int)PlayerIndex.Two * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.Shockwave);
-            //    playercount++;
-            //}
-            //if (GamePad.GetCapabilities(PlayerIndex.Three).IsConnected)
-            //{
-            //    scene.addPlayer(PlayerIndex.Three, new Vector2(400 + (int)PlayerIndex.Three * 100, 400), CarType.Big, CarFrontType.Spikes, AbilityType.Flamethrower);
-            //    playercount++;
-            //}
-            //if (GamePad.GetCapabilities(PlayerIndex.Four).IsConnected)
-            //{
-            //    scene.addPlayer(PlayerIndex.Four, new Vector2(400 + (int)PlayerIndex.Four * 100, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
-            //    playercount++;
-            //}
-
-
+            
             musicMenu = SoundCollection.Instance.GetSoundInstance(SoundType.Menu_Music);
             musicMenu.IsLooped = true;
-            musicMenu.Volume = 0.5f;
+            musicMenu.Volume = 0.5f * Settings.Instance.VolumeMusic;
             musicMenu.Play();
 
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
@@ -122,7 +102,7 @@ namespace CarGo
         /// </summary>
         protected override void UnloadContent()
         {
-            // TODO: Unload any non ContentManager content here
+            Settings.Instance.saveSettings();
         }
 
         /// <summary>
