@@ -16,7 +16,7 @@ namespace CarGo
         private List<Cargo> cargos;
         //private List<BaseEnemy> enemies;
         private List<ActiveAbility> activeAbilities;
-        private GraphicsDevice graphicsDevice;
+        private static GraphicsDevice graphicsDevice;
         private Vector2 screenSize;
         private Texture2D cargoLifeBar;
 
@@ -40,15 +40,19 @@ namespace CarGo
             spriteBatch.Draw(cargoLifeBar, new Vector2 (300 ,30), Color.White );
         }
 
-        private Texture2D createLifebar(Texture2D texture, int width, int height, float percentLife)
+        public static Texture2D createLifebar(Texture2D lifebar, int width, int height, float percentLife)
         {
-            return createLifebar(texture ,width, height, percentLife, 1);
+            return createLifebar(lifebar ,width, height, percentLife, 1);
         }
 
-        private Texture2D createLifebar(Texture2D lifeBar, int width, int height, float percentLife, int borderThickness)
+        public static Texture2D createLifebar(Texture2D lifeBar, int width, int height, float percentLife, int borderThickness)
+        {
+            return createLifebar(lifeBar, width, height, percentLife, borderThickness, Color.Red, Color.Gray, Color.Black);
+        }
+        public static Texture2D createLifebar(Texture2D lifeBar, int width, int height, float percentLife, int borderThickness, Color colorFull, Color colorEmpty, Color colorBorder)
         {
             if (lifeBar == null) lifeBar = new Texture2D(graphicsDevice, width, height);
-            else if(lifeBar.Width != width || lifeBar.Height != height) lifeBar = new Texture2D(graphicsDevice, width, height);
+            else if (lifeBar.Width != width || lifeBar.Height != height) lifeBar = new Texture2D(graphicsDevice, width, height);
             Color[] data = new Color[width * height];
             int redPart = (int)((width - borderThickness * 2) * percentLife / 100);
 
@@ -56,38 +60,38 @@ namespace CarGo
             {
                 for (int j = 0; j < width; j++)
                 {
-                    data[width * i + j] = Color.Black;
+                    data[width * i + j] = colorBorder;
                 }
             }
             for (int i = borderThickness; i < height - borderThickness; i++)
             {
                 for (int j = 0; j < borderThickness; j++)
                 {
-                    data[width * i + j] = Color.Black;
+                    data[width * i + j] = colorBorder;
                 }
                 for (int j = borderThickness; j < borderThickness + redPart + 1; j++)
                 {
-                    data[width * i + j] = Color.Red;
+                    data[width * i + j] = colorFull;
                 }
                 for (int j = redPart + 2; j < width - borderThickness; j++)
                 {
-                    data[width * i + j] = Color.DarkGray;
+                    data[width * i + j] = colorEmpty;
                 }
                 for (int j = width - borderThickness; j < width; j++)
                 {
-                    data[width * i + j] = Color.Black;
+                    data[width * i + j] = colorBorder;
                 }
             }
             for (int i = height - borderThickness; i < height; i++)
             {
                 for (int j = 0; j < width; j++)
                 {
-                    data[width * i + j] = Color.Black;
+                    data[width * i + j] = colorBorder;
                 }
             }
 
             lifeBar.SetData(data);
             return lifeBar;
-        }        
+        }
     }
 }
