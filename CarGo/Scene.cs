@@ -42,7 +42,7 @@ namespace CarGo
 
             SoundCollection.Instance.LoadSounds(content);
             //textureCollection = new TextureCollection(content);
-            TextureCollection.Instance.loadTextures(content);
+            //TextureCollection.Instance.loadTextures(content);
             collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects, activeAbilities);
             levelControl = new LevelControl(this,content, cargos);
             camera = new Camera(spriteBatch, screenSize, cargos, players, enemies, worldObjects, activeAbilities);
@@ -215,5 +215,14 @@ namespace CarGo
 
 
         }
+
+        public void UpdateAllVolumes()
+        {
+            foreach( Entity entity in entities)
+            {
+                entity.UpdateVolume();
+            }
+        }
+
     }
 }

@@ -13,7 +13,6 @@ namespace CarGo
     public class EnemyAI
     {
         //private AStar aStar;
-        private bool usingAStar;
         List<BaseEnemy> enemies;
         Cargo cargo;
         List<Cargo> cargos;
@@ -33,7 +32,6 @@ namespace CarGo
             this.worldObjects = worldObjects;
             this.enemies = enemies;
             this.cargos = cargos;
-            usingAStar = false;
         }
 
         public void Update(GameTime gameTime)

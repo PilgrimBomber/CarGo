@@ -19,6 +19,8 @@ namespace CarGo
         private Settings()
         {
             config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+            loadSettings();
+            //config = ConfigurationManager.OpenMachineConfiguration();
 
         }
 
@@ -63,7 +65,7 @@ namespace CarGo
         {
             AppSettingsReader settingsReader = new AppSettingsReader();
             VolumeMusic = Convert.ToSingle( config.AppSettings.Settings["VolumeMusic"].Value);
-            VolumeSound = (float)settingsReader.GetValue("VolumeSound", typeof(float));
+            VolumeSound = Convert.ToSingle(config.AppSettings.Settings["VolumeSound"].Value);
         }
 
         public void saveSettings()

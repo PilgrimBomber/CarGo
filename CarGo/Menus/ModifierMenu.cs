@@ -29,7 +29,6 @@ namespace CarGo
         private Texture2D background;
         private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
-        private Vector2[] boxConers;
         private Game1 theGame;
         private GamePadState[] previousState;
         private SoundEffectInstance soundHorn;

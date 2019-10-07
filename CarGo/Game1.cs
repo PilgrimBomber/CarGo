@@ -21,7 +21,7 @@ namespace CarGo
         MenuControls menuControls;
         CreditScreen creditScreen;
         public ModifierMenu modifierMenu;
-        SoundEffectInstance musicMenu;
+        SoundEffectInstance music;
 
         private GameState gameState;
         public GameState GameState { get => gameState; set => gameState = value; }
@@ -53,8 +53,9 @@ namespace CarGo
         /// </summary>
         protected override void Initialize()
         {
-            Settings.Instance.loadSettings();
+            //Settings.Instance.VolumeMusic = 0.5f;
             // TODO: Add your initialization logic here
+            TextureCollection.Instance.setContent( Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
             mainMenu = new MainMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
@@ -74,10 +75,10 @@ namespace CarGo
                 }
             }
             
-            musicMenu = SoundCollection.Instance.GetSoundInstance(SoundType.Menu_Music);
-            musicMenu.IsLooped = true;
-            musicMenu.Volume = 0.5f * Settings.Instance.VolumeMusic;
-            musicMenu.Play();
+            music = SoundCollection.Instance.GetSoundInstance(SoundType.Menu_Music);
+            music.IsLooped = true;
+            music.Volume = 0.5f * Settings.Instance.VolumeMusic;
+            music.Play();
 
             //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
             if (playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Big, CarFrontType.Bumper, AbilityType.Flamethrower);
@@ -185,6 +186,11 @@ namespace CarGo
                 default: break; ;
             }
             
+        }
+
+        public void UpdateMusicVolume()
+        {
+            music.Volume = Settings.Instance.VolumeMusic;
         }
     }
 }
