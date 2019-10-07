@@ -40,7 +40,7 @@ namespace CarGo
             cargos = new List<Cargo>();
             activeAbilities = new List<ActiveAbility>();
 
-            SoundCollection.Instance.LoadSounds(content);
+            //SoundCollection.Instance.LoadSounds(content);
             //textureCollection = new TextureCollection(content);
             //TextureCollection.Instance.loadTextures(content);
             collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects, activeAbilities);

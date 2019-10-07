@@ -55,7 +55,8 @@ namespace CarGo
         {
             //Settings.Instance.VolumeMusic = 0.5f;
             // TODO: Add your initialization logic here
-            TextureCollection.Instance.setContent( Content);
+            TextureCollection.Instance.SetContent( Content);
+            SoundCollection.Instance.SetContent(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
             mainMenu = new MainMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);

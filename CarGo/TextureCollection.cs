@@ -75,7 +75,7 @@ namespace CarGo
         }
 
 
-        public void setContent(ContentManager content)
+        public void SetContent(ContentManager content)
         {
             this.content = content;
         }
