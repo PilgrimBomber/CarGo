@@ -10,7 +10,7 @@ namespace CarGo
     /// This is the main type for your game.
     /// </summary>
     
-    public enum GameState {Playing,MenuMain, MenuModificationSelection,MenuPause,MenuLost,MenuWon, LevelEditor, Exit, MenuControls, CreditScreen}
+    public enum GameState {Playing,MenuMain, MenuModificationSelection,MenuPause,MenuLost,MenuWon, LevelEditor, Exit, MenuControls, CreditScreen, MenuSettings}
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -20,6 +20,7 @@ namespace CarGo
         PostGameMenu postGameMenu;
         MenuControls menuControls;
         CreditScreen creditScreen;
+        MenuSettings menuSettings;
         public ModifierMenu modifierMenu;
         SoundEffectInstance music;
 
@@ -62,9 +63,9 @@ namespace CarGo
             mainMenu = new MainMenu(spriteBatch, this);
             postGameMenu = new PostGameMenu(spriteBatch, this);
             modifierMenu = new ModifierMenu(spriteBatch, this);
+            menuSettings = new MenuSettings(spriteBatch, this);
             menuControls = new MenuControls(spriteBatch, this);
             creditScreen = new CreditScreen(spriteBatch, this);
-                       
             music = SoundCollection.Instance.GetSoundInstance(SoundType.Menu_Music);
             music.IsLooped = true;
             music.Volume = 0.5f * Settings.Instance.VolumeMusic;
@@ -132,6 +133,9 @@ namespace CarGo
                 case GameState.CreditScreen:
                     creditScreen.Update();
                     break;
+                case GameState.MenuSettings:
+                    menuSettings.Update();
+                    break;
                 default:break;
             }
         }
@@ -168,6 +172,9 @@ namespace CarGo
                     break;
                 case GameState.CreditScreen:
                     creditScreen.Draw();
+                    break;
+                case GameState.MenuSettings:
+                    menuSettings.Draw();
                     break;
                 default: break; ;
             }

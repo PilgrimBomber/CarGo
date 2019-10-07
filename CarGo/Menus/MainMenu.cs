@@ -75,7 +75,7 @@ namespace CarGo
                         j++;
                         break;
                     case 2:
-                        spriteBatch.DrawString(spriteFont, "Options", buttons[j], Color.Black);
+                        spriteBatch.DrawString(spriteFont, "Settings", buttons[j], Color.Black);
                         j++;
                         break;
                     case 3:
@@ -118,7 +118,7 @@ namespace CarGo
 
             if (stage == 2)
             {
-                theGame.GameState = GameState.CreditScreen;
+                theGame.GameState = GameState.MenuSettings;
             }
 
             if (stage == 3)
@@ -139,13 +139,13 @@ namespace CarGo
             {
                 GamePadState state = GamePad.GetState(PlayerIndex.One);
 
-                if (state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0 && stage < 4)
+                if ((state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0) || (state.IsButtonDown(Buttons.DPadDown) && previousState.IsButtonUp(Buttons.DPadDown)) && stage < 4)
                 {
 
                     stage++;
 
                 }
-                if (state.ThumbSticks.Left.Y > 0f && previousState.ThumbSticks.Left.Y == 0 && stage > 0)
+                if ((state.ThumbSticks.Left.Y > 0f && previousState.ThumbSticks.Left.Y == 0) || (state.IsButtonDown(Buttons.DPadUp) && previousState.IsButtonUp(Buttons.DPadUp)) && stage > 0)
                 {
 
                     stage--;
@@ -155,6 +155,11 @@ namespace CarGo
                 if(state.IsButtonUp(Buttons.A)&& previousState.IsButtonDown(Buttons.A))
                 {
                     ConfirmSelection();
+                }
+
+                if (state.IsButtonUp(Buttons.B) && previousState.IsButtonDown(Buttons.B))
+                {
+                    stage = 4;
                 }
 
                 previousState = state;

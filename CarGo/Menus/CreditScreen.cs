@@ -15,6 +15,7 @@ namespace CarGo
     {
         private Texture2D CreditScreenBackground;
         private SpriteBatch spriteBatch;
+        private GamePadState previousState;
 
         private Game1 theGame;
 
@@ -44,9 +45,21 @@ namespace CarGo
 
         public void Update()
         {
-            if (Keyboard.GetState().IsKeyDown(Keys.Back) || GamePad.GetState(PlayerIndex.One).IsButtonDown(Buttons.B))
+            Input();
+        }
+
+        private void Input()
+        {
+            if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
             {
-                theGame.GameState = GameState.MenuMain;
+                GamePadState state = GamePad.GetState(PlayerIndex.One);
+
+                if (state.IsButtonUp(Buttons.B) && previousState.IsButtonDown(Buttons.B))
+                {
+                    theGame.GameState = GameState.MenuMain;
+                }
+
+                previousState = state;
             }
         }
     }

@@ -72,8 +72,5 @@ namespace CarGo
         {
             config.Save(ConfigurationSaveMode.Full);
         }
-
-
-
     }
 }

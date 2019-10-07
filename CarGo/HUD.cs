@@ -40,9 +40,9 @@ namespace CarGo
             spriteBatch.Draw(cargoLifeBar, new Vector2 (300 ,30), Color.White );
         }
 
-        public static Texture2D createLifebar(Texture2D lifebar, int width, int height, float percentLife)
+        public static Texture2D createLifebar(Texture2D lifeBar, int width, int height, float percentLife)
         {
-            return createLifebar(lifebar ,width, height, percentLife, 1);
+            return createLifebar(lifeBar ,width, height, percentLife, 1);
         }
 
         public static Texture2D createLifebar(Texture2D lifeBar, int width, int height, float percentLife, int borderThickness)
