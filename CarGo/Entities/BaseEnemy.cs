@@ -66,6 +66,7 @@ namespace CarGo
                 {
                     if (wasPushed) return;
                     path.RemoveAt(0);
+                    if (path.Count == 0) return;
                     velocity = path.First() - this.hitbox.Center;
                     velocity.Normalize();
                     if(hitbox.Center.X<cargos[0].Hitbox.Center.X)

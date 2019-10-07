@@ -53,38 +53,23 @@ namespace CarGo
         /// </summary>
         protected override void Initialize()
         {
-            //Settings.Instance.VolumeMusic = 0.5f;
             // TODO: Add your initialization logic here
             TextureCollection.Instance.SetContent( Content);
             SoundCollection.Instance.SetContent(Content);
+            FontCollection.Instance.LoadFonts(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
-            mainMenu = new MainMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
-            postGameMenu = new PostGameMenu(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
+            mainMenu = new MainMenu(spriteBatch, this);
+            postGameMenu = new PostGameMenu(spriteBatch, this);
             modifierMenu = new ModifierMenu(spriteBatch, this);
-            menuControls = new MenuControls(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
-            creditScreen = new CreditScreen(spriteBatch, new Vector2(graphics.PreferredBackBufferWidth, graphics.PreferredBackBufferHeight), Content, this);
-
-            // Add a player for each connected Controller
-            int playercount = 0;
-            for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
-            {
-                if (GamePad.GetCapabilities(index).IsConnected)
-                {
-                    //scene.addPlayer(index, new Vector2(400 + (int)index * 100, 400), CarType.Small, CarFrontType.Bumper, AbilityType.RocketLauncher);
-                    playercount++;
-                }
-            }
-            
+            menuControls = new MenuControls(spriteBatch, this);
+            creditScreen = new CreditScreen(spriteBatch, this);
+                       
             music = SoundCollection.Instance.GetSoundInstance(SoundType.Menu_Music);
             music.IsLooped = true;
             music.Volume = 0.5f * Settings.Instance.VolumeMusic;
             music.Play();
 
-            //Debug: Wenn keine Controller angeschlossen sind erstelle einen Spieler um mit der Tastatur zu spielen
-            if (playercount==0)scene.addPlayer(PlayerIndex.Four, new Vector2(400, 400),CarType.Big, CarFrontType.Bumper, AbilityType.Flamethrower);
-            
-          // scene.addPlayer(PlayerIndex.Four, new Vector2(800, 400), CarType.Medium, CarFrontType.Bumper, AbilityType.RocketLauncher);
         }
 
         /// <summary>

@@ -21,7 +21,7 @@ namespace CarGo
         private KeyboardState previousKeyBoardState;
         private GamePadState previousState;
 
-        public PostGameMenu(SpriteBatch spriteBatchInit, Vector2 screenSize, ContentManager contentManager, Game1 game)
+        public PostGameMenu(SpriteBatch spriteBatchInit, Game1 game)
         {
             spriteBatch = spriteBatchInit;
             theGame = game;
@@ -32,8 +32,7 @@ namespace CarGo
             PostGameMenuBackgroundWin = TextureCollection.Instance.GetTexture(TextureType.Menu_VictoryScreen);
             PostGameMenuBackgroundLose = TextureCollection.Instance.GetTexture(TextureType.Menu_DefeatScreen);
 
-            //Set font for Buttontext 
-            FontCollection.Instance.LoadFonts(contentManager);
+            //Set font for Buttontext
             spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
 
         }

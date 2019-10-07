@@ -24,7 +24,7 @@ namespace CarGo
         private List<Vector2> buttons;
         private int stage;
 
-        public MainMenu(SpriteBatch spriteBatchInit,Vector2 screenSize, ContentManager contentManager, Game1 game)
+        public MainMenu(SpriteBatch spriteBatchInit, Game1 game)
         {
             spriteBatch = spriteBatchInit;
             theGame = game;
@@ -44,8 +44,7 @@ namespace CarGo
             MainMenuBackground = TextureCollection.Instance.GetTexture(TextureType.MainMenuBackground);
             carrierTexture = TextureCollection.Instance.GetTexture(TextureType.MainMenuCarrier);
 
-            //Set font for Buttontext 
-            FontCollection.Instance.LoadFonts(contentManager);
+            //Set font for Buttontext
             spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
 
            soundHorn = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Horn);

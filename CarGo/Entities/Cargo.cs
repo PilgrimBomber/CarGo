@@ -61,7 +61,6 @@ namespace CarGo
 
         public override void GetPushed(Vector2 direction)
         {
-            throw new NotImplementedException();
         }
         public override void TakeDamage(int damage)
         {

@@ -18,7 +18,7 @@ namespace CarGo
 
         private Game1 theGame;
 
-        public CreditScreen(SpriteBatch spriteBatchInit, Vector2 screenSize, ContentManager contentManager, Game1 game)
+        public CreditScreen(SpriteBatch spriteBatchInit, Game1 game)
         {
             spriteBatch = spriteBatchInit;
             theGame = game;

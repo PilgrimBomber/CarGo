@@ -153,11 +153,11 @@ namespace CarGo
                     {
                         Vector2 direction = Hitbox.Center - entity.Hitbox.Center;
                         
-                        Hitbox.Move(direction* (Hitbox.Offset.Length() + entity.Hitbox.Offset.Length()) / direction.Length());
+                        //Hitbox.Move(direction* (Hitbox.Offset.Length() + entity.Hitbox.Offset.Length()) / direction.Length());
                         //Collision with Rock
                         if (entity.GetType() == typeof(Rock) && wasPushed == true)
                         {
-                            //Hitbox.Move(-velocity);
+                            Hitbox.Move(-velocity);
                             this.TakeDamage((int)velocity.LengthSquared());
                             velocity *= -0.05f;
                         }

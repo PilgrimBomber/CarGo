@@ -55,7 +55,6 @@ namespace CarGo
         public abstract void UpdateVolume();
         public float getPercentLife()
         {
-            Console.WriteLine(((float)hitpoints / maxLife) * 100f+ "hitpoints "+ hitpoints );
             return ((float)hitpoints / maxLife) * 100f;
         }
     }
