@@ -90,7 +90,6 @@ namespace CarGo
         /// </summary>
         protected override void UnloadContent()
         {
-            Settings.Instance.saveSettings();
         }
 
         /// <summary>

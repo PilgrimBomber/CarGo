@@ -23,6 +23,7 @@ namespace CarGo
 
         private List<Vector2> buttons;
         private int stage;
+        private String[] texts;
 
         public MainMenu(SpriteBatch spriteBatchInit, Game1 game)
         {
@@ -38,6 +39,13 @@ namespace CarGo
             {
                 buttons.Add(new Vector2(300, 300 + (int)i * 100));
             }
+
+            texts = new String[5];
+            texts[0] = "Play";
+            texts[1] = "Controls";
+            texts[2] = "Settings";
+            texts[3] = "Credits";
+            texts[4] = "Exit";
 
             //Texture
             //Set Background 
@@ -57,38 +65,13 @@ namespace CarGo
 
             //Draw Background and Selection
             spriteBatch.Draw(MainMenuBackground, new Vector2(0, 0), Color.White);
-            //carrierBoxConers = carrierBox.Corners;
             spriteBatch.Draw(carrierTexture, buttons[stage] - new Vector2(buttons[stage].X, 25), Color.White);
 
             //Draw Button
-            int j = 0;
-            foreach (Vector2 vector2 in buttons)
+            
+            for(int j=0;j<5;j++)
             {
-                switch (j)
-                {
-                    case 0:
-                        spriteBatch.DrawString(spriteFont, "Play", buttons[j], Color.Black);
-                        j++;
-                        break;
-                    case 1:
-                        spriteBatch.DrawString(spriteFont, "Controls", buttons[j], Color.Black);
-                        j++;
-                        break;
-                    case 2:
-                        spriteBatch.DrawString(spriteFont, "Settings", buttons[j], Color.Black);
-                        j++;
-                        break;
-                    case 3:
-                        spriteBatch.DrawString(spriteFont, "Credits", buttons[j], Color.Black);
-                        j++;
-                        break;
-                    case 4:
-                        spriteBatch.DrawString(spriteFont, "Exit", buttons[j], Color.Black);
-                        j++;
-                        break;
-
-                }
-
+                spriteBatch.DrawString(spriteFont, texts[j], buttons[j], Color.Black);
             }
 
             spriteBatch.End();
@@ -139,13 +122,13 @@ namespace CarGo
             {
                 GamePadState state = GamePad.GetState(PlayerIndex.One);
 
-                if ((state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0) || (state.IsButtonDown(Buttons.DPadDown) && previousState.IsButtonUp(Buttons.DPadDown)) && stage < 4)
+                if (((state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0) || (state.IsButtonDown(Buttons.DPadDown) && previousState.IsButtonUp(Buttons.DPadDown))) && stage < 4)
                 {
 
                     stage++;
 
                 }
-                if ((state.ThumbSticks.Left.Y > 0f && previousState.ThumbSticks.Left.Y == 0) || (state.IsButtonDown(Buttons.DPadUp) && previousState.IsButtonUp(Buttons.DPadUp)) && stage > 0)
+                if (((state.ThumbSticks.Left.Y > 0f && previousState.ThumbSticks.Left.Y == 0) || (state.IsButtonDown(Buttons.DPadUp) && previousState.IsButtonUp(Buttons.DPadUp))) && stage > 0)
                 {
 
                     stage--;

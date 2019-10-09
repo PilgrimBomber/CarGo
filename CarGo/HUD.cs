@@ -69,11 +69,11 @@ namespace CarGo
                 {
                     data[width * i + j] = colorBorder;
                 }
-                for (int j = borderThickness; j < borderThickness + redPart + 1; j++)
+                for (int j = borderThickness; j < borderThickness + redPart; j++)
                 {
                     data[width * i + j] = colorFull;
                 }
-                for (int j = redPart + 2; j < width - borderThickness; j++)
+                for (int j = borderThickness + redPart; j < width - borderThickness; j++)
                 {
                     data[width * i + j] = colorEmpty;
                 }
