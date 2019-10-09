@@ -220,7 +220,7 @@ namespace CarGo
                     {
                         case 4:
                             Settings.Instance.saveSettings();
-                            theGame.GameState = GameState.MenuMain;
+                            StateMachine.Instance.Back();
                             stage = 0;
                             break;
                         case 5:
@@ -229,7 +229,7 @@ namespace CarGo
                             volumeSoundBar = HUD.createLifebar(volumeSoundBar, 300, 50, Settings.Instance.VolumeSound * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
                             theGame.UpdateMusicVolume();
                             theGame.scene.UpdateAllVolumes();
-                            theGame.GameState = GameState.MenuMain;
+                            StateMachine.Instance.Back();
                             stage = 0;
                             break;
                         default:

@@ -56,7 +56,7 @@ namespace CarGo
 
                 if (state.IsButtonUp(Buttons.B) && previousState.IsButtonDown(Buttons.B))
                 {
-                    theGame.GameState = GameState.MenuMain;
+                    StateMachine.Instance.Back();
                 }
 
                 previousState = state;

@@ -290,11 +290,10 @@ namespace CarGo
                     if (gamePadConnected[(int)index])
                     {
                         theGame.scene.addPlayer(index, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index]);
-                        theGame.GameState = GameState.Playing;
+                        StateMachine.Instance.ChangeState(GameState.Playing);
                         theGame.scene.LoadLevel();
                     }
                 }
-               
             }
         }
 
@@ -359,7 +358,7 @@ namespace CarGo
 
                     if(state.IsButtonDown(Buttons.Back) && previousState[(int)index].IsButtonUp(Buttons.Back))
                     {
-                        theGame.GameState = GameState.MenuMain;
+                        StateMachine.Instance.ChangeState(GameState.MenuMain);
                     }
 
                     previousState[(int)index] = state;

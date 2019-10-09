@@ -68,8 +68,17 @@ namespace CarGo
             }
         }
 
+        public Difficulty Difficulty {
+            get => difficulty;
+            set
+            {
+                difficulty = value;
+                config.AppSettings.Settings["Difficulty"].Value = ((int)difficulty).ToString();
+            }
+        }
+
         public Vector2 ScreenSize { get => screenSize; set => screenSize = value; }
-        public Difficulty Difficulty { get => difficulty; set => difficulty = value; }
+        
 
         public void loadSettings()
         {
@@ -78,11 +87,15 @@ namespace CarGo
             VolumeSound = Convert.ToSingle(config.AppSettings.Settings["VolumeSound"].Value);
             switch(Convert.ToInt32(config.AppSettings.Settings["Difficulty"].Value))
             {
-                case 1: difficulty = Difficulty.Easy;
+                case 1: difficulty = Difficulty.Noob;
                     break;
-                case 2: difficulty = Difficulty.Normal;
+                case 2: difficulty = Difficulty.Easy;
                     break;
-                case 3: difficulty = Difficulty.Hard;
+                case 3: difficulty = Difficulty.Normal;
+                    break;
+                case 4: difficulty = Difficulty.Hard;
+                    break;
+                case 5: difficulty = Difficulty.Extreme;
                     break;
                 default:
                     difficulty = Difficulty.Normal;

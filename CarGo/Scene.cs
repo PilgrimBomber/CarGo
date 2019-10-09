@@ -214,8 +214,8 @@ namespace CarGo
 
         public void Finish(bool won)
         {
-            if (won) game.GameState = GameState.MenuWon;
-            else game.GameState = GameState.MenuLost;
+            if (won) StateMachine.Instance.ChangeState(GameState.MenuWon);
+            else StateMachine.Instance.ChangeState(GameState.MenuLost);
 
 
         }

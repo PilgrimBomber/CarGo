@@ -3,6 +3,7 @@ using Microsoft.Xna.Framework.Graphics;
 using Microsoft.Xna.Framework.Input;
 using System;
 using Microsoft.Xna.Framework.Audio;
+using Microsoft.Xna.Framework.Media;
 
 namespace CarGo
 {
@@ -10,7 +11,7 @@ namespace CarGo
     /// This is the main type for your game.
     /// </summary>
     
-    public enum GameState {Playing,MenuMain, MenuModificationSelection,MenuPause,MenuLost,MenuWon, LevelEditor, Exit, MenuControls, CreditScreen, MenuSettings}
+    
     public class Game1 : Game
     {
         GraphicsDeviceManager graphics;
@@ -21,12 +22,9 @@ namespace CarGo
         MenuControls menuControls;
         CreditScreen creditScreen;
         MenuSettings menuSettings;
+        MenuPause menuPause;
         public ModifierMenu modifierMenu;
         SoundEffectInstance music;
-
-        private GameState gameState;
-        public GameState GameState { get => gameState; set => gameState = value; }
-
 
         public Game1()
         {
@@ -43,7 +41,7 @@ namespace CarGo
             graphics.ToggleFullScreen();
 #endif
             Content.RootDirectory = "Content";
-            GameState = GameState.MenuMain;
+            
         }
 
         /// <summary>
@@ -55,6 +53,7 @@ namespace CarGo
         protected override void Initialize()
         {
             // TODO: Add your initialization logic here
+            Settings.Instance.loadSettings();
             TextureCollection.Instance.SetContent( Content);
             SoundCollection.Instance.SetContent(Content);
             FontCollection.Instance.LoadFonts(Content);
@@ -65,6 +64,7 @@ namespace CarGo
             modifierMenu = new ModifierMenu(spriteBatch, this);
             menuSettings = new MenuSettings(spriteBatch, this);
             menuControls = new MenuControls(spriteBatch, this);
+            menuPause = new MenuPause(spriteBatch, this);
             creditScreen = new CreditScreen(spriteBatch, this);
             music = SoundCollection.Instance.GetSoundInstance(SoundType.Menu_Music);
             music.IsLooped = true;
@@ -79,8 +79,6 @@ namespace CarGo
         /// </summary>
         protected override void LoadContent()
         {
-            
-            
             // TODO: use this.Content to load your game content here
         }
 
@@ -90,6 +88,7 @@ namespace CarGo
         /// </summary>
         protected override void UnloadContent()
         {
+
         }
 
         /// <summary>
@@ -101,15 +100,14 @@ namespace CarGo
         {
             if (/*GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||*/ Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            gameState = this.GameState; //save current game state
             // TODO: Add your update logic here
-            switch (this.GameState)
+            switch (StateMachine.Instance.gameState)
             {
                 case GameState.Playing:
                     scene.Update(gameTime);
                     break;
                 case GameState.MenuPause:
-
+                    menuPause.Update();
                     break;
                 case GameState.MenuMain:
                     mainMenu.Update();               
@@ -147,12 +145,14 @@ namespace CarGo
         {
             GraphicsDevice.Clear(Color.White);
 
-            switch (this.GameState)
+            switch (StateMachine.Instance.gameState)
             {
                 case GameState.Playing:
                     scene.Draw(gameTime);
                     break;
                 case GameState.MenuPause:
+                    scene.Draw(gameTime);
+                    menuPause.Draw();
                     break;
                 case GameState.MenuMain:
                     mainMenu.Draw();
@@ -182,7 +182,7 @@ namespace CarGo
 
         public void UpdateMusicVolume()
         {
-            music.Volume = Settings.Instance.VolumeMusic;
+            music.Volume = 0.5f * Settings.Instance.VolumeMusic;
         }
     }
 }

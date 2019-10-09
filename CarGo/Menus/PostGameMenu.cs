@@ -18,7 +18,6 @@ namespace CarGo
         private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
         private Game1 theGame;
-        private KeyboardState previousKeyBoardState;
         private GamePadState previousState;
 
         public PostGameMenu(SpriteBatch spriteBatchInit, Game1 game)
@@ -44,7 +43,7 @@ namespace CarGo
 
             //Draw Background and Selection
             //spriteBatch.Draw(texture, hitbox.Center - offset, null, Color.White, hitbox.RotationRad, hitbox.Offset, 1.0f, SpriteEffects.None, 0f);
-            switch (theGame.GameState)
+            switch (StateMachine.Instance.gameState)
             {
                 case GameState.MenuWon:
                     spriteBatch.Draw(PostGameMenuBackgroundWin, new Vector2(0, 0), Color.White);
@@ -70,25 +69,12 @@ namespace CarGo
                 {
                     theGame.scene.Reset();
                     theGame.modifierMenu.Reset();
-                    theGame.GameState = GameState.MenuMain;
+                    StateMachine.Instance.ChangeState(GameState.MenuMain);
                 }
 
                 previousState = state;
             }
-            else //use Keyboard
-            {
-                KeyboardState keyboardstate = Keyboard.GetState();
-
-                if (keyboardstate.IsKeyUp(Keys.Enter) && previousKeyBoardState.IsKeyDown(Keys.Enter))
-                {
-                    theGame.scene.Reset();
-                    theGame.modifierMenu.Reset();
-                    theGame.GameState = GameState.MenuMain;
-                }
-
-
-                previousKeyBoardState = keyboardstate;
-            }
+            
 
 
 

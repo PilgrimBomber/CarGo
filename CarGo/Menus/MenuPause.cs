@@ -11,13 +11,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public class MainMenu
+    public class MenuPause
     {
         private Texture2D MainMenuBackground;
         private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
         private Texture2D carrierTexture;
-        private SoundEffectInstance soundHorn;
         private Game1 theGame;
         private GamePadState previousState;
 
@@ -25,7 +24,7 @@ namespace CarGo
         private int stage;
         private String[] texts;
 
-        public MainMenu(SpriteBatch spriteBatchInit, Game1 game)
+        public MenuPause(SpriteBatch spriteBatchInit, Game1 game)
         {
             spriteBatch = spriteBatchInit;
             theGame = game;
@@ -54,67 +53,16 @@ namespace CarGo
 
             //Set font for Buttontext
             spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
-
-           soundHorn = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Horn);
         }
 
-        //Draw the Menu 
-        public void Draw()
-        {
-            spriteBatch.Begin();
-
-            //Draw Background and Selection
-            spriteBatch.Draw(MainMenuBackground, new Vector2(0, 0), Color.White);
-            spriteBatch.Draw(carrierTexture, buttons[stage] - new Vector2(buttons[stage].X, 25), Color.White);
-
-            //Draw Button
-            
-            for(int j=0;j<5;j++)
-            {
-                spriteBatch.DrawString(spriteFont, texts[j], buttons[j], Color.Black);
-            }
-
-            spriteBatch.End();
-        }
-     
         public void Update()
         {
-            //TODO: Gamepad Input
-            //Check which Button is selected 
-            this.Input();
-
 
         }
 
-        private void ConfirmSelection()
+        public void Draw()
         {
-            if (stage == 0)
-            {
-                soundHorn.Play();
-                StateMachine.Instance.ChangeState(GameState.MenuModificationSelection);
-                
-            }
 
-            if (stage == 1)
-            {
-                StateMachine.Instance.ChangeState(GameState.MenuControls);
-            }
-
-            if (stage == 2)
-            {
-                StateMachine.Instance.ChangeState(GameState.MenuSettings);
-            }
-
-            if (stage == 3)
-            {
-                StateMachine.Instance.ChangeState(GameState.CreditScreen);
-            }
-
-            if (stage == 4)
-            {
-                soundHorn.Play();
-                StateMachine.Instance.ChangeState(GameState.Exit);
-            }
         }
 
         private void Input()
@@ -136,7 +84,7 @@ namespace CarGo
 
                 }
 
-                if(state.IsButtonUp(Buttons.A)&& previousState.IsButtonDown(Buttons.A))
+                if (state.IsButtonUp(Buttons.A) && previousState.IsButtonDown(Buttons.A))
                 {
                     ConfirmSelection();
                 }
@@ -150,6 +98,13 @@ namespace CarGo
             }
         }
 
+        private void ConfirmSelection()
+        {
+            if (stage == 0)
+            {
+                StateMachine.Instance.ChangeState(GameState.MenuModificationSelection);
+            }
+        }
+
     }
 }
-
