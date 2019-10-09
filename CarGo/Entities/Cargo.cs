@@ -64,7 +64,24 @@ namespace CarGo
         }
         public override void TakeDamage(int damage)
         {
-            hitpoints -= damage;
+            switch ((int)Settings.Instance.Difficulty)
+            {
+                case 1:
+                    hitpoints -= (int)(damage*0.3f);
+                    break;
+                case 2:
+                    hitpoints -= (int)(damage * 0.6f);
+                    break;
+                case 3:
+                    hitpoints -= damage;
+                    break;
+                case 4:
+                    hitpoints -= (int)(damage * 1.5f);
+                    break;
+                case 5:
+                    hitpoints -= (int)(damage * 2f);
+                    break;
+            }
         }
 
         public override void UpdateVolume()

@@ -8,10 +8,12 @@ using Microsoft.Xna.Framework;
 using Microsoft.Xna.Framework.Content;
 namespace CarGo
 {
-    public enum Difficulty {
-    Easy = 1,
-    Normal = 2,
-    Hard =5};
+    public enum Difficulty
+    {
+        Easy = 1,
+        Normal = 2,
+        Hard = 5
+    };
 
     public class Settings
     {

@@ -270,52 +270,55 @@ namespace CarGo
     public class Level1:Level
     {
         
-        public Level1(Scene scene, ContentManager content, List<Cargo> cargos)
+        public Level1(Scene scene, ContentManager content, List<Cargo> cargos, int playercount)
         {
             this.scene = scene;
             //this.content = content;
             this.cargos = cargos;
             levelNumber = 1;
             spawnEvents = new List<SpawnEvent>();
-
+                        
             spawnEvents.Add(new StartSpawnEvent(scene, 1));
             spawnEvents[0].AddSpawn(EntityType.Cargo, 960, 540);
 
             spawnEvents.Add(new SpawnEvent(0, scene));
-            spawnEvents[1].AddSpawn(EntityType.EnemyFast,2);
-            spawnEvents[1].AddSpawn(EntityType.EnemySlow, 5);
+            spawnEvents[1].AddSpawn(EntityType.EnemySlow, 2 + playercount*2);
+            spawnEvents[1].AddSpawn(EntityType.EnemyFast, 1 + playercount);
 
             spawnEvents.Add(new SpawnEvent(500, scene));
-            spawnEvents[2].AddSpawn(EntityType.EnemySlow,5);
-            spawnEvents[2].AddSpawn(EntityType.EnemyFast, 2);
+            spawnEvents[2].AddSpawn(EntityType.EnemySlow, 2 + playercount*2);
+            spawnEvents[2].AddSpawn(EntityType.EnemyFast, 1 + playercount);
 
             spawnEvents.Add(new SpawnEvent(1000, scene));
-            spawnEvents[3].AddSpawn(EntityType.EnemySlow, 6);
+            spawnEvents[3].AddSpawn(EntityType.EnemySlow, 4 + playercount*2);
 
             spawnEvents.Add(new SpawnEvent(1500, scene));
-            spawnEvents[4].AddSpawn(EntityType.EnemySlow, 2);
-            spawnEvents[4].AddSpawn(EntityType.EnemyFast, 3);
+            spawnEvents[4].AddSpawn(EntityType.EnemySlow, 1 + playercount*2);
+            spawnEvents[4].AddSpawn(EntityType.EnemyFast, 1 + playercount);
 
             spawnEvents.Add(new SpawnEvent(3000, scene));
-            spawnEvents[5].AddSpawn(EntityType.EnemySlow, 5);
+            spawnEvents[5].AddSpawn(EntityType.EnemySlow, 2 + playercount*2);
 
             spawnEvents.Add(new SpawnEvent(5000, scene));
-            spawnEvents[6].AddSpawn(EntityType.EnemySlow, 5);
-            spawnEvents[6].AddSpawn(EntityType.EnemyFast, 3);
+            spawnEvents[6].AddSpawn(EntityType.EnemySlow, 2 + playercount*2);
+            spawnEvents[6].AddSpawn(EntityType.EnemyFast, 1 + playercount);
 
             spawnEvents.Add(new SpawnEvent(8000, scene));
-            spawnEvents[7].AddSpawn(EntityType.EnemySlow, 15);
-            spawnEvents[7].AddSpawn(EntityType.EnemyFast, 1);
+            spawnEvents[7].AddSpawn(EntityType.EnemySlow, 1 + playercount*2);
+            spawnEvents[7].AddSpawn(EntityType.EnemyFast, 1 + playercount);
 
             spawnEvents.Add(new SpawnEvent(9000, scene));
-            spawnEvents[8].AddSpawn(EntityType.EnemySlow, 10);
+            spawnEvents[8].AddSpawn(EntityType.EnemySlow, 8 + playercount*2);
 
             spawnEvents.Add(new SpawnEvent(11000, scene));
-            spawnEvents[9].AddSpawn(EntityType.EnemySlow, 6);
-            spawnEvents[9].AddSpawn(EntityType.EnemyFast, 4);
+            spawnEvents[9].AddSpawn(EntityType.EnemySlow, 4 + playercount*2);
+            spawnEvents[9].AddSpawn(EntityType.EnemyFast, 3 + playercount);
 
             spawnEvents.Add(new FinishEvent(15000, scene));
+
+
             HandleStartSpawn();
+
         }
 
         

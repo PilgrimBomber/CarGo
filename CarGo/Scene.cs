@@ -28,7 +28,7 @@ namespace CarGo
         private LevelControl levelControl;
         private WorldObjectHandling worldObjectHandling;
         private Tilemap tilemap;
-       
+
         //private SpriteBatch spriteBatch;
         public Scene(SpriteBatch spriteBatch, ContentManager content, Vector2 screenSize, Game1 game)
         {
@@ -43,8 +43,7 @@ namespace CarGo
             //SoundCollection.Instance.LoadSounds(content);
             //textureCollection = new TextureCollection(content);
             //TextureCollection.Instance.loadTextures(content);
-            collisionCheck = new CollisionCheck(cargos,players,enemies,worldObjects, activeAbilities);
-            levelControl = new LevelControl(this,content, cargos);
+            collisionCheck = new CollisionCheck(cargos, players, enemies, worldObjects, activeAbilities);
             camera = new Camera(spriteBatch, screenSize, cargos, players, enemies, worldObjects, activeAbilities);
             worldObjectHandling = new WorldObjectHandling(this, worldObjects);
             tilemap = new Tilemap(1, content);
@@ -54,6 +53,12 @@ namespace CarGo
             this.content = content;
 
         }
+
+        public void LoadLevel()
+        {
+            levelControl = new LevelControl(this, content, cargos, players.Count);
+        }
+
 
         public void Reset()
         {
@@ -65,7 +70,6 @@ namespace CarGo
             cargos = new List<Cargo>();
             activeAbilities = new List<ActiveAbility>();
             collisionCheck = new CollisionCheck(cargos, players, enemies, worldObjects, activeAbilities);
-            levelControl = new LevelControl(this, content, cargos);
             camera.Reset(cargos,players,enemies,worldObjects,activeAbilities);
             worldObjectHandling = new WorldObjectHandling(this, worldObjects);
             tilemap = new Tilemap(1, content);

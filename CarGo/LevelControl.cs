@@ -15,10 +15,10 @@ namespace CarGo
         private Scene scene;
         private TimeSpan timer;
         private Level level;
-        public LevelControl(Scene scene, ContentManager content, List<Cargo> cargos)
+        public LevelControl(Scene scene, ContentManager content, List<Cargo> cargos, int playercount)
         {
             this.scene = scene;
-            this.level = new Level1(scene, content, cargos);
+            this.level = new Level1(scene, content, cargos, playercount);
             timer = TimeSpan.Zero;
         }
 

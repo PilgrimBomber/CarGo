@@ -291,8 +291,10 @@ namespace CarGo
                     {
                         theGame.scene.addPlayer(index, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index]);
                         theGame.GameState = GameState.Playing;
+                        theGame.scene.LoadLevel();
                     }
                 }
+               
             }
         }
 
