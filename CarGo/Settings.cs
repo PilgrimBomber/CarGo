@@ -10,9 +10,11 @@ namespace CarGo
 {
     public enum Difficulty
     {
-        Easy = 1,
-        Normal = 2,
-        Hard = 5
+        Noob = 1,
+        Easy = 2,
+        Normal = 3,
+        Hard = 4,
+        Extreme = 5
     };
 
     public class Settings

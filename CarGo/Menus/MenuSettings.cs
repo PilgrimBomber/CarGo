@@ -49,6 +49,9 @@ namespace CarGo
 
             switch (Settings.Instance.Difficulty)
             {
+                case Difficulty.Noob:
+                    texts[1] = "Noob";
+                    break;
                 case Difficulty.Easy:
                     texts[1] = "Easy";
                     break;
@@ -57,6 +60,9 @@ namespace CarGo
                     break;
                 case Difficulty.Hard:
                     texts[1] = "Hard";
+                    break;
+                case Difficulty.Extreme:
+                    texts[1] = "Extreme";
                     break;
             }
 
@@ -130,6 +136,10 @@ namespace CarGo
                     {
                         switch (Settings.Instance.Difficulty)
                         {
+                            case Difficulty.Noob:
+                                Settings.Instance.Difficulty = Difficulty.Easy;
+                                texts[1] = "Easy";
+                                break;
                             case Difficulty.Easy:
                                 Settings.Instance.Difficulty = Difficulty.Normal;
                                 texts[1] = "Normal";
@@ -139,8 +149,12 @@ namespace CarGo
                                 texts[1] = "Hard";
                                 break;
                             case Difficulty.Hard:
-                                Settings.Instance.Difficulty = Difficulty.Easy;
-                                texts[1] = "Easy";
+                                Settings.Instance.Difficulty = Difficulty.Extreme;
+                                texts[1] = "Extreme";
+                                break;
+                            case Difficulty.Extreme:
+                                Settings.Instance.Difficulty = Difficulty.Noob;
+                                texts[1] = "Noob";
                                 break;
                         }
                     }
@@ -164,9 +178,13 @@ namespace CarGo
                     {
                         switch (Settings.Instance.Difficulty)
                         {
+                            case Difficulty.Noob:
+                                Settings.Instance.Difficulty = Difficulty.Extreme;
+                                texts[1] = "Extreme";
+                                break;
                             case Difficulty.Easy:
-                                Settings.Instance.Difficulty = Difficulty.Hard;
-                                texts[1] = "Hard";
+                                Settings.Instance.Difficulty = Difficulty.Noob;
+                                texts[1] = "Noob";
                                 break;
                             case Difficulty.Normal:
                                 Settings.Instance.Difficulty = Difficulty.Easy;
@@ -175,6 +193,10 @@ namespace CarGo
                             case Difficulty.Hard:
                                 Settings.Instance.Difficulty = Difficulty.Normal;
                                 texts[1] = "Normal";
+                                break;
+                            case Difficulty.Extreme:
+                                Settings.Instance.Difficulty = Difficulty.Hard;
+                                texts[1] = "Hard";
                                 break;
                         }
                     }
