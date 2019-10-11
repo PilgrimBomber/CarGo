@@ -92,6 +92,8 @@ namespace CarGo
             {
                 soundHorn.Play();
                 StateMachine.Instance.ChangeState(GameState.MenuModificationSelection);
+                theGame.modifierMenu.Reset();
+                theGame.scene.Reset();
                 
             }
 
@@ -125,7 +127,6 @@ namespace CarGo
 
                 if (((state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0) || (state.IsButtonDown(Buttons.DPadDown) && previousState.IsButtonUp(Buttons.DPadDown))) && stage < 4)
                 {
-
                     stage++;
 
                 }

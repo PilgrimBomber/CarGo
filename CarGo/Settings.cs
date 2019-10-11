@@ -83,9 +83,12 @@ namespace CarGo
         public void loadSettings()
         {
             config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None);
+
             VolumeMusic = Convert.ToSingle( config.AppSettings.Settings["VolumeMusic"].Value);
+
             VolumeSound = Convert.ToSingle(config.AppSettings.Settings["VolumeSound"].Value);
-            switch(Convert.ToInt32(config.AppSettings.Settings["Difficulty"].Value))
+
+            switch (Convert.ToInt32(config.AppSettings.Settings["Difficulty"].Value))
             {
                 case 1: difficulty = Difficulty.Noob;
                     break;
@@ -101,6 +104,8 @@ namespace CarGo
                     difficulty = Difficulty.Normal;
                     throw new ArgumentOutOfRangeException();
             }
+
+            ScreenSize = new Vector2(1920, 1080);
         }
 
         public void saveSettings()

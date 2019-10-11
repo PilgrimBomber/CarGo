@@ -23,7 +23,7 @@ namespace CarGo
 
         public void HandleInput()
         {
-            if(player.PlayerIndex==PlayerIndex.Four)KeyboardInput();
+            //if(player.PlayerIndex==PlayerIndex.Four)KeyboardInput();
 
             GamepadInput();
         }
@@ -89,6 +89,11 @@ namespace CarGo
                 }
                 if (playerAction) player.Idle(false);
                 else player.Idle(true);
+
+                if (player.PlayerIndex == PlayerIndex.One && state.IsButtonDown(Buttons.Start))
+                {
+                    StateMachine.Instance.ChangeState(GameState.MenuPause);
+                }
 
                 previousState = state;
 

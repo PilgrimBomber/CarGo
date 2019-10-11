@@ -13,10 +13,11 @@ namespace CarGo
 {
     public class MenuPause
     {
-        private Texture2D MainMenuBackground;
+        
         private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
-        private Texture2D carrierTexture;
+        private Texture2D textureBackground;
+        private Texture2D textureCarrier;
         private Game1 theGame;
         private GamePadState previousState;
 
@@ -34,22 +35,28 @@ namespace CarGo
             //Create Buttons 
 
             buttons = new List<Vector2>();
-            for (int i = 0; i < 5; i++)
+            for (int i = 0; i < 4; i++)
             {
-                buttons.Add(new Vector2(300, 300 + (int)i * 100));
+                buttons.Add(new Vector2(300, 350 + (int)i * 100));
             }
 
-            texts = new String[5];
-            texts[0] = "Play";
-            texts[1] = "Controls";
-            texts[2] = "Settings";
-            texts[3] = "Credits";
-            texts[4] = "Exit";
+            texts = new String[4];
+            texts[0] = "Continue";
+            texts[1] = "Settings";
+            texts[2] = "Menu";
+            texts[3] = "Exit";
 
             //Texture
-            //Set Background 
-            MainMenuBackground = TextureCollection.Instance.GetTexture(TextureType.MainMenuBackground);
-            carrierTexture = TextureCollection.Instance.GetTexture(TextureType.MainMenuCarrier);
+            //Set Background
+            Color backgroundColor = new Color(0, 0, 0,100);
+            textureBackground = new Texture2D(spriteBatchInit.GraphicsDevice, (int)Settings.Instance.ScreenSize.X, (int)Settings.Instance.ScreenSize.Y);
+            Color[] data = new Color[(int)Settings.Instance.ScreenSize.X * (int)Settings.Instance.ScreenSize.Y];
+            for(int i=0;i< (int)Settings.Instance.ScreenSize.X * (int)Settings.Instance.ScreenSize.Y; i++)
+            {
+                data[i] = backgroundColor;
+            }
+            textureBackground.SetData(data);
+            textureCarrier = TextureCollection.Instance.GetTexture(TextureType.MainMenuCarrier);
 
             //Set font for Buttontext
             spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
@@ -57,12 +64,23 @@ namespace CarGo
 
         public void Update()
         {
-
+            Input();
         }
 
         public void Draw()
         {
+            spriteBatch.Begin();
 
+            spriteBatch.Draw(textureBackground, new Vector2(0, 0), Color.White);
+
+            for (int i = 0; i < 4; i++)
+            {
+                spriteBatch.DrawString(spriteFont, texts[i], buttons[i], Color.Black);
+            }
+
+            spriteBatch.Draw(textureCarrier, buttons[stage] + new Vector2(-300, -25), Color.White);
+
+            spriteBatch.End();
         }
 
         private void Input()
@@ -88,21 +106,28 @@ namespace CarGo
                 {
                     ConfirmSelection();
                 }
-
-                if (state.IsButtonUp(Buttons.B) && previousState.IsButtonDown(Buttons.B))
-                {
-                    stage = 4;
-                }
-
+                
                 previousState = state;
             }
         }
 
         private void ConfirmSelection()
         {
-            if (stage == 0)
+            switch (stage)
             {
-                StateMachine.Instance.ChangeState(GameState.MenuModificationSelection);
+                case 0:
+                    StateMachine.Instance.ChangeState(GameState.Playing);
+                    break;
+                case 1:
+                    StateMachine.Instance.ChangeState(GameState.MenuSettings);
+                    break;
+                case 2:
+                    StateMachine.Instance.ChangeState(GameState.MenuMain);
+                    break;
+                case 3:
+                    StateMachine.Instance.ChangeState(GameState.Exit);
+                    break;
+
             }
         }
 
