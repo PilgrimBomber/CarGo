@@ -130,9 +130,9 @@ namespace CarGo
 
                 }
 
-                if(state.ThumbSticks.Left.X > 0.2f)
+                if(state.ThumbSticks.Left.X > 0.2f || state.IsButtonDown(Buttons.DPadRight))
                 {
-                    if(stage ==0 && previousState.ThumbSticks.Left.X <0.2f)
+                    if(stage ==0 && previousState.ThumbSticks.Left.X <0.2f && previousState.IsButtonUp(Buttons.DPadRight))
                     {
                         switch (Settings.Instance.Difficulty)
                         {
@@ -172,9 +172,9 @@ namespace CarGo
                     }
                 }
 
-                if (state.ThumbSticks.Left.X < -0.2f)
+                if (state.ThumbSticks.Left.X < -0.2f || state.IsButtonDown(Buttons.DPadLeft))
                 {
-                    if (stage == 0 && previousState.ThumbSticks.Left.X > -0.2f)
+                    if (stage == 0 && previousState.ThumbSticks.Left.X > -0.2f && previousState.IsButtonUp(Buttons.DPadLeft))
                     {
                         switch (Settings.Instance.Difficulty)
                         {

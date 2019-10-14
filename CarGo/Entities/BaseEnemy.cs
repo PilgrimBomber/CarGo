@@ -62,6 +62,7 @@ namespace CarGo
         {
             if (path != null)
             {
+                if (path.Count == 0) return;
                 if (Vector2.Distance(path.First(), hitbox.Center) < 10)
                 {
                     if (wasPushed) return;
