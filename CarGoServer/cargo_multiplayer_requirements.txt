@@ -1,0 +1,42 @@
+Client:
+Username/ID
+
+hostet game. 
+	wird in lobby liste hinzugefügt
+	kann spieler einladen
+
+joint game:
+	wird in spielerliste 
+
+
+
+Server:
+
+
+
+
+
+Wer spawnt Gegner/Hindernisse? Server oder Client
+
+Nachrichten:
+MessageType
+Objekt ID
+	MessageType
+		Spawn
+			-Object Type
+			-message.writeallFields/readall...
+        UpdatePosition
+			-new Position
+        UpdateRotation
+			-new Rotation
+        Despawn
+			-Object Type
+        StateChange
+
+
+
+Matchmaking:
+liste mit lobbys
+
+liste mit allen Spielern(Seiten/Suche)
+	können eingeladen werden
