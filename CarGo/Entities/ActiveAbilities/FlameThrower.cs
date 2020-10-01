@@ -17,7 +17,7 @@ namespace CarGo
         private TimeSpan tickTimer;
         private SoundEffectInstance soundFlame;
         private Animation animation;
-        public FlameThrower(Scene scene, Player player):base(scene,player)
+        public FlameThrower(Scene scene, Player player, int objectID) :base(scene,player,objectID)
         {
             damage = 400;
             resetActivationCooldownTimer = 6;

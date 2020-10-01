@@ -18,7 +18,7 @@ namespace CarGo
         private bool isExploded;
         private Animation animation;
 
-        public RocketLauncher(Scene scene, Player player):base(scene,player)
+        public RocketLauncher(Scene scene, Player player, int objectID) :base(scene,player,objectID)
         {
             damage = 200;
             resetLivingTimer = 10;

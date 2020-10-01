@@ -9,18 +9,19 @@ using Lidgren.Network;
 
 namespace CarGo.Network
 {
-    class NetworkThread
+    public class NetworkThread
     {
 		private static NetClient s_client;
-
-
-		NetworkThread()
+		public static List<NetIncomingMessage> incomingMessages;
+		
+		public NetworkThread()
         {
 			NetPeerConfiguration config = new NetPeerConfiguration("chat");
 			config.AutoFlushSendQueue = false;
 			s_client = new NetClient(config);
-
-			s_client.RegisterReceivedCallback(new SendOrPostCallback(GotMessage));
+			incomingMessages = new List<NetIncomingMessage>();
+			s_client.RegisterReceivedCallback(new SendOrPostCallback(GotMessage),new SynchronizationContext());
+			
 		}
 
 
@@ -46,21 +47,9 @@ namespace CarGo.Network
 						NetConnectionStatus status = (NetConnectionStatus)im.ReadByte();
 						break;
 					case NetIncomingMessageType.Data:
-                        switch ((MessageType)im.ReadByte())
-                        {
-                            case MessageType.Spawn:
-                                break;
-
-
-							case MessageType.Despawn:
-                                break;
-                            case MessageType.UpdatePosition:
-                                break;
-                            case MessageType.UpdateRotation:
-                                break;
-                            case MessageType.StateChange:
-                                break;
-                        }
+						incomingMessages.Add(im);
+						
+						
                         break;
 					default:
 						break;
@@ -68,17 +57,15 @@ namespace CarGo.Network
                 s_client.Recycle(im);
             }
         }
-        private Type GetType(ObjectType objectType)
-		{
-			Type type = typeof(Program);
+        
 
-			switch (objectType)
-			{
-				case ObjectType.Player: type = typeof(CarGo.Player); break;
 
-					//...
-			}
-			return type;
-		}
+		//Send Message
+		private void BroadCastMessage(MessageType messageType, ObjectMessageType objectMessageType)
+        {
+
+        }
+
+
     }
 }

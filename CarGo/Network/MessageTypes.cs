@@ -6,7 +6,23 @@ using System.Threading.Tasks;
 
 namespace CarGo.Network
 {
+    public enum ServerInfo
+    {
+        ServerMessage,
+        Broadcast
+    }
+
+    public enum ServerTask
+    {
+        GetID
+    }
+    
     public enum MessageType
+    {
+        GameState,
+        ObjectUpdate
+    }
+    public enum ObjectMessageType
     {
         Spawn,
         UpdatePosition,
@@ -16,7 +32,7 @@ namespace CarGo.Network
     }
     public enum ObjectType
     {
-        Player,
+        Player
 
     }
 

@@ -15,8 +15,9 @@ namespace CarGo
         public bool isActivated;
         public bool isExploded;
         Texture2D ripTexture;
-        public Skull(Scene scene, Vector2 center)
+        public Skull(Scene scene, Vector2 center,int objectID)
         {
+            this.objectID = objectID;
             this.scene = scene;
             texture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_Skull);
             ripTexture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_SkullRip);

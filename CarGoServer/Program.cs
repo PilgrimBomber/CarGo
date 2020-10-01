@@ -16,7 +16,7 @@ namespace CarGoServer
     {
         private static NetServer s_server;
 
-        
+        //This is the Server
 		
 
         static void Main(string[] args)
@@ -73,29 +73,52 @@ namespace CarGoServer
 						break;
 					case NetIncomingMessageType.Data:
 						// incoming chat message from a client
-						string chat = im.ReadString();
+						var messageType = im.ReadByte();
+                        switch ((CarGo.Network.ServerInfo)messageType)
+                        {
+                            case CarGo.Network.ServerInfo.ServerMessage:
+                                //handle task
+                                var task = im.ReadByte();
+                                switch ((CarGo.Network.ServerTask)task)
+                                {
+                                    case CarGo.Network.ServerTask.GetID:
 
-						Console.WriteLine("Broadcasting '" + chat + "'");
 
-						// broadcast this to all connections, except sender
-						List<NetConnection> all = s_server.Connections; // get copy
-						all.Remove(im.SenderConnection);
+                                        break;
 
-						if (all.Count > 0)
-						{
-							NetOutgoingMessage om = s_server.CreateMessage();
-							om.Write(NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " said: " + chat);
-							XNAExtensions.Write(om, new Vector3(1, 2, 3));
-							s_server.SendMessage(om, all, NetDeliveryMethod.ReliableOrdered, 0);
-						}
+									default:
+										//fehler
+										break;
+                                }
+                                break;
+                            case CarGo.Network.ServerInfo.Broadcast:
+								//broadcast message
+								string message = im.ReadString();
+								// broadcast this to all connections, except sender
+								List<NetConnection> all = s_server.Connections; // get copy
+								all.Remove(im.SenderConnection);
+
+								if (all.Count > 0)
+								{
+									NetOutgoingMessage om = s_server.CreateMessage();
+									om.Write(/*NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " said: " +*/ message);
+									s_server.SendMessage(om, all, NetDeliveryMethod.ReliableOrdered, 0);
+								}
+								break;
+							default:
+								//Fehler
+								break;
+                        }
+                       				
+						
 						break;
 					default:
 						Console.WriteLine("Unhandled type: " + im.MessageType + " " + im.LengthBytes + " bytes " + im.DeliveryMethod + "|" + im.SequenceChannel);
 						break;
-				}
-				s_server.Recycle(im);
-			}
-		}
+                }
+                s_server.Recycle(im);
+            }
+        }
 
     }
 }

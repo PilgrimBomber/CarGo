@@ -51,7 +51,7 @@ namespace CarGo
             //enemyAI = new EnemyAI(tilemap, enemies, cargo);
             enemyAI = new EnemyAI(worldObjects, enemies, cargos);
             this.content = content;
-
+            
         }
 
         public void LoadLevel()
@@ -118,22 +118,22 @@ namespace CarGo
 
 
 
-        public void addCactus(Vector2 center)
+        public void addCactus(Vector2 center, int objectID)
         {
-            Cactus cactus = new Cactus(this, center);
+            Cactus cactus = new Cactus(this, center, objectID);
             addEntity(cactus);
             worldObjects.Add(cactus);
         }
 
-        public void addRock(Vector2 center)
+        public void addRock(Vector2 center, int objectID)
         {
-            Rock rock = new Rock(this, center);
+            Rock rock = new Rock(this, center, objectID);
             addEntity(rock);
             worldObjects.Add(rock);
         }
-        public void addSkull(Vector2 center)
+        public void addSkull(Vector2 center, int objectID)
         {
-            Skull skull = new Skull(this, center);
+            Skull skull = new Skull(this, center, objectID);
             addEntity(skull);
             worldObjects.Add(skull);
         }
@@ -144,16 +144,16 @@ namespace CarGo
             removeEntity(worldObject);
         }
 
-        public void addEnemy(EnemyType enemyType, Vector2 center)
+        public void addEnemy(EnemyType enemyType, Vector2 center, int objectID)
         {
             BaseEnemy enemy;
             switch (enemyType)
             {
-                case EnemyType.EnemyDummy: enemy = new EnemySlow(this, center);
+                case EnemyType.EnemyDummy: enemy = new EnemySlow(this, center, objectID);
                     break;
-                case EnemyType.EnemyFast: enemy = new EnemyFast(this, center);
+                case EnemyType.EnemyFast: enemy = new EnemyFast(this, center, objectID);
                     break;
-                default: enemy = new EnemySlow(this, center);
+                default: enemy = new EnemySlow(this, center, objectID);
                     break;
             }
             enemies.Add(enemy);
@@ -166,9 +166,17 @@ namespace CarGo
             removeEntity(enemy);
         }
 
-        public void addPlayer(PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType)
+
+        public void addPlayer(bool local, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType, int objectID)
         {
-            Player player = new Player(this, playerIndex, center, carType, carFrontType, abilityType);
+            Player player = new Player(local, this, PlayerIndex.One, center, carType, carFrontType, abilityType, objectID);
+            players.Add(player);
+            addEntity(player);
+        }
+
+        public void addPlayer(PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType, int objectID)
+        {
+            Player player = new Player(true, this, playerIndex, center, carType, carFrontType, abilityType, objectID);
             players.Add(player);
             addEntity(player);
         }
@@ -178,9 +186,9 @@ namespace CarGo
             removeEntity(player);
         }
 
-        public void addCargo(Vector2 center)
+        public void addCargo(Vector2 center, int objectID)
         {
-            Cargo cargo = new Cargo(this, center);
+            Cargo cargo = new Cargo(this, center, objectID);
             cargos.Add(cargo);
             entities.Add(cargo);
         }

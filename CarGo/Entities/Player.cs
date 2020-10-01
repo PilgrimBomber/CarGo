@@ -32,7 +32,7 @@ namespace CarGo
         private SoundEffectInstance soundHorn;
         private SoundEffectInstance soundHorn2;
         private SoundEffectInstance soundHorn3;
-
+        private bool local = true;
         //public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float TurnRate { get => turnRate; set => turnRate = value; }
         public float Drift { get => drift; set => drift = value; }
@@ -40,8 +40,10 @@ namespace CarGo
         public float Acceleration { get => acceleration; set => acceleration = value; }
         public PlayerIndex PlayerIndex { get => playerIndex; set => playerIndex = value; }
 
-        public Player(Scene scene, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType frontType, AbilityType ability)
+        public Player(bool local, Scene scene, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType frontType, AbilityType ability,int objectID)
         {
+            this.local = local;
+            this.objectID = objectID;
             this.playerIndex = playerIndex;
             this.scene = scene;
             inputHandler = new InputHandler(this, playerIndex);
@@ -85,16 +87,16 @@ namespace CarGo
             switch (ability)
             {
                 case AbilityType.RocketLauncher:
-                    this.active = new RocketLauncher(scene, this);
+                    this.active = new RocketLauncher(scene, this,ID_Manager.Instance.GetID());
                     break;
                 case AbilityType.Shockwave:
-                    this.active = new Shockwave(scene, this);
+                    this.active = new Shockwave(scene, this, ID_Manager.Instance.GetID());
                     break;
                 case AbilityType.TrapLauncher:
-                    this.active = new TrapLauncher(scene, this);
+                    this.active = new TrapLauncher(scene, this, ID_Manager.Instance.GetID());
                     break;
                 case AbilityType.Flamethrower:
-                    this.active = new FlameThrower(scene, this);
+                    this.active = new FlameThrower(scene, this, ID_Manager.Instance.GetID());
                     break;
             }
             scene.addActiveAbility(active);

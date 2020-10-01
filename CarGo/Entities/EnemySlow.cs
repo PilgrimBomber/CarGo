@@ -18,12 +18,12 @@ namespace CarGo
         //private List<Location> path2;
         //public List<Location> Path2 { get => path2; set => path2 = value; }
 
-        public EnemySlow(Scene scene, Vector2 center):base(scene)
+        public EnemySlow(Scene scene, Vector2 center,int objectID) : base(scene)
         {
-
+            this.objectID = objectID;
             //Set dummy texture
             texture = TextureCollection.Instance.GetTexture(TextureType.Enemy_Zombie_Slow);
-            
+
             //textureCollection.GetTexture(TextureType.Enemy_Zombie);
             soundCrash = SoundCollection.Instance.GetSoundInstance(SoundType.Enemy_Hit);
             UpdateVolume();
@@ -36,7 +36,6 @@ namespace CarGo
             baseSpeed = 2;
             Damage = 75;
         }
-        
 
         public override void Collide(Entity entity, EntityCategory entityCategory)
         {

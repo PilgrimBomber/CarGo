@@ -25,6 +25,10 @@ namespace CarGo
         MenuPause menuPause;
         public ModifierMenu modifierMenu;
         SoundEffectInstance music;
+        Network.NetworkThread networkThread = new Network.NetworkThread();
+        Network.LocalUpdates localUpdates;
+        int clientNumber;
+        public bool networkGame = false;
 
         public Game1()
         {
@@ -33,6 +37,9 @@ namespace CarGo
             graphics.PreferredBackBufferHeight = 1080;
             this.IsFixedTimeStep = true;//false;
             this.TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d); //60);
+
+            localUpdates = new Network.LocalUpdates(scene);
+
 #if DEBUG
             // Debug Code
 
@@ -100,8 +107,13 @@ namespace CarGo
         {
             if (/*GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||*/ Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
-            // TODO: Add your update logic here
-            switch (StateMachine.Instance.gameState)
+
+            if (networkGame)
+            {
+                localUpdates.Update();
+            }
+                // TODO: Add your update logic here
+                switch (StateMachine.Instance.gameState)
             {
                 case GameState.Playing:
                     scene.Update(gameTime);
@@ -135,6 +147,8 @@ namespace CarGo
                     break;
                 default:break;
             }
+            
+
         }
 
         /// <summary>

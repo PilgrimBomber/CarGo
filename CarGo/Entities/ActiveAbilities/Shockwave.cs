@@ -16,7 +16,7 @@ namespace CarGo
         private Texture2D textureShockwave;
         private Animation animation;
         private List<Entity> collidedEntities;
-        public Shockwave(Scene scene, Player player):base(scene,player)
+        public Shockwave(Scene scene, Player player, int objectID) :base(scene,player,objectID)
         {
             damage = 70;
             resetActivationCooldownTimer = 2.5f;

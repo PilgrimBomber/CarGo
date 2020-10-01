@@ -19,8 +19,9 @@ namespace CarGo
         protected float resetLivingTimer;
         protected float livingTimer;
         public bool isActive;
-        protected ActiveAbility(Scene scene, Player player)
+        protected ActiveAbility(Scene scene, Player player, int objectID)
         {
+            this.objectID = objectID;
             isActive = false;
             activationCooldownTimer = 0;
             livingTimer = 0;

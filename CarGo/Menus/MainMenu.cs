@@ -94,7 +94,8 @@ namespace CarGo
                 StateMachine.Instance.ChangeState(GameState.MenuModificationSelection);
                 theGame.modifierMenu.Reset();
                 theGame.scene.Reset();
-                
+                ID_Manager.Instance.SetClientNumber(1);
+                //TODO set client number from network
             }
 
             if (stage == 1)

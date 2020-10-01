@@ -16,8 +16,9 @@ namespace CarGo
         public bool isExploded;
         Texture2D ripTexture;
         Texture2D completlyRipTexture;
-        public Cactus(Scene scene, Vector2 center)
+        public Cactus(Scene scene, Vector2 center, int objectID)
         {
+            this.objectID = objectID;
             this.scene = scene;
             texture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_Cactus);
             ripTexture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_CactusRip);

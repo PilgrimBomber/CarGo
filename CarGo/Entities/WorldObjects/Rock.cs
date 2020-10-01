@@ -12,8 +12,10 @@ namespace CarGo
 {
     public class Rock : WorldObject
     {
-        public Rock(Scene scene, Vector2 center)
+        public Rock(Scene scene, Vector2 center,int objectID)
         {
+            this.objectID = objectID;
+            objectID = ID_Manager.Instance.GetID();
             this.scene = scene;
             texture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_Rock);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));

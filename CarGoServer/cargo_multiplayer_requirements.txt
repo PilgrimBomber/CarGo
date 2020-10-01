@@ -13,16 +13,34 @@ joint game:
 Server:
 
 
+Menüs:
+	Auswahl:
+		Local Game -> Normaler Start
+		Host Game -> Server erstellen(Einstellungsmenü) -> Lobby
+		Join Game -> Direct Connect/Lobbysuche  -> Lobby
 
 
+
+Object ID
+	Host sendet Nachricht an Server, Server vergibt ID?
+	Jeder Client hat Liste mit möglichen IDs?
+		Client hat Startnummer vom server, rest generiert er selbst
+Client Number (1,2,3,4)
+Input ändern (PlayerIndex)
 
 Wer spawnt Gegner/Hindernisse? Server oder Client
+	Ein HostClient verwaltet allgemeine Spawns
 
 Nachrichten:
+
 MessageType
-Objekt ID
-	MessageType
+	Object Update
+
+MessageType
+	GameState	
+	ObjectUpdate ->Objekt ID
 		Spawn
+
 			-Object Type
 			-message.writeallFields/readall...
         UpdatePosition
@@ -32,6 +50,7 @@ Objekt ID
         Despawn
 			-Object Type
         StateChange
+		Collision/Damage?
 
 
 

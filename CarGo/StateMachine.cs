@@ -9,9 +9,10 @@ namespace CarGo
     public enum GameState { Playing, MenuMain, MenuModificationSelection, MenuPause, MenuLost, MenuWon, LevelEditor, Exit, MenuControls, CreditScreen, MenuSettings }
     public class StateMachine
     {
-        private static StateMachine instance;
+        
         public GameState gameState;
         private GameState previousState;
+        private static StateMachine instance;
         public static StateMachine Instance
         {
             get

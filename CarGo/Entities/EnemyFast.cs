@@ -18,9 +18,9 @@ namespace CarGo
         //private List<Location> path2;
         //public List<Location> Path2 { get => path2; set => path2 = value; }
 
-        public EnemyFast(Scene scene, Vector2 center) : base(scene)
+        public EnemyFast(Scene scene, Vector2 center,int objectID) : base(scene)
         {
-
+            this.objectID = objectID;
             //Set EnemyFast texture
             texture = TextureCollection.Instance.GetTexture(TextureType.Enemy_Zombie_Fast);
             //textureCollection.GetTexture(TextureType.Enemy_Zombie);

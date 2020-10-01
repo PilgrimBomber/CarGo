@@ -14,8 +14,9 @@ namespace CarGo
     {
         private CarFront carFront;
 
-        public Cargo (Scene scene, Vector2 center)
+        public Cargo(Scene scene, Vector2 center,int objectID)
         {
+            this.objectID=objectID;
             this.scene = scene;
             texture = TextureCollection.Instance.GetTexture(TextureType.Cargo);
             this.hitbox = new RotRectangle(0, center, new Vector2(texture.Width / 2, texture.Height / 2));

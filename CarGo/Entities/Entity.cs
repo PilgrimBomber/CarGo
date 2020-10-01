@@ -36,7 +36,7 @@ namespace CarGo
         public RotRectangle Hitbox { get => hitbox;}
         public Vector2 Velocity { get => velocity; set => velocity = value; }
 
-
+        public int objectID;
 
         //public event EventHandler<EventArgs> DrawOrderChanged;
         //public event EventHandler<EventArgs> VisibleChanged;

@@ -19,7 +19,7 @@ namespace CarGo
         private SoundEffectInstance soundTrapLaunch;
 
 
-        public TrapLauncher(Scene scene, Player player):base(scene,player)
+        public TrapLauncher(Scene scene, Player player, int objectID) :base(scene,player,objectID)
         {
             damage = 200;
             resetLivingTimer = 8;
