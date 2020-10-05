@@ -16,6 +16,8 @@ namespace CarGoServer
     {
         private static NetServer s_server;
 
+		private static Dictionary<int, NetConnection> clients;
+
         //This is the Server
 		
 
@@ -27,14 +29,14 @@ namespace CarGoServer
             s_server = new NetServer(config);
 			s_server.Start();
 			s_server.RegisterReceivedCallback(new SendOrPostCallback(CheckForMessages), new SynchronizationContext());
-
+			clients = new Dictionary<int, NetConnection>();
 			Console.WriteLine("Server started on Port " + config.Port);
 
             while (true)
             {
 				//CheckForMessages();
-				NetBuffer message = new NetBuffer();
-				XNAExtensions.Write(message, new Vector3(1, 2, 3));
+				//NetBuffer message = new NetBuffer();
+				//XNAExtensions.Write(message, new Vector3(1, 2, 3));
 
 				//Send messages
 
@@ -67,7 +69,20 @@ namespace CarGoServer
 						Console.WriteLine(NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " " + status + ": " + reason);
 						
 						if (status == NetConnectionStatus.Connected)
-						Console.WriteLine("Remote hail: " + im.SenderConnection.RemoteHailMessage.ReadString());
+                        {
+							Console.WriteLine("Remote hail: " + im.SenderConnection.RemoteHailMessage.ReadString());
+                            for (int i = 0; i < 4; i++)
+                            {
+								if(clients.ContainsKey(i))
+                                {
+									continue;
+                                }
+								clients.Add(i, im.SenderConnection);
+								break;
+							}
+							
+						}
+						
 
 						//UpdateConnectionsList();
 						break;
@@ -81,8 +96,22 @@ namespace CarGoServer
                                 var task = im.ReadByte();
                                 switch ((CarGo.Network.ServerTask)task)
                                 {
-                                    case CarGo.Network.ServerTask.GetID:
-
+                                    case CarGo.Network.ServerTask.GetClientNumber:
+                                        foreach (int key in clients.Keys)
+                                        {
+                                            NetConnection value;
+											clients.TryGetValue(key, out value);
+											if (value == im.SenderConnection)
+                                            {
+												
+												NetOutgoingMessage om = s_server.CreateMessage();
+												om.Write((byte)CarGo.Network.MessageType.ReceiveClientNumber);
+												om.Write(key);
+												s_server.SendMessage(om, im.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+												break;
+											}
+                                        }
+										
 
                                         break;
 

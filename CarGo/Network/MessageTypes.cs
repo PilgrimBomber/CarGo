@@ -12,15 +12,18 @@ namespace CarGo.Network
         Broadcast
     }
 
+    
+
     public enum ServerTask
     {
-        GetID
+        GetClientNumber
     }
     
     public enum MessageType
     {
         GameState,
-        ObjectUpdate
+        ObjectUpdate,
+        ReceiveClientNumber
     }
     public enum ObjectMessageType
     {

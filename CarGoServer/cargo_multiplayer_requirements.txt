@@ -25,6 +25,9 @@ Object ID
 	Host sendet Nachricht an Server, Server vergibt ID?
 	Jeder Client hat Liste mit möglichen IDs?
 		Client hat Startnummer vom server, rest generiert er selbst
+
+		Muss requested werden. muss warten bis antwort kommt
+
 Client Number (1,2,3,4)
 Input ändern (PlayerIndex)
 

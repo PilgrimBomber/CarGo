@@ -110,6 +110,7 @@
     <Compile Include="Menus\CreditScreen.cs" />
     <Compile Include="Menus\LaunchMenu.cs" />
     <Compile Include="Menus\MainMenu.cs" />
+    <Compile Include="Menus\Menu.cs" />
     <Compile Include="Menus\MenuControls.cs" />
     <Compile Include="Menus\MenuPause.cs" />
     <Compile Include="Menus\MenuSettings.cs" />

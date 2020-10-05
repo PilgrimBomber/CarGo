@@ -23,6 +23,7 @@ namespace CarGo
         CreditScreen creditScreen;
         MenuSettings menuSettings;
         MenuPause menuPause;
+        LaunchMenu launchMenu;
         public ModifierMenu modifierMenu;
         SoundEffectInstance music;
         Network.NetworkThread networkThread = new Network.NetworkThread();
@@ -73,6 +74,7 @@ namespace CarGo
             menuControls = new MenuControls(spriteBatch, this);
             menuPause = new MenuPause(spriteBatch, this);
             creditScreen = new CreditScreen(spriteBatch, this);
+            launchMenu = new LaunchMenu(spriteBatch, this,networkThread);
             music = SoundCollection.Instance.GetSoundInstance(SoundType.Menu_Music);
             music.IsLooped = true;
             music.Volume = 0.5f * Settings.Instance.VolumeMusic;
@@ -112,8 +114,8 @@ namespace CarGo
             {
                 localUpdates.Update();
             }
-                // TODO: Add your update logic here
-                switch (StateMachine.Instance.gameState)
+            // TODO: Add your update logic here
+            switch (StateMachine.Instance.gameState)
             {
                 case GameState.Playing:
                     scene.Update(gameTime);
@@ -122,7 +124,7 @@ namespace CarGo
                     menuPause.Update();
                     break;
                 case GameState.MenuMain:
-                    mainMenu.Update();               
+                    mainMenu.Update();
                     break;
                 case GameState.MenuModificationSelection:
                     modifierMenu.Update();
@@ -145,9 +147,18 @@ namespace CarGo
                 case GameState.MenuSettings:
                     menuSettings.Update();
                     break;
-                default:break;
+                case GameState.LevelEditor:
+                    break;
+                case GameState.LaunchMenu:
+                    launchMenu.Update();
+                    break;
+                case GameState.OnlineLobby:
+                    break;
+                case GameState.SearchLobby:
+                    break;
+                default: break;
             }
-            
+
 
         }
 
@@ -189,9 +200,20 @@ namespace CarGo
                 case GameState.MenuSettings:
                     menuSettings.Draw();
                     break;
+                case GameState.LevelEditor:
+                    break;
+                case GameState.Exit:
+                    break;
+                case GameState.LaunchMenu:
+                    launchMenu.Draw();
+                    break;
+                case GameState.OnlineLobby:
+                    break;
+                case GameState.SearchLobby:
+                    break;
                 default: break; ;
             }
-            
+
         }
 
         public void UpdateMusicVolume()

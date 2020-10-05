@@ -91,11 +91,8 @@ namespace CarGo
             if (stage == 0)
             {
                 soundHorn.Play();
-                StateMachine.Instance.ChangeState(GameState.MenuModificationSelection);
-                theGame.modifierMenu.Reset();
-                theGame.scene.Reset();
-                ID_Manager.Instance.SetClientNumber(1);
-                //TODO set client number from network
+                StateMachine.Instance.ChangeState(GameState.LaunchMenu);
+                
             }
 
             if (stage == 1)

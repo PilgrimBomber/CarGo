@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CarGo
 {
-    public enum GameState { Playing, MenuMain, MenuModificationSelection, MenuPause, MenuLost, MenuWon, LevelEditor, Exit, MenuControls, CreditScreen, MenuSettings }
+    public enum GameState { Playing, MenuMain, MenuModificationSelection, MenuPause, MenuLost, MenuWon, LevelEditor, Exit, MenuControls, CreditScreen, MenuSettings, LaunchMenu, OnlineLobby, SearchLobby }
     public class StateMachine
     {
-        
+        public bool networkGame;
         public GameState gameState;
         private GameState previousState;
         private static StateMachine instance;
@@ -22,6 +22,7 @@ namespace CarGo
             }
         }
 
+        
         private StateMachine()
         {
             gameState = GameState.MenuMain;

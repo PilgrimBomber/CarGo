@@ -11,6 +11,7 @@ namespace CarGo.Network
 {
     public class LocalUpdates
     {
+        
         Scene scene;
         StateMachine stateMachine;
         public LocalUpdates(Scene scene)
@@ -39,35 +40,39 @@ namespace CarGo.Network
             {
                 case MessageType.GameState:
 
-					//Update GameState
+                    //Update GameState
 
                     break;
                 case MessageType.ObjectUpdate:
-					var objectID = im.ReadInt32();
-					switch ((ObjectMessageType)im.ReadByte())
-					{
-						case ObjectMessageType.Spawn:
+                    var objectID = im.ReadInt32();
+                    switch ((ObjectMessageType)im.ReadByte())
+                    {
+                        case ObjectMessageType.Spawn:
                             var objectType = im.ReadByte();
-                            switch((ObjectType)objectType)
+                            switch ((ObjectType)objectType)
                             {
                                 case ObjectType.Player:
 
-                                    scene.addPlayer(false,im.ReadVector2(),(CarType)im.ReadByte(),(CarFrontType)im.ReadByte(),(AbilityType)im.ReadByte(),(int)objectID);
+                                    scene.addPlayer(false, im.ReadVector2(), (CarType)im.ReadByte(), (CarFrontType)im.ReadByte(), (AbilityType)im.ReadByte(), (int)objectID);
                                     break;
                             }
-							break;
-                                        
+                            break;
 
-						case ObjectMessageType.Despawn:
-							break;
-						case ObjectMessageType.UpdatePosition:
-							break;
-						case ObjectMessageType.UpdateRotation:
-							break;
-						case ObjectMessageType.StateChange:
-							break;
-					}
-					break;
+
+                        case ObjectMessageType.Despawn:
+                            break;
+                        case ObjectMessageType.UpdatePosition:
+                            break;
+                        case ObjectMessageType.UpdateRotation:
+                            break;
+                        case ObjectMessageType.StateChange:
+                            break;
+                    }
+                    break;
+                case MessageType.ReceiveClientNumber:
+                    var clientNumber = im.ReadInt32();
+                    ID_Manager.Instance.SetClientNumber(clientNumber);
+                    break;
             }
         }
 
