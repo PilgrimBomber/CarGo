@@ -20,6 +20,7 @@ namespace CarGo
 
         public EnemyFast(Scene scene, Vector2 center,int objectID) : base(scene)
         {
+            entityType = EntityType.EnemyFast;
             this.objectID = objectID;
             //Set EnemyFast texture
             texture = TextureCollection.Instance.GetTexture(TextureType.Enemy_Zombie_Fast);

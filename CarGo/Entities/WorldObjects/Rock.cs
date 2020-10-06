@@ -14,6 +14,7 @@ namespace CarGo
     {
         public Rock(Scene scene, Vector2 center,int objectID)
         {
+            entityType = EntityType.Rock;
             this.objectID = objectID;
             objectID = ID_Manager.Instance.GetID();
             this.scene = scene;

@@ -22,7 +22,7 @@ namespace CarGo
     }
 
     public enum EntityCategory { Player, Cargo, Enemy, WorldObject, ActiveAbility}
-    public enum EntityType { Player,Cargo, EnemySlow, EnemyFast, Cactus, Rock, Skull}
+    public enum EntityType { Player,Cargo, EnemySlow, EnemyFast, Cactus, Rock, Skull, Ability}
 
     public abstract class Entity: ICollidable,IUpdateable//, IDrawable
     {
@@ -37,6 +37,8 @@ namespace CarGo
         public Vector2 Velocity { get => velocity; set => velocity = value; }
 
         public int objectID;
+
+        public EntityType entityType;
 
         //public event EventHandler<EventArgs> DrawOrderChanged;
         //public event EventHandler<EventArgs> VisibleChanged;

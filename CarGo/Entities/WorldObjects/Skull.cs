@@ -17,6 +17,7 @@ namespace CarGo
         Texture2D ripTexture;
         public Skull(Scene scene, Vector2 center,int objectID)
         {
+            entityType = EntityType.Skull;
             this.objectID = objectID;
             this.scene = scene;
             texture = TextureCollection.Instance.GetTexture(TextureType.WorldObject_Skull);

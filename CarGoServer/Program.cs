@@ -23,10 +23,19 @@ namespace CarGoServer
 
         static void Main(string[] args)
         {
-            NetPeerConfiguration config = new NetPeerConfiguration("chat");
+            
+			
+			NetPeerConfiguration config = new NetPeerConfiguration("chat");
             config.MaximumConnections = 100;
             config.Port = 14242;
-            s_server = new NetServer(config);
+			if (args.Length >= 1)
+			{
+				int port;
+				if(Int32.TryParse(args[0],out port))				
+					config.Port = port;
+			}
+
+			s_server = new NetServer(config);
 			s_server.Start();
 			s_server.RegisterReceivedCallback(new SendOrPostCallback(CheckForMessages), new SynchronizationContext());
 			clients = new Dictionary<int, NetConnection>();

@@ -63,8 +63,6 @@ namespace CarGo.Network
                             break;
                         case ObjectMessageType.UpdatePosition:
                             break;
-                        case ObjectMessageType.UpdateRotation:
-                            break;
                         case ObjectMessageType.StateChange:
                             break;
                     }

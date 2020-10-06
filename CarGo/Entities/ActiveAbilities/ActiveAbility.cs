@@ -21,6 +21,7 @@ namespace CarGo
         public bool isActive;
         protected ActiveAbility(Scene scene, Player player, int objectID)
         {
+            entityType = EntityType.Ability;
             this.objectID = objectID;
             isActive = false;
             activationCooldownTimer = 0;

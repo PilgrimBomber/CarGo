@@ -24,12 +24,12 @@ namespace CarGo
         MenuSettings menuSettings;
         MenuPause menuPause;
         LaunchMenu launchMenu;
+        WaitForServerStart waitForServerStart;
+        LoadingScreen loadingScreen;
         public ModifierMenu modifierMenu;
         SoundEffectInstance music;
-        Network.NetworkThread networkThread = new Network.NetworkThread();
+        public Network.NetworkThread networkThread = new Network.NetworkThread();
         Network.LocalUpdates localUpdates;
-        int clientNumber;
-        public bool networkGame = false;
 
         public Game1()
         {
@@ -74,7 +74,9 @@ namespace CarGo
             menuControls = new MenuControls(spriteBatch, this);
             menuPause = new MenuPause(spriteBatch, this);
             creditScreen = new CreditScreen(spriteBatch, this);
+            loadingScreen = new LoadingScreen(spriteBatch, this);
             launchMenu = new LaunchMenu(spriteBatch, this,networkThread);
+            waitForServerStart = new WaitForServerStart(networkThread);
             music = SoundCollection.Instance.GetSoundInstance(SoundType.Menu_Music);
             music.IsLooped = true;
             music.Volume = 0.5f * Settings.Instance.VolumeMusic;
@@ -110,7 +112,7 @@ namespace CarGo
             if (/*GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||*/ Keyboard.GetState().IsKeyDown(Keys.Escape))
                 Exit();
 
-            if (networkGame)
+            if (StateMachine.Instance.networkGame)
             {
                 localUpdates.Update();
             }
@@ -155,6 +157,9 @@ namespace CarGo
                 case GameState.OnlineLobby:
                     break;
                 case GameState.SearchLobby:
+                    break;
+                case GameState.WaitForServerStart:
+                    waitForServerStart.Update();
                     break;
                 default: break;
             }
@@ -210,6 +215,9 @@ namespace CarGo
                 case GameState.OnlineLobby:
                     break;
                 case GameState.SearchLobby:
+                    break;
+                case GameState.WaitForServerStart:
+                    loadingScreen.Draw();
                     break;
                 default: break; ;
             }

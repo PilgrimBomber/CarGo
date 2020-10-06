@@ -18,6 +18,7 @@ namespace CarGo
         private CollisionCheck collisionCheck;
         private EnemyAI enemyAI;
         public List<Entity> entities;
+        public Dictionary<int, Entity> entitiesID;
         private List<Entity> deadEntities;
         private List<Player> players;
         private List<BaseEnemy> enemies;
@@ -28,26 +29,28 @@ namespace CarGo
         private LevelControl levelControl;
         private WorldObjectHandling worldObjectHandling;
         private Tilemap tilemap;
-
+        private Network.NetworkThread networkThread;
         //private SpriteBatch spriteBatch;
         public Scene(SpriteBatch spriteBatch, ContentManager content, Vector2 screenSize, Game1 game)
         {
             entities = new List<Entity>();
+            entitiesID = new Dictionary<int, Entity>();
             deadEntities = new List<Entity>();
             players = new List<Player>();
             enemies = new List<BaseEnemy>();
             worldObjects = new List<WorldObject>();
             cargos = new List<Cargo>();
             activeAbilities = new List<ActiveAbility>();
-
+            this.game = game;
+            networkThread = game.networkThread;
             //SoundCollection.Instance.LoadSounds(content);
             //textureCollection = new TextureCollection(content);
             //TextureCollection.Instance.loadTextures(content);
             collisionCheck = new CollisionCheck(cargos, players, enemies, worldObjects, activeAbilities);
             camera = new Camera(spriteBatch, screenSize, cargos, players, enemies, worldObjects, activeAbilities);
-            worldObjectHandling = new WorldObjectHandling(this, worldObjects);
+            //worldObjectHandling = new WorldObjectHandling(this, worldObjects);
             tilemap = new Tilemap(1, content);
-            this.game = game;
+            
             //enemyAI = new EnemyAI(tilemap, enemies, cargo);
             enemyAI = new EnemyAI(worldObjects, enemies, cargos);
             this.content = content;
@@ -56,7 +59,7 @@ namespace CarGo
 
         public void LoadLevel()
         {
-            levelControl = new LevelControl(this, content, cargos, players.Count);
+            if(!StateMachine.Instance.networkGame ||networkThread.isMainClient) levelControl = new LevelControl(this, content, cargos, players.Count);
         }
 
 
@@ -71,7 +74,7 @@ namespace CarGo
             activeAbilities = new List<ActiveAbility>();
             collisionCheck = new CollisionCheck(cargos, players, enemies, worldObjects, activeAbilities);
             camera.Reset(cargos,players,enemies,worldObjects,activeAbilities);
-            worldObjectHandling = new WorldObjectHandling(this, worldObjects);
+            if(!StateMachine.Instance.networkGame || networkThread.isMainClient) worldObjectHandling = new WorldObjectHandling(this, worldObjects);
             tilemap = new Tilemap(1, content);
             //enemyAI = new EnemyAI(tilemap, enemies, cargo);
             enemyAI = new EnemyAI(worldObjects, enemies, cargos);
@@ -82,9 +85,9 @@ namespace CarGo
         {
             foreach (Entity entity in deadEntities)
             {
-                if (players.Contains(entity)) removePlayer(entity as Player);
-                if (enemies.Contains(entity)) removeEnemy(entity as BaseEnemy);
-                if (worldObjects.Contains(entity)) removeWorldObject(entity as WorldObject);
+                if (players.Contains(entity)) removePlayer(entity as Player,true);
+                if (enemies.Contains(entity)) removeEnemy(entity as BaseEnemy, true);
+                if (worldObjects.Contains(entity)) removeWorldObject(entity as WorldObject,true);
             }
             deadEntities.Clear();
         }
@@ -103,11 +106,13 @@ namespace CarGo
                 entity.Update(gameTime);
             }
             RemoveDeadEntities();
-            levelControl.Update();
-            worldObjectHandling.Update(gameTime);
             enemyAI.Update(gameTime);
             camera.Update();
-
+            if(!StateMachine.Instance.networkGame|| networkThread.isMainClient)
+            {
+                levelControl.Update();
+                worldObjectHandling.Update(gameTime);
+            }
         }
 
         public void Draw(GameTime gameTime)
@@ -115,36 +120,70 @@ namespace CarGo
             camera.Draw(gameTime, tilemap);
         }
 
+        public void RemoteAddPlayer(Vector2 center, int objectID, CarType carType, CarFrontType carFront, AbilityType abilityType)
+        {
+            addPlayer(false,center,carType,carFront,abilityType,objectID);
+        }
+
+        public void RemoteAddEntity(EntityType type, Vector2 center, int objectID)
+        {
+            switch (type)
+            {
+                case EntityType.Player:
+                    //
+                    break;
+                case EntityType.Cargo:
+                    addCargo(center, objectID,false);
+                    break;
+                case EntityType.EnemySlow:
+                    addEnemy(EnemyType.EnemyDummy, center, objectID,false);
+                    break;
+                case EntityType.EnemyFast:
+                    addEnemy(EnemyType.EnemyFast, center, objectID,false);
+                    break;
+                case EntityType.Cactus:
+                    addCactus(center, objectID,false);
+                    break;
+                case EntityType.Rock:
+                    addRock(center, objectID,false);
+                    break;
+                case EntityType.Skull:
+                    addSkull(center, objectID,false);
+                    break;
+                default:
+                    break;
+            }
 
 
+        }
 
-        public void addCactus(Vector2 center, int objectID)
+        public void addCactus(Vector2 center, int objectID, bool local)
         {
             Cactus cactus = new Cactus(this, center, objectID);
-            addEntity(cactus);
+            addEntity(cactus,local);
             worldObjects.Add(cactus);
         }
 
-        public void addRock(Vector2 center, int objectID)
+        public void addRock(Vector2 center, int objectID, bool local)
         {
             Rock rock = new Rock(this, center, objectID);
-            addEntity(rock);
+            addEntity(rock,local);
             worldObjects.Add(rock);
         }
-        public void addSkull(Vector2 center, int objectID)
+        public void addSkull(Vector2 center, int objectID, bool local)
         {
             Skull skull = new Skull(this, center, objectID);
-            addEntity(skull);
+            addEntity(skull,local);
             worldObjects.Add(skull);
         }
 
-        public void removeWorldObject(WorldObject worldObject)
+        public void removeWorldObject(WorldObject worldObject, bool local)
         {
             worldObjects.Remove(worldObject);
-            removeEntity(worldObject);
+            removeEntity(worldObject,local);
         }
 
-        public void addEnemy(EnemyType enemyType, Vector2 center, int objectID)
+        public void addEnemy(EnemyType enemyType, Vector2 center, int objectID, bool local)
         {
             BaseEnemy enemy;
             switch (enemyType)
@@ -157,13 +196,13 @@ namespace CarGo
                     break;
             }
             enemies.Add(enemy);
-            addEntity(enemy);
+            addEntity(enemy,local);
         }
 
-        public void removeEnemy(BaseEnemy enemy)
+        public void removeEnemy(BaseEnemy enemy, bool local)
         {
             enemies.Remove(enemy);
-            removeEntity(enemy);
+            removeEntity(enemy,local);
         }
 
 
@@ -171,26 +210,27 @@ namespace CarGo
         {
             Player player = new Player(local, this, PlayerIndex.One, center, carType, carFrontType, abilityType, objectID);
             players.Add(player);
-            addEntity(player);
+            addEntity(player,local);
         }
 
         public void addPlayer(PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType, int objectID)
         {
             Player player = new Player(true, this, playerIndex, center, carType, carFrontType, abilityType, objectID);
             players.Add(player);
-            addEntity(player);
+            addEntity(player,true);
         }
-        public void removePlayer(Player player)
+        public void removePlayer(Player player, bool local)
         {
             players.Remove(player);
-            removeEntity(player);
+            removeEntity(player,local);
         }
 
-        public void addCargo(Vector2 center, int objectID)
+        public void addCargo(Vector2 center, int objectID, bool local)
         {
             Cargo cargo = new Cargo(this, center, objectID);
             cargos.Add(cargo);
-            entities.Add(cargo);
+            addEntity(cargo, local);
+            
         }
         
         public List<Cargo> GetCargos()
@@ -198,26 +238,37 @@ namespace CarGo
             return cargos;
         }
 
-        private void addEntity(Entity entity)
+        private void addEntity(Entity entity, bool local)
         {
             entities.Add(entity);
+            entitiesID.Add(entity.objectID, entity);
+            if (local && StateMachine.Instance.networkGame)
+            {
+                networkThread.BroadCastEntityUpdate(Network.ObjectMessageType.Spawn, entity);
+            }
+
         }
 
-        private void removeEntity(Entity entity)
+        private void removeEntity(Entity entity, bool local)
         {
             entities.Remove(entity);
+            entitiesID.Remove(entity.objectID);
+            if (local && StateMachine.Instance.networkGame)
+            {
+                networkThread.BroadCastEntityUpdate(Network.ObjectMessageType.Despawn, entity);
+            }
         }
         
-        public void addActiveAbility(ActiveAbility activeAbility)
+        public void addActiveAbility(ActiveAbility activeAbility, bool local)
         {
             activeAbilities.Add(activeAbility);
-            addEntity(activeAbility);
+            addEntity(activeAbility, local);
         }
         
-        public void removeActiveAbility(ActiveAbility activeAbility)
+        public void removeActiveAbility(ActiveAbility activeAbility, bool local)
         {
             activeAbilities.Remove(activeAbility);
-            removeEntity(activeAbility);
+            removeEntity(activeAbility, local);
         }
 
         public void Finish(bool won)

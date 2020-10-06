@@ -20,6 +20,7 @@ namespace CarGo
 
         public EnemySlow(Scene scene, Vector2 center,int objectID) : base(scene)
         {
+            entityType = EntityType.EnemySlow;
             this.objectID = objectID;
             //Set dummy texture
             texture = TextureCollection.Instance.GetTexture(TextureType.Enemy_Zombie_Slow);

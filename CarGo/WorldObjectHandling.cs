@@ -50,14 +50,14 @@ namespace CarGo
                 int number = random.Next(0, 11);
                 if (number == 0)
                 {
-                    scene.addSkull(Center, ID_Manager.Instance.GetID());
+                    scene.addSkull(Center, ID_Manager.Instance.GetID(), true);
                 }
                 else if (number%2 == 0)
                 {
-                    scene.addCactus(Center, ID_Manager.Instance.GetID());
+                    scene.addCactus(Center, ID_Manager.Instance.GetID(), true);
                 }else
                 {
-                    scene.addRock(Center, ID_Manager.Instance.GetID());
+                    scene.addRock(Center, ID_Manager.Instance.GetID(), true);
                 }
 
                 while (CheckCollisions(worldObjects.Last(), worldObjects)&& CheckCollisions(worldObjects.Last().Hitbox))

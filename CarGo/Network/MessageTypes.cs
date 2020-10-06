@@ -28,8 +28,8 @@ namespace CarGo.Network
     public enum ObjectMessageType
     {
         Spawn,
+        PlayerSpawn,
         UpdatePosition,
-        UpdateRotation,
         Despawn,
         StateChange
     }

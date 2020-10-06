@@ -59,7 +59,7 @@ namespace CarGo
             }
             else
             {
-                scene.addCargo(new Vector2(1920 / 2, 1080 / 2),ID_Manager.Instance.GetID());
+                scene.addCargo(new Vector2(1920 / 2, 1080 / 2),ID_Manager.Instance.GetID(), true);
                 startPosition = cargos.First().Hitbox.Center;
             }
             
@@ -202,8 +202,8 @@ namespace CarGo
                 switch (types[i])
                 {
                     //case EntityType.Cactus: scene.addCactus(Position); break;
-                    case EntityType.EnemySlow: scene.addEnemy(EnemyType.EnemyDummy, Position, ID_Manager.Instance.GetID()); break;
-                    case EntityType.EnemyFast: scene.addEnemy(EnemyType.EnemyFast, Position, ID_Manager.Instance.GetID()); break;
+                    case EntityType.EnemySlow: scene.addEnemy(EnemyType.EnemyDummy, Position, ID_Manager.Instance.GetID(), true); break;
+                    case EntityType.EnemyFast: scene.addEnemy(EnemyType.EnemyFast, Position, ID_Manager.Instance.GetID(), true); break;
                     //case EntityType.Rock: scene.addRock(Position); break;
                 }
 
@@ -243,11 +243,11 @@ namespace CarGo
                 Vector2 Position = new Vector2(offsets[i].X + distanceTravelled, offsets[i].Y);
                 switch (types[i])
                 {
-                    case EntityType.Cactus: scene.addCactus(Position, ID_Manager.Instance.GetID()); break;
-                    case EntityType.Skull: scene.addSkull(Position, ID_Manager.Instance.GetID()); break;
-                    case EntityType.EnemySlow: scene.addEnemy(EnemyType.EnemyDummy, Position, ID_Manager.Instance.GetID()); break;
-                    case EntityType.EnemyFast: scene.addEnemy(EnemyType.EnemyFast, Position, ID_Manager.Instance.GetID()); break;
-                    case EntityType.Rock: scene.addRock(Position, ID_Manager.Instance.GetID()); break;
+                    case EntityType.Cactus: scene.addCactus(Position, ID_Manager.Instance.GetID(), true); break;
+                    case EntityType.Skull: scene.addSkull(Position, ID_Manager.Instance.GetID(), true); break;
+                    case EntityType.EnemySlow: scene.addEnemy(EnemyType.EnemyDummy, Position, ID_Manager.Instance.GetID(), true); break;
+                    case EntityType.EnemyFast: scene.addEnemy(EnemyType.EnemyFast, Position, ID_Manager.Instance.GetID(), true); break;
+                    case EntityType.Rock: scene.addRock(Position, ID_Manager.Instance.GetID(), true); break;
                     case EntityType.Player: scene.addPlayer(PlayerIndex.One, Position,CarType.Medium,CarFrontType.Bumper,AbilityType.RocketLauncher, ID_Manager.Instance.GetID()); break;
                 }
 

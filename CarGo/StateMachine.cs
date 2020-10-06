@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace CarGo
 {
-    public enum GameState { Playing, MenuMain, MenuModificationSelection, MenuPause, MenuLost, MenuWon, LevelEditor, Exit, MenuControls, CreditScreen, MenuSettings, LaunchMenu, OnlineLobby, SearchLobby }
+    public enum GameState { Playing, MenuMain, MenuModificationSelection, MenuPause, MenuLost, MenuWon, LevelEditor, Exit, MenuControls, CreditScreen, MenuSettings, LaunchMenu, OnlineLobby, SearchLobby, WaitForServerStart}
     public class StateMachine
     {
         public bool networkGame;

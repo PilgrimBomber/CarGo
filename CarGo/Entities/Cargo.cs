@@ -16,6 +16,7 @@ namespace CarGo
 
         public Cargo(Scene scene, Vector2 center,int objectID)
         {
+            entityType = EntityType.Cargo;
             this.objectID=objectID;
             this.scene = scene;
             texture = TextureCollection.Instance.GetTexture(TextureType.Cargo);

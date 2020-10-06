@@ -12,9 +12,9 @@ namespace ChatClient
 		private static NetClient s_client;
 		private static Form1 s_form;
 		private static NetPeerSettingsWindow s_settingsWindow;
-
+		
 		[STAThread]
-		static void Main()
+		static void Main(string[] args)
 		{
 			Application.EnableVisualStyles();
 			Application.SetCompatibleTextRenderingDefault(false);

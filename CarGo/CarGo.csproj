@@ -109,6 +109,7 @@
     <Compile Include="FontCollection.cs" />
     <Compile Include="Menus\CreditScreen.cs" />
     <Compile Include="Menus\LaunchMenu.cs" />
+    <Compile Include="Menus\LoadingScreen.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\Menu.cs" />
     <Compile Include="Menus\MenuControls.cs" />
@@ -116,6 +117,7 @@
     <Compile Include="Menus\MenuSettings.cs" />
     <Compile Include="Menus\ModifierMenu.cs" />
     <Compile Include="Menus\PostGameMenu.cs" />
+    <Compile Include="Menus\WaitForServerStart.cs" />
     <Compile Include="Network\ID_Manager.cs" />
     <Compile Include="Network\LocalUpdates.cs" />
     <Compile Include="Network\MessageTypes.cs" />

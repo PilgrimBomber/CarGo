@@ -18,11 +18,11 @@ namespace CarGo
         private float drift;
         private PlayerIndex playerIndex;
         private float lastTurn;
-        private CarType carType;
+        public CarType carType;
         private CarFront carFront;
-        private CarFrontType carFrontType;
+        public CarFrontType carFrontType;
         private ActiveAbility active;
-        private AbilityType abilityType;
+        public AbilityType abilityType;
         private bool noDamage;
         private float cooldownBoost = 0;
         private int idleCounter;
@@ -42,6 +42,7 @@ namespace CarGo
 
         public Player(bool local, Scene scene, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType frontType, AbilityType ability,int objectID)
         {
+            entityType = EntityType.Player;
             this.local = local;
             this.objectID = objectID;
             this.playerIndex = playerIndex;
@@ -99,7 +100,7 @@ namespace CarGo
                     this.active = new FlameThrower(scene, this, ID_Manager.Instance.GetID());
                     break;
             }
-            scene.addActiveAbility(active);
+            scene.addActiveAbility(active,local);
 
             
             carFront = new CarFront(frontType, carType, hitbox);
@@ -112,9 +113,14 @@ namespace CarGo
         {
             if (hitpoints <= 0) scene.KillEntity(this);
             lastTurn = 0;
-            inputHandler.HandleInput();
+            if(local)
+            {
+                inputHandler.HandleInput();
+                CalculateCooldowns(gameTime);
+            }
+            
 
-            CalculateCooldowns(gameTime);
+            
             //Console.WriteLine("Geschwindigkeit:" + velocity.Length().ToString() + "Position: " + hitbox.Center.ToString());
             Move(velocity);
 
