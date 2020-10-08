@@ -27,6 +27,7 @@ namespace CarGo
         LaunchMenu launchMenu;
         WaitForServerStart waitForServerStart;
         LoadingScreen loadingScreen;
+        LobbySearch lobbySearch;
         public ModifierMenu modifierMenu;
         SoundEffectInstance music;
         public Network.NetworkThread networkThread;
@@ -68,8 +69,9 @@ namespace CarGo
             spriteBatch = new SpriteBatch(GraphicsDevice);
             scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
             lobbyOnline = new LobbyOnline(spriteBatch, this);
-            localUpdates = new Network.LocalUpdates(scene,lobbyOnline);
+            localUpdates = new Network.LocalUpdates(this,scene,lobbyOnline);
             networkThread = new Network.NetworkThread(localUpdates);
+            lobbySearch = new LobbySearch(spriteBatch,this);
             localUpdates.SetNetworkThread(networkThread);
             mainMenu = new MainMenu(spriteBatch, this);
             postGameMenu = new PostGameMenu(spriteBatch, this);
@@ -228,9 +230,57 @@ namespace CarGo
 
         }
 
+        public Menu GetCurrentMenu()
+        {
+
+            switch (StateMachine.Instance.gameState)
+            {
+                case GameState.MenuMain:
+                    return mainMenu;
+                    break;
+                case GameState.MenuModificationSelection:
+                    return modifierMenu;
+                    break;
+                case GameState.MenuPause:
+                    return menuPause;
+                    break;
+                case GameState.MenuLost:
+                    return postGameMenu;
+                    break;
+                case GameState.MenuWon:
+                    return postGameMenu;
+                    break;
+                case GameState.MenuControls:
+                    return menuControls;
+                    break;
+                case GameState.CreditScreen:
+                    return creditScreen;
+                    break;
+                case GameState.MenuSettings:
+                    return menuSettings;
+                    break;
+                case GameState.LaunchMenu:
+                    return launchMenu;
+                    break;
+                case GameState.OnlineLobby:
+                    return lobbyOnline;
+                    break;
+                case GameState.SearchLobby:
+                    return lobbySearch;
+                    break;
+                case GameState.WaitForServerStart:
+                    return waitForServerStart;
+                    break;
+                default:
+                    throw new ArgumentOutOfRangeException();
+                    return null;
+            }
+        }
+        
         public void UpdateMusicVolume()
         {
             music.Volume = 0.5f * Settings.Instance.VolumeMusic;
         }
+        
     }
 }

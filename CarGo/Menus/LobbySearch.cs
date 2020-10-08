@@ -9,12 +9,18 @@ namespace CarGo
 {
     class LobbySearch : Menu
     {
-        LobbySearch(SpriteBatch spriteBatchInit, Game1 game):base(spriteBatchInit,game)
+        
+
+        public LobbySearch(SpriteBatch spriteBatchInit, Game1 game):base(spriteBatchInit,game,0)
         {
 
         }
-        
-        
+
+        protected override void Back()
+        {
+            throw new NotImplementedException();
+        }
+
         protected override void ConfirmSelection()
         {
             throw new NotImplementedException();

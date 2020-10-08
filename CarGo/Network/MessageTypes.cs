@@ -24,7 +24,8 @@ namespace CarGo.Network
         GameState,
         ObjectUpdate,
         ReceiveClientNumber,
-        IntroduceClient
+        IntroduceClient,
+        MenuInput
     }
     public enum ObjectMessageType
     {

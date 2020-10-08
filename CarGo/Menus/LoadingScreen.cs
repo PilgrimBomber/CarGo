@@ -10,10 +10,10 @@ using Microsoft.Xna.Framework.Audio;
 
 namespace CarGo
 {
-    class LoadingScreen : Menu
+    class LoadingScreen
     {
 
-        public LoadingScreen(SpriteBatch spriteBatchInit, Game1 game) : base(spriteBatchInit, game)
+        public LoadingScreen(SpriteBatch spriteBatchInit, Game1 game)
         {
 
         }
@@ -21,11 +21,6 @@ namespace CarGo
         public void Draw()
         {
 
-        }
-
-        protected override void ConfirmSelection()
-        {
-            
         }
     }
 }

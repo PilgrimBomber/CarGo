@@ -11,25 +11,19 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public class MenuSettings
+    public class MenuSettings:Menu
     {
         private Texture2D settingsBackground;
-        private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
-        private Game1 theGame;
         private List<Vector2> positions;
-        private GamePadState previousState;
         private Texture2D volumeSoundBar;
         private Texture2D volumeMusicBar;
         private Texture2D carrierTexture;
 
         private String[] texts;
-        private int stage;
 
-        public MenuSettings(SpriteBatch spriteBatchInit, Game1 game)
+        public MenuSettings(SpriteBatch spriteBatchInit, Game1 game):base(spriteBatchInit,game,6)
         {
-            spriteBatch = spriteBatchInit;
-            theGame = game;
             settingsBackground = TextureCollection.Instance.GetTexture(TextureType.MainMenuBackground);
             spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
 
@@ -37,7 +31,6 @@ namespace CarGo
             volumeSoundBar= HUD.createLifebar(volumeSoundBar, 300, 50, Settings.Instance.VolumeSound * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
             carrierTexture = TextureCollection.Instance.GetTexture(TextureType.MainMenuCarrier);
 
-            stage = 0;
 
             texts = new String[6];
             texts[0] = "Difficulty";
@@ -98,158 +91,120 @@ namespace CarGo
         }
 
 
-        public void Update()
+
+        protected override void Back()
         {
-
-            this.Input();
-
+            stage = 5;
         }
 
-        private void Input()
+        protected override void ConfirmSelection()
         {
-            if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
+            switch (stage)
             {
-                GamePadState state = GamePad.GetState(PlayerIndex.One);
+                case 4:
+                    Settings.Instance.saveSettings();
+                    StateMachine.Instance.Back();
+                    stage = 0;
+                    break;
+                case 5:
+                    Settings.Instance.loadSettings();
+                    volumeMusicBar = HUD.createLifebar(volumeMusicBar, 300, 50, Settings.Instance.VolumeMusic * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
+                    volumeSoundBar = HUD.createLifebar(volumeSoundBar, 300, 50, Settings.Instance.VolumeSound * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
+                    theGame.UpdateMusicVolume();
+                    theGame.scene.UpdateAllVolumes();
+                    StateMachine.Instance.Back();
+                    stage = 0;
+                    break;
+                default:
+                    stage = 4;
+                    break;
 
-                if (((state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0 && Math.Abs (state.ThumbSticks.Left.X)< 0.2f ) || (state.IsButtonDown(Buttons.DPadDown) && previousState.IsButtonUp(Buttons.DPadDown))) && stage < 5)
-                {
-                    if(stage==0)
-                    {
-                        stage++;
-                    }
-                    stage++;
-
-                }
-                if (((state.ThumbSticks.Left.Y > 0f && previousState.ThumbSticks.Left.Y == 0 && Math.Abs(state.ThumbSticks.Left.X) < 0.2f) || (state.IsButtonDown(Buttons.DPadUp) && previousState.IsButtonUp(Buttons.DPadUp))) && stage > 0)
-                {
-                    if(stage==2)
-                    {
-                        stage--;
-                    }
-                    stage--;
-
-                }
-
-                if(state.ThumbSticks.Left.X > 0.2f || state.IsButtonDown(Buttons.DPadRight))
-                {
-                    if(stage ==0 && previousState.ThumbSticks.Left.X <0.2f && previousState.IsButtonUp(Buttons.DPadRight))
-                    {
-                        switch (Settings.Instance.Difficulty)
-                        {
-                            case Difficulty.Noob:
-                                Settings.Instance.Difficulty = Difficulty.Easy;
-                                texts[1] = "Easy";
-                                break;
-                            case Difficulty.Easy:
-                                Settings.Instance.Difficulty = Difficulty.Normal;
-                                texts[1] = "Normal";
-                                break;
-                            case Difficulty.Normal:
-                                Settings.Instance.Difficulty = Difficulty.Hard;
-                                texts[1] = "Hard";
-                                break;
-                            case Difficulty.Hard:
-                                Settings.Instance.Difficulty = Difficulty.Extreme;
-                                texts[1] = "Extreme";
-                                break;
-                            case Difficulty.Extreme:
-                                Settings.Instance.Difficulty = Difficulty.Noob;
-                                texts[1] = "Noob";
-                                break;
-                        }
-                    }
-                    if (stage == 2)
-                    {
-                        Settings.Instance.VolumeMusic += 0.01f;
-                        theGame.UpdateMusicVolume();
-                        volumeMusicBar = HUD.createLifebar(volumeMusicBar, 300, 50, Settings.Instance.VolumeMusic * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
-                    }
-                    if (stage == 3)
-                    {
-                        Settings.Instance.VolumeSound += 0.01f;
-                        theGame.scene.UpdateAllVolumes();
-                        volumeSoundBar = HUD.createLifebar(volumeSoundBar, 300, 50, Settings.Instance.VolumeSound * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
-                    }
-                }
-
-                if (state.ThumbSticks.Left.X < -0.2f || state.IsButtonDown(Buttons.DPadLeft))
-                {
-                    if (stage == 0 && previousState.ThumbSticks.Left.X > -0.2f && previousState.IsButtonUp(Buttons.DPadLeft))
-                    {
-                        switch (Settings.Instance.Difficulty)
-                        {
-                            case Difficulty.Noob:
-                                Settings.Instance.Difficulty = Difficulty.Extreme;
-                                texts[1] = "Extreme";
-                                break;
-                            case Difficulty.Easy:
-                                Settings.Instance.Difficulty = Difficulty.Noob;
-                                texts[1] = "Noob";
-                                break;
-                            case Difficulty.Normal:
-                                Settings.Instance.Difficulty = Difficulty.Easy;
-                                texts[1] = "Easy";
-                                break;
-                            case Difficulty.Hard:
-                                Settings.Instance.Difficulty = Difficulty.Normal;
-                                texts[1] = "Normal";
-                                break;
-                            case Difficulty.Extreme:
-                                Settings.Instance.Difficulty = Difficulty.Hard;
-                                texts[1] = "Hard";
-                                break;
-                        }
-                    }
-                    if (stage == 2)
-                    {
-                        Settings.Instance.VolumeMusic -= 0.01f;
-                        theGame.UpdateMusicVolume();
-                        volumeMusicBar = HUD.createLifebar(volumeMusicBar, 300, 50, Settings.Instance.VolumeMusic * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
-                    }
-                    if (stage == 3)
-                    {
-                        Settings.Instance.VolumeSound -= 0.01f;
-                        theGame.scene.UpdateAllVolumes();
-                        volumeSoundBar = HUD.createLifebar(volumeSoundBar, 300, 50, Settings.Instance.VolumeSound * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
-                    }
-                }
-
-                if (state.IsButtonUp(Buttons.A) && previousState.IsButtonDown(Buttons.A))
-                {
-                    switch(stage)
-                    {
-                        case 4:
-                            Settings.Instance.saveSettings();
-                            StateMachine.Instance.Back();
-                            stage = 0;
-                            break;
-                        case 5:
-                            Settings.Instance.loadSettings();
-                            volumeMusicBar = HUD.createLifebar(volumeMusicBar, 300, 50, Settings.Instance.VolumeMusic * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
-                            volumeSoundBar = HUD.createLifebar(volumeSoundBar, 300, 50, Settings.Instance.VolumeSound * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
-                            theGame.UpdateMusicVolume();
-                            theGame.scene.UpdateAllVolumes();
-                            StateMachine.Instance.Back();
-                            stage = 0;
-                            break;
-                        default:
-                            stage = 4;
-                            break;
-
-                    }
-                        
-
-                }
-
-                if (state.IsButtonUp(Buttons.B) && previousState.IsButtonDown(Buttons.B))
-                {
-                    stage = 5;
-                }
-
-                previousState = state;
             }
         }
 
+        protected override void Left()
+        {
+            if (stage == 0)
+            {
+                switch (Settings.Instance.Difficulty)
+                {
+                    case Difficulty.Noob:
+                        Settings.Instance.Difficulty = Difficulty.Easy;
+                        texts[1] = "Easy";
+                        break;
+                    case Difficulty.Easy:
+                        Settings.Instance.Difficulty = Difficulty.Normal;
+                        texts[1] = "Normal";
+                        break;
+                    case Difficulty.Normal:
+                        Settings.Instance.Difficulty = Difficulty.Hard;
+                        texts[1] = "Hard";
+                        break;
+                    case Difficulty.Hard:
+                        Settings.Instance.Difficulty = Difficulty.Extreme;
+                        texts[1] = "Extreme";
+                        break;
+                    case Difficulty.Extreme:
+                        Settings.Instance.Difficulty = Difficulty.Noob;
+                        texts[1] = "Noob";
+                        break;
+                }
+            }
+            if (stage == 2)
+            {
+                Settings.Instance.VolumeMusic += 0.01f;
+                theGame.UpdateMusicVolume();
+                volumeMusicBar = HUD.createLifebar(volumeMusicBar, 300, 50, Settings.Instance.VolumeMusic * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
+            }
+            if (stage == 3)
+            {
+                Settings.Instance.VolumeSound += 0.01f;
+                theGame.scene.UpdateAllVolumes();
+                volumeSoundBar = HUD.createLifebar(volumeSoundBar, 300, 50, Settings.Instance.VolumeSound * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
+            }
+        }
+
+        protected override void Right()
+        {
+            if (stage == 0)
+            {
+                switch (Settings.Instance.Difficulty)
+                {
+                    case Difficulty.Noob:
+                        Settings.Instance.Difficulty = Difficulty.Extreme;
+                        texts[1] = "Extreme";
+                        break;
+                    case Difficulty.Easy:
+                        Settings.Instance.Difficulty = Difficulty.Noob;
+                        texts[1] = "Noob";
+                        break;
+                    case Difficulty.Normal:
+                        Settings.Instance.Difficulty = Difficulty.Easy;
+                        texts[1] = "Easy";
+                        break;
+                    case Difficulty.Hard:
+                        Settings.Instance.Difficulty = Difficulty.Normal;
+                        texts[1] = "Normal";
+                        break;
+                    case Difficulty.Extreme:
+                        Settings.Instance.Difficulty = Difficulty.Hard;
+                        texts[1] = "Hard";
+                        break;
+                }
+            }
+            if (stage == 2)
+            {
+                Settings.Instance.VolumeMusic -= 0.01f;
+                theGame.UpdateMusicVolume();
+                volumeMusicBar = HUD.createLifebar(volumeMusicBar, 300, 50, Settings.Instance.VolumeMusic * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
+            }
+            if (stage == 3)
+            {
+                Settings.Instance.VolumeSound -= 0.01f;
+                theGame.scene.UpdateAllVolumes();
+                volumeSoundBar = HUD.createLifebar(volumeSoundBar, 300, 50, Settings.Instance.VolumeSound * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
+            }
+        }
 
 
         //when changing SoundVolume call UpdateVolume() for all Entities

@@ -11,29 +11,21 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public class MenuPause
+    public class MenuPause: Menu
     {
         
-        private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
         private Texture2D textureBackground;
         private Texture2D textureCarrier;
-        private Game1 theGame;
-        private GamePadState previousState;
 
         private List<Vector2> buttons;
-        private int stage;
         private String[] texts;
 
-        public MenuPause(SpriteBatch spriteBatchInit, Game1 game)
+        public MenuPause(SpriteBatch spriteBatchInit, Game1 game): base(spriteBatchInit,game,4)
         {
-            spriteBatch = spriteBatchInit;
-            theGame = game;
-            stage = 0;
-
             //Boxes
             //Create Buttons 
-
+            numButtons = 4;
             buttons = new List<Vector2>();
             for (int i = 0; i < 4; i++)
             {
@@ -62,10 +54,7 @@ namespace CarGo
             spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
         }
 
-        public void Update()
-        {
-            Input();
-        }
+        
 
         public void Draw()
         {
@@ -83,35 +72,9 @@ namespace CarGo
             spriteBatch.End();
         }
 
-        private void Input()
-        {
-            if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
-            {
-                GamePadState state = GamePad.GetState(PlayerIndex.One);
+        
 
-                if (((state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0) || (state.IsButtonDown(Buttons.DPadDown) && previousState.IsButtonUp(Buttons.DPadDown))) && stage < 3)
-                {
-
-                    stage++;
-
-                }
-                if (((state.ThumbSticks.Left.Y > 0f && previousState.ThumbSticks.Left.Y == 0) || (state.IsButtonDown(Buttons.DPadUp) && previousState.IsButtonUp(Buttons.DPadUp))) && stage > 0)
-                {
-
-                    stage--;
-
-                }
-
-                if (state.IsButtonUp(Buttons.A) && previousState.IsButtonDown(Buttons.A))
-                {
-                    ConfirmSelection();
-                }
-                
-                previousState = state;
-            }
-        }
-
-        private void ConfirmSelection()
+        protected override void ConfirmSelection()
         {
             switch (stage)
             {
@@ -131,5 +94,9 @@ namespace CarGo
             }
         }
 
+        protected override void Back()
+        {
+            StateMachine.Instance.ChangeState(GameState.Playing);
+        }
     }
 }

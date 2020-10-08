@@ -12,7 +12,7 @@ namespace CarGo
     {
         private Texture2D background;
         public static List<OnlinePlayer> onlinePlayers;
-        public LobbyOnline(SpriteBatch spriteBatchInit, Game1 game) : base(spriteBatchInit, game)
+        public LobbyOnline(SpriteBatch spriteBatchInit, Game1 game) : base(spriteBatchInit, game,0)
         {
             background = TextureCollection.Instance.GetTexture(TextureType.Menu_Background);
             onlinePlayers = new List<OnlinePlayer>();
@@ -31,9 +31,9 @@ namespace CarGo
             spriteBatch.End();
         }
 
-        public void AddOnlinePlayer(string name, int id)
+        public void AddOnlinePlayer(string name, int id, InputType inputType)
         {
-            onlinePlayers.Add(new OnlinePlayer(name, id));
+            onlinePlayers.Add(new OnlinePlayer(name, id, inputType));
         }
 
         public OnlinePlayer GetOnlinePlayer(int id)
@@ -48,5 +48,10 @@ namespace CarGo
             return null;
         }
 
+        protected override void Back()
+        {
+            //StateMachine.Instance.Back();
+            //ToDO: Leave Lobby
+        }
     }
 }

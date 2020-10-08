@@ -22,11 +22,10 @@ namespace CarGo
 
 
 
-        public LaunchMenu(SpriteBatch spriteBatchInit, Game1 game, Network.NetworkThread networkThread):base(spriteBatchInit,game)
+        public LaunchMenu(SpriteBatch spriteBatchInit, Game1 game, Network.NetworkThread networkThread):base(spriteBatchInit,game,3)
         {
             this.networkThread = networkThread;
             
-            numButtons = 3;
             
             buttons = new List<Vector2>();
             for (int i = 0; i < numButtons; i++)
@@ -68,10 +67,11 @@ namespace CarGo
 
             spriteBatch.End();
         }
-     
-        
 
-        
+        protected override void Back()
+        {
+            StateMachine.Instance.Back();
+        }
 
         protected override void ConfirmSelection()
         {
@@ -102,7 +102,6 @@ namespace CarGo
         }
 
         
-
     }
 }
 

@@ -10,13 +10,25 @@ namespace CarGo
     {
         public string name;
         public int clientID;
-
-        public OnlinePlayer(string name, int id)
+        public InputType inputType;
+        public OnlinePlayer(string name, int id, InputType inputType)
         {
             this.name = name;
             this.clientID = id;
+            this.inputType = inputType;
         }
         
         
+    }
+
+    public enum InputType
+    {
+        Controller1,
+        Controller2,
+        Controller3,
+        Controller4,
+        KeyBoard,
+        Remote,
+        Local
     }
 }

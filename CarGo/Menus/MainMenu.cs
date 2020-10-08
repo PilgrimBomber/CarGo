@@ -19,11 +19,10 @@ namespace CarGo
         private Texture2D carrierTexture;
         private SoundEffectInstance soundHorn;
 
-        public MainMenu(SpriteBatch spriteBatchInit, Game1 game): base(spriteBatchInit,game)
+        public MainMenu(SpriteBatch spriteBatchInit, Game1 game): base(spriteBatchInit,game,5)
         {
             //Boxes
             //Create Buttons 
-            numButtons = 5;
             buttons = new List<Vector2>();
             for (int i = 0; i < 5; i++)
             {
@@ -66,8 +65,11 @@ namespace CarGo
 
             spriteBatch.End();
         }
-     
-        
+
+        protected override void Back()
+        {
+            
+        }
 
         protected override void ConfirmSelection()
         {

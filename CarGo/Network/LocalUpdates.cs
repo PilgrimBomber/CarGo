@@ -20,10 +20,11 @@ namespace CarGo.Network
         private float timeSinceLastUpdate;
         LobbyOnline lobbyOnline;
         NetworkThread networkThread;
+        Game1 game;
         //public List<NetIncomingMessage> incomingMessages;
-        public LocalUpdates(Scene scene, LobbyOnline lobbyOnline)
+        public LocalUpdates(Game1 game, Scene scene, LobbyOnline lobbyOnline)
         {
-            
+            this.game = game;
             this.scene = scene;
             this.lobbyOnline = lobbyOnline;
             updatesPerSecond = 10;
@@ -88,7 +89,7 @@ namespace CarGo.Network
                         case ObjectMessageType.PlayerSpawn:
 
                             int clientNumberP = im.ReadInt32();
-                            
+
                             center = XNAExtensions.ReadVector2(im);
                             CarType carType = (CarType)im.ReadByte();
                             CarFrontType carFrontType = (CarFrontType)im.ReadByte();
@@ -118,13 +119,17 @@ namespace CarGo.Network
                 case MessageType.ReceiveClientNumber:
                     var clientNumber = im.ReadInt32();
                     ID_Manager.Instance.SetClientNumber(clientNumber);
-                    lobbyOnline.AddOnlinePlayer(Settings.Instance.PlayerName, clientNumber);
+                    lobbyOnline.AddOnlinePlayer(Settings.Instance.PlayerName, clientNumber,InputType.Local);
                     break;
                 case MessageType.IntroduceClient:
                     int clientID = im.ReadInt32();
                     var clientName = im.ReadString();
-                    lobbyOnline.AddOnlinePlayer(clientName, clientID);
+                    lobbyOnline.AddOnlinePlayer(clientName, clientID, InputType.Remote);
                     //create new onlinePlayer for Lobby
+                    break;
+                case MessageType.MenuInput:
+                    Menu currentmenu = game.GetCurrentMenu();
+                    currentmenu.Input((InputType)im.ReadByte());
                     break;
             }
         }

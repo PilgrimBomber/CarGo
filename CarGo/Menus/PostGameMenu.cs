@@ -11,16 +11,13 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public class PostGameMenu
+    public class PostGameMenu:Menu
     {
         private Texture2D PostGameMenuBackgroundWin;
         private Texture2D PostGameMenuBackgroundLose;
-        private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
-        private Game1 theGame;
-        private GamePadState previousState;
 
-        public PostGameMenu(SpriteBatch spriteBatchInit, Game1 game)
+        public PostGameMenu(SpriteBatch spriteBatchInit, Game1 game):base(spriteBatchInit,game,0)
         {
             spriteBatch = spriteBatchInit;
             theGame = game;
@@ -58,30 +55,18 @@ namespace CarGo
         }
 
 
-        public void Update()
+        
+
+        protected override void Back()
         {
+            ConfirmSelection();
+        }
 
-            if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
-            {
-                GamePadState state = GamePad.GetState(PlayerIndex.One);
-
-                if (state.IsButtonUp(Buttons.A) && previousState.IsButtonDown(Buttons.A))
-                {
-                    theGame.scene.Reset();
-                    theGame.modifierMenu.Reset();
-                    StateMachine.Instance.ChangeState(GameState.MenuMain);
-                }
-
-                previousState = state;
-            }
-            
-
-
-
-
-
-
-
+        protected override void ConfirmSelection()
+        {
+            theGame.scene.Reset();
+            theGame.modifierMenu.Reset();
+            StateMachine.Instance.ChangeState(GameState.MenuMain);
         }
     }
 }

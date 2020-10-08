@@ -11,7 +11,7 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public class ModifierMenu
+    public class ModifierMenu:Menu
     {
         private List<RotRectangle> playerBoxes;
         private List<RotRectangle> selectionDescription;
@@ -27,13 +27,11 @@ namespace CarGo
         private AbilityType[] abilityTypes; 
         private Texture2D showSelectionTexture;
         private Texture2D background;
-        private SpriteBatch spriteBatch;
         private SpriteFont spriteFont;
-        private Game1 theGame;
         private GamePadState[] previousState;
         private SoundEffectInstance soundHorn;
         private Texture2D selectionBoxBox;
-        public ModifierMenu(SpriteBatch spriteBatchInit, Game1 game )
+        public ModifierMenu(SpriteBatch spriteBatchInit, Game1 game ):base(spriteBatchInit,game,4)
         {
             spriteBatch = spriteBatchInit;
             theGame = game;
@@ -289,14 +287,23 @@ namespace CarGo
                 {
                     if (gamePadConnected[(int)index])
                     {
-                        theGame.scene.addPlayer(true, index, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index], ID_Manager.Instance.GetID(),new OnlinePlayer(Settings.Instance.PlayerName+index.ToString(), ID_Manager.Instance.GetID()));
+                        //find fitting OnlinePlayer object and set inputtype if local else use index
+                        theGame.scene.addPlayer(true, index, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index], ID_Manager.Instance.GetID(),new OnlinePlayer(Settings.Instance.PlayerName+index.ToString(), ID_Manager.Instance.GetID(),(InputType)index));
                         StateMachine.Instance.ChangeState(GameState.Playing);
                         theGame.scene.LoadLevel();
                     }
                 }
             }
         }
+        protected override void ConfirmSelection()
+        {
+            throw new NotImplementedException();
+        }
 
+        protected override void Back()
+        {
+            throw new NotImplementedException();
+        }
         public void Input()
         {
 
@@ -395,5 +402,7 @@ namespace CarGo
             return ready;
 
         }
+
+        
     }
 }

@@ -11,20 +11,12 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public class MenuControls
+    public class MenuControls:Menu
     {
         private Texture2D MenuControlsBackground;
-        private SpriteBatch spriteBatch;
-        private GamePadState previousState;
-        private Game1 theGame;
-
-        public MenuControls(SpriteBatch spriteBatchInit, Game1 game)
+        public MenuControls(SpriteBatch spriteBatchInit, Game1 game):base(spriteBatchInit,game,0)
         {
-            spriteBatch = spriteBatchInit;
-            theGame = game;
-
-            //Texture
-            //Set Background 
+            
 
            MenuControlsBackground = TextureCollection.Instance.GetTexture(TextureType.Menu_Controls);
         }
@@ -42,24 +34,17 @@ namespace CarGo
         }
 
 
-        public void Update()
+
+        protected override void Back()
         {
-            Input();
+            StateMachine.Instance.ChangeState(GameState.MenuMain);
         }
 
-        private void Input()
+        protected override void ConfirmSelection()
         {
-            if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
-            {
-                GamePadState state = GamePad.GetState(PlayerIndex.One);
-
-                if (state.IsButtonUp(Buttons.B) && previousState.IsButtonDown(Buttons.B))
-                {
-                    StateMachine.Instance.ChangeState(GameState.MenuMain);
-                }
-
-                previousState = state;
-            }
+            StateMachine.Instance.ChangeState(GameState.MenuMain);
         }
+
+        
     }
 }

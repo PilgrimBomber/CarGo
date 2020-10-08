@@ -6,10 +6,10 @@ using System.Threading.Tasks;
 
 namespace CarGo
 {
-    class WaitForServerStart
+    class WaitForServerStart:Menu
     {
         Network.NetworkThread networkThread;
-        public WaitForServerStart(Network.NetworkThread networkThread)
+        public WaitForServerStart(Network.NetworkThread networkThread):base(null,null,0)
         {
             this.networkThread = networkThread;
         }
@@ -23,6 +23,16 @@ namespace CarGo
                 StateMachine.Instance.ChangeState(GameState.OnlineLobby);
             }
 
+        }
+
+        protected override void Back()
+        {
+            
+        }
+
+        protected override void ConfirmSelection()
+        {
+            
         }
     }
 }
