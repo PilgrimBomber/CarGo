@@ -23,7 +23,8 @@ namespace CarGo.Network
     {
         GameState,
         ObjectUpdate,
-        ReceiveClientNumber
+        ReceiveClientNumber,
+        IntroduceClient
     }
     public enum ObjectMessageType
     {
@@ -31,7 +32,8 @@ namespace CarGo.Network
         PlayerSpawn,
         UpdatePosition,
         Despawn,
-        StateChange
+        StateChange,
+        UpdateHitpoints
     }
     public enum ObjectType
     {

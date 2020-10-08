@@ -110,6 +110,8 @@
     <Compile Include="Menus\CreditScreen.cs" />
     <Compile Include="Menus\LaunchMenu.cs" />
     <Compile Include="Menus\LoadingScreen.cs" />
+    <Compile Include="Menus\LobbyOnline.cs" />
+    <Compile Include="Menus\LobbySearch.cs" />
     <Compile Include="Menus\MainMenu.cs" />
     <Compile Include="Menus\Menu.cs" />
     <Compile Include="Menus\MenuControls.cs" />
@@ -122,6 +124,7 @@
     <Compile Include="Network\LocalUpdates.cs" />
     <Compile Include="Network\MessageTypes.cs" />
     <Compile Include="Network\NetworkThread.cs" />
+    <Compile Include="Network\OnlinePlayer.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="StateMachine.cs" />
     <Compile Include="WorldObjectHandling.cs" />

@@ -27,7 +27,7 @@ namespace CarGo
     public abstract class Entity: ICollidable,IUpdateable//, IDrawable
     {
         protected RotRectangle hitbox;
-        protected int hitpoints;
+        public int hitpoints;
         protected int maxLife;
         protected Texture2D texture;
         protected Vector2 velocity;
@@ -58,6 +58,14 @@ namespace CarGo
         public float getPercentLife()
         {
             return ((float)hitpoints / maxLife) * 100f;
+        }
+        
+
+        public void RemoteUpdatePosition(Vector2 center, float rotation, Vector2 velocity)
+        {
+            hitbox.SetPosition(center);
+            hitbox.SetRotation(rotation);
+            this.velocity = velocity;
         }
     }
 }

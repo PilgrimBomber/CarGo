@@ -11,29 +11,19 @@ using Microsoft.Xna.Framework.Input;
 
 namespace CarGo
 {
-    public class MainMenu
+    public class MainMenu : Menu
     {
         private Texture2D MainMenuBackground;
-        private SpriteBatch spriteBatch;
+        
         private SpriteFont spriteFont;
         private Texture2D carrierTexture;
         private SoundEffectInstance soundHorn;
-        private Game1 theGame;
-        private GamePadState previousState;
 
-        private List<Vector2> buttons;
-        private int stage;
-        private String[] texts;
-
-        public MainMenu(SpriteBatch spriteBatchInit, Game1 game)
+        public MainMenu(SpriteBatch spriteBatchInit, Game1 game): base(spriteBatchInit,game)
         {
-            spriteBatch = spriteBatchInit;
-            theGame = game;
-            stage = 0;
-
             //Boxes
             //Create Buttons 
-
+            numButtons = 5;
             buttons = new List<Vector2>();
             for (int i = 0; i < 5; i++)
             {
@@ -77,16 +67,9 @@ namespace CarGo
             spriteBatch.End();
         }
      
-        public void Update()
-        {
-            //TODO: Gamepad Input
-            //Check which Button is selected 
-            this.Input();
+        
 
-
-        }
-
-        private void ConfirmSelection()
+        protected override void ConfirmSelection()
         {
             if (stage == 0)
             {
@@ -117,37 +100,7 @@ namespace CarGo
             }
         }
 
-        private void Input()
-        {
-            if (GamePad.GetCapabilities(PlayerIndex.One).IsConnected)
-            {
-                GamePadState state = GamePad.GetState(PlayerIndex.One);
-
-                if (((state.ThumbSticks.Left.Y < 0f && previousState.ThumbSticks.Left.Y == 0) || (state.IsButtonDown(Buttons.DPadDown) && previousState.IsButtonUp(Buttons.DPadDown))) && stage < 4)
-                {
-                    stage++;
-
-                }
-                if (((state.ThumbSticks.Left.Y > 0f && previousState.ThumbSticks.Left.Y == 0) || (state.IsButtonDown(Buttons.DPadUp) && previousState.IsButtonUp(Buttons.DPadUp))) && stage > 0)
-                {
-
-                    stage--;
-
-                }
-
-                if(state.IsButtonUp(Buttons.A)&& previousState.IsButtonDown(Buttons.A))
-                {
-                    ConfirmSelection();
-                }
-
-                if (state.IsButtonUp(Buttons.B) && previousState.IsButtonDown(Buttons.B))
-                {
-                    stage = 4;
-                }
-
-                previousState = state;
-            }
-        }
+        
 
     }
 }

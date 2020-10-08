@@ -17,11 +17,11 @@ namespace CarGoServer
         private static NetServer s_server;
 
 		private static Dictionary<int, NetConnection> clients;
+		private static Dictionary<int, string> clientNames;
+		//This is the Server
 
-        //This is the Server
-		
 
-        static void Main(string[] args)
+		static void Main(string[] args)
         {
             
 			
@@ -39,6 +39,7 @@ namespace CarGoServer
 			s_server.Start();
 			s_server.RegisterReceivedCallback(new SendOrPostCallback(CheckForMessages), new SynchronizationContext());
 			clients = new Dictionary<int, NetConnection>();
+			clientNames = new Dictionary<int, string>();
 			Console.WriteLine("Server started on Port " + config.Port);
 
             while (true)
@@ -79,17 +80,29 @@ namespace CarGoServer
 						
 						if (status == NetConnectionStatus.Connected)
                         {
-							Console.WriteLine("Remote hail: " + im.SenderConnection.RemoteHailMessage.ReadString());
-                            for (int i = 0; i < 4; i++)
+							string hail = im.SenderConnection.RemoteHailMessage.ReadString();
+							for (int i = 1; i < 5; i++)
                             {
 								if(clients.ContainsKey(i))
                                 {
 									continue;
                                 }
 								clients.Add(i, im.SenderConnection);
+								clientNames.Add(i,hail);
+								List<NetConnection> all = s_server.Connections; // get copy
+								all.Remove(im.SenderConnection);
+								if (all.Count > 0)
+								{
+									NetOutgoingMessage om = s_server.CreateMessage();
+									om.Write((byte)CarGo.Network.MessageType.IntroduceClient);
+									om.Write(i);
+									om.Write(hail);
+									s_server.SendMessage(om, all, NetDeliveryMethod.ReliableOrdered, 0);
+								}
 								break;
 							}
 							
+
 						}
 						
 
@@ -130,16 +143,13 @@ namespace CarGoServer
                                 }
                                 break;
                             case CarGo.Network.ServerInfo.Broadcast:
-								//broadcast message
-								string message = im.ReadString();
-								// broadcast this to all connections, except sender
+								//broadcast this to all connections, except sender
 								List<NetConnection> all = s_server.Connections; // get copy
 								all.Remove(im.SenderConnection);
-
 								if (all.Count > 0)
 								{
 									NetOutgoingMessage om = s_server.CreateMessage();
-									om.Write(/*NetUtility.ToHexString(im.SenderConnection.RemoteUniqueIdentifier) + " said: " +*/ message);
+									om.Write(im);
 									s_server.SendMessage(om, all, NetDeliveryMethod.ReliableOrdered, 0);
 								}
 								break;

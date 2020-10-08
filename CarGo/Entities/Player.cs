@@ -32,7 +32,9 @@ namespace CarGo
         private SoundEffectInstance soundHorn;
         private SoundEffectInstance soundHorn2;
         private SoundEffectInstance soundHorn3;
-        private bool local = true;
+        public bool local = true;
+        private OnlinePlayer onlinePlayer;
+
         //public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float TurnRate { get => turnRate; set => turnRate = value; }
         public float Drift { get => drift; set => drift = value; }
@@ -40,13 +42,14 @@ namespace CarGo
         public float Acceleration { get => acceleration; set => acceleration = value; }
         public PlayerIndex PlayerIndex { get => playerIndex; set => playerIndex = value; }
 
-        public Player(bool local, Scene scene, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType frontType, AbilityType ability,int objectID)
+        public Player(bool local, Scene scene, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType frontType, AbilityType ability,int objectID, OnlinePlayer onlinePlayer)
         {
             entityType = EntityType.Player;
             this.local = local;
             this.objectID = objectID;
             this.playerIndex = playerIndex;
             this.scene = scene;
+            this.onlinePlayer = onlinePlayer;
             inputHandler = new InputHandler(this, playerIndex);
             soundAcceleration = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Accelerate);
             soundBackground = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Background);
@@ -108,6 +111,7 @@ namespace CarGo
             noDamage = false;
             idleCounter = 0;
         }
+
 
         override public void Update(GameTime gameTime)
         {

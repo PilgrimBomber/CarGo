@@ -21,6 +21,7 @@ namespace CarGo
         public Dictionary<int, Entity> entitiesID;
         private List<Entity> deadEntities;
         private List<Player> players;
+        public List<Player> localPlayers;
         private List<BaseEnemy> enemies;
         private List<WorldObject> worldObjects;
         private List<Cargo> cargos;
@@ -37,6 +38,7 @@ namespace CarGo
             entitiesID = new Dictionary<int, Entity>();
             deadEntities = new List<Entity>();
             players = new List<Player>();
+            localPlayers = new List<Player>();
             enemies = new List<BaseEnemy>();
             worldObjects = new List<WorldObject>();
             cargos = new List<Cargo>();
@@ -120,9 +122,21 @@ namespace CarGo
             camera.Draw(gameTime, tilemap);
         }
 
-        public void RemoteAddPlayer(Vector2 center, int objectID, CarType carType, CarFrontType carFront, AbilityType abilityType)
+        public void RemoteUpdatePosition(int objectID,Vector2 center, float rotation, Vector2 velocity)
         {
-            addPlayer(false,center,carType,carFront,abilityType,objectID);
+            if(entitiesID.ContainsKey(objectID))
+            {
+                entitiesID[objectID].RemoteUpdatePosition(center, rotation, velocity);
+            }
+            else
+            {
+                //error, object not existing
+            }
+        }
+
+        public void RemoteAddPlayer(Vector2 center, int objectID, CarType carType, CarFrontType carFront, AbilityType abilityType, OnlinePlayer onlinePlayer)
+        {
+            addPlayer(false, PlayerIndex.One, center, carType, carFront, abilityType, objectID, onlinePlayer);
         }
 
         public void RemoteAddEntity(EntityType type, Vector2 center, int objectID)
@@ -153,8 +167,19 @@ namespace CarGo
                 default:
                     break;
             }
+        }
 
+        public void RemoteRemoveEntity(int objectID)
+        {
+            Entity entity = entitiesID[objectID];
+            if (players.Contains(entity)) removePlayer(entity as Player, false);
+            if (enemies.Contains(entity)) removeEnemy(entity as BaseEnemy, false);
+            if (worldObjects.Contains(entity)) removeWorldObject(entity as WorldObject,false);
+        }
 
+        public void RemoteUpdateHitpoints(int objectID, int newHitpoints)
+        {
+            entitiesID[objectID].hitpoints = newHitpoints;
         }
 
         public void addCactus(Vector2 center, int objectID, bool local)
@@ -206,19 +231,14 @@ namespace CarGo
         }
 
 
-        public void addPlayer(bool local, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType, int objectID)
+        public void addPlayer(bool local, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType, int objectID, OnlinePlayer onlinePlayer)
         {
-            Player player = new Player(local, this, PlayerIndex.One, center, carType, carFrontType, abilityType, objectID);
+            Player player = new Player(local, this, playerIndex, center, carType, carFrontType, abilityType, objectID, onlinePlayer);
             players.Add(player);
             addEntity(player,local);
+            if (local) localPlayers.Add(player);
         }
 
-        public void addPlayer(PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType, int objectID)
-        {
-            Player player = new Player(true, this, playerIndex, center, carType, carFrontType, abilityType, objectID);
-            players.Add(player);
-            addEntity(player,true);
-        }
         public void removePlayer(Player player, bool local)
         {
             players.Remove(player);

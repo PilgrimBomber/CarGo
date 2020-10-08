@@ -14,12 +14,13 @@ namespace CarGo.Network
     public class NetworkThread
     {
 		private static NetClient s_client;
-		public static List<NetIncomingMessage> incomingMessages;
+		
 		private Thread serverThread;
 		public string host;
 		public int port=14242;
-
+		private static NetworkThread instance;
 		public bool isMainClient= false;
+		LocalUpdates localUpdates;
 		public bool IsServerRunning
         {
 			get 
@@ -29,21 +30,25 @@ namespace CarGo.Network
 				else return false;
 			}
         }
-		public NetworkThread()
+		public NetworkThread(LocalUpdates localUpdates)
         {
+			this.localUpdates = localUpdates;
 			NetPeerConfiguration config = new NetPeerConfiguration("chat");
 			config.AutoFlushSendQueue = false;
 			s_client = new NetClient(config);
-			incomingMessages = new List<NetIncomingMessage>();
+			
 			s_client.RegisterReceivedCallback(new SendOrPostCallback(GotMessage),new SynchronizationContext());
 			port = 23451;
+			instance = this;
 		}
 
 		public void ConnectToServer()
         {
 			s_client.Start();
-			NetOutgoingMessage hail = s_client.CreateMessage("This is the hail message");
+			//make hail message contain username + ?
+			NetOutgoingMessage hail = s_client.CreateMessage(Settings.Instance.PlayerName);
 			s_client.Connect(host, port, hail);
+			
 		}
 		//public static void Connect(string host, int port)
 		//{
@@ -84,15 +89,28 @@ namespace CarGo.Network
 				{
 					case NetIncomingMessageType.DebugMessage:
 					case NetIncomingMessageType.ErrorMessage:
+						break;
 					case NetIncomingMessageType.WarningMessage:
 					case NetIncomingMessageType.VerboseDebugMessage:
 						string text = im.ReadString();
 						break;
 					case NetIncomingMessageType.StatusChanged:
 						NetConnectionStatus status = (NetConnectionStatus)im.ReadByte();
+						if(status == NetConnectionStatus.Connected)
+                        {
+							instance.RequestClientNumber();
+						}
 						break;
 					case NetIncomingMessageType.Data:
-						incomingMessages.Add(im);
+						if (im.Data != null)
+						{
+							//instance.localUpdates.incomingMessages.Add(im);
+							instance.localUpdates.ParseMessage(im);
+						}
+						else
+						{
+							int i = 0;
+						}
 						
 						
                         break;
@@ -125,6 +143,16 @@ namespace CarGo.Network
 
         }
 
+		public void BroadCastNewGameState(GameState newState)
+        {
+			NetOutgoingMessage om = s_client.CreateMessage();
+			om.Write((byte)ServerInfo.Broadcast);
+			om.Write((byte)MessageType.GameState);
+			om.Write((byte)newState);
+			s_client.SendMessage(om, NetDeliveryMethod.ReliableOrdered);
+			s_client.FlushSendQueue();
+		}
+
         public void BroadCastEntityUpdate(ObjectMessageType objectMessageType, Entity entity)
         {
 			NetOutgoingMessage om = s_client.CreateMessage();
@@ -134,31 +162,34 @@ namespace CarGo.Network
 			om.Write(entity.objectID);
             switch (objectMessageType)
             {
-				case ObjectMessageType.PlayerSpawn:
-					om.Write((byte)entity.entityType);
-					XNAExtensions.Write(om, entity.Hitbox.Center);
-					Player player = (Player)entity;
-					om.Write((byte)player.carType);
-					om.Write((byte)player.carFrontType);
-					om.Write((byte)player.abilityType);
-					break;
-				case ObjectMessageType.Spawn:
-					om.Write((byte)entity.entityType);
-					XNAExtensions.Write(om, entity.Hitbox.Center);
-					break;
+                case ObjectMessageType.PlayerSpawn:
+                    XNAExtensions.Write(om, entity.Hitbox.Center);
+                    Player player = (Player)entity;
+                    om.Write((byte)player.carType);
+                    om.Write((byte)player.carFrontType);
+                    om.Write((byte)player.abilityType);
+                    break;
+                case ObjectMessageType.Spawn:
+                    om.Write((byte)entity.entityType);
+                    XNAExtensions.Write(om, entity.Hitbox.Center);
+                    break;
                 case ObjectMessageType.UpdatePosition:
-					XNAExtensions.Write(om, entity.Hitbox.Center);
-					om.Write(entity.Hitbox.RotationRad);
-					XNAExtensions.Write(om, entity.Velocity);
-					break;
+                    XNAExtensions.Write(om, entity.Hitbox.Center);
+                    om.Write(entity.Hitbox.RotationRad);
+                    XNAExtensions.Write(om, entity.Velocity);
+                    break;
                 case ObjectMessageType.Despawn:
+					//doesnt need more information
                     break;
                 case ObjectMessageType.StateChange:
                     break;
+                case ObjectMessageType.UpdateHitpoints:
+					om.Write(entity.hitpoints);
+                    break;
             }
 
-            
-			s_client.SendMessage(om, NetDeliveryMethod.ReliableOrdered);
+
+            s_client.SendMessage(om, NetDeliveryMethod.ReliableOrdered);
 			s_client.FlushSendQueue();
         }
 

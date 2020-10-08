@@ -248,7 +248,7 @@ namespace CarGo
                     case EntityType.EnemySlow: scene.addEnemy(EnemyType.EnemyDummy, Position, ID_Manager.Instance.GetID(), true); break;
                     case EntityType.EnemyFast: scene.addEnemy(EnemyType.EnemyFast, Position, ID_Manager.Instance.GetID(), true); break;
                     case EntityType.Rock: scene.addRock(Position, ID_Manager.Instance.GetID(), true); break;
-                    case EntityType.Player: scene.addPlayer(PlayerIndex.One, Position,CarType.Medium,CarFrontType.Bumper,AbilityType.RocketLauncher, ID_Manager.Instance.GetID()); break;
+                    case EntityType.Player: scene.addPlayer(true, PlayerIndex.One, Position,CarType.Medium,CarFrontType.Bumper,AbilityType.RocketLauncher, ID_Manager.Instance.GetID(),null); break;
                 }
 
             }

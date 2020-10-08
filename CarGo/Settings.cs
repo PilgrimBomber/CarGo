@@ -25,7 +25,7 @@ namespace CarGo
         private Difficulty difficulty;
         private Vector2 screenSize;
         private Configuration config;
-
+        private string playerName;
         private Settings()
         {
             loadSettings();
@@ -78,7 +78,7 @@ namespace CarGo
         }
 
         public Vector2 ScreenSize { get => screenSize; set => screenSize = value; }
-        
+        public string PlayerName { get => playerName; set => playerName = value; }
 
         public void loadSettings()
         {
@@ -104,6 +104,8 @@ namespace CarGo
                     difficulty = Difficulty.Normal;
                     throw new ArgumentOutOfRangeException();
             }
+
+            playerName = config.AppSettings.Settings["PlayerName"].Value;
 
             ScreenSize = new Vector2(1920, 1080);
         }

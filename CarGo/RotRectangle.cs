@@ -71,6 +71,15 @@ namespace CarGo
 
         }
 
+        public void SetRotation(float newRad)
+        {
+            for (int i = 0; i < 4; i++)
+            {
+                corners[i] = Geometry.Rotate(corners[i], newRad - rotationRad, center);
+            }
+            rotationRad = newRad;
+        }
+
         public void Scale(float scalingFactor)
         {
             offset *= scalingFactor;

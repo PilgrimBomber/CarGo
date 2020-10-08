@@ -5,7 +5,7 @@ using System.Text;
 using System.Threading.Tasks;
 using Lidgren.Network;
 using Lidgren.Network.Xna;
-
+using Microsoft.Xna.Framework;
 
 namespace CarGo.Network
 {
@@ -14,24 +14,60 @@ namespace CarGo.Network
         
         Scene scene;
         StateMachine stateMachine;
-        public LocalUpdates(Scene scene)
+
+        private float updatesPerSecond;
+        private float timePerUpdate;
+        private float timeSinceLastUpdate;
+        LobbyOnline lobbyOnline;
+        NetworkThread networkThread;
+        //public List<NetIncomingMessage> incomingMessages;
+        public LocalUpdates(Scene scene, LobbyOnline lobbyOnline)
         {
+            
             this.scene = scene;
-            this.stateMachine = StateMachine.Instance;
+            this.lobbyOnline = lobbyOnline;
+            updatesPerSecond = 10;
+            timePerUpdate = 1000 / updatesPerSecond;
+            timeSinceLastUpdate = 0;
+            //incomingMessages = new List<NetIncomingMessage>();
         }
 
-
-        public void Update()
+        public void SetNetworkThread(NetworkThread networkThread)
         {
-            for (int i = 0; i < NetworkThread.incomingMessages.Count; i++)
+            this.networkThread = networkThread;
+        }
+
+        public void Update(GameTime gameTime)
+        {
+            timeSinceLastUpdate += (float)gameTime.ElapsedGameTime.TotalMilliseconds;
+            if (timeSinceLastUpdate >= timePerUpdate)
             {
-                ParseMessage(NetworkThread.incomingMessages[i]);
+                timeSinceLastUpdate = 0;
+                SendUpdates();
             }
-            NetworkThread.incomingMessages.Clear();
+        }
+
+        private void SendUpdates()
+        {
+            if(networkThread.isMainClient)
+            {
+                foreach(Entity entity in scene.entities)
+                {
+                    if(entity.entityType != EntityType.Player || ((Player)entity).local)
+                        networkThread.BroadCastEntityUpdate(ObjectMessageType.UpdatePosition, entity);
+                }
+            }
+            else
+            {
+                foreach(Player player in scene.localPlayers)
+                {
+                    networkThread.BroadCastEntityUpdate(ObjectMessageType.UpdatePosition, player);
+                }
+            }
         }
 
 
-        private void ParseMessage(NetIncomingMessage im)
+        public void ParseMessage(NetIncomingMessage im)
         {
             //Parse and Apply all Changes
 
@@ -44,32 +80,51 @@ namespace CarGo.Network
 
                     break;
                 case MessageType.ObjectUpdate:
+                    var objectMessageType = (ObjectMessageType)im.ReadByte();
                     var objectID = im.ReadInt32();
-                    switch ((ObjectMessageType)im.ReadByte())
+                    Vector2 center;
+                    switch (objectMessageType)
                     {
-                        case ObjectMessageType.Spawn:
-                            var objectType = im.ReadByte();
-                            switch ((ObjectType)objectType)
-                            {
-                                case ObjectType.Player:
+                        case ObjectMessageType.PlayerSpawn:
 
-                                    scene.addPlayer(false, im.ReadVector2(), (CarType)im.ReadByte(), (CarFrontType)im.ReadByte(), (AbilityType)im.ReadByte(), (int)objectID);
-                                    break;
-                            }
+                            int clientNumberP = im.ReadInt32();
+                            
+                            center = XNAExtensions.ReadVector2(im);
+                            CarType carType = (CarType)im.ReadByte();
+                            CarFrontType carFrontType = (CarFrontType)im.ReadByte();
+                            AbilityType abilityType = (AbilityType)im.ReadByte();
+                            scene.RemoteAddPlayer(center, objectID, carType, carFrontType, abilityType, lobbyOnline.GetOnlinePlayer(clientNumberP));
                             break;
-
-
+                        case ObjectMessageType.Spawn:
+                            EntityType entityType = (EntityType)im.ReadByte();
+                            center = XNAExtensions.ReadVector2(im);
+                            scene.RemoteAddEntity(entityType, center, objectID);
+                            break;
                         case ObjectMessageType.Despawn:
+                            scene.RemoteRemoveEntity(objectID);
                             break;
                         case ObjectMessageType.UpdatePosition:
+                            center = XNAExtensions.ReadVector2(im);
+                            float rotation = im.ReadFloat();
+                            Vector2 velocity = XNAExtensions.ReadVector2(im);
                             break;
                         case ObjectMessageType.StateChange:
+                            break;
+                        case ObjectMessageType.UpdateHitpoints:
+
                             break;
                     }
                     break;
                 case MessageType.ReceiveClientNumber:
                     var clientNumber = im.ReadInt32();
                     ID_Manager.Instance.SetClientNumber(clientNumber);
+                    lobbyOnline.AddOnlinePlayer(Settings.Instance.PlayerName, clientNumber);
+                    break;
+                case MessageType.IntroduceClient:
+                    int clientID = im.ReadInt32();
+                    var clientName = im.ReadString();
+                    lobbyOnline.AddOnlinePlayer(clientName, clientID);
+                    //create new onlinePlayer for Lobby
                     break;
             }
         }

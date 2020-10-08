@@ -18,6 +18,7 @@ namespace CarGo
         SpriteBatch spriteBatch;
         public Scene scene;
         MainMenu mainMenu;
+        LobbyOnline lobbyOnline;
         PostGameMenu postGameMenu;
         MenuControls menuControls;
         CreditScreen creditScreen;
@@ -28,7 +29,7 @@ namespace CarGo
         LoadingScreen loadingScreen;
         public ModifierMenu modifierMenu;
         SoundEffectInstance music;
-        public Network.NetworkThread networkThread = new Network.NetworkThread();
+        public Network.NetworkThread networkThread;
         Network.LocalUpdates localUpdates;
 
         public Game1()
@@ -39,8 +40,7 @@ namespace CarGo
             this.IsFixedTimeStep = true;//false;
             this.TargetElapsedTime = TimeSpan.FromSeconds(1d / 60d); //60);
 
-            localUpdates = new Network.LocalUpdates(scene);
-
+            
 #if DEBUG
             // Debug Code
 
@@ -67,6 +67,10 @@ namespace CarGo
             FontCollection.Instance.LoadFonts(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
             scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
+            lobbyOnline = new LobbyOnline(spriteBatch, this);
+            localUpdates = new Network.LocalUpdates(scene,lobbyOnline);
+            networkThread = new Network.NetworkThread(localUpdates);
+            localUpdates.SetNetworkThread(networkThread);
             mainMenu = new MainMenu(spriteBatch, this);
             postGameMenu = new PostGameMenu(spriteBatch, this);
             modifierMenu = new ModifierMenu(spriteBatch, this);
@@ -81,7 +85,7 @@ namespace CarGo
             music.IsLooped = true;
             music.Volume = 0.5f * Settings.Instance.VolumeMusic;
             music.Play();
-
+            
         }
 
         /// <summary>
@@ -114,7 +118,7 @@ namespace CarGo
 
             if (StateMachine.Instance.networkGame)
             {
-                localUpdates.Update();
+                localUpdates.Update(gameTime);
             }
             // TODO: Add your update logic here
             switch (StateMachine.Instance.gameState)

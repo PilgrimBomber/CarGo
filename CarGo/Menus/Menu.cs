@@ -73,12 +73,12 @@ namespace CarGo
         protected void KeyBoardInput()
         {
             KeyboardState state = Keyboard.GetState();
-            if (((state.IsKeyDown(Keys.Right) && previousKeyBoardState.IsKeyUp(Keys.Right)) || (state.IsKeyDown(Keys.D) && previousKeyBoardState.IsKeyUp(Keys.D))) && stage < numButtons - 1)
+            if (((state.IsKeyDown(Keys.Down) && previousKeyBoardState.IsKeyUp(Keys.Down)) || (state.IsKeyDown(Keys.S) && previousKeyBoardState.IsKeyUp(Keys.S))) && stage < numButtons - 1)
             {
                 stage++;
 
             }
-            if (((state.IsKeyDown(Keys.Left) && previousKeyBoardState.IsKeyUp(Keys.Left)) || (state.IsKeyDown(Keys.A) && previousKeyBoardState.IsKeyUp(Keys.A))) && stage > 0)
+            if (((state.IsKeyDown(Keys.Up) && previousKeyBoardState.IsKeyUp(Keys.Up)) || (state.IsKeyDown(Keys.W) && previousKeyBoardState.IsKeyUp(Keys.W))) && stage > 0)
             {
                 stage--;
             }

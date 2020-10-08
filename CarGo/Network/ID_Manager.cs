@@ -55,6 +55,7 @@ namespace CarGo
             if(!clientNumberSet)
             {
                 return -2;
+                //client number not yet set. request it or wait for response
             }
             else
             {
