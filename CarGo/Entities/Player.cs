@@ -16,7 +16,6 @@ namespace CarGo
         private float acceleration;
         private float turnRate;
         private float drift;
-        private PlayerIndex playerIndex;
         private float lastTurn;
         public CarType carType;
         private CarFront carFront;
@@ -40,17 +39,16 @@ namespace CarGo
         public float Drift { get => drift; set => drift = value; }
         public float MaxSpeed { get => maxSpeed; set => maxSpeed = value; }
         public float Acceleration { get => acceleration; set => acceleration = value; }
-        public PlayerIndex PlayerIndex { get => playerIndex; set => playerIndex = value; }
 
-        public Player(bool local, Scene scene, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType frontType, AbilityType ability,int objectID, OnlinePlayer onlinePlayer)
+        public Player(bool local, Scene scene, Vector2 center, CarType carType, CarFrontType frontType, AbilityType ability,int objectID, OnlinePlayer onlinePlayer)
         {
             entityType = EntityType.Player;
             this.local = local;
             this.objectID = objectID;
-            this.playerIndex = playerIndex;
+            
             this.scene = scene;
             this.onlinePlayer = onlinePlayer;
-            inputHandler = new InputHandler(this, playerIndex);
+            inputHandler = new InputHandler(this, onlinePlayer.inputType);
             soundAcceleration = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Accelerate);
             soundBackground = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Background);
             soundBoost = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Boost);

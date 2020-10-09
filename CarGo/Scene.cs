@@ -50,7 +50,7 @@ namespace CarGo
             //TextureCollection.Instance.loadTextures(content);
             collisionCheck = new CollisionCheck(cargos, players, enemies, worldObjects, activeAbilities);
             camera = new Camera(spriteBatch, screenSize, cargos, players, enemies, worldObjects, activeAbilities);
-            //worldObjectHandling = new WorldObjectHandling(this, worldObjects);
+            worldObjectHandling = new WorldObjectHandling(this, worldObjects);
             tilemap = new Tilemap(1, content);
             
             //enemyAI = new EnemyAI(tilemap, enemies, cargo);
@@ -68,6 +68,7 @@ namespace CarGo
         public void Reset()
         {
             entities = new List<Entity>();
+            entitiesID = new Dictionary<int, Entity>();
             deadEntities = new List<Entity>();
             players = new List<Player>();
             enemies = new List<BaseEnemy>();
@@ -108,13 +109,15 @@ namespace CarGo
                 entity.Update(gameTime);
             }
             RemoveDeadEntities();
-            enemyAI.Update(gameTime);
-            camera.Update();
+            
+            
             if(!StateMachine.Instance.networkGame|| networkThread.isMainClient)
             {
                 levelControl.Update();
                 worldObjectHandling.Update(gameTime);
             }
+            enemyAI.Update(gameTime);
+            camera.Update();
         }
 
         public void Draw(GameTime gameTime)
@@ -136,7 +139,7 @@ namespace CarGo
 
         public void RemoteAddPlayer(Vector2 center, int objectID, CarType carType, CarFrontType carFront, AbilityType abilityType, OnlinePlayer onlinePlayer)
         {
-            addPlayer(false, PlayerIndex.One, center, carType, carFront, abilityType, objectID, onlinePlayer);
+            addPlayer(false, center, carType, carFront, abilityType, objectID, onlinePlayer);
         }
 
         public void RemoteAddEntity(EntityType type, Vector2 center, int objectID)
@@ -231,9 +234,9 @@ namespace CarGo
         }
 
 
-        public void addPlayer(bool local, PlayerIndex playerIndex, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType, int objectID, OnlinePlayer onlinePlayer)
+        public void addPlayer(bool local, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType, int objectID, OnlinePlayer onlinePlayer)
         {
-            Player player = new Player(local, this, playerIndex, center, carType, carFrontType, abilityType, objectID, onlinePlayer);
+            Player player = new Player(local, this, center, carType, carFrontType, abilityType, objectID, onlinePlayer);
             players.Add(player);
             addEntity(player,local);
             if (local) localPlayers.Add(player);
@@ -261,7 +264,7 @@ namespace CarGo
         private void addEntity(Entity entity, bool local)
         {
             entities.Add(entity);
-            entitiesID.Add(entity.objectID, entity);
+            if(entity.objectID>0) entitiesID.Add(entity.objectID, entity);
             if (local && StateMachine.Instance.networkGame)
             {
                 networkThread.BroadCastEntityUpdate(Network.ObjectMessageType.Spawn, entity);

@@ -16,14 +16,27 @@ namespace CarGo
 
         }
 
-        protected override void Back()
+        public void Update()
+        {
+            Network.NetworkThread.Instance.ConnectToServer("localhost");
+            StateMachine.Instance.ChangeState(GameState.OnlineLobby);
+            base.Update();
+        }
+
+        protected override void Back(int clientID, InputController inputController)
         {
             throw new NotImplementedException();
         }
 
-        protected override void ConfirmSelection()
+        protected override void ConfirmSelection(int clientID, InputController inputController)
         {
             throw new NotImplementedException();
+        }
+
+        internal void Draw()
+        {
+            
+
         }
     }
 }

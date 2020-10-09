@@ -33,6 +33,17 @@ namespace CarGo
         {
             previousState = this.gameState;
             this.gameState = gameState;
+            if (networkGame)
+            {
+                if(gameState == GameState.MenuModificationSelection || gameState == GameState.MenuPause ||gameState == GameState.Playing || gameState == GameState.MenuWon || gameState == GameState.MenuLost)
+                    Network.NetworkThread.Instance.BroadCastNewGameState(gameState);
+            }
+        }
+
+        public void RemoteChangeState(GameState gameState)
+        {
+            previousState = this.gameState;
+            this.gameState = gameState;
         }
 
         public void Back()

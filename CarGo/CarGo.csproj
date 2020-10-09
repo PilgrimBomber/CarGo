@@ -125,6 +125,7 @@
     <Compile Include="Network\MessageTypes.cs" />
     <Compile Include="Network\NetworkThread.cs" />
     <Compile Include="Network\OnlinePlayer.cs" />
+    <Compile Include="PreferredInput.cs" />
     <Compile Include="Settings.cs" />
     <Compile Include="StateMachine.cs" />
     <Compile Include="WorldObjectHandling.cs" />

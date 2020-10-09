@@ -68,12 +68,12 @@ namespace CarGo
             spriteBatch.End();
         }
 
-        protected override void Back()
+        protected override void Back(int clientID, InputController inputController)
         {
             StateMachine.Instance.Back();
         }
 
-        protected override void ConfirmSelection()
+        protected override void ConfirmSelection(int clientID, InputController inputController)
         {
             if (stage == 0)
             {

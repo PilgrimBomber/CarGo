@@ -8,21 +8,23 @@ namespace CarGo
 {
     public class ID_Manager
     {
-        private int clientNumber;
+        private static int clientNumber;
         private bool clientNumberSet = false;
-        public void SetClientNumber(int number){
-            if (number > 0 && number < 10)
+        public int ClientNumber {
+            get => clientNumber; 
+            set
             {
-                clientNumber = number; 
-                clientNumberSet = true;
-                lastID = clientNumber * IDRangeSize;
-                usedIDs = new HashSet<int>();
-                usedIDs.Add(lastID);
+                if (value >= 0 && value < 10)
+                {
+                    clientNumber = value;
+                    clientNumberSet = true;
+                    lastID = clientNumber * IDRangeSize;
+                    usedIDs = new HashSet<int>();
+                    usedIDs.Add(lastID);
+                }
             }
-
-            
-            
         }
+        
 
         private HashSet<int> usedIDs;
         private int lastID;
@@ -60,7 +62,7 @@ namespace CarGo
             else
             {
                 int newID = lastID + 1;
-                if (usedIDs.Contains(newID) || newID % IDRangeSize != lastID % IDRangeSize)
+                if (usedIDs.Contains(newID) || newID / IDRangeSize != lastID / IDRangeSize)
                 {
                     //Error wrong ID
                     return -1;

@@ -18,19 +18,18 @@ namespace CarGo
         {
             if (networkThread.IsServerRunning)
             {
-                networkThread.host = "localhost";
-                networkThread.ConnectToServer();
+                networkThread.ConnectToServer("localhost");
                 StateMachine.Instance.ChangeState(GameState.OnlineLobby);
             }
 
         }
 
-        protected override void Back()
+        protected override void Back(int clientID, InputController inputController)
         {
             
         }
 
-        protected override void ConfirmSelection()
+        protected override void ConfirmSelection(int clientID, InputController inputController)
         {
             
         }

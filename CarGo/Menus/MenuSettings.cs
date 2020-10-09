@@ -92,12 +92,12 @@ namespace CarGo
 
 
 
-        protected override void Back()
+        protected override void Back(int clientID, InputController inputController)
         {
             stage = 5;
         }
 
-        protected override void ConfirmSelection()
+        protected override void ConfirmSelection(int clientID, InputController inputController)
         {
             switch (stage)
             {
@@ -122,7 +122,7 @@ namespace CarGo
             }
         }
 
-        protected override void Left()
+        protected override void Right(int clientID, InputController inputController)
         {
             if (stage == 0)
             {
@@ -152,19 +152,19 @@ namespace CarGo
             }
             if (stage == 2)
             {
-                Settings.Instance.VolumeMusic += 0.01f;
+                Settings.Instance.VolumeMusic += 0.05f;
                 theGame.UpdateMusicVolume();
                 volumeMusicBar = HUD.createLifebar(volumeMusicBar, 300, 50, Settings.Instance.VolumeMusic * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
             }
             if (stage == 3)
             {
-                Settings.Instance.VolumeSound += 0.01f;
+                Settings.Instance.VolumeSound += 0.05f;
                 theGame.scene.UpdateAllVolumes();
                 volumeSoundBar = HUD.createLifebar(volumeSoundBar, 300, 50, Settings.Instance.VolumeSound * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
             }
         }
 
-        protected override void Right()
+        protected override void Left(int clientID, InputController inputController)
         {
             if (stage == 0)
             {
@@ -194,13 +194,13 @@ namespace CarGo
             }
             if (stage == 2)
             {
-                Settings.Instance.VolumeMusic -= 0.01f;
+                Settings.Instance.VolumeMusic -= 0.05f;
                 theGame.UpdateMusicVolume();
                 volumeMusicBar = HUD.createLifebar(volumeMusicBar, 300, 50, Settings.Instance.VolumeMusic * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
             }
             if (stage == 3)
             {
-                Settings.Instance.VolumeSound -= 0.01f;
+                Settings.Instance.VolumeSound -= 0.05f;
                 theGame.scene.UpdateAllVolumes();
                 volumeSoundBar = HUD.createLifebar(volumeSoundBar, 300, 50, Settings.Instance.VolumeSound * 100, 0, new Color(42, 64, 28), Color.Transparent, Color.Transparent);
             }

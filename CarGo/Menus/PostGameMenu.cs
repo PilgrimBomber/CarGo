@@ -57,12 +57,12 @@ namespace CarGo
 
         
 
-        protected override void Back()
+        protected override void Back(int clientID, InputController inputController)
         {
-            ConfirmSelection();
+            ConfirmSelection(clientID,inputController);
         }
 
-        protected override void ConfirmSelection()
+        protected override void ConfirmSelection(int clientID, InputController inputController)
         {
             theGame.scene.Reset();
             theGame.modifierMenu.Reset();

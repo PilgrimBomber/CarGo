@@ -14,29 +14,29 @@ namespace CarGo
         private Player player;
         private GamePadState previousState;
         private KeyboardState previousKeyBoardState;
-        public InputHandler(Player player, PlayerIndex playerIndex)
+        private InputController inputController;
+        public InputHandler(Player player, InputController inputController)
         {
             this.player = player;
-            previousState = GamePad.GetState(player.PlayerIndex);
+            if(inputController < InputController.KeyBoard) previousState = GamePad.GetState((PlayerIndex)inputController);
             previousKeyBoardState = Keyboard.GetState();
         }
 
         public void HandleInput()
         {
-            //if(player.PlayerIndex==PlayerIndex.Four)KeyboardInput();
-
-            GamepadInput();
+            if(inputController == InputController.KeyBoard)KeyboardInput();
+            if(inputController< InputController.KeyBoard) GamepadInput((PlayerIndex)inputController);
         }
 
-        private void GamepadInput()
+        private void GamepadInput(PlayerIndex playerIndex)
         {
             //Controller Input
-            GamePadCapabilities capabilities = GamePad.GetCapabilities(player.PlayerIndex);
+            GamePadCapabilities capabilities = GamePad.GetCapabilities(playerIndex);
             bool playerAction = false;
             // Check if the controller is connected
             if (capabilities.IsConnected)
             {
-                GamePadState state = GamePad.GetState(player.PlayerIndex);
+                GamePadState state = GamePad.GetState(playerIndex);
 
 
                 if (state.ThumbSticks.Left.X < 0f)
@@ -90,7 +90,7 @@ namespace CarGo
                 if (playerAction) player.Idle(false);
                 else player.Idle(true);
 
-                if (player.PlayerIndex == PlayerIndex.One && state.IsButtonDown(Buttons.Start))
+                if (state.IsButtonDown(Buttons.Start))
                 {
                     StateMachine.Instance.ChangeState(GameState.MenuPause);
                 }

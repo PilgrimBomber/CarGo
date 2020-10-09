@@ -37,7 +37,7 @@ namespace CarGo
             theGame = game;
             background = TextureCollection.Instance.GetTexture(TextureType.Menu_Background);
             selectionBoxBox = TextureCollection.Instance.GetTexture(TextureType.Menu_Selection_BoxBox);
-
+            
             //GamePads connected
             gamePadConnected = new bool[4];
             currentStage = new int[4];
@@ -101,6 +101,43 @@ namespace CarGo
             soundHorn = SoundCollection.Instance.GetSoundInstance(SoundType.Car_Horn);
 
 
+        }
+
+        private int GetIndex(int clientID, InputController inputController)
+        {
+            int index = 0;
+            if (StateMachine.Instance.networkGame)
+                foreach (OnlinePlayer player in LobbyOnline.onlinePlayers)
+                {
+                    if (player.clientID == clientID) return index;
+                    index++;
+                }
+            else
+            {
+                switch (inputController)
+                {
+                    case InputController.Controller1:
+                        return 0;
+                        break;
+                    case InputController.Controller2:
+                        return 1;
+                        break;
+                    case InputController.Controller3:
+                        return 2;
+                        break;
+                    case InputController.Controller4:
+                        return 3;
+                        break;
+                    case InputController.KeyBoard:
+                        return 3;
+                        break;
+                    default:
+                        break;
+                }
+
+            }
+
+            return -1;
         }
 
         public void Reset()
@@ -280,119 +317,174 @@ namespace CarGo
 
         public void Update()
         {
-            this.Input();
+            if(StateMachine.Instance.networkGame)
+            {
+                for (int i = 0; i < 4; i++)
+                {
+                    if (i < LobbyOnline.onlinePlayers.Count) gamePadConnected[i] = true;
+                    else gamePadConnected[i] = false;
+                }
+            }
+
+
             if(CheckReady())
             {
-                for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+                
+                for (int index=0; index<4; index++)
                 {
                     if (gamePadConnected[(int)index])
                     {
                         //find fitting OnlinePlayer object and set inputtype if local else use index
-                        theGame.scene.addPlayer(true, index, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index], ID_Manager.Instance.GetID(),new OnlinePlayer(Settings.Instance.PlayerName+index.ToString(), ID_Manager.Instance.GetID(),(InputType)index));
+                        theGame.scene.addPlayer(true, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index], ID_Manager.Instance.GetID(),new OnlinePlayer(Settings.Instance.PlayerName+index.ToString(), ID_Manager.Instance.GetID(),(InputController)index));
                         StateMachine.Instance.ChangeState(GameState.Playing);
                         theGame.scene.LoadLevel();
                     }
                 }
             }
+            base.Update();
         }
-        protected override void ConfirmSelection()
+        protected override void ConfirmSelection(int clientID, InputController inputController)
         {
-            throw new NotImplementedException();
+            int index = GetIndex(clientID, inputController);
+            if (currentStage[(int)index] < 3) currentStage[(int)index]++;
         }
 
-        protected override void Back()
+        protected override void Back(int clientID, InputController inputController)
         {
-            throw new NotImplementedException();
+            int index = GetIndex(clientID, inputController);
+            if (currentStage[(int)index] > 0) currentStage[(int)index]--;
         }
-        public void Input()
-        {
 
-            for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+        protected override void Left(int clientID, InputController inputController)
+        {
+            
+            int index = GetIndex(clientID,inputController);
+            switch (currentStage[(int)index])
             {
-                
-                if (gamePadConnected[(int)index])
-                {
-                    GamePadState state = GamePad.GetState(index);
-
-                    if ((state.ThumbSticks.Left.X < 0f && previousState[(int)index].ThumbSticks.Left.X == 0) || (state.IsButtonDown(Buttons.DPadLeft) && previousState[(int)index].IsButtonUp(Buttons.DPadLeft))) 
-                    {
-
-                        switch(currentStage[(int)index])
-                        {
-                            case 0:
-                                if ((int)carTypes[(int)index] > 0) carTypes[(int)index]--;
-                                else carTypes[(int)index] = CarType.Big;
-                                break;
-                            case 1:
-                                if ((int)frontTypes[(int)index] > 0) frontTypes[(int)index]--;
-                                else frontTypes[(int)index] = CarFrontType.Bumper;
-                                break;
-                            case 2:
-                                if ((int)abilityTypes[(int)index] > 0) abilityTypes[(int)index]--;
-                                else abilityTypes[(int)index] = AbilityType.TrapLauncher;
-                                break;
-                        }
-                    }
-                    if ((state.ThumbSticks.Left.X > 0f && previousState[(int)index].ThumbSticks.Left.X == 0) || (state.IsButtonDown(Buttons.DPadRight) && previousState[(int)index].IsButtonUp(Buttons.DPadRight)))
-                    {
-                        switch (currentStage[(int)index])
-                        {
-                            case 0:
-                                if (carTypes[(int)index] != CarType.Big) carTypes[(int)index]++;
-                                else carTypes[(int)index] = CarType.Small;
-                                break;
-                            case 1:
-                                if (frontTypes[(int)index] != CarFrontType.Bumper) frontTypes[(int)index]++;
-                                else frontTypes[(int)index] = CarFrontType.Spikes;
-                                break;
-                            case 2:
-                                if (abilityTypes[(int)index] != AbilityType.TrapLauncher) abilityTypes[(int)index]++;
-                                else abilityTypes[(int)index] = AbilityType.Flamethrower;
-                                break;
-                        }
-                    }
-
-                    if(state.IsButtonDown(Buttons.A) && previousState[(int)index].IsButtonUp(Buttons.A))
-                    {
-                        if (currentStage[(int)index] < 3) currentStage[(int)index]++;
-                    }
-
-                    if (state.IsButtonDown(Buttons.B) && previousState[(int)index].IsButtonUp(Buttons.B))
-                    {
-                        if (currentStage[(int)index] > 0) currentStage[(int)index]--;
-                        else gamePadConnected[(int)index] = false;
-                    }
-
-                    if(state.IsButtonDown(Buttons.Back) && previousState[(int)index].IsButtonUp(Buttons.Back))
-                    {
-                        StateMachine.Instance.ChangeState(GameState.MenuMain);
-                    }
-
-                    previousState[(int)index] = state;
-                }
-
-                else
-                {
-                    if(GamePad.GetCapabilities(index).IsConnected)
-                    {
-                        GamePadState state = GamePad.GetState(index);
-                        if (state.IsButtonDown(Buttons.A)&& previousState[(int)index].IsButtonUp(Buttons.A))
-                        {
-                            gamePadConnected[(int)index] = true;
-                        }
-                        previousState[(int) index] = state;
-                    }
-                }
-
-
-
+                case 0:
+                    if ((int)carTypes[(int)index] > 0) carTypes[(int)index]--;
+                    else carTypes[(int)index] = CarType.Big;
+                    break;
+                case 1:
+                    if ((int)frontTypes[(int)index] > 0) frontTypes[(int)index]--;
+                    else frontTypes[(int)index] = CarFrontType.Bumper;
+                    break;
+                case 2:
+                    if ((int)abilityTypes[(int)index] > 0) abilityTypes[(int)index]--;
+                    else abilityTypes[(int)index] = AbilityType.TrapLauncher;
+                    break;
             }
         }
+
+        protected override void Right(int clientID, InputController inputController)
+        {
+            int index = GetIndex(clientID, inputController);
+            switch (currentStage[(int)index])
+            {
+                case 0:
+                    if (carTypes[(int)index] != CarType.Big) carTypes[(int)index]++;
+                    else carTypes[(int)index] = CarType.Small;
+                    break;
+                case 1:
+                    if (frontTypes[(int)index] != CarFrontType.Bumper) frontTypes[(int)index]++;
+                    else frontTypes[(int)index] = CarFrontType.Spikes;
+                    break;
+                case 2:
+                    if (abilityTypes[(int)index] != AbilityType.TrapLauncher) abilityTypes[(int)index]++;
+                    else abilityTypes[(int)index] = AbilityType.Flamethrower;
+                    break;
+            }
+        }
+
+        //public void Input()
+        //{
+
+        //    for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+        //    {
+                
+        //        if (gamePadConnected[(int)index])
+        //        {
+        //            GamePadState state = GamePad.GetState(index);
+
+        //            if ((state.ThumbSticks.Left.X < 0f && previousState[(int)index].ThumbSticks.Left.X == 0) || (state.IsButtonDown(Buttons.DPadLeft) && previousState[(int)index].IsButtonUp(Buttons.DPadLeft))) 
+        //            {
+
+        //                switch(currentStage[(int)index])
+        //                {
+        //                    case 0:
+        //                        if ((int)carTypes[(int)index] > 0) carTypes[(int)index]--;
+        //                        else carTypes[(int)index] = CarType.Big;
+        //                        break;
+        //                    case 1:
+        //                        if ((int)frontTypes[(int)index] > 0) frontTypes[(int)index]--;
+        //                        else frontTypes[(int)index] = CarFrontType.Bumper;
+        //                        break;
+        //                    case 2:
+        //                        if ((int)abilityTypes[(int)index] > 0) abilityTypes[(int)index]--;
+        //                        else abilityTypes[(int)index] = AbilityType.TrapLauncher;
+        //                        break;
+        //                }
+        //            }
+        //            if ((state.ThumbSticks.Left.X > 0f && previousState[(int)index].ThumbSticks.Left.X == 0) || (state.IsButtonDown(Buttons.DPadRight) && previousState[(int)index].IsButtonUp(Buttons.DPadRight)))
+        //            {
+        //                switch (currentStage[(int)index])
+        //                {
+        //                    case 0:
+        //                        if (carTypes[(int)index] != CarType.Big) carTypes[(int)index]++;
+        //                        else carTypes[(int)index] = CarType.Small;
+        //                        break;
+        //                    case 1:
+        //                        if (frontTypes[(int)index] != CarFrontType.Bumper) frontTypes[(int)index]++;
+        //                        else frontTypes[(int)index] = CarFrontType.Spikes;
+        //                        break;
+        //                    case 2:
+        //                        if (abilityTypes[(int)index] != AbilityType.TrapLauncher) abilityTypes[(int)index]++;
+        //                        else abilityTypes[(int)index] = AbilityType.Flamethrower;
+        //                        break;
+        //                }
+        //            }
+
+        //            if(state.IsButtonDown(Buttons.A) && previousState[(int)index].IsButtonUp(Buttons.A))
+        //            {
+        //                if (currentStage[(int)index] < 3) currentStage[(int)index]++;
+        //            }
+
+        //            if (state.IsButtonDown(Buttons.B) && previousState[(int)index].IsButtonUp(Buttons.B))
+        //            {
+        //                if (currentStage[(int)index] > 0) currentStage[(int)index]--;
+        //                else gamePadConnected[(int)index] = false;
+        //            }
+
+        //            if(state.IsButtonDown(Buttons.Back) && previousState[(int)index].IsButtonUp(Buttons.Back))
+        //            {
+        //                StateMachine.Instance.ChangeState(GameState.MenuMain);
+        //            }
+
+        //            previousState[(int)index] = state;
+        //        }
+
+        //        else
+        //        {
+        //            if(GamePad.GetCapabilities(index).IsConnected)
+        //            {
+        //                GamePadState state = GamePad.GetState(index);
+        //                if (state.IsButtonDown(Buttons.A)&& previousState[(int)index].IsButtonUp(Buttons.A))
+        //                {
+        //                    gamePadConnected[(int)index] = true;
+        //                }
+        //                previousState[(int) index] = state;
+        //            }
+        //        }
+
+
+
+        //    }
+        //}
 
         public bool CheckReady()
         {
             bool ready = true;
-            for (PlayerIndex index = PlayerIndex.One; index <= PlayerIndex.Four; index++)
+            for (int index=0; index<4;index++)
             {
                 if(gamePadConnected[(int)index] && currentStage[(int)index]!=3)
                 {
@@ -403,6 +495,6 @@ namespace CarGo
 
         }
 
-        
+
     }
 }

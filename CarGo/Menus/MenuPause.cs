@@ -74,7 +74,7 @@ namespace CarGo
 
         
 
-        protected override void ConfirmSelection()
+        protected override void ConfirmSelection(int clientID, InputController inputController)
         {
             switch (stage)
             {
@@ -94,7 +94,7 @@ namespace CarGo
             }
         }
 
-        protected override void Back()
+        protected override void Back(int clientID, InputController inputController)
         {
             StateMachine.Instance.ChangeState(GameState.Playing);
         }

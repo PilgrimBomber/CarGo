@@ -67,12 +67,13 @@ namespace CarGo
             SoundCollection.Instance.SetContent(Content);
             FontCollection.Instance.LoadFonts(Content);
             spriteBatch = new SpriteBatch(GraphicsDevice);
-            scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
             lobbyOnline = new LobbyOnline(spriteBatch, this);
-            localUpdates = new Network.LocalUpdates(this,scene,lobbyOnline);
+            localUpdates = new Network.LocalUpdates(this, lobbyOnline);
             networkThread = new Network.NetworkThread(localUpdates);
+            scene = new Scene(spriteBatch, Content, new Vector2(graphics.PreferredBackBufferWidth,graphics.PreferredBackBufferHeight),this);
             lobbySearch = new LobbySearch(spriteBatch,this);
             localUpdates.SetNetworkThread(networkThread);
+            localUpdates.SetScene(scene);
             mainMenu = new MainMenu(spriteBatch, this);
             postGameMenu = new PostGameMenu(spriteBatch, this);
             modifierMenu = new ModifierMenu(spriteBatch, this);
@@ -121,6 +122,7 @@ namespace CarGo
             if (StateMachine.Instance.networkGame)
             {
                 localUpdates.Update(gameTime);
+                PreferredInput.Instance.Update();
             }
             // TODO: Add your update logic here
             switch (StateMachine.Instance.gameState)
@@ -161,8 +163,10 @@ namespace CarGo
                     launchMenu.Update();
                     break;
                 case GameState.OnlineLobby:
+                    lobbyOnline.Update();
                     break;
                 case GameState.SearchLobby:
+                    lobbySearch.Update();
                     break;
                 case GameState.WaitForServerStart:
                     waitForServerStart.Update();
@@ -219,8 +223,10 @@ namespace CarGo
                     launchMenu.Draw();
                     break;
                 case GameState.OnlineLobby:
+                    lobbyOnline.Draw();
                     break;
                 case GameState.SearchLobby:
+                    lobbySearch.Draw();
                     break;
                 case GameState.WaitForServerStart:
                     loadingScreen.Draw();

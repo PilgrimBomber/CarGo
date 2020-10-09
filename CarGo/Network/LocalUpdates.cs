@@ -22,7 +22,7 @@ namespace CarGo.Network
         NetworkThread networkThread;
         Game1 game;
         //public List<NetIncomingMessage> incomingMessages;
-        public LocalUpdates(Game1 game, Scene scene, LobbyOnline lobbyOnline)
+        public LocalUpdates(Game1 game, LobbyOnline lobbyOnline)
         {
             this.game = game;
             this.scene = scene;
@@ -36,6 +36,10 @@ namespace CarGo.Network
         public void SetNetworkThread(NetworkThread networkThread)
         {
             this.networkThread = networkThread;
+        }
+        public void SetScene(Scene scene)
+        {
+            this.scene = scene;
         }
 
         public void Update(GameTime gameTime)
@@ -76,7 +80,8 @@ namespace CarGo.Network
             switch ((MessageType)type)
             {
                 case MessageType.GameState:
-
+                    GameState newState = (GameState)im.ReadByte();
+                    StateMachine.Instance.RemoteChangeState(newState);
                     //Update GameState
 
                     break;
@@ -84,6 +89,7 @@ namespace CarGo.Network
                     var objectMessageType = (ObjectMessageType)im.ReadByte();
                     var objectID = im.ReadInt32();
                     Vector2 center;
+                    int clientID;
                     switch (objectMessageType)
                     {
                         case ObjectMessageType.PlayerSpawn:
@@ -112,24 +118,26 @@ namespace CarGo.Network
                         case ObjectMessageType.StateChange:
                             break;
                         case ObjectMessageType.UpdateHitpoints:
-
+                            int newHitpoints = im.ReadInt32();
+                            scene.RemoteUpdateHitpoints(objectID, newHitpoints);
                             break;
                     }
                     break;
                 case MessageType.ReceiveClientNumber:
-                    var clientNumber = im.ReadInt32();
-                    ID_Manager.Instance.SetClientNumber(clientNumber);
-                    lobbyOnline.AddOnlinePlayer(Settings.Instance.PlayerName, clientNumber,InputType.Local);
+                    clientID = im.ReadInt32();
+                    ID_Manager.Instance.ClientNumber = clientID;
+                    lobbyOnline.AddOnlinePlayer(Settings.Instance.PlayerName, clientID,PreferredInput.Instance.GetPreferredInput);
                     break;
                 case MessageType.IntroduceClient:
-                    int clientID = im.ReadInt32();
+                    clientID = im.ReadInt32();
                     var clientName = im.ReadString();
-                    lobbyOnline.AddOnlinePlayer(clientName, clientID, InputType.Remote);
+                    lobbyOnline.AddOnlinePlayer(clientName, clientID, InputController.Remote);
                     //create new onlinePlayer for Lobby
                     break;
                 case MessageType.MenuInput:
                     Menu currentmenu = game.GetCurrentMenu();
-                    currentmenu.Input((InputType)im.ReadByte());
+                    clientID = im.ReadInt32();
+                    currentmenu.RemoteInput((InputType)im.ReadByte(),clientID);
                     break;
             }
         }

@@ -10,8 +10,8 @@ namespace CarGo
     {
         public string name;
         public int clientID;
-        public InputType inputType;
-        public OnlinePlayer(string name, int id, InputType inputType)
+        public InputController inputType;
+        public OnlinePlayer(string name, int id, InputController inputType)
         {
             this.name = name;
             this.clientID = id;
@@ -21,7 +21,7 @@ namespace CarGo
         
     }
 
-    public enum InputType
+    public enum InputController
     {
         Controller1,
         Controller2,

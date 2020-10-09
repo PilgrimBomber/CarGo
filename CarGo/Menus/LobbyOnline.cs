@@ -17,9 +17,16 @@ namespace CarGo
             background = TextureCollection.Instance.GetTexture(TextureType.Menu_Background);
             onlinePlayers = new List<OnlinePlayer>();
         }
-        protected override void ConfirmSelection()
+        protected override void ConfirmSelection(int clientID, InputController inputController)
         {
-            throw new NotImplementedException();
+            //throw new NotImplementedException();
+        }
+
+        public void Update()
+        {
+            if(onlinePlayers.Count>=2) StateMachine.Instance.ChangeState(GameState.MenuModificationSelection);
+
+            base.Update();
         }
 
         public void Draw()
@@ -31,7 +38,7 @@ namespace CarGo
             spriteBatch.End();
         }
 
-        public void AddOnlinePlayer(string name, int id, InputType inputType)
+        public void AddOnlinePlayer(string name, int id, InputController inputType)
         {
             onlinePlayers.Add(new OnlinePlayer(name, id, inputType));
         }
@@ -48,10 +55,11 @@ namespace CarGo
             return null;
         }
 
-        protected override void Back()
+        protected override void Back(int clientID, InputController inputController)
         {
             //StateMachine.Instance.Back();
             //ToDO: Leave Lobby
         }
+
     }
 }

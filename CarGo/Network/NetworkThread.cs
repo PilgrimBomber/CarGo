@@ -16,9 +16,8 @@ namespace CarGo.Network
 		private static NetClient s_client;
 		
 		private Thread serverThread;
-		public string host;
 		public int port=14242;
-		private static NetworkThread instance;
+		public static NetworkThread Instance;
 		public bool isMainClient= false;
 		LocalUpdates localUpdates;
 		public bool IsServerRunning
@@ -39,10 +38,10 @@ namespace CarGo.Network
 			
 			s_client.RegisterReceivedCallback(new SendOrPostCallback(GotMessage),new SynchronizationContext());
 			port = 23451;
-			instance = this;
+			Instance = this;
 		}
 
-		public void ConnectToServer()
+		public void ConnectToServer(string host)
         {
 			s_client.Start();
 			//make hail message contain username + ?
@@ -98,14 +97,14 @@ namespace CarGo.Network
 						NetConnectionStatus status = (NetConnectionStatus)im.ReadByte();
 						if(status == NetConnectionStatus.Connected)
                         {
-							instance.RequestClientNumber();
+							Instance.RequestClientNumber();
 						}
 						break;
 					case NetIncomingMessageType.Data:
 						if (im.Data != null)
 						{
 							//instance.localUpdates.incomingMessages.Add(im);
-							instance.localUpdates.ParseMessage(im);
+							Instance.localUpdates.ParseMessage(im);
 						}
 						else
 						{
