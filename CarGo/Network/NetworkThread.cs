@@ -61,7 +61,7 @@ namespace CarGo.Network
         {
             Process pr = new Process();
             ProcessStartInfo prs = new ProcessStartInfo();
-			prs.WorkingDirectory =Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\CarGoServer\bin\Release\")); 
+			prs.WorkingDirectory =Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\CarGoServer\bin\Debug\")); 
 
 			prs.FileName = @"CarGoServer.exe";
 			prs.Arguments = port.ToString();
@@ -98,6 +98,7 @@ namespace CarGo.Network
 						if(status == NetConnectionStatus.Connected)
                         {
 							Instance.RequestClientNumber();
+							Instance.RequestServerInfo();
 						}
 						break;
 					case NetIncomingMessageType.Data:
@@ -129,18 +130,43 @@ namespace CarGo.Network
 			s_client.SendMessage(om, NetDeliveryMethod.ReliableOrdered);
 			s_client.FlushSendQueue();
 		}
-		//public static void Send(string text)
-		//{
-		//	NetOutgoingMessage om = s_client.CreateMessage(text);
-		//	s_client.SendMessage(om, NetDeliveryMethod.ReliableOrdered);
-		//	s_client.FlushSendQueue();
-		//}
+		
+		public void RequestServerInfo()
+        {
+			NetOutgoingMessage om = s_client.CreateMessage();
+			om.Write((byte)ServerInfo.ServerMessage);
+			om.Write((byte)ServerTask.GetServerInformation);
+			s_client.SendMessage(om, NetDeliveryMethod.ReliableOrdered);
+			s_client.FlushSendQueue();
+		}
+
 
 		//Send Message
 		private void BroadCastMessage(MessageType messageType, ObjectMessageType objectMessageType)
         {
 
         }
+
+		public void BroadCastReady()
+        {
+			NetOutgoingMessage om = s_client.CreateMessage();
+			om.Write((byte)ServerInfo.Broadcast);
+			om.Write((byte)MessageType.PlayerReady);
+			om.Write(ID_Manager.Instance.ClientNumber);
+			s_client.SendMessage(om, NetDeliveryMethod.ReliableOrdered);
+			s_client.FlushSendQueue();
+		}
+
+		public void BroadCastMenuInput(InputType inputType)
+        {
+			NetOutgoingMessage om = s_client.CreateMessage();
+			om.Write((byte)ServerInfo.Broadcast);
+			om.Write((byte)MessageType.MenuInput);
+			om.Write(ID_Manager.Instance.ClientNumber);
+			om.Write((byte)inputType);
+			s_client.SendMessage(om, NetDeliveryMethod.ReliableOrdered);
+			s_client.FlushSendQueue();
+		}
 
 		public void BroadCastNewGameState(GameState newState)
         {
@@ -162,6 +188,7 @@ namespace CarGo.Network
             switch (objectMessageType)
             {
                 case ObjectMessageType.PlayerSpawn:
+					om.Write(ID_Manager.Instance.ClientNumber);
                     XNAExtensions.Write(om, entity.Hitbox.Center);
                     Player player = (Player)entity;
                     om.Write((byte)player.carType);

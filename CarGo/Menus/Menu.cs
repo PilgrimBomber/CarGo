@@ -153,6 +153,10 @@ namespace CarGo
 
         private void Input(InputType inputType, int clientID, InputController inputController)
         {
+            if (StateMachine.Instance.networkGame && StateMachine.Instance.IsSharedMenu() && clientID == ID_Manager.Instance.ClientNumber)
+            {
+                Network.NetworkThread.Instance.BroadCastMenuInput(inputType);
+            }
             switch (inputType)
             {
                 case InputType.Up:
@@ -175,6 +179,7 @@ namespace CarGo
                     Right(clientID, inputController);
                     break;
             }
+            
         }
 
     }

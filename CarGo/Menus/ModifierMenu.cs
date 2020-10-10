@@ -105,13 +105,13 @@ namespace CarGo
 
         private int GetIndex(int clientID, InputController inputController)
         {
-            int index = 0;
             if (StateMachine.Instance.networkGame)
-                foreach (OnlinePlayer player in LobbyOnline.onlinePlayers)
+                for (int i = 0; i < LobbyOnline.onlinePlayers.Count; i++)
                 {
-                    if (player.clientID == clientID) return index;
-                    index++;
+                    if (LobbyOnline.onlinePlayers[i].clientID == clientID) return i;
+
                 }
+
             else
             {
                 switch (inputController)
@@ -327,7 +327,7 @@ namespace CarGo
             }
 
 
-            if(CheckReady())
+            if((!StateMachine.Instance.networkGame || Network.NetworkThread.Instance.isMainClient) && CheckReady())
             {
                 
                 for (int index=0; index<4; index++)

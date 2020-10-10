@@ -11,6 +11,8 @@ namespace CarGo
         public string name;
         public int clientID;
         public InputController inputType;
+        public bool ready;
+        
         public OnlinePlayer(string name, int id, InputController inputType)
         {
             this.name = name;
@@ -18,7 +20,10 @@ namespace CarGo
             this.inputType = inputType;
         }
         
-        
+        public void ToggleReady()
+        {
+            ready = !ready;
+        }
     }
 
     public enum InputController

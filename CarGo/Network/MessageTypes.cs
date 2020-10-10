@@ -9,14 +9,15 @@ namespace CarGo.Network
     public enum ServerInfo
     {
         ServerMessage,
-        Broadcast
+        Broadcast        
     }
 
     
 
     public enum ServerTask
     {
-        GetClientNumber
+        GetClientNumber,
+        GetServerInformation
     }
     
     public enum MessageType
@@ -24,8 +25,10 @@ namespace CarGo.Network
         GameState,
         ObjectUpdate,
         ReceiveClientNumber,
+        ReceiveServerInfo,
         IntroduceClient,
-        MenuInput
+        MenuInput,
+        PlayerReady
     }
     public enum ObjectMessageType
     {

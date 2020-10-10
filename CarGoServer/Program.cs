@@ -1,6 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -18,9 +20,10 @@ namespace CarGoServer
 
 		private static Dictionary<int, NetConnection> clients;
 		private static Dictionary<int, string> clientNames;
+		
 		//This is the Server
-
-
+		private static string serverName;
+		private static string publicAddress;
 		static void Main(string[] args)
         {
             
@@ -34,6 +37,12 @@ namespace CarGoServer
 				if(Int32.TryParse(args[0],out port))				
 					config.Port = port;
 			}
+			serverName = "CarGo Server";
+			if (args.Length >= 2)
+			{
+				serverName = args[1];
+			}
+			publicAddress = GetIPAddress();
 
 			s_server = new NetServer(config);
 			s_server.Start();
@@ -62,6 +71,7 @@ namespace CarGoServer
 			NetIncomingMessage im;
 			while ((im = s_server.ReadMessage()) != null)
 			{
+				NetOutgoingMessage om;
 				// handle incoming message
 				switch (im.MessageType)
 				{
@@ -88,12 +98,26 @@ namespace CarGoServer
 									continue;
                                 }
 								clients.Add(i, im.SenderConnection);
+                                //send existing client names
+                                foreach (int key in clientNames.Keys)
+                                {
+									om = s_server.CreateMessage();
+									om.Write((byte)1);
+									om.Write((byte)CarGo.Network.MessageType.IntroduceClient);
+									om.Write(key);
+									om.Write(clientNames[key]);
+									s_server.SendMessage(om, im.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+									
+                                }
 								clientNames.Add(i,hail);
+								
+								//introduce new client to others
 								List<NetConnection> all = s_server.Connections; // get copy
 								all.Remove(im.SenderConnection);
 								if (all.Count > 0)
 								{
-									NetOutgoingMessage om = s_server.CreateMessage();
+									om = s_server.CreateMessage();
+									om.Write((byte)1);
 									om.Write((byte)CarGo.Network.MessageType.IntroduceClient);
 									om.Write(i);
 									om.Write(hail);
@@ -111,7 +135,9 @@ namespace CarGoServer
 					case NetIncomingMessageType.Data:
 						// incoming chat message from a client
 						var messageType = im.ReadByte();
-                        switch ((CarGo.Network.ServerInfo)messageType)
+						
+
+						switch ((CarGo.Network.ServerInfo)messageType)
                         {
                             case CarGo.Network.ServerInfo.ServerMessage:
                                 //handle task
@@ -122,44 +148,53 @@ namespace CarGoServer
                                         foreach (int key in clients.Keys)
                                         {
                                             NetConnection value;
-											clients.TryGetValue(key, out value);
-											if (value == im.SenderConnection)
+                                            clients.TryGetValue(key, out value);
+                                            if (value == im.SenderConnection)
                                             {
-												
-												NetOutgoingMessage om = s_server.CreateMessage();
+
+                                                om = s_server.CreateMessage();
+												om.Write((byte)19);
 												om.Write((byte)CarGo.Network.MessageType.ReceiveClientNumber);
-												om.Write(key);
-												s_server.SendMessage(om, im.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
-												break;
-											}
+                                                om.Write(key);
+                                                s_server.SendMessage(om, im.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
+                                                break;
+                                            }
                                         }
-										
+
 
                                         break;
-
-									default:
-										//fehler
+                                    case CarGo.Network.ServerTask.GetServerInformation:
+										om = s_server.CreateMessage();
+										om.Write((byte)19);
+										om.Write((byte)CarGo.Network.MessageType.ReceiveServerInfo);
+										om.Write(serverName);
+										
+										om.Write(publicAddress);
+										s_server.SendMessage(om, im.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
 										break;
+                                    default:
+                                        //fehler
+                                        break;
                                 }
                                 break;
                             case CarGo.Network.ServerInfo.Broadcast:
-								//broadcast this to all connections, except sender
-								List<NetConnection> all = s_server.Connections; // get copy
-								all.Remove(im.SenderConnection);
-								if (all.Count > 0)
-								{
-									NetOutgoingMessage om = s_server.CreateMessage();
-									om.Write(im);
-									s_server.SendMessage(om, all, NetDeliveryMethod.ReliableOrdered, 0);
-								}
-								break;
-							default:
-								//Fehler
-								break;
+                                //broadcast this to all connections, except sender
+                                List<NetConnection> all = s_server.Connections; // get copy
+                                all.Remove(im.SenderConnection);
+                                if (all.Count > 0)
+                                {
+                                    om = s_server.CreateMessage();
+                                    om.Write(im);
+                                    s_server.SendMessage(om, all, NetDeliveryMethod.ReliableOrdered, 0);
+                                }
+                                break;
+                            default:
+                                //Fehler
+                                break;
                         }
-                       				
-						
-						break;
+
+
+                        break;
 					default:
 						Console.WriteLine("Unhandled type: " + im.MessageType + " " + im.LengthBytes + " bytes " + im.DeliveryMethod + "|" + im.SequenceChannel);
 						break;
@@ -168,5 +203,23 @@ namespace CarGoServer
             }
         }
 
-    }
+
+		static string GetIPAddress()
+		{
+			String address = "";
+			WebRequest request = WebRequest.Create("http://checkip.dyndns.org/");
+			using (WebResponse response = request.GetResponse())
+			using (StreamReader stream = new StreamReader(response.GetResponseStream()))
+			{
+				address = stream.ReadToEnd();
+			}
+
+			int first = address.IndexOf("Address: ") + 9;
+			int last = address.LastIndexOf("</body>");
+			address = address.Substring(first, last - first);
+
+			return address;
+		}
+
+	}
 }

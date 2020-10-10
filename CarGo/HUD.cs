@@ -16,7 +16,7 @@ namespace CarGo
         private List<Cargo> cargos;
         //private List<BaseEnemy> enemies;
         private List<ActiveAbility> activeAbilities;
-        private static GraphicsDevice graphicsDevice;
+        public static GraphicsDevice graphicsDevice;
         private Vector2 screenSize;
         private Texture2D cargoLifeBar;
 

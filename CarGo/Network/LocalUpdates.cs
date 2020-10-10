@@ -75,7 +75,7 @@ namespace CarGo.Network
         public void ParseMessage(NetIncomingMessage im)
         {
             //Parse and Apply all Changes
-
+            var del = im.ReadByte();
             var type = im.ReadByte();
             switch ((MessageType)type)
             {
@@ -93,14 +93,12 @@ namespace CarGo.Network
                     switch (objectMessageType)
                     {
                         case ObjectMessageType.PlayerSpawn:
-
-                            int clientNumberP = im.ReadInt32();
-
+                            clientID = im.ReadInt32();
                             center = XNAExtensions.ReadVector2(im);
                             CarType carType = (CarType)im.ReadByte();
                             CarFrontType carFrontType = (CarFrontType)im.ReadByte();
                             AbilityType abilityType = (AbilityType)im.ReadByte();
-                            scene.RemoteAddPlayer(center, objectID, carType, carFrontType, abilityType, lobbyOnline.GetOnlinePlayer(clientNumberP));
+                            scene.RemoteAddPlayer(center, objectID, carType, carFrontType, abilityType, lobbyOnline.GetOnlinePlayer(clientID));
                             break;
                         case ObjectMessageType.Spawn:
                             EntityType entityType = (EntityType)im.ReadByte();
@@ -126,7 +124,7 @@ namespace CarGo.Network
                 case MessageType.ReceiveClientNumber:
                     clientID = im.ReadInt32();
                     ID_Manager.Instance.ClientNumber = clientID;
-                    lobbyOnline.AddOnlinePlayer(Settings.Instance.PlayerName, clientID,PreferredInput.Instance.GetPreferredInput);
+                    lobbyOnline.AddOnlinePlayer(Settings.Instance.PlayerName, clientID, PreferredInput.Instance.GetPreferredInput);
                     break;
                 case MessageType.IntroduceClient:
                     clientID = im.ReadInt32();
@@ -137,7 +135,18 @@ namespace CarGo.Network
                 case MessageType.MenuInput:
                     Menu currentmenu = game.GetCurrentMenu();
                     clientID = im.ReadInt32();
-                    currentmenu.RemoteInput((InputType)im.ReadByte(),clientID);
+                    currentmenu.RemoteInput((InputType)im.ReadByte(), clientID);
+                    break;
+                case MessageType.ReceiveServerInfo:
+                    string serverName = im.ReadString();
+                    string address = im.ReadString() + ":" + networkThread.port;//im.SenderEndPoint.ToString();
+                    lobbyOnline.serverName = serverName;
+                    lobbyOnline.serverAddress = address;
+                    break;
+                case MessageType.PlayerReady:
+                    clientID = im.ReadInt32();
+                    lobbyOnline.SetPlayerReady(clientID);
+
                     break;
             }
         }

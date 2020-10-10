@@ -43,13 +43,14 @@ namespace CarGo
             worldObjects = new List<WorldObject>();
             cargos = new List<Cargo>();
             activeAbilities = new List<ActiveAbility>();
+            camera = new Camera(spriteBatch, screenSize, cargos, players, enemies, worldObjects, activeAbilities);
             this.game = game;
             networkThread = game.networkThread;
             //SoundCollection.Instance.LoadSounds(content);
             //textureCollection = new TextureCollection(content);
             //TextureCollection.Instance.loadTextures(content);
             collisionCheck = new CollisionCheck(cargos, players, enemies, worldObjects, activeAbilities);
-            camera = new Camera(spriteBatch, screenSize, cargos, players, enemies, worldObjects, activeAbilities);
+            
             worldObjectHandling = new WorldObjectHandling(this, worldObjects);
             tilemap = new Tilemap(1, content);
             

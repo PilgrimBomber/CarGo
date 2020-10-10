@@ -40,6 +40,17 @@ namespace CarGo
             }
         }
 
+        public bool IsSharedMenu()
+        {
+            if (gameState == GameState.MenuModificationSelection) return true;
+            //if (gameState == GameState.OnlineLobby) return true;
+            if (gameState == GameState.MenuLost) return true;
+            if (gameState == GameState.MenuWon) return true;
+            if (gameState == GameState.MenuPause) return true;
+            if (gameState == GameState.Playing) return true;
+            return false;
+        }
+
         public void RemoteChangeState(GameState gameState)
         {
             previousState = this.gameState;
