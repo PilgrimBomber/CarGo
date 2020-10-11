@@ -20,6 +20,7 @@ namespace CarGo.Network
 		public static NetworkThread Instance;
 		public bool isMainClient= false;
 		LocalUpdates localUpdates;
+		private int updateCounter = 0;
 		public bool IsServerRunning
         {
 			get 
@@ -36,9 +37,20 @@ namespace CarGo.Network
 			config.AutoFlushSendQueue = false;
 			s_client = new NetClient(config);
 			
-			s_client.RegisterReceivedCallback(new SendOrPostCallback(GotMessage),new SynchronizationContext());
+			//s_client.RegisterReceivedCallback(new SendOrPostCallback(GotMessage),new SynchronizationContext());
 			port = 23451;
 			Instance = this;
+		}
+
+		public void Update()
+        {
+			if(updateCounter>1)
+            {
+				if (s_client.Status != NetPeerStatus.NotRunning) GotMessage();
+				updateCounter = 0;
+			}
+			
+			updateCounter++;
 		}
 
 		public void ConnectToServer(string host)
@@ -49,14 +61,7 @@ namespace CarGo.Network
 			s_client.Connect(host, port, hail);
 			
 		}
-		//public static void Connect(string host, int port)
-		//{
-		//	s_client.Start();
-		//	NetOutgoingMessage hail = s_client.CreateMessage("This is the hail message");
-		//	s_client.Connect(host, port, hail);
-		//}
-
-
+		
 		public void LaunchServer()
         {
             Process pr = new Process();
@@ -78,7 +83,7 @@ namespace CarGo.Network
 				//serverThread.Start();
 		}
 
-		public static void GotMessage(object peer)
+		public static void GotMessage()
 		{
 			NetIncomingMessage im;
 			while ((im = s_client.ReadMessage()) != null)
@@ -188,9 +193,10 @@ namespace CarGo.Network
             switch (objectMessageType)
             {
                 case ObjectMessageType.PlayerSpawn:
-					om.Write(ID_Manager.Instance.ClientNumber);
+					Player player = (Player)entity;
+					om.Write(player.onlinePlayer.clientID);
                     XNAExtensions.Write(om, entity.Hitbox.Center);
-                    Player player = (Player)entity;
+                    
                     om.Write((byte)player.carType);
                     om.Write((byte)player.carFrontType);
                     om.Write((byte)player.abilityType);

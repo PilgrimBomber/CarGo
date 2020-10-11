@@ -329,15 +329,16 @@ namespace CarGo
 
             if((!StateMachine.Instance.networkGame || Network.NetworkThread.Instance.isMainClient) && CheckReady())
             {
-                
+                theGame.scene.Reset();
+                StateMachine.Instance.ChangeState(GameState.Playing);
+                theGame.scene.LoadLevel();
                 for (int index=0; index<4; index++)
                 {
                     if (gamePadConnected[(int)index])
                     {
                         //find fitting OnlinePlayer object and set inputtype if local else use index
-                        theGame.scene.addPlayer(true, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index], ID_Manager.Instance.GetID(),new OnlinePlayer(Settings.Instance.PlayerName+index.ToString(), ID_Manager.Instance.GetID(),(InputController)index));
-                        StateMachine.Instance.ChangeState(GameState.Playing);
-                        theGame.scene.LoadLevel();
+                        theGame.scene.addPlayer(true, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index], ID_Manager.Instance.GetID(),LobbyOnline.onlinePlayers[index]);
+                        
                     }
                 }
             }

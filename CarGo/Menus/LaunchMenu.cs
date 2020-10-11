@@ -91,6 +91,7 @@ namespace CarGo
                 //start new Server and connect
                 StateMachine.Instance.networkGame = true;
                 StateMachine.Instance.ChangeState(GameState.WaitForServerStart);
+                theGame.scene.Reset();
             }
 
             if (stage == 2)
@@ -98,6 +99,7 @@ namespace CarGo
                 
                 StateMachine.Instance.networkGame = true;
                 StateMachine.Instance.ChangeState(GameState.SearchLobby);
+                theGame.scene.Reset();
             }
         }
 

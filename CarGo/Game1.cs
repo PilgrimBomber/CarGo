@@ -121,6 +121,7 @@ namespace CarGo
 
             if (StateMachine.Instance.networkGame)
             {
+                networkThread.Update();
                 localUpdates.Update(gameTime);
                 PreferredInput.Instance.Update();
             }

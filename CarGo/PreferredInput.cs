@@ -12,12 +12,10 @@ namespace CarGo
     {
         private GamePadState[] lastState;
         
-        private bool[] changedLastUpdate;
         private InputController lastChanged;
         private PreferredInput()
         {
             lastState = new GamePadState[4];
-            changedLastUpdate = new bool[5];
         }
 
         public InputController GetPreferredInput

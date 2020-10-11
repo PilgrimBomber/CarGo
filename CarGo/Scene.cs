@@ -138,7 +138,7 @@ namespace CarGo
             }
         }
 
-        public void RemoteAddPlayer(Vector2 center, int objectID, CarType carType, CarFrontType carFront, AbilityType abilityType, OnlinePlayer onlinePlayer)
+        public void RemoteAddPlayer(int clientID, Vector2 center, int objectID, CarType carType, CarFrontType carFront, AbilityType abilityType, OnlinePlayer onlinePlayer)
         {
             addPlayer(false, center, carType, carFront, abilityType, objectID, onlinePlayer);
         }
@@ -175,6 +175,7 @@ namespace CarGo
 
         public void RemoteRemoveEntity(int objectID)
         {
+            if (!entitiesID.ContainsKey(objectID)) return;
             Entity entity = entitiesID[objectID];
             if (players.Contains(entity)) removePlayer(entity as Player, false);
             if (enemies.Contains(entity)) removeEnemy(entity as BaseEnemy, false);
@@ -237,10 +238,13 @@ namespace CarGo
 
         public void addPlayer(bool local, Vector2 center, CarType carType, CarFrontType carFrontType, AbilityType abilityType, int objectID, OnlinePlayer onlinePlayer)
         {
-            Player player = new Player(local, this, center, carType, carFrontType, abilityType, objectID, onlinePlayer);
+            Player player = new Player(onlinePlayer.clientID == ID_Manager.Instance.ClientNumber, this, center, carType, carFrontType, abilityType, objectID, onlinePlayer);
             players.Add(player);
             addEntity(player,local);
-            if (local) localPlayers.Add(player);
+            if (onlinePlayer.clientID == ID_Manager.Instance.ClientNumber)
+            {
+                localPlayers.Add(player);
+            }
         }
 
         public void removePlayer(Player player, bool local)
@@ -268,7 +272,8 @@ namespace CarGo
             if(entity.objectID>0) entitiesID.Add(entity.objectID, entity);
             if (local && StateMachine.Instance.networkGame)
             {
-                networkThread.BroadCastEntityUpdate(Network.ObjectMessageType.Spawn, entity);
+                if (entity.entityType == EntityType.Player) networkThread.BroadCastEntityUpdate(Network.ObjectMessageType.PlayerSpawn, entity);
+                else networkThread.BroadCastEntityUpdate(Network.ObjectMessageType.Spawn, entity);
             }
 
         }

@@ -61,7 +61,7 @@ namespace CarGo
         }
         
 
-        public void RemoteUpdatePosition(Vector2 center, float rotation, Vector2 velocity)
+        public virtual void RemoteUpdatePosition(Vector2 center, float rotation, Vector2 velocity)
         {
             hitbox.SetPosition(center);
             hitbox.SetRotation(rotation);

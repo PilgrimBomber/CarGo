@@ -27,7 +27,7 @@ namespace CarGo.Network
             this.game = game;
             this.scene = scene;
             this.lobbyOnline = lobbyOnline;
-            updatesPerSecond = 10;
+            updatesPerSecond = 100;
             timePerUpdate = 1000 / updatesPerSecond;
             timeSinceLastUpdate = 0;
             //incomingMessages = new List<NetIncomingMessage>();
@@ -58,16 +58,14 @@ namespace CarGo.Network
             {
                 foreach(Entity entity in scene.entities)
                 {
-                    if(entity.entityType != EntityType.Player || ((Player)entity).local)
+                    if(entity.entityType != EntityType.Player)
                         networkThread.BroadCastEntityUpdate(ObjectMessageType.UpdatePosition, entity);
+                    
                 }
             }
-            else
+            foreach(Player player in scene.localPlayers)
             {
-                foreach(Player player in scene.localPlayers)
-                {
-                    networkThread.BroadCastEntityUpdate(ObjectMessageType.UpdatePosition, player);
-                }
+                networkThread.BroadCastEntityUpdate(ObjectMessageType.UpdatePosition, player);
             }
         }
 
@@ -98,7 +96,7 @@ namespace CarGo.Network
                             CarType carType = (CarType)im.ReadByte();
                             CarFrontType carFrontType = (CarFrontType)im.ReadByte();
                             AbilityType abilityType = (AbilityType)im.ReadByte();
-                            scene.RemoteAddPlayer(center, objectID, carType, carFrontType, abilityType, lobbyOnline.GetOnlinePlayer(clientID));
+                            scene.RemoteAddPlayer(clientID, center, objectID, carType, carFrontType, abilityType, lobbyOnline.GetOnlinePlayer(clientID));
                             break;
                         case ObjectMessageType.Spawn:
                             EntityType entityType = (EntityType)im.ReadByte();
@@ -112,6 +110,7 @@ namespace CarGo.Network
                             center = XNAExtensions.ReadVector2(im);
                             float rotation = im.ReadFloat();
                             Vector2 velocity = XNAExtensions.ReadVector2(im);
+                            scene.RemoteUpdatePosition(objectID, center, rotation, velocity);
                             break;
                         case ObjectMessageType.StateChange:
                             break;

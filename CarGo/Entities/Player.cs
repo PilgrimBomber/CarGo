@@ -32,7 +32,7 @@ namespace CarGo
         private SoundEffectInstance soundHorn2;
         private SoundEffectInstance soundHorn3;
         public bool local = true;
-        private OnlinePlayer onlinePlayer;
+        public OnlinePlayer onlinePlayer;
 
         //public Vector2 Velocity { get => velocity; set => velocity = value; }
         public float TurnRate { get => turnRate; set => turnRate = value; }
@@ -145,7 +145,15 @@ namespace CarGo
         }
 
 
-
+        public override void RemoteUpdatePosition(Vector2 center, float rotation, Vector2 velocity)
+        {
+            Move(center - hitbox.Center);
+            carFront.Hitbox.RotatePoint(rotation - carFront.Hitbox.RotationRad, hitbox.Center);
+            hitbox.SetRotation(rotation);
+            //carFront.Hitbox.SetRotation(rotation);
+            
+            this.velocity = velocity;
+        }
         public override void Collide(Entity entity, EntityCategory entityCategory)
         {
 
@@ -322,7 +330,6 @@ namespace CarGo
                 if(abilityType== AbilityType.Flamethrower) active.Hitbox.RotatePoint(rad * turnRate * (30 - velocity.Length()) / 20, hitbox.Center);
 
             }
-
         }
         public void Accelerate(float accelerationFactor)
         {
