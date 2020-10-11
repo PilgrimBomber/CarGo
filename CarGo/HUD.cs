@@ -32,6 +32,7 @@ namespace CarGo
 
         public void Update()
         {
+            if (cargos.Count == 0) return;
             cargoLifeBar = createLifebar(cargoLifeBar, 1380, 20, cargos[0].getPercentLife(), 2);
         }
 

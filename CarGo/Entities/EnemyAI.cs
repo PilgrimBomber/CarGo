@@ -36,7 +36,9 @@ namespace CarGo
 
         public void Update(GameTime gameTime)
         {
+            if (cargos.Count == 0) return;
             if (cargo == null) cargo = cargos.First();
+
 
 
             //Direct Move

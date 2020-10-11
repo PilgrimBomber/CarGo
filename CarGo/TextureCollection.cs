@@ -82,6 +82,7 @@ namespace CarGo
 
         private void LoadTexture(TextureType textureType)
         {
+            if (textures.ContainsKey(textureType)) return;
             switch (textureType)
             {
                 case TextureType.Active_FlameThrower: textures.Add(TextureType.Active_FlameThrower, content.Load<Texture2D>("textures/Cargo")); break;//noch benötigt

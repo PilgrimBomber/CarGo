@@ -24,6 +24,7 @@ namespace CarGo
 
         public void HandleInput()
         {
+            if (StateMachine.Instance.networkGame) inputController = PreferredInput.Instance.GetPreferredInput;
             if(inputController == InputController.KeyBoard)KeyboardInput();
             if(inputController< InputController.KeyBoard) GamepadInput((PlayerIndex)inputController);
         }

@@ -70,10 +70,13 @@ namespace CarGo
             }
             float borderX = 300f;
             float borderY = 300f;
+            if (centers.Count == 0) return;
             offset.X = sumX / centers.Count -screenCenter.X;
+            offset.Y = sumY / centers.Count - screenCenter.Y;
+            if (cargos.Count == 0) return;
             if (offset.X - cargos[0].Hitbox.Center.X + screenCenter.X > (screenSize.X-screenCenter.X)-borderX) offset.X = cargos[0].Hitbox.Center.X + (screenSize.X - screenCenter.X) - borderX - screenCenter.X;
             if (offset.X - cargos[0].Hitbox.Center.X + screenCenter.X < -((screenSize.X - screenCenter.X) - borderX)) offset.X = cargos[0].Hitbox.Center.X - ((screenSize.X - screenCenter.X) - borderX) - screenCenter.X;
-            offset.Y = sumY / centers.Count - screenCenter.Y;
+            
             if (offset.Y - cargos[0].Hitbox.Center.Y + screenCenter.Y > ((screenSize.Y-screenCenter.Y)-borderY)) offset.Y = cargos[0].Hitbox.Center.Y + ((screenSize.Y - screenCenter.Y) - borderY) - screenCenter.Y;
             if (offset.Y - cargos[0].Hitbox.Center.Y + screenCenter.Y < -((screenSize.Y - screenCenter.Y) - borderY)) offset.Y = cargos[0].Hitbox.Center.Y - ((screenSize.Y - screenCenter.Y) - borderY) - screenCenter.Y;
         }
