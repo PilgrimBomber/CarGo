@@ -325,7 +325,7 @@ namespace CarGo
                     else gamePadConnected[i] = false;
                 }
             }
-
+            
 
             if((!StateMachine.Instance.networkGame || Network.NetworkThread.Instance.isMainClient) && CheckReady())
             {
@@ -337,8 +337,8 @@ namespace CarGo
                     if (gamePadConnected[(int)index])
                     {
                         //find fitting OnlinePlayer object and set inputtype if local else use index
-                        theGame.scene.addPlayer(true, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index], ID_Manager.Instance.GetID(),LobbyOnline.onlinePlayers[index]);
-                        
+                        if (StateMachine.Instance.networkGame) theGame.scene.addPlayer(true, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index], ID_Manager.Instance.GetID(), LobbyOnline.onlinePlayers[index]);
+                        else theGame.scene.addPlayer(true, new Vector2(400 + (int)index * 100, 400), carTypes[(int)index], frontTypes[(int)index], abilityTypes[(int)index], ID_Manager.Instance.GetID(), new OnlinePlayer(Settings.Instance.PlayerName + index.ToString(), ID_Manager.Instance.ClientNumber, (InputController)index));
                     }
                 }
             }
@@ -347,7 +347,8 @@ namespace CarGo
         protected override void ConfirmSelection(int clientID, InputController inputController)
         {
             int index = GetIndex(clientID, inputController);
-            if (currentStage[(int)index] < 3) currentStage[(int)index]++;
+            if (!StateMachine.Instance.networkGame && !gamePadConnected[index]) gamePadConnected[index]=true;
+            else if (currentStage[(int)index] < 3) currentStage[(int)index]++;
         }
 
         protected override void Back(int clientID, InputController inputController)
@@ -485,13 +486,16 @@ namespace CarGo
         public bool CheckReady()
         {
             bool ready = true;
+            int numConnected = 0;
             for (int index=0; index<4;index++)
             {
-                if(gamePadConnected[(int)index] && currentStage[(int)index]!=3)
+                if(gamePadConnected[(int)index])
                 {
-                    ready = false;
+                    numConnected++;
+                    if(currentStage[(int)index] != 3) ready = false;
                 }
             }
+            if (numConnected == 0) return false;
             return ready;
 
         }

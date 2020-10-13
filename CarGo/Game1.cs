@@ -23,7 +23,7 @@ namespace CarGo
         MenuControls menuControls;
         CreditScreen creditScreen;
         MenuSettings menuSettings;
-        MenuPause menuPause;
+        public MenuPause menuPause;
         LaunchMenu launchMenu;
         WaitForServerStart waitForServerStart;
         LoadingScreen loadingScreen;
@@ -116,8 +116,8 @@ namespace CarGo
         /// <param name="gameTime">Provides a snapshot of timing values.</param>
         protected override void Update(GameTime gameTime)
         {
-            if (/*GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||*/ Keyboard.GetState().IsKeyDown(Keys.Escape))
-                Exit();
+            //if (/*GamePad.GetState(PlayerIndex.One).Buttons.Back == ButtonState.Pressed ||*/ Keyboard.GetState().IsKeyDown(Keys.Escape))
+            //    Exit();
 
             if (StateMachine.Instance.networkGame)
             {
@@ -278,6 +278,7 @@ namespace CarGo
                 case GameState.WaitForServerStart:
                     return waitForServerStart;
                     break;
+                    
                 default:
                     throw new ArgumentOutOfRangeException();
                     return null;

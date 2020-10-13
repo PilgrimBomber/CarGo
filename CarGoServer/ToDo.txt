@@ -1,0 +1,13 @@
+﻿	Master Server
+		Lobby Liste
+		Joinen über Code
+		Direkt Joinen über IP
+		Matchmaking
+	Host Einstellungen
+		Name
+		public
+		Passwort?
+x	Settings PlayerName
+x	Pause
+x		Chat
+x	Local Multiplayer

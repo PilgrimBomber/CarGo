@@ -28,7 +28,8 @@ namespace CarGo.Network
         ReceiveServerInfo,
         IntroduceClient,
         MenuInput,
-        PlayerReady
+        PlayerReady,
+        Chat
     }
     public enum ObjectMessageType
     {

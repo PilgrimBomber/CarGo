@@ -33,7 +33,7 @@ namespace CarGo.Network
 		public NetworkThread(LocalUpdates localUpdates)
         {
 			this.localUpdates = localUpdates;
-			NetPeerConfiguration config = new NetPeerConfiguration("chat");
+			NetPeerConfiguration config = new NetPeerConfiguration("GameServer");
 			config.AutoFlushSendQueue = false;
 			s_client = new NetClient(config);
 			
@@ -147,10 +147,15 @@ namespace CarGo.Network
 
 
 		//Send Message
-		private void BroadCastMessage(MessageType messageType, ObjectMessageType objectMessageType)
+		public void BroadCastChatMessage(string message)
         {
-
-        }
+			NetOutgoingMessage om = s_client.CreateMessage();
+			om.Write((byte)ServerInfo.Broadcast);
+			om.Write((byte)MessageType.Chat);
+			om.Write(Settings.Instance.PlayerName + ": " + message);
+			s_client.SendMessage(om, NetDeliveryMethod.ReliableOrdered);
+			s_client.FlushSendQueue();
+		}
 
 		public void BroadCastReady()
         {

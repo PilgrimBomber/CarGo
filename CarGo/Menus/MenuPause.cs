@@ -20,26 +20,35 @@ namespace CarGo
 
         private List<Vector2> buttons;
         private String[] texts;
-
-        public MenuPause(SpriteBatch spriteBatchInit, Game1 game): base(spriteBatchInit,game,4)
+        private Texture2D chatWindow;
+        private bool chatMode;
+        private string chatMessage;
+        private List<string> chatLog;
+        private Keys[] lastKeys;
+        public MenuPause(SpriteBatch spriteBatchInit, Game1 game): base(spriteBatchInit,game,5)
         {
             //Boxes
             //Create Buttons 
-            numButtons = 4;
+            numButtons = 5;
             buttons = new List<Vector2>();
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < numButtons; i++)
             {
                 buttons.Add(new Vector2(300, 350 + (int)i * 100));
             }
 
-            texts = new String[4];
+            texts = new String[numButtons];
             texts[0] = "Continue";
             texts[1] = "Settings";
             texts[2] = "Menu";
             texts[3] = "Exit";
-
+            texts[4] = "Chat";
+            lastKeys = Keyboard.GetState().GetPressedKeys();
             //Texture
             //Set Background
+            HUD.graphicsDevice = spriteBatchInit.GraphicsDevice;
+            chatWindow = HUD.createLifebar(chatWindow,600,400,0,2,Color.White,Color.White,Color.Black);
+            chatLog = new List<string>();
+            chatMessage = "";
             Color backgroundColor = new Color(0, 0, 0,100);
             textureBackground = new Texture2D(spriteBatchInit.GraphicsDevice, (int)Settings.Instance.ScreenSize.X, (int)Settings.Instance.ScreenSize.Y);
             Color[] data = new Color[(int)Settings.Instance.ScreenSize.X * (int)Settings.Instance.ScreenSize.Y];
@@ -55,6 +64,22 @@ namespace CarGo
         }
 
         
+        public void Update()
+        {
+            if(chatMode)
+            {
+                Keys[] keys = Keyboard.GetState().GetPressedKeys();
+                foreach (Keys key in keys)
+                {
+                    if(!lastKeys.Contains(key))chatMessage += InputHandler.KeyToString(key,keys.Contains(Keys.LeftShift)|| keys.Contains(Keys.RightShift));
+                }
+                lastKeys = keys;
+            }
+
+            base.Update();
+        }
+
+        
 
         public void Draw()
         {
@@ -62,12 +87,27 @@ namespace CarGo
 
             spriteBatch.Draw(textureBackground, new Vector2(0, 0), Color.White);
 
-            for (int i = 0; i < 4; i++)
+            for (int i = 0; i < numButtons; i++)
             {
                 spriteBatch.DrawString(spriteFont, texts[i], buttons[i], Color.Black);
             }
 
             spriteBatch.Draw(textureCarrier, buttons[stage] + new Vector2(-300, -25), Color.White);
+
+            if(chatMode)
+            {
+                spriteBatch.Draw(chatWindow, new Vector2(1200,500), Color.White);
+                //show 10 lastMessages
+                int shownMessages = 10;
+                int numMessages = chatLog.Count>shownMessages? shownMessages:chatLog.Count;
+                int firstIndex = chatLog.Count-numMessages;
+                for (int i = 0; i < numMessages; i++)
+                {
+                    spriteBatch.DrawString(spriteFont, chatLog[firstIndex + i], new Vector2(1205, 505 + 30 * i), Color.Black, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 0);
+                }
+                if(chatMessage.Length>0)spriteBatch.DrawString(spriteFont, chatMessage, new Vector2(1205, 875), Color.Black, 0, Vector2.Zero, 0.5f, SpriteEffects.None, 0);
+            }
+
 
             spriteBatch.End();
         }
@@ -90,13 +130,36 @@ namespace CarGo
                 case 3:
                     StateMachine.Instance.ChangeState(GameState.Exit);
                     break;
-
+                case 4:
+                    if(StateMachine.Instance.networkGame)
+                    {
+                        if (!chatMode) chatMode = true;
+                        else
+                        {
+                            if (chatMessage.Length > 0)
+                            {
+                                Network.NetworkThread.Instance.BroadCastChatMessage(chatMessage);
+                                AddChatMessage(chatMessage);
+                            }
+                            chatMessage = "";
+                        }
+                    }
+                    break;
             }
+        }
+
+        public void AddChatMessage(string newMessage)
+        {
+            chatLog.Add(newMessage);
         }
 
         protected override void Back(int clientID, InputController inputController)
         {
-            StateMachine.Instance.ChangeState(GameState.Playing);
+            if (stage == 4 && chatMode) chatMode = false;
+            else StateMachine.Instance.ChangeState(GameState.Playing);
         }
+
+
+        
     }
 }

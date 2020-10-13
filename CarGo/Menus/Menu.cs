@@ -132,7 +132,7 @@ namespace CarGo
                 Input(InputType.Confirm, InputController.KeyBoard);
             }
 
-            if (state.IsKeyUp(Keys.Back) && previousKeyBoardState.IsKeyDown(Keys.Back))
+            if (/*(state.IsKeyUp(Keys.Back) && previousKeyBoardState.IsKeyDown(Keys.Back)) ||*/ (state.IsKeyUp(Keys.Escape) && previousKeyBoardState.IsKeyDown(Keys.Escape)))
             {
                 Input(InputType.Back, InputController.KeyBoard);
             }

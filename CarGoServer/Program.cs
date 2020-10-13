@@ -9,6 +9,7 @@ using System.Threading.Tasks;
 using Lidgren.Network;
 using Lidgren.Network.Xna;
 using Microsoft.Xna.Framework;
+using MSCommon;
 
 namespace CarGoServer
 {
@@ -22,27 +23,41 @@ namespace CarGoServer
 		private static Dictionary<int, string> clientNames;
 		
 		//This is the Server
-		private static string serverName;
-		private static string publicAddress;
+		private static ServerData serverData;
+
+		private static bool registerOnline;
+		private static bool gameRunning;
 		static void Main(string[] args)
         {
-            
-			
-			NetPeerConfiguration config = new NetPeerConfiguration("chat");
-            config.MaximumConnections = 100;
+
+			IPEndPoint masterServerEndpoint = NetUtility.Resolve(CommonConstants.MasterServerAddress, CommonConstants.MasterServerPort);
+			NetPeerConfiguration config = new NetPeerConfiguration("GameServer");
+            config.MaximumConnections = 4;
+			serverData.serverPort = 14242;
             config.Port = 14242;
 			if (args.Length >= 1)
 			{
 				int port;
-				if(Int32.TryParse(args[0],out port))				
+				if (Int32.TryParse(args[0], out port))
+				{
+					serverData.serverPort = port;
 					config.Port = port;
+				}				
+					
 			}
-			serverName = "CarGo Server";
+			serverData.serverName = "CarGo Server";
 			if (args.Length >= 2)
 			{
-				serverName = args[1];
+				serverData.serverName = args[1];
 			}
-			publicAddress = GetIPAddress();
+			if(args.Length >= 3)
+            {
+				if (args[2] == "true") registerOnline = true;
+				else registerOnline = false;
+            }
+			registerOnline = true;
+
+			serverData.publicAddress = GetIPAddress();
 
 			s_server = new NetServer(config);
 			s_server.Start();
@@ -51,17 +66,26 @@ namespace CarGoServer
 			clientNames = new Dictionary<int, string>();
 			Console.WriteLine("Server started on Port " + config.Port);
 
-            while (true)
-            {
-				//CheckForMessages();
-				//NetBuffer message = new NetBuffer();
-				//XNAExtensions.Write(message, new Vector3(1, 2, 3));
+			var lastRegistered = -60.0f;
 
-				//Send messages
-
-                Thread.Sleep(1);
-            }
-
+			while ((Console.KeyAvailable == false || Console.ReadKey().Key != ConsoleKey.Escape)&& !gameRunning )
+			{
+				// (re-)register periodically with master server
+				if (NetTime.Now > lastRegistered + 60 && registerOnline)
+				{
+					// register with master server
+					NetOutgoingMessage regMsg = s_server.CreateMessage();
+					regMsg.Write((byte)MasterServerMessageType.RegisterHost);
+					IPAddress mask;
+					serverData.localAddress = NetUtility.GetMyAddress(out mask);
+					regMsg.Write(s_server.UniqueIdentifier);
+					regMsg.WriteAllFields(serverData);
+					//regMsg.Write(new IPEndPoint(adr, 14242));
+					Console.WriteLine("Sending registration to master server");
+					s_server.SendUnconnectedMessage(regMsg, masterServerEndpoint);
+					lastRegistered = (float)NetTime.Now;
+				}
+			}
 
         }
 
@@ -98,6 +122,7 @@ namespace CarGoServer
 									continue;
                                 }
 								clients.Add(i, im.SenderConnection);
+								serverData.numClients++;
                                 //send existing client names
                                 foreach (int key in clientNames.Keys)
                                 {
@@ -167,9 +192,10 @@ namespace CarGoServer
 										om = s_server.CreateMessage();
 										om.Write((byte)19);
 										om.Write((byte)CarGo.Network.MessageType.ReceiveServerInfo);
-										om.Write(serverName);
+										//om.WriteAllFields(serverData);
+										om.Write(serverData.serverName);
 										
-										om.Write(publicAddress);
+										om.Write(serverData.publicAddress);
 										s_server.SendMessage(om, im.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
 										break;
                                     default:
@@ -178,7 +204,15 @@ namespace CarGoServer
                                 }
                                 break;
                             case CarGo.Network.ServerInfo.Broadcast:
-                                //broadcast this to all connections, except sender
+                                
+								if((CarGo.Network.MessageType)im.ReadByte()== CarGo.Network.MessageType.GameState)
+                                {
+									if((CarGo.GameState)im.ReadByte()== CarGo.GameState.MenuModificationSelection)
+                                    {
+										gameRunning = true;
+                                    }
+                                }
+								//broadcast this to all connections, except sender
                                 List<NetConnection> all = s_server.Connections; // get copy
                                 all.Remove(im.SenderConnection);
                                 if (all.Count > 0)

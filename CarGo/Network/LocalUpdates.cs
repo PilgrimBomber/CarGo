@@ -147,6 +147,10 @@ namespace CarGo.Network
                     lobbyOnline.SetPlayerReady(clientID);
 
                     break;
+                case MessageType.Chat:
+                    string message = im.ReadString();
+                    game.menuPause.AddChatMessage(message);
+                    break;
             }
         }
 
