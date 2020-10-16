@@ -69,7 +69,7 @@
     </DocumentationFile>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)' == 'Release|x64'">
-    <OutputPath>bin\x64\Release\</OutputPath>
+    <OutputPath>..\Release\CarGo\</OutputPath>
     <DefineConstants>TRACE;WINDOWS</DefineConstants>
     <Optimize>true</Optimize>
     <DebugType>pdbonly</DebugType>
@@ -82,6 +82,9 @@
     <StartupObject>CarGo.Program</StartupObject>
   </PropertyGroup>
   <ItemGroup>
+    <Compile Include="..\CarGoServer\ServerData.cs">
+      <Link>Network\ServerData.cs</Link>
+    </Compile>
     <Compile Include="..\CarGoServer\XNAExtensions.cs">
       <Link>Network\XNAExtensions.cs</Link>
     </Compile>
@@ -153,6 +156,7 @@
     <Reference Include="System" />
     <Reference Include="System.Configuration" />
     <Reference Include="System.Web.Extensions" />
+    <Reference Include="System.Windows.Forms" />
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
@@ -171,6 +175,10 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
+    <ProjectReference Include="..\CarGoServer\CarGoServer.csproj">
+      <Project>{f0d1b247-615a-4156-a6a1-cf6c00d194ed}</Project>
+      <Name>CarGoServer</Name>
+    </ProjectReference>
     <ProjectReference Include="..\Lidgren.Network\Lidgren.Network.csproj">
       <Project>{49ba1c69-6104-41ac-a5d8-b54fa9f696e8}</Project>
       <Name>Lidgren.Network</Name>

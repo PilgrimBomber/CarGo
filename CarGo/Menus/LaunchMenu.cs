@@ -86,10 +86,6 @@ namespace CarGo
 
             if (stage == 1)
             {
-                networkThread.LaunchServer();
-                networkThread.isMainClient = true;
-                //start new Server and connect
-                StateMachine.Instance.networkGame = true;
                 StateMachine.Instance.ChangeState(GameState.WaitForServerStart);
                 theGame.scene.Reset();
             }

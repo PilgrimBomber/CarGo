@@ -1,11 +1,11 @@
-﻿	Master Server
-		Lobby Liste
-		Joinen über Code
-		Direkt Joinen über IP
+﻿x	Master Server
+		LobbySearch
+			Joinen über Code (server unique identifier)
+			Direkt Joinen über IP
 		Matchmaking
-	Host Einstellungen
-		Name
-		public
+x	Host Einstellungen
+x		Name
+x		public
 		Passwort?
 x	Settings PlayerName
 x	Pause

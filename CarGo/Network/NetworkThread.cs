@@ -19,6 +19,7 @@ namespace CarGo.Network
 		public int port=14242;
 		public static NetworkThread Instance;
 		public bool isMainClient= false;
+		public bool publicServer;
 		LocalUpdates localUpdates;
 		private int updateCounter = 0;
 		public bool IsServerRunning
@@ -62,14 +63,23 @@ namespace CarGo.Network
 			
 		}
 		
-		public void LaunchServer()
+		public void LaunchServer(string serverName, bool registerServer)
         {
             Process pr = new Process();
             ProcessStartInfo prs = new ProcessStartInfo();
+#if DEBUG
+            // Debug Code
 			prs.WorkingDirectory =Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\CarGoServer\bin\Debug\")); 
+#else
+			prs.WorkingDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\CarGoServer\"));
+#endif
 
 			prs.FileName = @"CarGoServer.exe";
-			prs.Arguments = port.ToString();
+			string args = port.ToString();
+			args += " " + serverName;
+			publicServer = registerServer;
+			args += " " + (registerServer ? "true" : "false");
+			prs.Arguments = args;
             pr.StartInfo = prs;
 			pr.Start();
 			

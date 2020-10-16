@@ -18,6 +18,7 @@ namespace CarGo.Network
         private float updatesPerSecond;
         private float timePerUpdate;
         private float timeSinceLastUpdate;
+        
         LobbyOnline lobbyOnline;
         NetworkThread networkThread;
         Game1 game;
@@ -137,10 +138,11 @@ namespace CarGo.Network
                     currentmenu.RemoteInput((InputType)im.ReadByte(), clientID);
                     break;
                 case MessageType.ReceiveServerInfo:
-                    string serverName = im.ReadString();
-                    string address = im.ReadString() + ":" + networkThread.port;//im.SenderEndPoint.ToString();
-                    lobbyOnline.serverName = serverName;
-                    lobbyOnline.serverAddress = address;
+                    CarGoServer.ServerData serverData = new CarGoServer.ServerData();
+                    im.ReadAllFields(serverData);
+                    //string serverName = im.ReadString();
+                    //string address = im.ReadString() + ":" + networkThread.port;//im.SenderEndPoint.ToString();
+                    lobbyOnline.serverData = serverData;
                     break;
                 case MessageType.PlayerReady:
                     clientID = im.ReadInt32();

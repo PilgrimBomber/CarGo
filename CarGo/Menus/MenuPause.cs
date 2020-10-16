@@ -21,7 +21,7 @@ namespace CarGo
         private List<Vector2> buttons;
         private String[] texts;
         private Texture2D chatWindow;
-        private bool chatMode;
+        private bool inputMode;
         private string chatMessage;
         private List<string> chatLog;
         private Keys[] lastKeys;
@@ -66,7 +66,7 @@ namespace CarGo
         
         public void Update()
         {
-            if(chatMode)
+            if(inputMode)
             {
                 Keys[] keys = Keyboard.GetState().GetPressedKeys();
                 foreach (Keys key in keys)
@@ -94,7 +94,7 @@ namespace CarGo
 
             spriteBatch.Draw(textureCarrier, buttons[stage] + new Vector2(-300, -25), Color.White);
 
-            if(chatMode)
+            if(inputMode)
             {
                 spriteBatch.Draw(chatWindow, new Vector2(1200,500), Color.White);
                 //show 10 lastMessages
@@ -133,7 +133,7 @@ namespace CarGo
                 case 4:
                     if(StateMachine.Instance.networkGame)
                     {
-                        if (!chatMode) chatMode = true;
+                        if (!inputMode) inputMode = true;
                         else
                         {
                             if (chatMessage.Length > 0)
@@ -152,10 +152,17 @@ namespace CarGo
         {
             chatLog.Add(newMessage);
         }
-
+        protected override void Up(int clientID, InputController inputController)
+        {
+            if (!inputMode) base.Up(clientID, inputController);
+        }
+        protected override void Down(int clientID, InputController inputController)
+        {
+            if (!inputMode) base.Down(clientID, inputController);
+        }
         protected override void Back(int clientID, InputController inputController)
         {
-            if (stage == 4 && chatMode) chatMode = false;
+            if (stage == 4 && inputMode) inputMode = false;
             else StateMachine.Instance.ChangeState(GameState.Playing);
         }
 

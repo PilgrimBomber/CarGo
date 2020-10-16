@@ -2,7 +2,7 @@
 using Microsoft.Xna.Framework.Graphics;
 using System;
 using System.Collections.Generic;
-using System.Linq;
+using System.Windows.Forms;
 using System.Text;
 using System.Threading.Tasks;
 
@@ -13,38 +13,43 @@ namespace CarGo
         private Texture2D background;
         private Texture2D carrierTexture;
         public static List<OnlinePlayer> onlinePlayers;
-        public string serverName;
-        public string serverAddress;
+        //public string serverName;
+        //public string serverAddress;
+        public CarGoServer.ServerData serverData;
         private Vector2[] namePositions;
         private SpriteFont spriteFont;
 
         private Texture2D playerBox;
-        public LobbyOnline(SpriteBatch spriteBatchInit, Game1 game) : base(spriteBatchInit, game,2)
+        public LobbyOnline(SpriteBatch spriteBatchInit, Game1 game) : base(spriteBatchInit, game,4)
         {
             background = TextureCollection.Instance.GetTexture(TextureType.Menu_Background);
             carrierTexture = TextureCollection.Instance.GetTexture(TextureType.MainMenuCarrier);
             HUD.graphicsDevice = spriteBatchInit.GraphicsDevice;
-            playerBox = HUD.createLifebar(playerBox, 500, 400, 0, 2, Color.Transparent, Color.Transparent, Color.Black);
+            playerBox = HUD.createLifebar(playerBox, 600, 400, 0, 2, Color.Transparent, Color.Transparent, Color.Black);
 
             onlinePlayers = new List<OnlinePlayer>();
 
             namePositions = new Vector2[4];
             for (int i = 0; i < 4; i++)
             {
-                namePositions[i].X = 200;
+                namePositions[i].X = 900;
                 namePositions[i].Y = 300 + i*100;
             }
 
             buttons = new List<Vector2>();
-            buttons.Add(new Vector2(200, 900));
-            buttons.Add(new Vector2(1200,900));
+            buttons.Add(new Vector2(200, 300));
+            buttons.Add(new Vector2(200, 400));
+            buttons.Add(new Vector2(200, 500));
+            buttons.Add(new Vector2(200, 600));
 
             spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
 
-            texts = new string[2];
+            texts = new string[4];
             texts[0] = "Invite";
             texts[1] = "Ready";
-
+            
+            texts[2] = "Copy ServerAddress";
+            texts[3] = "Copy InviteCode";
 
         }
         protected override void ConfirmSelection(int clientID, InputController inputController)
@@ -60,7 +65,22 @@ namespace CarGo
                     IdentifyOnlinePlayer(clientID).ToggleReady();
                     Network.NetworkThread.Instance.BroadCastReady();
                     break;
+                case 2:
+                    CopyServerAddressToClipboard();
+                    break;
+                case 3:
+                    if(Network.NetworkThread.Instance.publicServer) CopyInviteCodeToClipboard();
+                    break;
             }
+        }
+
+        private void CopyInviteCodeToClipboard()
+        {
+            Clipboard.SetData(DataFormats.Text, (object)serverData.uniqueID.ToString());
+        }
+        private void CopyServerAddressToClipboard()
+        {
+            Clipboard.SetData(DataFormats.Text, (object)serverData.publicAddress);
         }
 
         private int IdentifyOnlinePlayerIndex(int clientID)
@@ -102,7 +122,7 @@ namespace CarGo
             spriteBatch.Begin();
             spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
 
-            spriteBatch.DrawString(spriteFont, serverName + " at " + serverAddress, new Vector2(100,100), Color.Black);
+            if(serverData!=null)spriteBatch.DrawString(spriteFont,"Server Name: " + serverData.serverName , new Vector2(100,100), Color.Black);
 
             spriteBatch.Draw(playerBox, namePositions[0] - new Vector2(25, 25),Color.White);
             for (int j = 0; j < onlinePlayers.Count; j++)
@@ -116,7 +136,7 @@ namespace CarGo
 
 
             spriteBatch.Draw(carrierTexture, buttons[stage] - new Vector2(carrierTexture.Width, 25), Color.White);
-            for (int j = 0; j < numButtons; j++)
+            for (int j = 0; j < (Network.NetworkThread.Instance.publicServer ? numButtons:numButtons-1); j++)
             {
                 spriteBatch.DrawString(spriteFont, texts[j], buttons[j], Color.Black);
             }

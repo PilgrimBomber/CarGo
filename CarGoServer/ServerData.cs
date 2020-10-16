@@ -9,12 +9,13 @@ namespace CarGoServer
 {
     public class ServerData
     {
+        public Int64 uniqueID;
         public string serverName;
-        public IPAddress localAddress;
+        public long localAddress;
         public string publicAddress;
         public int serverPort;
         public int numClients;
-
+        public bool showInServerList;
         public ServerData()
         {
             numClients = 0;

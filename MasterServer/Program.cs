@@ -57,7 +57,7 @@ namespace MasterServer
 									Console.WriteLine("Sending list of " + registeredHosts.Count + " hosts to client " + msg.SenderEndPoint);
 									foreach (var hostData in registeredHosts)
 									{
-										if(hostData.Value.numClients<maxPlayers)
+										if(hostData.Value.numClients<maxPlayers && hostData.Value.showInServerList)
                                         {
 											// send registered host to client
 											NetOutgoingMessage om = peer.CreateMessage();

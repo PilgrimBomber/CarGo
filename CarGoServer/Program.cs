@@ -33,8 +33,10 @@ namespace CarGoServer
 			IPEndPoint masterServerEndpoint = NetUtility.Resolve(CommonConstants.MasterServerAddress, CommonConstants.MasterServerPort);
 			NetPeerConfiguration config = new NetPeerConfiguration("GameServer");
             config.MaximumConnections = 4;
+			serverData = new ServerData();
 			serverData.serverPort = 14242;
             config.Port = 14242;
+
 			if (args.Length >= 1)
 			{
 				int port;
@@ -55,29 +57,28 @@ namespace CarGoServer
 				if (args[2] == "true") registerOnline = true;
 				else registerOnline = false;
             }
-			registerOnline = true;
 
 			serverData.publicAddress = GetIPAddress();
-
+			serverData.showInServerList = registerOnline;
 			s_server = new NetServer(config);
 			s_server.Start();
 			s_server.RegisterReceivedCallback(new SendOrPostCallback(CheckForMessages), new SynchronizationContext());
 			clients = new Dictionary<int, NetConnection>();
 			clientNames = new Dictionary<int, string>();
 			Console.WriteLine("Server started on Port " + config.Port);
-
+			serverData.uniqueID = s_server.UniqueIdentifier;
 			var lastRegistered = -60.0f;
 
 			while ((Console.KeyAvailable == false || Console.ReadKey().Key != ConsoleKey.Escape)&& !gameRunning )
 			{
 				// (re-)register periodically with master server
-				if (NetTime.Now > lastRegistered + 60 && registerOnline)
+				if (NetTime.Now > lastRegistered + 60 )
 				{
 					// register with master server
 					NetOutgoingMessage regMsg = s_server.CreateMessage();
 					regMsg.Write((byte)MasterServerMessageType.RegisterHost);
 					IPAddress mask;
-					serverData.localAddress = NetUtility.GetMyAddress(out mask);
+					serverData.localAddress = NetUtility.GetMyAddress(out mask).Address;
 					regMsg.Write(s_server.UniqueIdentifier);
 					regMsg.WriteAllFields(serverData);
 					//regMsg.Write(new IPEndPoint(adr, 14242));
@@ -192,10 +193,10 @@ namespace CarGoServer
 										om = s_server.CreateMessage();
 										om.Write((byte)19);
 										om.Write((byte)CarGo.Network.MessageType.ReceiveServerInfo);
-										//om.WriteAllFields(serverData);
-										om.Write(serverData.serverName);
+										om.WriteAllFields(serverData);
+										//om.Write(serverData.serverName);
 										
-										om.Write(serverData.publicAddress);
+										//om.Write(serverData.publicAddress);
 										s_server.SendMessage(om, im.SenderConnection, NetDeliveryMethod.ReliableOrdered, 0);
 										break;
                                     default:
@@ -207,10 +208,10 @@ namespace CarGoServer
                                 
 								if((CarGo.Network.MessageType)im.ReadByte()== CarGo.Network.MessageType.GameState)
                                 {
-									if((CarGo.GameState)im.ReadByte()== CarGo.GameState.MenuModificationSelection)
+									/*if((CarGo.GameState)im.ReadByte()== CarGo.GameState.MenuModificationSelection)
                                     {
 										gameRunning = true;
-                                    }
+                                    }*/
                                 }
 								//broadcast this to all connections, except sender
                                 List<NetConnection> all = s_server.Connections; // get copy

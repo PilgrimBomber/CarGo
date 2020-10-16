@@ -83,7 +83,7 @@ namespace CarGo
             creditScreen = new CreditScreen(spriteBatch, this);
             loadingScreen = new LoadingScreen(spriteBatch, this);
             launchMenu = new LaunchMenu(spriteBatch, this,networkThread);
-            waitForServerStart = new WaitForServerStart(networkThread);
+            waitForServerStart = new WaitForServerStart(networkThread, spriteBatch);
             music = SoundCollection.Instance.GetSoundInstance(SoundType.Menu_Music);
             music.IsLooped = true;
             music.Volume = 0.5f * Settings.Instance.VolumeMusic;
@@ -230,7 +230,7 @@ namespace CarGo
                     lobbySearch.Draw();
                     break;
                 case GameState.WaitForServerStart:
-                    loadingScreen.Draw();
+                    waitForServerStart.Draw();
                     break;
                 default: break; ;
             }
