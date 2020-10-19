@@ -20,13 +20,16 @@ namespace CarGo
         private SpriteFont spriteFont;
 
         private Texture2D playerBox;
-        public LobbyOnline(SpriteBatch spriteBatchInit, Game1 game) : base(spriteBatchInit, game,4)
+        private Texture2D menuYes;
+        private Texture2D menuNo;
+        public LobbyOnline(SpriteBatch spriteBatchInit, Game1 game) : base(spriteBatchInit, game,3)
         {
             background = TextureCollection.Instance.GetTexture(TextureType.Menu_Background);
             carrierTexture = TextureCollection.Instance.GetTexture(TextureType.MainMenuCarrier);
             HUD.graphicsDevice = spriteBatchInit.GraphicsDevice;
             playerBox = HUD.createLifebar(playerBox, 600, 400, 0, 2, Color.Transparent, Color.Transparent, Color.Black);
-
+            menuYes = TextureCollection.Instance.GetTexture(TextureType.Menu_Yes);
+            menuNo = TextureCollection.Instance.GetTexture(TextureType.Menu_No);
             onlinePlayers = new List<OnlinePlayer>();
 
             namePositions = new Vector2[4];
@@ -44,12 +47,11 @@ namespace CarGo
 
             spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
 
-            texts = new string[4];
-            texts[0] = "Invite";
-            texts[1] = "Ready";
+            texts = new string[3];
+            texts[0] = "Ready";
             
-            texts[2] = "Copy ServerAddress";
-            texts[3] = "Copy InviteCode";
+            texts[1] = "Copy ServerAddress";
+            texts[2] = "Copy InviteCode";
 
         }
         protected override void ConfirmSelection(int clientID, InputController inputController)
@@ -57,18 +59,14 @@ namespace CarGo
             switch (stage)
             {
                 case 0:
-
-                    break;
-
-                case 1:
                     if (clientID == ID_Manager.Instance.ClientNumber);
                     IdentifyOnlinePlayer(clientID).ToggleReady();
                     Network.NetworkThread.Instance.BroadCastReady();
                     break;
-                case 2:
+                case 1:
                     CopyServerAddressToClipboard();
                     break;
-                case 3:
+                case 2:
                     if(Network.NetworkThread.Instance.publicServer) CopyInviteCodeToClipboard();
                     break;
             }
@@ -129,8 +127,9 @@ namespace CarGo
             {
                 spriteBatch.DrawString(spriteFont, onlinePlayers[j].name, namePositions[j], Color.Black);
                 //Draw ready/not ready
-                if (onlinePlayers[j].ready) spriteBatch.DrawString(spriteFont, "Ready", namePositions[j] + new Vector2(400,0), Color.Black);
-                else spriteBatch.DrawString(spriteFont, "Not R", namePositions[j] + new Vector2(400, 0), Color.Black);
+                if (onlinePlayers[j].ready) spriteBatch.Draw(menuYes, namePositions[j] + new Vector2(500, 0), Color.White);
+                else spriteBatch.Draw(menuNo, namePositions[j] + new Vector2(500, 0), Color.White);
+
 
             }
 

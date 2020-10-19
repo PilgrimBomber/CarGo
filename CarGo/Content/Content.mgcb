@@ -404,6 +404,18 @@
 /processorParam:TextureFormat=Color
 /build:textures/Menu_Defeatscreen.png
 
+#begin textures/Menu_No.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Menu_No.png
+
 #begin textures/Menu_Select_Flamethrower.png
 /importer:TextureImporter
 /processor:TextureProcessor
@@ -451,6 +463,18 @@
 /processorParam:MakeSquare=False
 /processorParam:TextureFormat=Color
 /build:textures/Menu_Victoryscreen.png
+
+#begin textures/Menu_Yes.png
+/importer:TextureImporter
+/processor:TextureProcessor
+/processorParam:ColorKeyColor=255,0,255,255
+/processorParam:ColorKeyEnabled=True
+/processorParam:GenerateMipmaps=False
+/processorParam:PremultiplyAlpha=True
+/processorParam:ResizeToPowerOfTwo=False
+/processorParam:MakeSquare=False
+/processorParam:TextureFormat=Color
+/build:textures/Menu_Yes.png
 
 #begin textures/Mod_Front_Big_Bumper.png
 /importer:TextureImporter

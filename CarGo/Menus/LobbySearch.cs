@@ -142,6 +142,7 @@ namespace CarGo
             {
                 if (serverSelectionMode == 0) spriteBatch.Draw(carrierTexture, new Vector2(0, buttons[2].Y - 25), Color.White);
                 if (serverSelectionMode == 1) spriteBatch.Draw(carrierTexture, new Vector2(400, buttons[2].Y - 5 + serverSelectedIndex*80), Color.White);
+                if (serverSelectionMode == 2) spriteBatch.Draw(carrierTexture, new Vector2(1200, buttons[2].Y - 25), Color.White);
             }
 
 
@@ -155,6 +156,7 @@ namespace CarGo
             spriteBatch.DrawString(spriteFont, "Confirm ", buttons[0] + new Vector2(1200, 0), Color.Black);
             spriteBatch.DrawString(spriteFont, "Code: "+ inputCode, buttons[1] + new Vector2(400, 0), Color.Black);
             spriteBatch.DrawString(spriteFont, "Confirm ", buttons[1] + new Vector2(1200, 0), Color.Black);
+            spriteBatch.DrawString(spriteFont, "Confirm ", buttons[2] + new Vector2(1200, 0), Color.Black);
             spriteBatch.Draw(serverBox, buttons[2] + new Vector2(400,0), Color.White);
             for (int i = 0; i < serverDatas.Count; i++)
             {
@@ -184,7 +186,7 @@ namespace CarGo
 
         protected override void Up(int clientID, InputController inputController)
         {
-            if (iPInputMode == 0 && codeInputMode == 0 && serverSelectionMode==0) base.Up(clientID, inputController);
+            if(iPInputMode == 0 && codeInputMode == 0 && serverSelectionMode==0)base.Up(clientID, inputController);
             if(serverSelectionMode==1)
             {
                 if (serverSelectedIndex > 0) serverSelectedIndex--;
@@ -193,11 +195,21 @@ namespace CarGo
 
         protected override void Down(int clientID, InputController inputController)
         {
-            if (iPInputMode == 0 && codeInputMode == 0 && serverSelectionMode == 0) base.Down(clientID, inputController);
+
             if (serverSelectionMode == 1)
             {
-                if (serverSelectedIndex < serverDatas.Count-1) serverSelectedIndex++;
+                if (serverSelectedIndex < serverDatas.Count - 1) serverSelectedIndex++;
             }
+            if (iPInputMode == 0 && codeInputMode == 0 && serverSelectionMode == 0) base.Down(clientID, inputController);
+        }
+
+        protected override void Right(int clientID, InputController inputController)
+        {
+            if (serverSelectionMode == 1)
+            {
+                if (serverSelectedIndex < serverDatas.Count - 1) serverSelectedIndex++;
+            }
+            if (iPInputMode == 0 && codeInputMode == 0 && serverSelectionMode == 0) base.Down(clientID, inputController);
         }
 
         protected override void Back(int clientID, InputController inputController)

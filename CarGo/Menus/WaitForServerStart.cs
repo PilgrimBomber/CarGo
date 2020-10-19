@@ -21,6 +21,8 @@ namespace CarGo
         private Texture2D background;
         private SpriteFont spriteFont;
         private Texture2D carrierTexture;
+        private Texture2D menuYes;
+        private Texture2D menuNo;
         private int serverPollCounter;
         public WaitForServerStart(Network.NetworkThread networkThread, SpriteBatch spriteBatchInit):base(spriteBatchInit,null,4)
         {
@@ -29,6 +31,8 @@ namespace CarGo
             lastKeys = Keyboard.GetState().GetPressedKeys();
             background = TextureCollection.Instance.GetTexture(TextureType.Menu_Background);
             carrierTexture = TextureCollection.Instance.GetTexture(TextureType.MainMenuCarrier);
+            menuYes = TextureCollection.Instance.GetTexture(TextureType.Menu_Yes);
+            menuNo = TextureCollection.Instance.GetTexture(TextureType.Menu_No);
             spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
             serverPollCounter = 0;
             numButtons = 4;
@@ -121,7 +125,9 @@ namespace CarGo
 
             //Draw Background and Selection
             spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
-            spriteBatch.Draw(carrierTexture, buttons[stage] - new Vector2(buttons[stage].X, 25), Color.White);
+            if(stage==0 && inputMode) spriteBatch.Draw(carrierTexture, new Vector2(300,buttons[0].Y -25), Color.White);
+            else if (stage == 1 && inputModePort) spriteBatch.Draw(carrierTexture, new Vector2(300, buttons[1].Y - 25), Color.White);
+            else spriteBatch.Draw(carrierTexture, buttons[stage] - new Vector2(buttons[stage].X, 25), Color.White);
 
             for (int j = 0; j < numButtons; j++)
             {
@@ -130,8 +136,8 @@ namespace CarGo
             spriteBatch.DrawString(spriteFont, serverName, buttons[0]+ new Vector2(300,0), Color.Black);
             spriteBatch.DrawString(spriteFont, port, buttons[1] + new Vector2(300, 0), Color.Black);
 
-            if (registerServer) spriteBatch.DrawString(spriteFont, "Yes", buttons[2] + new Vector2(200,0), Color.Black);
-            else spriteBatch.DrawString(spriteFont, "No", buttons[2] + new Vector2(200, 0), Color.Black);
+            if (registerServer) spriteBatch.Draw(menuYes, buttons[2] + new Vector2(300,0), Color.White);
+            else spriteBatch.Draw(menuNo, buttons[2] + new Vector2(300, 0), Color.White);
 
 
             spriteBatch.End();

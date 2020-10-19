@@ -49,6 +49,8 @@ namespace CarGo
         Menu_VictoryScreen,
         Menu_DefeatScreen,
         Menu_Controls,
+        Menu_Yes,
+        Menu_No,
         Menu_Select_Flamethrower,
         Menu_Select_Shockwave,
         Menu_Selection_BoxBox,
@@ -128,9 +130,10 @@ namespace CarGo
                 case TextureType.Menu_Select_Shockwave: texture = content.Load<Texture2D>("textures/Menu_Select_Shockwave"); break;
                 case TextureType.Menu_Selection_BoxBox: texture = content.Load<Texture2D>("textures/Menu_Selection_BoxBox"); break;
                 case TextureType.CreditScreen: texture = content.Load<Texture2D>("textures/CreditScreen"); break;
-
+                case TextureType.Menu_Yes: texture = content.Load<Texture2D>("textures/Menu_Yes"); break;
+                case TextureType.Menu_No: texture = content.Load<Texture2D>("textures/Menu_No"); break;
             }
-            if(!textures.ContainsKey(textureType))textures.Add(textureType, texture);
+            if (!textures.ContainsKey(textureType))textures.Add(textureType, texture);
         }
 
         public Texture2D GetTexture(TextureType textureType)
@@ -144,7 +147,7 @@ namespace CarGo
             return returntexture;
         }
 
-        
+
 
 
     }

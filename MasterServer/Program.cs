@@ -56,13 +56,13 @@ namespace MasterServer
 
                                 case MasterServerMessageType.RequestHostList:
                                     // It's a client wanting a list of registered hosts
-                                    Console.WriteLine("Sending list of " + registeredHosts.Count + " hosts to client " + msg.SenderEndPoint);
+                                    //Console.WriteLine("Sending list of " + registeredHosts.Count + " hosts to client " + msg.SenderEndPoint);
                                     foreach (var hostData in registeredHosts)
                                     {
-                                        if (true|| hostData.Value.numClients < maxPlayers && hostData.Value.showInServerList)
+                                        if (hostData.Value.showInServerList)
                                         {
                                             // send registered host to client
-                                            Console.WriteLine("sending " + hostData.Value.serverName);
+                                            //Console.WriteLine("sending " + hostData.Value.serverName);
                                             NetOutgoingMessage om = peer.CreateMessage();
                                             om.Write((byte)CarGo.Network.MessageType.ServerInList);
                                             om.Write(hostData.Key);
