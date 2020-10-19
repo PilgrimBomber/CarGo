@@ -18,20 +18,14 @@ namespace CarGo.Network
 		
 		private Thread serverThread;
 		public int port=14242;
+		private string host;
 		public static NetworkThread Instance;
 		public bool isMainClient= false;
 		public bool publicServer;
 		LocalUpdates localUpdates;
 		private int updateCounter = 0;
-		public bool IsServerRunning
-        {
-			get 
-			{
-				Process[] pname = Process.GetProcessesByName("CarGoServer");
-				if (pname.Length != 0) return true;
-				else return false;
-			}
-        }
+		public bool serverRunning;
+        
 		public NetworkThread(LocalUpdates localUpdates)
         {
 			this.localUpdates = localUpdates;
@@ -64,23 +58,24 @@ namespace CarGo.Network
 		public void ConnectToServer(string host, int port)
         {
 			this.port = port;
+			this.host = host;
 			//make hail message contain username + ?
 			NetOutgoingMessage hail = s_client.CreateMessage(Settings.Instance.PlayerName);
 			s_client.Connect(host, port, hail);
 			
 		}
 		
-		public void LaunchServer(string serverName, bool registerServer)
+		public void LaunchServer(string serverName, bool registerServer, int port)
         {
             Process pr = new Process();
             ProcessStartInfo prs = new ProcessStartInfo();
 #if DEBUG
             // Debug Code
-			prs.WorkingDirectory =Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\CarGoServer\bin\Debug\")); 
+			prs.WorkingDirectory =Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\..\..\..\CarGoServer\bin\Debug\"));
 #else
 			prs.WorkingDirectory = Path.GetFullPath(Path.Combine(Environment.CurrentDirectory, @"..\CarGoServer\"));
 #endif
-
+			this.port = port;
 			prs.FileName = @"CarGoServer.exe";
 			string args = port.ToString();
 			args += " " + serverName;
@@ -148,6 +143,14 @@ namespace CarGo.Network
 			IPEndPoint masterServerEndpoint = NetUtility.Resolve(MSCommon.CommonConstants.MasterServerAddress, MSCommon.CommonConstants.MasterServerPort);
 			s_client.SendUnconnectedMessage(om, masterServerEndpoint);
         }
+		public void CheckServerRunning(string host, int port)
+        {
+			NetOutgoingMessage om = s_client.CreateMessage();
+			om.Write((byte)ServerInfo.ServerMessage);
+			om.Write((byte)ServerTask.CheckOnline);
+			s_client.SendUnconnectedMessage(om, host,port);
+		}
+
 		//public void RequestServerAddress(long code)
 		//{
 		//	NetOutgoingMessage om = s_client.CreateMessage();

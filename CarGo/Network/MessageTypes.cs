@@ -17,7 +17,8 @@ namespace CarGo.Network
     public enum ServerTask
     {
         GetClientNumber,
-        GetServerInformation
+        GetServerInformation,
+        CheckOnline
     }
     
     public enum MessageType
@@ -31,7 +32,8 @@ namespace CarGo.Network
         PlayerReady,
         Chat,
         ServerInList,
-        ReceiveServerAddress
+        ReceiveServerAddress,
+        ServerOnline
     }
     public enum ObjectMessageType
     {

@@ -122,7 +122,7 @@ namespace CarGo
             spriteBatch.Begin();
             spriteBatch.Draw(background, new Vector2(0, 0), Color.White);
 
-            if(serverData!=null)spriteBatch.DrawString(spriteFont,"Server Name: " + serverData.serverName , new Vector2(100,100), Color.Black);
+            if(serverData!=null)spriteBatch.DrawString(spriteFont,"Server Name: " + serverData.serverName , new Vector2(200,100), Color.Black);
 
             spriteBatch.Draw(playerBox, namePositions[0] - new Vector2(25, 25),Color.White);
             for (int j = 0; j < onlinePlayers.Count; j++)

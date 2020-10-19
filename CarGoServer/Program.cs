@@ -33,6 +33,7 @@ namespace CarGoServer
 			IPEndPoint masterServerEndpoint = NetUtility.Resolve(CommonConstants.MasterServerAddress, CommonConstants.MasterServerPort);
 			NetPeerConfiguration config = new NetPeerConfiguration("GameServer");
             config.MaximumConnections = 4;
+			config.EnableMessageType(NetIncomingMessageType.UnconnectedData);
 			serverData = new ServerData();
 			serverData.serverPort = 14242;
             config.Port = 14242;
@@ -230,6 +231,21 @@ namespace CarGoServer
 
 
                         break;
+					case NetIncomingMessageType.UnconnectedData:
+						if((CarGo.Network.ServerInfo)im.ReadByte()== CarGo.Network.ServerInfo.ServerMessage)
+                        {
+							if((CarGo.Network.ServerTask)im.ReadByte()== CarGo.Network.ServerTask.CheckOnline)
+                            {
+								Console.WriteLine("sending online confirmation");
+								om = s_server.CreateMessage();
+								om.Write((byte)CarGo.Network.MessageType.ServerOnline);
+								om.Write(true);
+								om.WriteAllFields(serverData);
+
+								s_server.SendUnconnectedMessage(om,im.SenderEndPoint);
+                            }
+                        }
+						break;
 					default:
 						Console.WriteLine("Unhandled type: " + im.MessageType + " " + im.LengthBytes + " bytes " + im.DeliveryMethod + "|" + im.SequenceChannel);
 						break;

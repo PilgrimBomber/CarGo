@@ -80,6 +80,10 @@ namespace CarGo.Network
                 im.ReadAllFields(serverData);
                 game.lobbySearch.AddServerData(serverData);
             }
+            if(type== MessageType.ServerOnline)
+            {
+                networkThread.serverRunning = true;
+            }
         }
         public void ParseMessage(NetIncomingMessage im)
         {

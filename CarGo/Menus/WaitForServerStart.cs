@@ -21,7 +21,7 @@ namespace CarGo
         private Texture2D background;
         private SpriteFont spriteFont;
         private Texture2D carrierTexture;
-
+        private int serverPollCounter;
         public WaitForServerStart(Network.NetworkThread networkThread, SpriteBatch spriteBatchInit):base(spriteBatchInit,null,4)
         {
             this.networkThread = networkThread;
@@ -30,7 +30,7 @@ namespace CarGo
             background = TextureCollection.Instance.GetTexture(TextureType.Menu_Background);
             carrierTexture = TextureCollection.Instance.GetTexture(TextureType.MainMenuCarrier);
             spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
-
+            serverPollCounter = 0;
             numButtons = 4;
             buttons = new List<Vector2>();
             for (int i = 0; i < numButtons; i++)
@@ -90,10 +90,27 @@ namespace CarGo
                 }
                 lastKeys = keys;
             }
-            if (networkThread.IsServerRunning)
+            if (networkThread.serverRunning)
             {
                 networkThread.ConnectToServer("localhost");
                 StateMachine.Instance.ChangeState(GameState.OnlineLobby);
+            }
+            else
+            {
+                if( serverPollCounter>0)
+                {
+                    serverPollCounter--;
+                    if(serverPollCounter==0)
+                    {
+                        int portI;
+                        if(int.TryParse(port,out portI))
+                        {
+                            networkThread.CheckServerRunning("localhost", portI);
+                            serverPollCounter = 20;
+                        }
+                        
+                    }
+                }
             }
             
         }
@@ -127,9 +144,14 @@ namespace CarGo
             {
                 serverName = Settings.Instance.PlayerName + "sServer";
             }
-            networkThread.LaunchServer(serverName,registerServer);
-            networkThread.isMainClient = true;
-            StateMachine.Instance.networkGame = true;
+            int portI;
+            if(int.TryParse(port,out portI))
+            {
+                networkThread.LaunchServer(serverName, registerServer, portI);
+                networkThread.isMainClient = true;
+                StateMachine.Instance.networkGame = true;
+                serverPollCounter = 20;
+            }
             
         }
 
