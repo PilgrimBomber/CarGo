@@ -29,7 +29,9 @@ namespace CarGo.Network
         IntroduceClient,
         MenuInput,
         PlayerReady,
-        Chat
+        Chat,
+        ServerInList,
+        ReceiveServerAddress
     }
     public enum ObjectMessageType
     {
@@ -45,6 +47,12 @@ namespace CarGo.Network
         Player
 
     }
-
+    public enum MasterServerMessageType
+    {
+        RegisterHost,
+        RequestHostList,
+        RequestIntroduction,
+        GetHostByCode
+    }
 
 }

@@ -13,14 +13,16 @@ namespace CarGo
     {
         Network.NetworkThread networkThread;
         private string serverName;
+        private string port;
         private bool registerServer;
         private bool inputMode;
+        private bool inputModePort;
         private Keys[] lastKeys;
         private Texture2D background;
         private SpriteFont spriteFont;
         private Texture2D carrierTexture;
 
-        public WaitForServerStart(Network.NetworkThread networkThread, SpriteBatch spriteBatchInit):base(spriteBatchInit,null,3)
+        public WaitForServerStart(Network.NetworkThread networkThread, SpriteBatch spriteBatchInit):base(spriteBatchInit,null,4)
         {
             this.networkThread = networkThread;
             registerServer = false;
@@ -29,17 +31,19 @@ namespace CarGo
             carrierTexture = TextureCollection.Instance.GetTexture(TextureType.MainMenuCarrier);
             spriteFont = FontCollection.Instance.GetFont(FontCollection.Fonttyp.MainMenuButtonFont);
 
-            numButtons = 3;
+            numButtons = 4;
             buttons = new List<Vector2>();
             for (int i = 0; i < numButtons; i++)
             {
                 buttons.Add(new Vector2(300, 300 + (int)i * 100));
             }
             serverName = Settings.Instance.PlayerName + "sServer";
+            port = "23451";
             texts = new String[numButtons];
             texts[0] = "Server Name";
-            texts[1] = "Public";
-            texts[2] = "Start Server";
+            texts[1] = "Port";
+            texts[2] = "Public";
+            texts[3] = "Start Server";
             inputMode = false;
         }
 
@@ -68,6 +72,24 @@ namespace CarGo
                 }
                 lastKeys = keys;
             }
+            if (inputModePort)
+            {
+                Keys[] keys = Keyboard.GetState().GetPressedKeys();
+                foreach (Keys key in keys)
+                {
+                    if (key != Keys.LeftShift && key != Keys.RightShift)
+                        if (!lastKeys.Contains(key))
+                        {
+                            char keyAsString = InputHandler.KeyToString(key, keys.Contains(Keys.LeftShift) || keys.Contains(Keys.RightShift));
+                            if (keyAsString == ' ')
+                            {
+                                if (key == Keys.Back) if (port.Length != 0) port = port.Substring(0, port.Length - 1);
+                            }
+                            else port += keyAsString;
+                        }
+                }
+                lastKeys = keys;
+            }
             if (networkThread.IsServerRunning)
             {
                 networkThread.ConnectToServer("localhost");
@@ -89,10 +111,10 @@ namespace CarGo
                 spriteBatch.DrawString(spriteFont, texts[j], buttons[j], Color.Black);
             }
             spriteBatch.DrawString(spriteFont, serverName, buttons[0]+ new Vector2(300,0), Color.Black);
+            spriteBatch.DrawString(spriteFont, port, buttons[1] + new Vector2(300, 0), Color.Black);
 
-
-            if (registerServer) spriteBatch.DrawString(spriteFont, "Yes", buttons[1] + new Vector2(200,0), Color.Black);
-            else spriteBatch.DrawString(spriteFont, "No", buttons[1] + new Vector2(200, 0), Color.Black);
+            if (registerServer) spriteBatch.DrawString(spriteFont, "Yes", buttons[2] + new Vector2(200,0), Color.Black);
+            else spriteBatch.DrawString(spriteFont, "No", buttons[2] + new Vector2(200, 0), Color.Black);
 
 
             spriteBatch.End();
@@ -144,9 +166,19 @@ namespace CarGo
                     }
                     break;
                 case 1:
-                    registerServer = !registerServer;
+                    if (!inputModePort)
+                    {
+                        inputModePort = true;
+                    }
+                    else
+                    {
+                        inputModePort = false;
+                    }
                     break;
                 case 2:
+                    registerServer = !registerServer;
+                    break;
+                case 3:
                     LaunchServer();
                     break;
             }

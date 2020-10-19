@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Diagnostics;
 using System.IO;
 using System.Linq;
+using System.Net;
 using System.Text;
 using System.Threading;
 using System.Threading.Tasks;
@@ -36,11 +37,13 @@ namespace CarGo.Network
 			this.localUpdates = localUpdates;
 			NetPeerConfiguration config = new NetPeerConfiguration("GameServer");
 			config.AutoFlushSendQueue = false;
+			config.EnableMessageType(NetIncomingMessageType.UnconnectedData);
 			s_client = new NetClient(config);
 			
 			//s_client.RegisterReceivedCallback(new SendOrPostCallback(GotMessage),new SynchronizationContext());
 			port = 23451;
 			Instance = this;
+			s_client.Start();
 		}
 
 		public void Update()
@@ -56,7 +59,11 @@ namespace CarGo.Network
 
 		public void ConnectToServer(string host)
         {
-			s_client.Start();
+			ConnectToServer(host, port);
+        }
+		public void ConnectToServer(string host, int port)
+        {
+			this.port = port;
 			//make hail message contain username + ?
 			NetOutgoingMessage hail = s_client.CreateMessage(Settings.Instance.PlayerName);
 			s_client.Connect(host, port, hail);
@@ -122,13 +129,10 @@ namespace CarGo.Network
 							//instance.localUpdates.incomingMessages.Add(im);
 							Instance.localUpdates.ParseMessage(im);
 						}
-						else
-						{
-							int i = 0;
-						}
-						
-						
-                        break;
+						break;
+					case NetIncomingMessageType.UnconnectedData:
+						Instance.localUpdates.ParseUnconnectedMessage(im);
+						break;
 					default:
 						break;
                 }
@@ -136,6 +140,22 @@ namespace CarGo.Network
             }
         }
         
+
+		public void RequestServerList()
+        {
+			NetOutgoingMessage om = s_client.CreateMessage();
+			om.Write((byte)MasterServerMessageType.RequestHostList);
+			IPEndPoint masterServerEndpoint = NetUtility.Resolve(MSCommon.CommonConstants.MasterServerAddress, MSCommon.CommonConstants.MasterServerPort);
+			s_client.SendUnconnectedMessage(om, masterServerEndpoint);
+        }
+		//public void RequestServerAddress(long code)
+		//{
+		//	NetOutgoingMessage om = s_client.CreateMessage();
+		//	om.Write((byte)MasterServerMessageType.GetHostByCode);
+		//	om.Write(code);
+		//	IPEndPoint masterServerEndpoint = NetUtility.Resolve(MSCommon.CommonConstants.MasterServerAddress, MSCommon.CommonConstants.MasterServerPort);
+		//	s_client.SendUnconnectedMessage(om, masterServerEndpoint);
+		//}
 
 		public void RequestClientNumber()
         {
@@ -155,6 +175,7 @@ namespace CarGo.Network
 			s_client.FlushSendQueue();
 		}
 
+		
 
 		//Send Message
 		public void BroadCastChatMessage(string message)

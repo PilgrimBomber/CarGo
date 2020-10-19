@@ -70,12 +70,23 @@ namespace CarGo.Network
             }
         }
 
-
+        public void ParseUnconnectedMessage(NetIncomingMessage im)
+        {
+            var type = (MessageType)im.ReadByte();
+            if(type== MessageType.ServerInList)
+            {
+                long key = im.ReadInt64();
+                CarGoServer.ServerData serverData= new CarGoServer.ServerData();
+                im.ReadAllFields(serverData);
+                game.lobbySearch.AddServerData(serverData);
+            }
+        }
         public void ParseMessage(NetIncomingMessage im)
         {
             //Parse and Apply all Changes
             var del = im.ReadByte();
             var type = im.ReadByte();
+            CarGoServer.ServerData serverData= new CarGoServer.ServerData();
             switch ((MessageType)type)
             {
                 case MessageType.GameState:
@@ -138,7 +149,6 @@ namespace CarGo.Network
                     currentmenu.RemoteInput((InputType)im.ReadByte(), clientID);
                     break;
                 case MessageType.ReceiveServerInfo:
-                    CarGoServer.ServerData serverData = new CarGoServer.ServerData();
                     im.ReadAllFields(serverData);
                     //string serverName = im.ReadString();
                     //string address = im.ReadString() + ":" + networkThread.port;//im.SenderEndPoint.ToString();
@@ -152,6 +162,14 @@ namespace CarGo.Network
                 case MessageType.Chat:
                     string message = im.ReadString();
                     game.menuPause.AddChatMessage(message);
+                    break;
+                case MessageType.ServerInList:
+                    long key = im.ReadInt64();
+                    serverData = new CarGoServer.ServerData();
+                    im.ReadAllFields(serverData);
+                    game.lobbySearch.AddServerData(serverData);
+                    break;
+                case MessageType.ReceiveServerAddress:
                     break;
             }
         }

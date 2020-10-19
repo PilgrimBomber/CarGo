@@ -75,6 +75,9 @@
     <Compile Include="..\CarGoServer\ServerData.cs">
       <Link>ServerData.cs</Link>
     </Compile>
+    <Compile Include="..\CarGo\Network\MessageTypes.cs">
+      <Link>MessageTypes.cs</Link>
+    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>

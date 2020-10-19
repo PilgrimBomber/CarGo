@@ -27,7 +27,7 @@ namespace CarGo
         LaunchMenu launchMenu;
         WaitForServerStart waitForServerStart;
         LoadingScreen loadingScreen;
-        LobbySearch lobbySearch;
+        public LobbySearch lobbySearch;
         public ModifierMenu modifierMenu;
         SoundEffectInstance music;
         public Network.NetworkThread networkThread;
@@ -167,7 +167,7 @@ namespace CarGo
                     lobbyOnline.Update();
                     break;
                 case GameState.SearchLobby:
-                    lobbySearch.Update();
+                    lobbySearch.Update(gameTime);
                     break;
                 case GameState.WaitForServerStart:
                     waitForServerStart.Update();

@@ -70,9 +70,6 @@
     <Compile Include="..\MSCommon\CommonConstants.cs">
       <Link>CommonConstants.cs</Link>
     </Compile>
-    <Compile Include="..\MSCommon\MasterServerMessageType.cs">
-      <Link>MasterServerMessageType.cs</Link>
-    </Compile>
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="ServerData.cs" />
@@ -83,7 +80,6 @@
   </ItemGroup>
   <ItemGroup>
     <Content Include="cargo_multiplayer_requirements.txt" />
-    <Content Include="ToDo.txt" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Lidgren.Network\Lidgren.Network.csproj">

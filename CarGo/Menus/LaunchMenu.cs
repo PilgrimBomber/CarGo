@@ -87,6 +87,7 @@ namespace CarGo
             if (stage == 1)
             {
                 StateMachine.Instance.ChangeState(GameState.WaitForServerStart);
+                StateMachine.Instance.networkGame = true;
                 theGame.scene.Reset();
             }
 
@@ -96,6 +97,7 @@ namespace CarGo
                 StateMachine.Instance.networkGame = true;
                 StateMachine.Instance.ChangeState(GameState.SearchLobby);
                 theGame.scene.Reset();
+                networkThread.RequestServerList();
             }
         }
 

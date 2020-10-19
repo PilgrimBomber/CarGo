@@ -19,10 +19,10 @@ namespace MSCommon
 			{
 				if(masterServerAddress==null || masterServerAddress.Length<2)
                 {
-					Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None); ;
-					masterServerAddress = config.AppSettings.Settings["MasterServerAddress"].Value;
+					//Configuration config = ConfigurationManager.OpenExeConfiguration(ConfigurationUserLevel.None); ;
+					//masterServerAddress = config.AppSettings.Settings["MasterServerAddress"].Value;
 				}
-				return masterServerAddress;
+				return "localhost";//masterServerAddress;
 			}
 		} 
 		//public const int GameServerPort = 14242;

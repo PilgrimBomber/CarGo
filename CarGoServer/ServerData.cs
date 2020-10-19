@@ -11,7 +11,7 @@ namespace CarGoServer
     {
         public Int64 uniqueID;
         public string serverName;
-        public long localAddress;
+        public string localAddress;
         public string publicAddress;
         public int serverPort;
         public int numClients;

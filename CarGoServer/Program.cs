@@ -47,7 +47,7 @@ namespace CarGoServer
 				}				
 					
 			}
-			serverData.serverName = "CarGo Server";
+			serverData.serverName = "CarGoServer";
 			if (args.Length >= 2)
 			{
 				serverData.serverName = args[1];
@@ -76,9 +76,9 @@ namespace CarGoServer
 				{
 					// register with master server
 					NetOutgoingMessage regMsg = s_server.CreateMessage();
-					regMsg.Write((byte)MasterServerMessageType.RegisterHost);
+					regMsg.Write((byte)CarGo.Network.MasterServerMessageType.RegisterHost);
 					IPAddress mask;
-					serverData.localAddress = NetUtility.GetMyAddress(out mask).Address;
+					serverData.localAddress = NetUtility.GetMyAddress(out mask).ToString();
 					regMsg.Write(s_server.UniqueIdentifier);
 					regMsg.WriteAllFields(serverData);
 					//regMsg.Write(new IPEndPoint(adr, 14242));
